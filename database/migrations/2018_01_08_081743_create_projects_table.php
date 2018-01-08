@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCostTypesTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCostTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cost_types', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->commit('name');
-            $table->tinyInteger('type')->default(1)->commit('is_simple');
-            $table->unsignedInteger('base')->default(0)->commit('base_type_id');
+            $table->string('PartyA')->commit('PartyA');
+            $table->float('price')->default(0)->commit('price');
+            $table->integer('finishTime')->commit('finishTime');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCostTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cost_types');
+        Schema::dropIfExists('projects');
     }
 }
