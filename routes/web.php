@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+//    dd(array_merge(\Illuminate\Sup,['d','c']));
+    dd(request()->all());
     return view('welcome');
 });
 Route::post('login','UserController@login');
