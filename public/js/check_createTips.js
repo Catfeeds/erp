@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#checkCreateTips",data:{tipsForm:_schemas.checkTips},mounted:function(){$("#checkCreateTips").removeClass("invisible")},methods:{deleteItem:function(e,t,i){this.tipsForm[e].splice(i,1)},addItem:function(e){var t=this.tipsForm[e],i=t.length,s=void 0;s=i>0?t[i-1].id+1:1,this.tipsForm[e].push({id:s})}}})});

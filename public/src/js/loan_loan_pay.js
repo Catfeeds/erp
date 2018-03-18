@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#loanLoanPay",data:{loanForm:{people:"",data:"",bank:"",account:"",type:""}},mounted:function(){$("#loanLoanPay").removeClass("invisible"),this.loanFomr.date=_helper.timeFormat(new Date,"YYYY-MM-DD")},methods:{submit:function(){this.$notify({title:"成功",message:"提交成功",type:"success"})}}})});

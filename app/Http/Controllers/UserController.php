@@ -14,18 +14,16 @@ class UserController extends Controller
     //
     public function loginPage()
     {
-        return 'LoginPage';
+        return view('login');
     }
     public function login(Login $request)
     {
         $username = $request->get('username');
         $password = $request->get('password');
         if (Auth::attempt(['username'=>$username,'password'=>$password],true)){
-            return 'SUCCESS';
+            return redirect('index');
         }else{
-            return redirect()->back()->withErrors([
-                '用户名不存在或密码错误！'
-            ]);
+            return redirect()->back()->with('status','用户名或密码错误！');
         }
     }
     public function logout()
@@ -35,11 +33,23 @@ class UserController extends Controller
         }
         return redirect('login');
     }
+    public function registerPage()
+    {
+
+    }
     public function register()
     {
         $user = new User();
-
     }
+    public function index()
+    {
+        if (Auth::check()){
+            return view('index');
+        }
+        return redirect('login');
+    }
+
+
     
 
 }

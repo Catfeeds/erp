@@ -8,7 +8,7 @@ class CreateOutContractsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *分标合同情况
      * @return void
      */
     public function up()

@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"loanDetailList"},mounted:function(){$("#navbar").removeClass("invisible")},methods:{}}),new Vue({el:"#loanDetailList",data:{dateOption:_schemas.datePickerOption,date:"",timeout:null},mounted:function(){$("#loanDetailList").removeClass("invisible")},methods:{}})});

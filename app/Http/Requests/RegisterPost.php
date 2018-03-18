@@ -26,7 +26,7 @@ class RegisterPost extends FormRequest
     {
         return [
             //
-            'username'=>''
+            'username'=>'required'
         ];
     }
     public function messages()

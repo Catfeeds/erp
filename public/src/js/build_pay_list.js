@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"buildPayList"},mounted:function(){$("#navbar").removeClass("invisible")},methods:{}})});

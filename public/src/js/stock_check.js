@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#stockCheck",data:{dateOption:_schemas.datePickerOption,date:""},mounted:function(){$("#stockCheck").removeClass("invisible")},methods:{}})});

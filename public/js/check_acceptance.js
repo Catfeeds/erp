@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#checkAcceptance",data:{acceptanceForm:{acceptance_date:"",remark:"",deadline:"",finish:!1}},mounted:function(){$("#checkAcceptance").removeClass("invisible")},methods:{}})});

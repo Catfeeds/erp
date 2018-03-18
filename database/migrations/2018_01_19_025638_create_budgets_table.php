@@ -19,7 +19,7 @@ class CreateBudgetsTable extends Migration
             $table->string('name');
             $table->string('param');
             $table->string('brand');
-            $table->string('');
+            $table->string('factory');
             $table->string('');
             $table->float('price');
             $table->integer('number');

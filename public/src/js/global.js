@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$(".ui.dropdown").dropdown(),$(".ui.accordion").accordion(),$("#sidebarBtn").on("click",function(){if("none"===$(this).find("i").css("display"))return!1;$(".index-aside").toggleClass("active")})});

@@ -9,6 +9,7 @@ class CreateContractsTable extends Migration
     /**
      * Run the migrations.
      *
+     * 项目合同图片地址表格
      * @return void
      */
     public function up()

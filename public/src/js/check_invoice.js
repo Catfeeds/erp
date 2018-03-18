@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Vue({el:"#checkInvoice",data:{invoiceForm:_schemas.checkInvoice},mounted:function(){$("#checkInvoice").removeClass("invisible")},methods:{deleteItem:function(e,i,c){this.invoiceForm[e].splice(c,1)},addItem:function(e){var i=this.invoiceForm[e],c=i.length,n=void 0;n=c>0?i[c-1].id+1:1,this.invoiceForm[e].push({id:n})}}})});
