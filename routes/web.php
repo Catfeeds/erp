@@ -28,4 +28,5 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('material/create','SystemController@createMaterialPage');
    Route::post('material/create','SystemController@createMaterialPage');
    Route::get('warehouse/create','SystemController@createWarehousePage');
+   Route::post('warehouse/create','SystemController@createWarehouse');
 });
