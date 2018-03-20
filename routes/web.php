@@ -29,4 +29,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('material/create','SystemController@createMaterialPage');
    Route::get('warehouse/create','SystemController@createWarehousePage');
    Route::post('warehouse/create','SystemController@createWarehouse');
+   Route::get('bank/create','SystemController@createBankAccountPage');
+   Route::get('bank/list','SystemController@listBankAccountsPage');
+   Route::post('bank/create','SystemController@createBankAccount');
 });

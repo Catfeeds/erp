@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBankAccountPost;
+use App\Http\Requests\CreateInvoicePost;
 use App\Http\Requests\CreateMaterial;
 use App\Http\Requests\CreateWarehousePost;
 use App\Http\Requests\SupplierCreatePost;
+use App\Models\BankAccount;
 use App\Models\ContractContent;
+use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\Supplier;
 use App\Models\TaxRate;
@@ -236,5 +240,83 @@ class SystemController extends Controller
         $data = $DbObj->paginate(10);
         return view('warehouse.list',['warehouses'=>$data]);
     }
+    //银行账号
+    public function createBankAccount(CreateBankAccountPost $post)
+    {
+        $id = $post->get('id');
+        if ($id){
+            $account = BankAccount::find($id);
+        }else{
+            $account = new BankAccount();
+        }
+        $account->name = $post->get('name');
+        $account->account = $post->get('account');
+        if ($account->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
 
+    public function listBankAccountsPage()
+    {
+        $name = Input::get('name');
+        $account = Input::get('account');
+        $DbObj = DB::table('bank_accounts');
+        if ($name){
+            $DbObj->where('name','like','%'.$name.'%');
+        }
+        if ($account){
+            $DbObj->where('account','like','%'.$account.'%');
+        }
+        $accounts = $DbObj->paginate(10);
+        return view('bank.list',['accounts'=>$accounts]);
+    }
+
+    public function createBankAccountPage()
+    {
+        $id = Input::get('id');
+        if ($id){
+            $account = BankAccount::find($id);
+        }else{
+            $account = new BankAccount();
+        }
+        return view('bank.create',['account'=>$account]);
+    }
+
+    //发票类型
+    public function createInvoice(CreateInvoicePost $post)
+    {
+        $id = $post->get('id');
+        if ($id){
+            $invoice = Invoice::find($id);
+        }else{
+            $invoice = new Invoice();
+        }
+        $invoice->name = $post->get('name');
+        $invoice->remark = $post->get('remark');
+        if ($invoice->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function createInvoicePage()
+    {
+        $id = Input::get('id');
+        if ($id){
+            $invoice = Invoice::find($id);
+        }else{
+            $invoice = new Invoice();
+        }
+        return view('invoice.create',['invoice'=>$invoice]);
+    }
+
+    public function listInvoicesPage()
+    {
+        $invoices = Invoice::paginate(10);
+        return view('invoice.list',['invoices'=>$invoices]);
+    }
 }
