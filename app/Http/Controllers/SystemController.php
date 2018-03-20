@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateBankAccountPost;
 use App\Http\Requests\CreateInvoicePost;
 use App\Http\Requests\CreateMaterial;
+use App\Http\Requests\CreateProjectTypePost;
+use App\Http\Requests\CreateTeamPost;
 use App\Http\Requests\CreateWarehousePost;
 use App\Http\Requests\SupplierCreatePost;
 use App\Models\BankAccount;
 use App\Models\ContractContent;
 use App\Models\Invoice;
 use App\Models\Material;
+use App\Models\ProjectType;
 use App\Models\Supplier;
 use App\Models\TaxRate;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -318,5 +322,65 @@ class SystemController extends Controller
     {
         $invoices = Invoice::paginate(10);
         return view('invoice.list',['invoices'=>$invoices]);
+    }
+
+    //施工队伍
+    public function createTeam(CreateTeamPost $post)
+    {
+        $id = $post->get('id');
+        if ($id){
+            $team = Team::find($id);
+        }else{
+            $team = new Team();
+        }
+        $team->name = $post->get('name');
+        $team->manager = $post->get('manager');
+        if ($team->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function createTeamPage()
+    {
+        $id = Input::get('id');
+        if ($id){
+            $team = Team::find($id);
+        }else{
+            $team = new Team();
+        }
+        return view('team.create',['team'=>$team]);
+    }
+    public function listTeamsPage()
+    {
+        $name = Input::get('name');
+        $manager = Input::get('manager');
+        $DbObj = DB::table('teams');
+        if ($name){
+            $DbObj->where('name','like','%'.$name.'%');
+        }
+        if ($manager){
+            $DbObj->where('manager','like','%'.$manager.'%');
+        }
+        $teams = $DbObj->paginate(10);
+        return view('team.list',['teams'=>$teams]);
+    }
+    public function createProjectType(CreateProjectTypePost $post)
+    {
+        $id = $post->get('id');
+        if ($id){
+            $type = ProjectType::find($id);
+        }else{
+            $type = new ProjectType();
+        }
+        $type->name = $post->get('name');
+        $type->rate = $post->get('rate');
+        if ($type->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
 }

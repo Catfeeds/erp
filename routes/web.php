@@ -32,4 +32,14 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('bank/create','SystemController@createBankAccountPage');
    Route::get('bank/list','SystemController@listBankAccountsPage');
    Route::post('bank/create','SystemController@createBankAccount');
+   Route::get('invoice/create','SystemController@createInvoice');
+   Route::get('invoice/list','SystemController@listInvoicesPage');
+   Route::post('invoice/create','SystemController@createInvoicePage');
+   Route::get('team/create','SystemController@createTeam');
+   Route::get('team/list','SystemController@listTeamsPage');
+   Route::post('team/create','SystemController@createTeamPage');
+   Route::get('project/type/create','SystemController@createProjectType');
+   Route::get('project/types/list','SystemController@createTeamPage');
+   Route::post('project/type/create','SystemController@createTeamPage');
+
 });
