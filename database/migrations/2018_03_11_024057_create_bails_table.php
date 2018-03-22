@@ -24,8 +24,8 @@ class CreateBailsTable extends Migration
             $table->string('pay_date');
             $table->float('pay_price');
             $table->string('payee');
-            $table->string('bank');
-            $table->string('bank_account');
+            $table->string('bank')->nullable();
+            $table->string('bank_account')->nullable();
             $table->string('condition')->nullable();
             $table->timestamps();
         });
