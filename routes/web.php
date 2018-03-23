@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/','UserController@index');
+Route::get('/',function (){
+    $a= sprintf("%03d", 15) ;
+    echo 'XM'.date('Yms',time()).$a;
+});
 Route::post('login','UserController@login');
 
 Route::get('login','UserController@loginPage');
