@@ -18,6 +18,7 @@ class CreateProjectSituationsTable extends Migration
             $table->unsignedInteger('project_id');
             $table->float('price')->default(0);
             $table->tinyInteger('type')->default(1);
+            $table->tinyInteger('is_main')->default(0);
             $table->timestamps();
         });
     }

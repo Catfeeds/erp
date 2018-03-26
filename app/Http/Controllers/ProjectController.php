@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetPost;
 use App\Http\Requests\CreateProjectPost;
+use App\Models\Bail;
 use App\Models\Budget;
 use App\Models\MainContract;
 use App\Models\OutContract;
 use App\Models\Project;
+use App\Models\ProjectPicture;
+use App\Models\ProjectSituations;
+use App\Models\Receipt;
+use App\Models\SituationList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -42,11 +47,11 @@ class ProjectController extends Controller
         $projectData = $post->get('project');
         if (!empty($projectData)){
             if (isset($projectData['id'])){
+                $project = Project::find($projectData['id']);
+            }else{
                 $project = new Project();
                 $count = Project::where('date')->count();
                 $project->number = 'XM'.date('Yms',time()).sprintf("%03d", $count);
-            }else{
-                $project = Project::find($projectData['id']);
             }
             $project->name = $post->get('name');
             $project->PartyA = $post->get('PartyA');
@@ -62,9 +67,9 @@ class ProjectController extends Controller
             foreach ($mainContracts as $mainContract){
                 if (isset($mainContract['id'])){
                     $contract = MainContract::find($mainContract['id']);
-                    $contract->project_id = $project->id;
                 }else{
                     $contract = new MainContract();
+                    $contract->project_id = $project->id;
                 }
                 $contract->unit = $mainContract['unit'];
                 $contract->price = $mainContract['price'];
@@ -77,9 +82,9 @@ class ProjectController extends Controller
             foreach ($outContracts as $outContract){
                 if (isset($outContract['id'])){
                     $out_contract = OutContract::find($outContract['id']);
-                    $out_contract->project_id = $project->id;
                 }else{
                     $out_contract = new OutContract();
+                    $out_contract->project_id = $project->id;
                 }
                 $out_contract->unit = $outContract['unit'];
                 $out_contract->price = $outContract['price'];
@@ -87,9 +92,90 @@ class ProjectController extends Controller
                 $out_contract->save();
             }
         }
-
+        $situations = $post->get('situations');
+        if (!empty($situations)){
+            foreach($situations as $situation){
+                if (isset($situation['id'])){
+                    $situ = ProjectSituations::find($situation['id']);
+                }else{
+                    $situ = new ProjectSituations();
+                    $situ->project_id = $project->id;
+                }
+                $situ->price = $situation['price'];
+                $situ->type = $situation['type'];
+                $situ->is_main = $situation['is_main'];
+                $situ->save();
+                if (!empty($situation['lists'])){
+                    foreach ($situation['lists'] as $list){
+                        if (isset($list['id'])){
+                            $lis = SituationList::find($list['id']);
+                        }else{
+                            $lis = new SituationList();
+                            $lis->situation_id = $situ->id;
+                        }
+                        $lis->name = $list['name'];
+                        $lis->tax = $list['tax'];
+                        $lis->price = $list['price'];
+                        $lis->remark = $list['remark'];
+                        $lis->save();
+                    }
+                }
+            }
+        }
+        $bails = $post->get('bails');
+        if (!empty($bails)){
+            foreach ($bails as $item){
+                if (isset($item['id'])){
+                    $bail = Bail::find($item['id']);
+                }else{
+                    $bail = new Bail();
+                    $bail->project_id = $project->id;
+                }
+                $bail->unit = $item['unit'];
+                $bail->price = $item['price'];
+                $bail->term = $item['term'];
+                $bail->cost = $item['cost'];
+                $bail->other = $item['other'];
+                $bail->pay_date = $item['pay_date'];
+                $bail->pay_price = $item['pay_price'];
+                $bail->payee = $item['payee'];
+                $bail->bank = $item['bank'];
+                $bail->bank_account = $item['bank_account'];
+                $bail->condition = $item['condition'];
+                $bail->save();
+            }
+        }
+        $receipts = $post->get('receipts');
+        if (!empty($receipts)){
+            foreach ($receipts as $item){
+                if (isset($item['id'])){
+                    $receipt = Receipt::find($item['id']);
+                }else{
+                    $receipt = new Receipt();
+                    $receipt->project_id = $project->id;
+                }
+                $receipt->ratio = $item['ratio'];
+                $receipt->price = $item['price'];
+                $receipt->condition = $item['condition'];
+                $receipt->save();
+            }
+        }
+        $pictures = $post->get('pictures');
+        if (!empty($pictures)){
+            foreach ($pictures as $item){
+                if (isset($item['id'])){
+                    $picture = ProjectPicture::find($item['id']);
+                }else{
+                    $picture = new ProjectPicture();
+                    $picture->project_id = $project->id;
+                }
+                $picture->url = $item['url'];
+                $picture->save();
+            }
+        }
         return response()->json([
-            'dd'
+            'code'=>'200',
+            'msg'=>'SUCCESS'
         ]);
     }
     public function addBudget(BudgetPost $budgetPost)

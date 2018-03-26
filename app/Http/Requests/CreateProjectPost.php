@@ -50,6 +50,7 @@ class CreateProjectPost extends FormRequest
             'situations.*'=>'required',
             'situations.*.price'=>'required|numeric',
             'situations.*.type'=>'required|numeric',
+            'situations.*.is_main'=>'required|numeric',
             'situations.*.lists'=>'required|array',
             'situations.*.lists.*'=>'required',
             'situations.*.lists.*.name'=>'required|string',
