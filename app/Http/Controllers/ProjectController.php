@@ -40,7 +40,7 @@ class ProjectController extends Controller
             $projectDb->where('name','like','%'.$name.'%');
         }
         $projects = $projectDb->paginate(10);
-        return view('project.list',$projects);
+        return view('project.list',['projects'=>$projects]);
     }
     public function createProject(CreateProjectPost $post)
     {
@@ -180,7 +180,37 @@ class ProjectController extends Controller
     }
     public function addBudget(BudgetPost $budgetPost)
     {
-        $budget = new Budget();
+        $budgets = $budgetPost->get('budgets');
+        if (!empty($budgets)){
+            foreach ($budgets as $item){
+                $budget = new Budget();
+                $budget->project_id = $item['project_id'];
+                $budget->name = $item['name'];
+                $budget->param = $item['param'];
+                $budget->brand = $item['brand'];
+                $budget->factory = $item['factory'];
+                $budget->unit = $item['unit'];
+                $budget->price = $item['price'];
+                $budget->number = $item['number'];
+                $budget->cost = $item['cost'];
+                $budget->type = $item['type'];
+                $budget->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function delBudget($id)
+    {
+        $budget = Budget::find($id);
+        if ($budget->delete()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
     public function addBudgetPage()
     {
