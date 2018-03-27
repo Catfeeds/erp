@@ -10,7 +10,9 @@ use App\Http\Requests\CreateTeamPost;
 use App\Http\Requests\CreateWarehousePost;
 use App\Http\Requests\SupplierCreatePost;
 use App\Models\BankAccount;
+use App\Models\Category;
 use App\Models\ContractContent;
+use App\Models\Detail;
 use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\ProjectType;
@@ -377,6 +379,48 @@ class SystemController extends Controller
         $type->name = $post->get('name');
         $type->rate = $post->get('rate');
         if ($type->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function addCategory(Request $post)
+    {
+        $category = new Category();
+        $category->title = $post->get('title');
+        $category->save();
+        $kinds = $post->get('kinds');
+        foreach ($kinds as $item){
+            $kind = new Detail();
+            $kind->category_id = $category->id;
+            $kind->title = $item;
+            $kind->save();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function addKinds(Request $post)
+    {
+        $kinds = $post->get('kinds');
+        $category_id = $post->get('category_id');
+        foreach ($kinds as $item){
+            $kind = new Detail();
+            $kind->category_id = $category_id;
+            $kind->title = $item;
+            $kind->save();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function delKind($id)
+    {
+        $detail = Detail::find($id);
+        if ($detail->delete()){
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
