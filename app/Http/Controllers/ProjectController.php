@@ -178,7 +178,7 @@ class ProjectController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
-    public function addBudget(BudgetPost $budgetPost)
+    public function addBudget(Request $budgetPost)
     {
         $budgets = $budgetPost->get('budgets');
         if (!empty($budgets)){

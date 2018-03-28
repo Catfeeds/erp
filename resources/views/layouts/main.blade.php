@@ -196,19 +196,19 @@
                 <a href="#">人员权限</a>
             </el-menu-item>
             <el-menu-item index="dataSupplier">
-                <a href="#">供应商</a>
+                <a href="{{url('supplier/list')}}">供应商</a>
             </el-menu-item>
             <el-menu-item index="dataMateriel">
-                <a href="#">物料</a>
+                <a href="{{url('material/list')}}">物料</a>
             </el-menu-item>
             <el-menu-item index="dataWarehouse">
-                <a href="#">仓库</a>
+                <a href="{{url('warehouse/list')}}">仓库</a>
             </el-menu-item>
             <el-menu-item index="dataBank">
-                <a href="#">银行账户</a>
+                <a href="{{url('bank/list')}}">银行账户</a>
             </el-menu-item>
             <el-menu-item index="dataTeam">
-                <a href="#">施工队</a>
+                <a href="{{url('team/list')}}">施工队</a>
             </el-menu-item>
             <el-menu-item index="dataPayment">
                 <a href="#">报销费用类型</a>

@@ -16,7 +16,7 @@
             <form method="get" class="ui form">
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../data/warehouse_add.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('warehouse/create')}}')">
                             <i class="icon plus"></i>
                             <span>新增仓库</span>
                         </a>

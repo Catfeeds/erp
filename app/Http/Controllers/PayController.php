@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinishPayApply;
 use App\Models\LoanList;
 use App\Models\PayApply;
 use App\Models\RequestPayment;
@@ -151,5 +152,21 @@ class PayController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS'
         ]);
+    }
+    public function createFinishPayApply(Request $post)
+    {
+        $apply = new FinishPayApply();
+        $apply->project_id = $post->get('project_id');
+        $apply->pay_date = $post->get('pay_date');
+        $apply->price = $post->get('price');
+        $apply->payee = $post->get('payee');
+        $apply->bank = $post->get('bank');
+        $apply->bank_account = $post->get('bank_account');
+        if ($apply->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
 }

@@ -17,7 +17,7 @@
             <form action="" class="ui form">
                 <div class="flex-row flex-between">
                     <div>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../data/supplier_add.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('supplier/create')}}')">
                             <i class="icon plus"></i>
                             <span>新增供应商</span>
                         </a>
@@ -57,33 +57,17 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($suppliers as $supplier)
                 <tr>
-                    <td>xxx供应商</td>
-                    <td>中国银行</td>
-                    <td>672372717285283212</td>
+                    <td>{{$supplier->name}}</td>
+                    <td>{{$supplier->bank}}</td>
+                    <td>{{$supplier->account}}</td>
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/supplier_add.html?id=1')">修改</a>
-                        <a class="ui mini button negative" href="#">删除</a>
+                        <a class="ui mini button negative" href="{{url('delete/supplier/')}}{{$supplier->id}}">删除</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>xxx供应商</td>
-                    <td>中国银行</td>
-                    <td>672372717285283212</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/supplier_add.html?id=1')">修改</a>
-                        <a class="ui mini button negative" href="#">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>xxx供应商</td>
-                    <td>中国银行</td>
-                    <td>672372717285283212</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/supplier_add.html?id=1')">修改</a>
-                        <a class="ui mini button negative" href="#">删除</a>
-                    </td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

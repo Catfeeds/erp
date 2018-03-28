@@ -21,6 +21,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');
    Route::get('project/create','ProjectController@createProjectPage');
+   //数据维护
    Route::get('supplier/list','SystemController@listSupplierPage');
    Route::post('supplier/create','SystemController@createSupplier');
    Route::get('supplier/create','SystemController@createSupplierPage');
@@ -28,6 +29,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('material/create','SystemController@createMaterialPage');
    Route::post('material/create','SystemController@createMaterialPage');
    Route::get('warehouse/create','SystemController@createWarehousePage');
+   Route::get('warehouse/list','SystemController@listWarehousesPage');
    Route::post('warehouse/create','SystemController@createWarehouse');
    Route::get('bank/create','SystemController@createBankAccountPage');
    Route::get('bank/list','SystemController@listBankAccountsPage');
