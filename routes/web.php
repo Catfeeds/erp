@@ -11,12 +11,9 @@
 |
 */
 
-Route::get('/',function (){
-    $a= sprintf("%03d", 15) ;
-    echo 'XM'.date('Yms',time()).$a;
-});
+Route::get('/','UserController@index');
 Route::post('login','UserController@login');
-
+Route::any('upload','SystemController@upload');
 Route::get('login','UserController@loginPage');
 Route::get('logout','UserController@logout');
 Route::post('project/create','ProjectController@createProject');

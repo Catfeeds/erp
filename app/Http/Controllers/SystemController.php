@@ -92,9 +92,59 @@ class SystemController extends Controller
         }
         return redirect()->back()->with('status','没有该内容！');
     }
-    public function upload()
+    public function upload(Request $request)
     {
-
+        if (!$request->hasFile('image')){
+            return response()->json([
+                'return_code'=>'FAIL',
+                'return_msg'=>'空文件'
+            ]);
+        }
+        $file = $request->file('image');
+        $name = $file->getClientOriginalName();
+        $name = explode('.',$name);
+        if (count($name)!=2){
+            return response()->json([
+                'return_code'=>'FAIL',
+                'return_msg'=>'非法文件名'
+            ]);
+        }
+        $allow =  [
+        'jpg',
+        'png',
+        'txt',
+        'bmp',
+        'gif',
+        'jpeg',
+        'pem',
+        'mp4',
+    ];
+        if (!in_array(strtolower($name[1]),$allow)){
+            return response()->json([
+                'return_code'=>'FAIL',
+                'return_msg'=>'不支持的文件格式'
+            ]);
+        }
+        $md5 = md5_file($file);
+        $name = $name[1];
+        $name = $md5.'.'.$name;
+        if (!$file){
+            return response()->json([
+                'return_code'=>'FAIL',
+                'return_msg'=>'空文件'
+            ]);
+        }
+        if ($file->isValid()){
+            $destinationPath = 'uploads';
+            $file->move($destinationPath,$name);
+            return response()->json([
+                'return_code'=>'SUCCESS',
+                'data'=>[
+                    'file_name'=>$name,
+                    'base_url'=>'http://119.23.202.220:8080'.($destinationPath.'/'.$name),
+                ]
+            ]);
+        }
     }
     //供应商列表
     public function listSupplierPage()
@@ -116,7 +166,7 @@ class SystemController extends Controller
         return view('supplier.list',['suppliers'=>$data]);
     }
     //创建供应商
-    public function createSupplier(SupplierCreatePost $post)
+    public function createSupplier(Request $post)
     {
         $id = $post->get('id');
         if ($id){
@@ -179,7 +229,7 @@ class SystemController extends Controller
         }
     }
 
-    public function createMaterial(CreateMaterial $post)
+    public function createMaterial(Request $post)
     {
         $id =$post->get('id');
         if ($id){
@@ -213,7 +263,7 @@ class SystemController extends Controller
         return view('warehouse.create',['warehouse'=>$warehouse]);
     }
 
-    public function createWarehouse(CreateWarehousePost $post)
+    public function createWarehouse(Request $post)
     {
         $id = Input::get('id');
         if ($id){
@@ -247,7 +297,7 @@ class SystemController extends Controller
         return view('warehouse.list',['warehouses'=>$data]);
     }
     //银行账号
-    public function createBankAccount(CreateBankAccountPost $post)
+    public function createBankAccount(Request $post)
     {
         $id = $post->get('id');
         if ($id){
@@ -292,7 +342,7 @@ class SystemController extends Controller
     }
 
     //发票类型
-    public function createInvoice(CreateInvoicePost $post)
+    public function createInvoice(Request $post)
     {
         $id = $post->get('id');
         if ($id){
@@ -327,7 +377,7 @@ class SystemController extends Controller
     }
 
     //施工队伍
-    public function createTeam(CreateTeamPost $post)
+    public function createTeam(Request $post)
     {
         $id = $post->get('id');
         if ($id){
@@ -368,7 +418,7 @@ class SystemController extends Controller
         $teams = $DbObj->paginate(10);
         return view('team.list',['teams'=>$teams]);
     }
-    public function createProjectType(CreateProjectTypePost $post)
+    public function createProjectType(Request $post)
     {
         $id = $post->get('id');
         if ($id){
@@ -427,4 +477,5 @@ class SystemController extends Controller
             ]);
         }
     }
+
 }

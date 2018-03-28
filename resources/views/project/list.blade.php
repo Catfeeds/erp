@@ -19,7 +19,7 @@
             <span>Excel 导出</span>
         </a>
     </div>
-    <form action="/views/project/list.html" class="ui form flex-fluid">
+    <form class="ui form flex-fluid">
         <div class="ui left action right input fluid">
             <div class="ui button white dropdown ">
                 <input name="seartch-type" type="hidden">
@@ -60,65 +60,20 @@
         @foreach($projects as $project)
         <tr>
             <td>
-                <a href="{{url('project/check')}}/{{$project->id}}">154376453254</a>
+                <a href="{{url('project/check')}}/{{$project->id}}">{{$project->number}}</a>
             </td>
-            <td>2017-12-01</td>
-            <td class="table-content">这是一大段内容</td>
-            <td>张喜</td>
-            <td>20万</td>
+            <td>{{date('Y-m-d'),$project->createTime}}</td>
+            <td class="table-content">{{$project->name}}</td>
+            <td>{{$project->pm}}</td>
+            <td>{{$project->price}}</td>
             <td>30万</td>
-            <td>xx公司</td>
+            <td>{{$project->PartyA}}</td>
             <td>20万</td>
             <td>xx单位</td>
             <td>10万</td>
-            <td>2018-02-14</td>
+            <td>{{date('Y-m-d'),$project->finishTime}}</td>
         </tr>
         @endforeach
-        <tr>
-            <td>
-                <a href="../project/check.html">154236453254</a>
-            </td>
-            <td>2017-12-01</td>
-            <td class="table-content">这是一大段内容</td>
-            <td>张喜</td>
-            <td>20万</td>
-            <td>30万</td>
-            <td>xx公司</td>
-            <td>20万</td>
-            <td>xx单位</td>
-            <td>10万</td>
-            <td>2018-02-14</td>
-        </tr>
-        <tr>
-            <td>
-                <a href="../project/check.html">154376453254</a>
-            </td>
-            <td>2017-12-01</td>
-            <td class="table-content">这是一大段内容</td>
-            <td>张喜</td>
-            <td>20万</td>
-            <td>30万</td>
-            <td>xx公司</td>
-            <td>20万</td>
-            <td>xx单位</td>
-            <td>10万</td>
-            <td>2018-02-14</td>
-        </tr>
-        <tr>
-            <td>
-                <a href="../project/check.html">154376453254</a>
-            </td>
-            <td>2017-12-01</td>
-            <td class="table-content">这是一大段内容</td>
-            <td>张喜</td>
-            <td>20万</td>
-            <td>30万</td>
-            <td>xx公司</td>
-            <td>20万</td>
-            <td>xx单位</td>
-            <td>10万</td>
-            <td>2018-02-14</td>
-        </tr>
         </tbody>
     </table>
 </div>
