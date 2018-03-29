@@ -11,6 +11,7 @@ use App\Models\OutContract;
 use App\Models\Project;
 use App\Models\ProjectPicture;
 use App\Models\ProjectSituations;
+use App\Models\ProjectType;
 use App\Models\Receipt;
 use App\Models\SituationList;
 use Illuminate\Http\Request;
@@ -26,7 +27,14 @@ class ProjectController extends Controller
     }
     public function createProjectPage()
     {
-        return view('project.create');
+        $id = Input::get('id');
+        if ($id){
+            $project = Project::find($id);
+            dd($project);
+        }else{
+            $types = ProjectType::select(['id','name'])->get()->toArray();
+            return view('project.create',['types'=>$types]);
+        }
     }
     public function listProject()
     {

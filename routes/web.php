@@ -37,10 +37,11 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('invoice/create','SystemController@createInvoice');
    Route::get('invoice/list','SystemController@listInvoicesPage');
    Route::post('invoice/create','SystemController@createInvoicePage');
-   Route::get('team/create','SystemController@createTeam');
+   Route::post('team/create','SystemController@createTeam');
    Route::get('team/list','SystemController@listTeamsPage');
-   Route::post('team/create','SystemController@createTeamPage');
-   Route::get('project/type/create','SystemController@createProjectType');
+   Route::get('team/create','SystemController@createTeamPage');
+   Route::post('project/type/create','SystemController@createProjectType');
+   Route::get('project/type/create','SystemController@createProjectTypePage');
    Route::get('project/types/list','SystemController@createTeamPage');
    Route::post('project/type/create','SystemController@createTeamPage');
 

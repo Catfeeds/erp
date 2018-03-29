@@ -435,6 +435,16 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function createProjectTypePage()
+    {
+        $id = Input::get('id');
+        if ($id){
+            $type = ProjectType::find($id);
+        }else{
+            $type = new ProjectType();
+        }
+        return view('type.create',['type'=>$type]);
+    }
     public function addCategory(Request $post)
     {
         $category = new Category();

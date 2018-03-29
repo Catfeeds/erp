@@ -10,7 +10,7 @@
     </div>
 
     <div style="display:none;" id="contractContent">
-        [{"id":1,"name":"内容1"},{"id":2,"name":"内容2"},{"id":3,"name":"内容3"}]
+        {{json_encode($types)}}
     </div>
     <div style="display:none;" id="contractTax">
         [{"id":1,"name":"5%"},{"id":2,"name":"9%"},{"id":3,"name":"15%"}]

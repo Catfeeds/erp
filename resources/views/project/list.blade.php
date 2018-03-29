@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title','已立项清单')
 @section('content')
+    <div class="index-content print-no-padding">
 <div class="ui breadcrumb">
     <a class="section">项目立项管理</a>
     <div class="divider"> / </div>
