@@ -1,1 +1,191 @@
-"use strict";function _defineProperty(t,e,a){return e in t?Object.defineProperty(t,e,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[e]=a,t}$(document).ready(function(){var t;new Vue({el:"#checkCollect",data:{collectForm:_schemas.checkCollect,companies:[{id:1,name:"单位A"},{id:2,name:"单位B"},{id:2,name:"单位C"}],banks:[{id:1,name:"中国银行",account:0xdd7cc016fa7b28},{id:2,name:"平安银行",account:0xe1b80ca67d20f8},{id:3,name:"广发银行",account:0xe15b47ecd74258},{id:4,name:"中央银行",account:0xdd7cc016fa7b28}]},mounted:function(){$(".tabular.menu .item").tab(),$("#checkCollect").removeClass("invisible")},methods:(t={querySearchCompany:function(t,e){var a=this.companies,n=t?a.filter(this.createFilterCompany(t)):a;clearTimeout(this.timeout),this.timeout=setTimeout(function(){e(n)},1e3*Math.random())},createFilterCompany:function(t){return function(e){return 0===e.name.toLowerCase().indexOf(t.toLowerCase())}},handleSelectCompanyA:function(t){this.collectForm.margins.payee_id=t.id,this.collectForm.margins.payee=t.name},handleSelectCompanyB:function(t){this.collectForm.masterContract.payee_id=t.id,this.collectForm.masterContract.payee=t.name},handleSelectCompanyC:function(t){this.collectForm.subContract.payee_id=t.id,this.collectForm.subContract.payee=t.name},querySearchBank:function(t,e){var a=this.banks,n=t?a.filter(this.createFilterBank(t)):a;clearTimeout(this.timeout),this.timeout=setTimeout(function(){e(n)},1e3*Math.random())},createFilterBank:function(t){return function(e){return 0===e.name.toLowerCase().indexOf(t.toLowerCase())}},handleSelectBankA:function(t){this.collectForm.margins.bank_id=t.id,this.collectForm.margins.bank=t.name,this.collectForm.margins.account=t.account},handleSelectBankB:function(t){this.collectForm.masterContract.bank_id=t.id,this.collectForm.masterContract.bank=t.name,this.collectForm.masterContract.account=t.account},handleSelectBankC:function(t){this.collectForm.subContract.bank_id=t.id,this.collectForm.subContract.bank=t.name,this.collectForm.subContract.account=t.account},checkSubmit:function(t){var e=this.collectForm[t];for(var a in e)if(void 0===e[a]||""===e[a])return this.$notify.error({title:"错误",message:"请确保已填写所有内容！"}),!1;switch(t){case"margins":this.marginsSubmit(t);break;case"masterContract":this.masterContractSubmit(t);break;case"subContract":this.subContractSubmit(t);break;case"subCompany":this.subCompanySubmit(t);break;default:return!1}},clearData:function(t){for(var e in this.collectForm[t])this.collectForm[t][e]=""},marginsSubmit:function(t){this.clearData(t),this.$notify.success({title:"成功",message:"提交成功！"})}},_defineProperty(t,"marginsSubmit",function(t){this.clearData(t),this.$notify.success({title:"成功",message:"提交成功！"})}),_defineProperty(t,"marginsSubmit",function(t){this.clearData(t),this.$notify.success({title:"成功",message:"提交成功！"})}),_defineProperty(t,"marginsSubmit",function(t){this.clearData(t),this.$notify.success({title:"成功",message:"提交成功！"})}),t)})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#checkCollect',
+        data: {
+          collectForm: _schemas.checkCollect,
+          companies: [{
+              id: 1,
+              name: '单位A'
+            },
+            {
+              id: 2,
+              name: '单位B'
+            },
+            {
+              id: 2,
+              name: '单位C'
+            }
+          ],
+
+          banks: [{
+              id: 1,
+              name: '中国银行',
+              account: 62343134314134313
+            },
+            {
+              id: 2,
+              name: '平安银行',
+              account: 63534234232234234
+            },
+            {
+              id: 3,
+              name: '广发银行',
+              account: 63432234234233432
+            },
+            {
+              id: 4,
+              name: '中央银行',
+              account: 62343134314134313
+            }
+          ]
+        },
+        mounted() {
+          $('.tabular.menu .item').tab()
+          $('#checkCollect').removeClass('invisible')
+        },
+        methods: {
+          //单位搜索
+          querySearchCompany(queryString, cb) {
+            var companies = this.companies
+            var results = queryString ? companies.filter(this.createFilterCompany(queryString)) : companies;
+            // 调用 callback 返回建议列表的数据
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(results);
+            }, 1000 * Math.random());
+          },
+          createFilterCompany(queryString) {
+            return (item) => {
+              return (item.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+          },
+          handleSelectCompanyA(item) {
+            this.collectForm.margins.payee_id = item.id
+            this.collectForm.margins.payee = item.name
+          },
+          handleSelectCompanyB(item) {
+            this.collectForm.masterContract.payee_id = item.id
+            this.collectForm.masterContract.payee = item.name
+          },
+          handleSelectCompanyC(item) {
+            this.collectForm.subContract.payee_id = item.id
+            this.collectForm.subContract.payee = item.name
+          },
+
+          //银行搜索
+          querySearchBank(queryString, cb) {
+            var banks = this.banks
+            var results = queryString ? banks.filter(this.createFilterBank(queryString)) : banks;
+            // 调用 callback 返回建议列表的数据
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(results);
+            }, 1000 * Math.random());
+          },
+          createFilterBank(queryString) {
+            return (item) => {
+              return (item.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+          },
+          handleSelectBankA(item) {
+            this.collectForm.margins.bank_id = item.id
+            this.collectForm.margins.bank = item.name
+            this.collectForm.margins.account = item.account
+          },
+          handleSelectBankB(item) {
+            this.collectForm.masterContract.bank_id = item.id
+            this.collectForm.masterContract.bank = item.name
+            this.collectForm.masterContract.account = item.account
+          },
+          handleSelectBankC(item) {
+            this.collectForm.subContract.bank_id = item.id
+            this.collectForm.subContract.bank = item.name
+            this.collectForm.subContract.account = item.account
+          },
+
+          //数据校验
+          checkSubmit(name) {
+            const vm = this
+            const data = vm.collectForm[name]
+
+            for (let it in data) {
+              if (typeof data[it] === 'undefined' || data[it] === '') {
+
+                vm.$notify.error({
+                  title: '错误',
+                  message: '请确保已填写所有内容！'
+                })
+                return false
+              }
+            }
+
+            switch (name) {
+              case 'margins':
+                vm.marginsSubmit(name)
+                break
+              case 'masterContract':
+                vm.masterContractSubmit(name)
+                break
+              case 'subContract':
+                vm.subContractSubmit(name)
+                break
+              case 'subCompany':
+                vm.subCompanySubmit(name)
+                break
+              default:
+                return false
+            }
+          },
+
+          //清空数据
+          clearData(name) {
+            for (let it in this.collectForm[name]) {
+              this.collectForm[name][it] = ''
+            }
+          },
+
+          //保证金提交
+          marginsSubmit(name) {
+            const vm = this
+            this.clearData(name)
+            vm.$notify.success({
+              title: '成功',
+              message: '提交成功！'
+            })
+          },
+
+          //主合同提交
+          marginsSubmit(name) {
+            const vm = this
+            this.clearData(name)
+            vm.$notify.success({
+              title: '成功',
+              message: '提交成功！'
+            })
+          },
+
+          //分包合同提交
+          marginsSubmit(name) {
+            const vm = this
+            this.clearData(name)
+            vm.$notify.success({
+              title: '成功',
+              message: '提交成功！'
+            })
+          },
+
+          //发包公司提交
+          marginsSubmit(name) {
+            const vm = this
+            this.clearData(name)
+            vm.$notify.success({
+              title: '成功',
+              message: '提交成功！'
+            })
+          }
+        }
+      })
+    })
+}()

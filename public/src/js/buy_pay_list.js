@@ -1,1 +1,16 @@
-"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"buyPayList"},mounted:function(){$("#navbar").removeClass("invisible"),$(".ui.checkbox").checkbox()},methods:{}})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#navbar',
+        data: {
+          navActive: 'buyPayList'
+        },
+        mounted() {
+          $('#navbar').removeClass('invisible')
+          $('.ui.checkbox').checkbox()
+        },
+        methods: {}
+      })
+    })
+}()

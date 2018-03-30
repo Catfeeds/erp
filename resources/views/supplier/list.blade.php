@@ -63,7 +63,7 @@
                     <td>{{$supplier->bank}}</td>
                     <td>{{$supplier->account}}</td>
                     <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/supplier_add.html?id=1')">修改</a>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('supplier/create')}}?id={{$supplier->id}}')">修改</a>
                         <a class="ui mini button negative" href="{{url('delete/supplier/')}}{{$supplier->id}}">删除</a>
                     </td>
                 </tr>

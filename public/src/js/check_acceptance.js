@@ -1,1 +1,20 @@
-"use strict";$(document).ready(function(){new Vue({el:"#checkAcceptance",data:{acceptanceForm:{acceptance_date:"",remark:"",deadline:"",finish:!1}},mounted:function(){$("#checkAcceptance").removeClass("invisible")},methods:{}})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#checkAcceptance',
+        data: {
+          acceptanceForm: {
+            acceptance_date: '',
+            remark: '',
+            deadline: '',
+            finish: false
+          }
+        },
+        mounted(){
+          $('#checkAcceptance').removeClass('invisible')
+        },
+        methods: {}
+      })
+    })
+}()

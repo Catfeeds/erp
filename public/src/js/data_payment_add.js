@@ -1,1 +1,52 @@
-"use strict";$(document).ready(function(){new Vue({el:"#dataPaymentAdd",data:{paymentForm:{name:"",list:[]},inputValue:"",inputVisible:!1},mounted:function(){$("#dataPaymentAdd").removeClass("invisible")},methods:{handleClose:function(t,i){this.paymentForm.list.splice(i,1)},showInput:function(){var t=this;this.inputVisible=!0,this.$nextTick(function(i){t.$refs.saveTagInput.$refs.input.focus()})},handleInputConfirm:function(){var t=this.inputValue;t&&this.paymentForm.list.push(t),this.inputVisible=!1,this.inputValue=""},submit:function(){console.log(this.paymentForm),this.paymentForm.name="",this.paymentForm.list=[],this.$notify({title:"成功",message:"提交成功",type:"success"})}}})});
+! function () {
+  $(document)
+    .ready(() => {
+
+      new Vue({
+        el: '#dataPaymentAdd',
+        data: {
+          paymentForm: {
+            name: '',
+            list: []
+          },
+          inputValue: '',
+          inputVisible: false
+        },
+        mounted() {
+          $('#dataPaymentAdd').removeClass('invisible')
+        },
+        methods: {
+
+          //移除标签
+          handleClose(tag, index) {
+            this.paymentForm.list.splice(index, 1)
+          },
+          showInput() {
+            this.inputVisible = true
+            this.$nextTick(_ => {
+              this.$refs.saveTagInput.$refs.input.focus()
+            })
+          },
+          handleInputConfirm() {
+            let inputValue = this.inputValue
+            if (inputValue) {
+              this.paymentForm.list.push(inputValue)
+            }
+            this.inputVisible = false
+            this.inputValue = ''
+          },
+          //提交
+          submit() {
+            console.log(this.paymentForm)
+            this.paymentForm.name = ''
+            this.paymentForm.list = []
+            this.$notify({
+              title: '成功',
+              message: '提交成功',
+              type: 'success'
+            })
+          },
+        }
+      })
+    })
+}()

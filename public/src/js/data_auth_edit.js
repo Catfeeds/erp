@@ -1,1 +1,7 @@
-"use strict";$(document).ready(function(){$(".ui.radio.checkbox").checkbox()});
+! function () {
+  $(document)
+    .ready(() => {
+      $('.ui.radio.checkbox')
+        .checkbox();
+    })
+}()

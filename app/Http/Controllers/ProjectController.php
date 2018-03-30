@@ -22,6 +22,25 @@ use Illuminate\Support\Facades\Input;
 class ProjectController extends Controller
 {
     //
+    public function searchProject()
+    {
+        $number = Input::get('id');
+        $name = Input::get('name');
+        $DbObj = DB::table('projects');
+        if ($number){
+            $DbObj->where('number','like','%'.$number.'%');
+        }
+        if ($name){
+            $DbObj->where('name','like','%'.$name.'%');
+        }
+        $data = $DbObj->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+
+    }
     public function addProject()
     {
 
@@ -52,7 +71,7 @@ class ProjectController extends Controller
         $projects = $projectDb->paginate(10);
         return view('project.list',['projects'=>$projects]);
     }
-    public function createProject(CreateProjectPost $post)
+    public function createProject(Request $post)
     {
         $projectData = $post->get('project');
         if (!empty($projectData)){
@@ -60,16 +79,16 @@ class ProjectController extends Controller
                 $project = Project::find($projectData['id']);
             }else{
                 $project = new Project();
-                $count = Project::where('date')->count();
-                $project->number = 'XM'.date('Yms',time()).sprintf("%03d", $count);
+                $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();;
+                $project->number = 'XM'.date('Ymd',time()).sprintf("%03d", $count);
             }
-            $project->name = $post->get('name');
-            $project->PartyA = $post->get('PartyA');
-            $project->price = $post->get('price');
-            $project->finishTime = strtotime($post->get('finishTime'));
-            $project->pm = $post->get('pm');
-            $project->createTime = strtotime($post->get('createTime'));
-            $project->condition = $post->get('condition');
+            $project->name = $projectData['name'];
+            $project->PartyA = $projectData['PartyA'];
+            $project->price = $projectData['price'];
+            $project->finishTime = strtotime($projectData['finishTime']);
+            $project->pm = $projectData['pm'];
+            $project->createTime = strtotime($projectData['createTime']);
+            $project->condition = $projectData['condition'];
             $project->save();
         }
         $mainContracts = $post->get('mainContracts');
@@ -77,6 +96,10 @@ class ProjectController extends Controller
             foreach ($mainContracts as $mainContract){
                 if (isset($mainContract['id'])){
                     $contract = MainContract::find($mainContract['id']);
+                    if (empty($contract)){
+                        $contract = new MainContract();
+                        $contract->project_id = $project->id;
+                    }
                 }else{
                     $contract = new MainContract();
                     $contract->project_id = $project->id;
@@ -92,6 +115,10 @@ class ProjectController extends Controller
             foreach ($outContracts as $outContract){
                 if (isset($outContract['id'])){
                     $out_contract = OutContract::find($outContract['id']);
+                    if (empty($out_contract)){
+                        $out_contract = new OutContract();
+                        $out_contract->project_id = $project->id;
+                    }
                 }else{
                     $out_contract = new OutContract();
                     $out_contract->project_id = $project->id;
@@ -107,6 +134,10 @@ class ProjectController extends Controller
             foreach($situations as $situation){
                 if (isset($situation['id'])){
                     $situ = ProjectSituations::find($situation['id']);
+                    if (empty($situ)){
+                        $situ = new ProjectSituations();
+                        $situ->project_id = $project->id;
+                    }
                 }else{
                     $situ = new ProjectSituations();
                     $situ->project_id = $project->id;
@@ -164,7 +195,7 @@ class ProjectController extends Controller
                     $receipt = new Receipt();
                     $receipt->project_id = $project->id;
                 }
-                $receipt->ratio = $item['ratio'];
+                $receipt->ratio = $item['radio'];
                 $receipt->price = $item['price'];
                 $receipt->condition = $item['condition'];
                 $receipt->save();
@@ -175,6 +206,10 @@ class ProjectController extends Controller
             foreach ($pictures as $item){
                 if (isset($item['id'])){
                     $picture = ProjectPicture::find($item['id']);
+                    if (empty($picture)){
+                        $picture = new ProjectPicture();
+                        $picture->project_id = $project->id;
+                    }
                 }else{
                     $picture = new ProjectPicture();
                     $picture->project_id = $project->id;
@@ -197,11 +232,12 @@ class ProjectController extends Controller
     }
     public function addBudget(Request $budgetPost)
     {
+        $project_id = $budgetPost->get('project_id');
         $budgets = $budgetPost->get('budgets');
         if (!empty($budgets)){
             foreach ($budgets as $item){
                 $budget = new Budget();
-                $budget->project_id = $item['project_id'];
+                $budget->project_id = $project_id;
                 $budget->name = $item['name'];
                 $budget->param = $item['param'];
                 $budget->brand = $item['brand'];
@@ -228,6 +264,11 @@ class ProjectController extends Controller
                 'msg'=>'SUCCESS'
             ]);
         }
+    }
+    public function listBudgetsPage()
+    {
+        $project = Project::first();
+        return view('budget.list');
     }
 
 

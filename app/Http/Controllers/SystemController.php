@@ -15,6 +15,7 @@ use App\Models\ContractContent;
 use App\Models\Detail;
 use App\Models\Invoice;
 use App\Models\Material;
+use App\Models\ProjectPicture;
 use App\Models\ProjectType;
 use App\Models\Supplier;
 use App\Models\TaxRate;
@@ -127,21 +128,24 @@ class SystemController extends Controller
         }
 //        $md5 = md5_file($file);
         $name = $name[1];
-        $name = date('Y-m-d H:i:s',time()).'.'.$name;
+        $name = date('Y-m-d His',time()).'.'.$name;
         if (!$file){
             return response()->json([
                 'return_code'=>'FAIL',
                 'return_msg'=>'空文件'
             ]);
         }
+        $count = ProjectPicture::count();
         if ($file->isValid()){
             $destinationPath = 'uploads';
             $file->move($destinationPath,$name);
             return response()->json([
-                'return_code'=>'SUCCESS',
+                'code'=>'200',
+                'msg'=>'SUCCESS',
                 'data'=>[
-                    'file_name'=>$name,
-                    'base_url'=>'http://119.23.202.220:8080'.($destinationPath.'/'.$name),
+                    'size'=>$count+1,
+                    'name'=>$name,
+                    'url'=>'http://119.23.202.220:8080/'.($destinationPath.'/'.$name),
                 ]
             ]);
         }
@@ -178,7 +182,10 @@ class SystemController extends Controller
         $supplier->bank = $post->get('bank');
         $supplier->account = $post->get('account');
         if ($supplier->save()){
-            return redirect()->back('status','操作成功');
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
         }
     }
     //创建供应商界面
@@ -190,7 +197,7 @@ class SystemController extends Controller
         }else{
             $supplier = new Supplier();
         }
-        return view('supplier.add',$supplier);
+        return view('supplier.add',['supplier'=>$supplier]);
     }
     //物料列表
     public function listMaterialPage()
@@ -237,7 +244,17 @@ class SystemController extends Controller
         }else{
             $material = new Material();
         }
-
+        $material->name = $post->get('name');
+        $material->param = $post->get('param');
+        $material->model = $post->get('model');
+        $material->factory = $post->get('factor');
+        $material->unit = $post->get('unit');
+        if ($material->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
     //
     public function createMaterialPage()

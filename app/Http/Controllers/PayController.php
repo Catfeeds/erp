@@ -16,7 +16,7 @@ class PayController extends Controller
     //
     public function createPayApplyPage()
     {
-        return view('00');
+        return view('pay.add');
     }
     public function createPayApply(Request $post)
     {
@@ -80,7 +80,7 @@ class PayController extends Controller
             $DbObj->where('number','like','%'.$number.'%');
         }
         $data = $DbObj->paginate(10);
-        return view('',['lists'=>$data]);
+        return view('pay.list',['lists'=>$data]);
     }
     public function createLoanApply(Request $post)
     {

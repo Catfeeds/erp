@@ -1,1 +1,49 @@
-"use strict";$(document).ready(function(){new Vue({el:"#dataInvoiceAdd",data:{invoiceForm:{id:"",name:"",remark:""}},mounted:function(){this.invoiceForm.id=$("#invoiceId").val(),this.invoiceForm.name=$("#invoiceName").val(),this.invoiceForm.remark=$("#invoiceRemark").val()},methods:{submit:function(){var e=this;_http.InvoiceManager.createInvoice(this.invoiceForm).then(function(i){"200"===i.data.code?e.$notify({title:"成功",message:"提交成功",type:"success"}):e.$notify({title:"错误",message:i.data.msg,type:"error"})}).catch(function(i){e.$notify({title:"错误",message:"服务器出错",type:"error"})})}}})});
+! function () {
+  $(document)
+    .ready(() => {
+
+      new Vue({
+        el: '#dataInvoiceAdd',
+        data: {
+          invoiceForm: {
+            id: '',
+            name: '',
+            remark: '',
+          }
+        },
+        mounted() {
+          this.invoiceForm.id = $('#invoiceId').val()
+          this.invoiceForm.name = $('#invoiceName').val()
+          this.invoiceForm.remark = $('#invoiceRemark').val()
+        },
+        methods: {
+          //提交
+          submit() {
+            _http.InvoiceManager.createInvoice(this.invoiceForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '提交成功',
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          },
+        }
+      })
+    })
+}()

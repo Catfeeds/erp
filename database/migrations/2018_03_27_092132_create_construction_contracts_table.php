@@ -18,14 +18,13 @@ class CreateConstructionContractsTable extends Migration
             $table->string('number');
             $table->string('date');
             $table->string('team');
-            $table->string('manager');
+//            $table->string('manager');
             $table->string('project_number');
             $table->string('project_content');
             $table->string('project_manager');
             $table->string('manager')->nullable();
             $table->string('checker')->nullable();
             $table->string('reviewer')->nullable();
-
             $table->timestamps();
         });
     }

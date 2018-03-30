@@ -40,8 +40,8 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">仓管员</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="warehouseManager" value="{{$warehouse->admin}}">
-                                <input type="text" v-model="warehouseForm.manager" placeholder="请输入仓管员">
+                                <input type="hidden" id="warehouseAdmin" value="{{$warehouse->admin}}">
+                                <input type="text" v-model="warehouseForm.admin" placeholder="请输入仓管员">
                             </div>
                         </div>
                     </div>
@@ -58,6 +58,7 @@
         </div>
     </div>
     <!-- /主体内容 === 不可复用 -->
+
 @endsection
 @section('pageJs')
     <script src="{{url('js/data_warehouse_add.js')}}"></script>

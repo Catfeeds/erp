@@ -1,1 +1,69 @@
-"use strict";$(document).ready(function(){new Vue({el:"#buildPaySingle",data:{checkedMen:[],menList:[{id:1,name:"张先生"},{id:2,name:"陈一发"},{id:3,name:"刘芳芳"},{id:4,name:"乌达奇"},{id:5,name:"何求"}]},mounted:function(){var e=this;$(".paySingleBtn").on("click",function(){e.$confirm("确定复核, 是否继续?","提示",{confirmButtonText:"确定",cancelButtonText:"取消",type:"warning"}).then(function(){e.$message({type:"success",message:"已复核!"}),$(".ui.dimmer").addClass("active")}).catch(function(){e.$message({type:"info",message:"已取消"})})})},methods:{handleCheckManChange:function(e){console.log(this.checkedMen)},confirmRecheck:function(){this.$notify({title:"成功",message:"已选择了审批人",type:"success"}),$(".ui.dimmer").removeClass("active")}}})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#buildPaySingle',
+        data: {
+          checkedMen: [],
+          menList: [{
+              id: 1,
+              name: '张先生'
+            },
+            {
+              id: 2,
+              name: '陈一发'
+            },
+            {
+              id: 3,
+              name: '刘芳芳'
+            },
+            {
+              id: 4,
+              name: '乌达奇'
+            },
+            {
+              id: 5,
+              name: '何求'
+            }
+          ],
+        },
+        mounted() {
+          const vm = this
+          $('.paySingleBtn').on('click', function () {
+            vm.$confirm('确定复核, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              vm.$message({
+                type: 'success',
+                message: '已复核!'
+              })
+              $('.ui.dimmer').addClass('active')
+            }).catch(() => {
+              vm.$message({
+                type: 'info',
+                message: '已取消'
+              })
+            })
+          })
+        },
+        methods: {
+          //选择审核人
+          handleCheckManChange(value) {
+            console.log(this.checkedMen)
+          },
+
+          //提交审核人
+          confirmRecheck() {
+            this.$notify({
+              title: '成功',
+              message: '已选择了审批人',
+              type: 'success'
+            })
+            $('.ui.dimmer').removeClass('active')
+          }
+        }
+      })
+    })
+}()

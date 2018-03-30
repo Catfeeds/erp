@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" href="{{url('material/list')}}">物料列表</a>
+            <a class="section" href="../data/material_list.html">物料列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增物料</div>
         </div>
@@ -31,8 +31,8 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">性能与技术参数</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="materialParameter" value="{{$material->param}}">
-                                <input type="text" v-model="materialForm.parameter" placeholder="请输入性能与技术参数">
+                                <input type="hidden" id="materialParam" value="{{$material->param}}">
+                                <input type="text" v-model="materialForm.param" placeholder="请输入性能与技术参数">
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">生产厂家</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="materialManufacturer" value="{{$material->factory}}">
-                                <input type="text" v-model="materialForm.manufacturer" placeholder="请输入生产厂家">
+                                <input type="hidden" id="materialFactor" value="{{$material->factory}}">
+                                <input type="text" v-model="materialForm.factor" placeholder="请输入生产厂家">
                             </div>
                         </div>
                     </div>

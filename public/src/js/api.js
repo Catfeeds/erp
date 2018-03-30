@@ -1,1 +1,234 @@
-"use strict";var _createClass=function(){function t(t,e){for(var a=0;a<e.length;a++){var n=e[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}return function(e,a,n){return a&&t(e.prototype,a),n&&t(e,n),e}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}!function(t,e){"object"===("undefined"==typeof exports?"undefined":_typeof(exports))&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):t._http=e()}(window,function(){var t="http://119.23.202.220:8080",e=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createProject",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/project/create",t,this.dataMethodDefaults)}},{key:"createType",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/project/type/create",t,this.dataMethodDefaults)}}]),e}(),a=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createSupplier",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/supplier/create",t,this.dataMethodDefaults)}}]),e}(),n=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createMaterial",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/material/create",t,this.dataMethodDefaults)}}]),e}(),r=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createWarehouse",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/warehouse/create",t,this.dataMethodDefaults)}}]),e}(),s=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createBank",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/bank/create",t,this.dataMethodDefaults)}}]),e}(),o=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createInvoice",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/invoice/create",t,this.dataMethodDefaults)}}]),e}(),i=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0}),this.dataMethodDefaults={headers:{"Content-Type":"application/x-www-form-urlencoded"},transformRequest:[function(t){return Qs.stringify(t)}]}}return _createClass(e,[{key:"createTeam",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/team/create",t,this.dataMethodDefaults)}}]),e}(),u=function(){function e(){_classCallCheck(this,e),this._http=axios.create({baseURL:t,withCredentials:!0})}return _createClass(e,[{key:"createUpload",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return this._http.post("/upload",t)}}]),e}();return{ProjectManager:new e,SupplierManager:new a,MaterialManager:new n,WarehouseManager:new r,BankManager:new s,InvoiceManager:new o,TeamManager:new i,UploadManager:new u}});
+! function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? (module.exports = factory()) :
+    typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
+}(window, function () {
+
+  const url = 'http://localhost/erp/public/'
+
+  class ProjectManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+
+
+    //新建项目
+    createProject(data = {}) {
+      return this._http.post('/project/create', data, this.dataMethodDefaults)
+    }
+
+    //创建项目类别
+    createType(data = {}) {
+      return this._http.post('/project/type/create', data, this.dataMethodDefaults)
+    }
+
+    //项目查询
+    searchProject(search = {}) {
+      return this._http.get(`/projects`, {
+        params: search
+      })
+    }
+
+    // getUser(id) {
+    //   if (!id) {
+    //     return Promise.reject(new Error(`getUser：id(${id})无效`))
+    //   }
+    //   return this._http.get(`/users/${id}`)
+    // }
+
+    // createUser(data = {}) {
+    //   if (!data || !Object.keys(data).length) {
+    //     return Promise.reject(new Error('createUser：提交的数据无效'))
+    //   }
+    //   return this._http.post('/users', data, this.dataMethodDefaults)
+    // }
+  }
+
+  class SupplierManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+
+    //创建供应商
+    createSupplier(data = {}) {
+      return this._http.post('/supplier/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  class MaterialManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+
+    //创建材料
+    createMaterial(data = {}) {
+      return this._http.post('/material/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  class WarehouseManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //创建仓库
+    createWarehouse(data = {}) {
+      return this._http.post('/warehouse/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  class BankManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //创建银行
+    createBank(data = {}) {
+      return this._http.post('/bank/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  class InvoiceManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //创建银行
+    createInvoice(data = {}) {
+      return this._http.post('/invoice/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  class TeamManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //创建团队
+    createTeam(data = {}) {
+      return this._http.post('/team/create', data, this.dataMethodDefaults)
+    }
+  }
+
+  //上传
+  class UploadManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+    }
+    //上传
+    createUpload(data = {}) {
+      return this._http.post('/upload', data)
+    }
+  }
+
+  class BudgetManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //录入物料
+    createBudget(project_id = '', data = {}) {
+      return this._http.post(`/create/budget?project_id=${project_id}`, data, this.dataMethodDefaults)
+    }
+  }
+
+  const http = {
+    ProjectManager: new ProjectManager(),
+    SupplierManager: new SupplierManager(),
+    MaterialManager: new MaterialManager(),
+    WarehouseManager: new WarehouseManager(),
+    BankManager: new BankManager(),
+    InvoiceManager: new InvoiceManager(),
+    TeamManager: new TeamManager(),
+    UploadManager: new UploadManager(),
+    BudgetManager: new BudgetManager()
+  }
+
+  return http
+
+})

@@ -1,1 +1,15 @@
-"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"buildFinishList"},mounted:function(){$("#navbar").removeClass("invisible")},methods:{}})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#navbar',
+        data: {
+          navActive: 'buildFinishList'
+        },
+        mounted() {
+          $('#navbar').removeClass('invisible')
+        },
+        methods: {}
+      })
+    })
+}()

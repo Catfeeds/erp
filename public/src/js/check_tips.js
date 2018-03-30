@@ -1,1 +1,24 @@
-"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"checkTips"},mounted:function(){$("#navbar").removeClass("invisible")},methods:{}}),new Vue({el:"#datePicker",data:{dateOption:_schemas.datePickerOption,date:""}})});
+! function () {
+  $(document)
+    .ready(() => {
+
+      new Vue({
+        el: '#navbar',
+        data: {
+          navActive: 'checkTips'
+        },
+        mounted() {
+          $('#navbar').removeClass('invisible')
+        },
+        methods: {}
+      })
+
+      new Vue({
+        el: '#datePicker',
+        data: {
+          dateOption: _schemas.datePickerOption,
+          date: ''
+        }
+      })
+    })
+}()

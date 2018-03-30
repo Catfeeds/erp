@@ -1,1 +1,16 @@
-"use strict";$(document).ready(function(){new Vue({el:"#navbar",data:{navActive:"stockReturnList"},mounted:function(){$("#navbar").removeClass("invisible")},methods:{}})});
+! function () {
+  $(document)
+    .ready(() => {
+
+      new Vue({
+        el: '#navbar',
+        data: {
+          navActive: 'stockReturnList'
+        },
+        mounted() {
+          $('#navbar').removeClass('invisible')
+        },
+        methods: {}
+      })
+    })
+}()

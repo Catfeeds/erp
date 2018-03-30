@@ -1,1 +1,356 @@
-"use strict";var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};!function(t,e){"object"===("undefined"==typeof exports?"undefined":_typeof(exports))&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):t._helper=e()}(window,function(){return{fullWindow:function(t){var e=["height="+screen.height,"width="+screen.width,"fullscreen=yes","location=no"].join(",");window.open(t,"",e).moveTo(0,0)},timeFormat:function(t,e){if(t){if(!e)return t;var a={"Y+":t.getFullYear(),"M+":t.getMonth()+1,"D+":t.getDate(),"h+":t.getHours(),"m+":t.getMinutes(),"s+":t.getSeconds()},n=e;for(var r in a)new RegExp("("+r+")").test(n)&&(n="Y+"===r?n.replace(RegExp.$1,a[r]):n.replace(RegExp.$1,a[r]>10?a[r]:"0"+a[r]));return n}console.error("date is necessary!")},projectCreatFormat:function(t){var e={project:{},mainContracts:[],outContracts:[],situations:[],bails:[],receipts:[],pictures:[]};if(!t)return e;var a=t.project;e.project.id=a.id?a.id:"",e.project.name=a.name,e.project.PartyA=a.partyA,e.project.price=a.amount,e.project.finishTime=a.completeDate,e.project.pm=a.manager,e.project.createTime=a.signDate,e.project.condition=a.maintain,t.masterCompany.forEach(function(t,a){if(t){var n={id:t.id?t.id:"",unit:t.name,price:t.amount,remark:t.remark};e.mainContracts.push(n)}}),t.subCompany.forEach(function(t,a){if(t){var n={id:t.id?t.id:"",unit:t.name,price:t.amount,remark:t.remark};e.outContracts.push(n)}});var n=t.masterContract,r=t.subContract;return n.forEach(function(t,a){if(t){var n={price:t.amount,type:1,is_main:0===a?1:0,lists:[]};t.details.forEach(function(t,e){var a={name:t.name,tax:t.tax,price:t.amount,remark:t.remark};n.lists.push(a)}),e.situations.push(n)}}),r.forEach(function(t,a){if(t){var n={price:t.amount,type:2,is_main:0===a?1:0,lists:[]};t.details.forEach(function(t,e){var a={name:t.name,tax:t.tax,price:t.amount,remark:t.remark};n.lists.push(a)}),e.situations.push(n)}}),t.margins.forEach(function(t,a){if(t){var n={unit:t.guarantee_company,price:t.guarantee_amount,term:t.guarantee_date,cost:t.guarantee_cost,other:t.guarantee_others,pay_date:t.payment_date,pay_price:t.payment_amount,payee:t.payment_payee,bank:t.payment_bank,bank_account:t.payment_account,condition:t.payment_recycle};e.bails.push(n)}}),t.paymentConditions.forEach(function(t,a){if(t){var n={radio:t.rate,price:t.expected,condition:t.condition};e.receipts.push(n)}}),t.contracts.forEach(function(t,a){if(t){var n={id:t.id,url:t.url,name:t.name};e.pictures.push(n)}}),e},projectGetFormat:function(t){var e={project:{},masterCompany:[],subCompany:[],masterContract:[],subContract:[],margins:[],paymentConditions:[],contracts:[]};if(!t)return e;var a=t.project;return e.project.id=a.id?a.id:"",e.project.name=a.name,e.project.partyA=a.PartyA,e.project.amount=a.price,e.project.completeDate=a.finishTime,e.project.manager=a.pm,e.project.signDate=a.createTime,e.project.maintain=a.condition,t.mainContracts.forEach(function(t,a){if(t){var n={id:t.id?t.id:"",name:t.unit,amount:t.price,remark:t.remark};e.masterCompany.push(n)}}),t.outContracts.forEach(function(t,a){if(t){var n={id:t.id?t.id:"",name:t.unit,amount:t.price,remark:t.remark};e.subCompany.push(n)}}),t.situations.forEach(function(t,a){if(t){var n={id:t.id,amount:t.price,details:[]};t.lists.forEach(function(t,e){var a={name:t.name,tax:t.tax,amount:t.price,remark:t.remark};n.details.push(a)}),1==t.type?e.masterContract.push(n):2==t.type&&e.subContract.push(n)}}),t.bails.forEach(function(t,a){if(t){var n={id:t.id,guarantee_company:t.unit,guarantee_amount:t.price,guarantee_date:t.term,guarantee_cost:t.cost,guarantee_others:t.other,payment_date:t.pay_date,payment_amount:t.pay_price,payment_payee:t.payee,payment_bank:t.bank,payment_account:t.bank_account,payment_recycle:t.condition};e.margins.push(n)}}),t.receipts.forEach(function(t,a){if(t){var n={rate:t.radio,expected:t.price,condition:t.condition};e.paymentConditions.push(n)}}),t.pictures.forEach(function(t,a){if(t){var n={id:t.id,url:t.url,name:t.name};e.contracts.push(n)}}),e}}});
+! function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? (module.exports = factory()) :
+    typeof define === 'function' && define.amd ? define(factory) : (global._helper = factory())
+}(window, function () {
+
+  const helper = {
+
+    //全屏跳转
+    fullWindow: function (url) {
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes',
+        'location=no'
+      ].join(',')
+
+      let popup = window.open(url, '', params)
+      popup.moveTo(0, 0)
+    },
+
+    //时间格式化
+    timeFormat(date, format) {
+      if (!date) {
+        console.error('date is necessary!')
+        return undefined
+      } else if (!format) {
+        return date
+      }
+      const timeType = {
+        'Y+': date.getFullYear(),
+        'M+': date.getMonth() + 1,
+        'D+': date.getDate(),
+        'h+': date.getHours(),
+        'm+': date.getMinutes(),
+        's+': date.getSeconds()
+      }
+
+      let result = format
+      for (let key in timeType) {
+        if (new RegExp(`(${key})`).test(result)) {
+          if (key === 'Y+') {
+            result = result.replace(RegExp.$1, timeType[key])
+          } else {
+            result = result.replace(RegExp.$1, timeType[key] > 10 ? timeType[key] : `0${timeType[key]}`)
+          }
+        }
+      }
+      return result
+    },
+
+    //项目表单重命名
+    projectCreatFormat(data) {
+      let result = {
+        project: {},
+        mainContracts: [],
+        outContracts: [],
+        situations: [],
+        bails: [],
+        receipts: [],
+        pictures: []
+      }
+      if (!data) {
+        return result
+      }
+
+      const project = data.project
+      //project edit
+      result.project.id = project.id ? project.id : ''
+      result.project.name = project.name
+      result.project.PartyA = project.partyA
+      result.project.price = project.amount
+      result.project.finishTime = project.completeDate
+      result.project.pm = project.manager
+      result.project.createTime = project.signDate
+      result.project.condition = project.maintain
+
+
+      // masterCompany edit
+      const mainContracts = data.masterCompany
+
+      mainContracts.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id ? it.id : '',
+            unit: it.name,
+            price: it.amount,
+            remark: it.remark
+          }
+          result.mainContracts.push(tmp)
+        }
+      })
+
+      //subCompany edit
+      const outContracts = data.subCompany
+
+      outContracts.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id ? it.id : '',
+            unit: it.name,
+            price: it.amount,
+            remark: it.remark
+          }
+          result.outContracts.push(tmp)
+        }
+      })
+
+      //master/sub Contracts edit
+      const masterContract = data.masterContract
+      const subContract = data.subContract
+
+      masterContract.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            price: it.amount,
+            type: 1,
+            is_main: index === 0 ? 1 : 0,
+            lists: []
+          }
+          const details = it.details
+          details.forEach((subIt, subIndex) => {
+            let subTmp = {
+              name: subIt.name,
+              tax: subIt.tax,
+              price: subIt.amount,
+              remark: subIt.remark,
+            }
+            tmp.lists.push(subTmp)
+          })
+          result.situations.push(tmp)
+        }
+      })
+
+      subContract.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            price: it.amount,
+            type: 2,
+            is_main: index === 0 ? 1 : 0,
+            lists: []
+          }
+          const details = it.details
+          details.forEach((subIt, subIndex) => {
+            let subTmp = {
+              name: subIt.name,
+              tax: subIt.tax,
+              price: subIt.amount,
+              remark: subIt.remark,
+            }
+            tmp.lists.push(subTmp)
+          })
+          result.situations.push(tmp)
+        }
+      })
+
+      //margins edit
+      const margins = data.margins
+
+      margins.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            unit: it.guarantee_company,
+            price: it.guarantee_amount,
+            term: it.guarantee_date,
+            cost: it.guarantee_cost,
+            other: it.guarantee_others,
+            pay_date: it.payment_date,
+            pay_price: it.payment_amount,
+            payee: it.payment_payee,
+            bank: it.payment_bank,
+            bank_account: it.payment_account,
+            condition: it.payment_recycle,
+          }
+          result.bails.push(tmp)
+        }
+      })
+
+
+      //condition edit
+      const paymentConditions = data.paymentConditions
+
+      paymentConditions.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            radio: it.rate,
+            price: it.expected,
+            condition: it.condition,
+          }
+          result.receipts.push(tmp)
+        }
+      })
+
+      // picture edit
+      const pictures = data.contracts
+
+      pictures.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id,
+            url: it.url,
+            name: it.name,
+          }
+          result.pictures.push(tmp)
+        }
+      })
+
+      return result
+    },
+
+    //项目数据获取重命名
+    projectGetFormat(data) {
+      let result = {
+        project: {},
+        masterCompany: [],
+        subCompany: [],
+        masterContract: [],
+        subContract: [],
+        margins: [],
+        paymentConditions: [],
+        contracts: []
+      }
+      if (!data) {
+        return result
+      }
+
+      const project = data.project
+      //project edit
+      result.project.id = project.id ? project.id : ''
+      result.project.name = project.name
+      result.project.partyA = project.PartyA
+      result.project.amount = project.price
+      result.project.completeDate = project.finishTime
+      result.project.manager = project.pm
+      result.project.signDate = project.createTime
+      result.project.maintain = project.condition
+
+
+      // masterCompany edit
+      const masterCompany = data.mainContracts
+
+      masterCompany.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id ? it.id : '',
+            name: it.unit,
+            amount: it.price,
+            remark: it.remark
+          }
+          result.masterCompany.push(tmp)
+        }
+      })
+
+      //subCompany edit
+      const subCompany = data.outContracts
+
+      subCompany.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id ? it.id : '',
+            name: it.unit,
+            amount: it.price,
+            remark: it.remark
+          }
+          result.subCompany.push(tmp)
+        }
+      })
+
+      //master/sub Contracts edit
+      const situations = data.situations
+
+      situations.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id,
+            amount: it.price,
+            details: []
+          }
+          const details = it.lists
+          details.forEach((subIt, subIndex) => {
+            let subTmp = {
+              name: subIt.name,
+              tax: subIt.tax,
+              amount: subIt.price,
+              remark: subIt.remark,
+            }
+            tmp.details.push(subTmp)
+          })
+          if (it.type == 1) {
+            result.masterContract.push(tmp)
+          } else if (it.type == 2) {
+            result.subContract.push(tmp)
+          }
+        }
+      })
+
+      //margins edit
+      const margins = data.bails
+
+      margins.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id,
+            guarantee_company: it.unit,
+            guarantee_amount: it.price,
+            guarantee_date: it.term,
+            guarantee_cost: it.cost,
+            guarantee_others: it.other,
+            payment_date: it.pay_date,
+            payment_amount: it.pay_price,
+            payment_payee: it.payee,
+            payment_bank: it.bank,
+            payment_account: it.bank_account,
+            payment_recycle: it.condition,
+          }
+          result.margins.push(tmp)
+        }
+      })
+
+
+      //condition edit
+      const paymentConditions = data.receipts
+
+      paymentConditions.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            rate: it.radio,
+            expected: it.price,
+            condition: it.condition,
+          }
+          result.paymentConditions.push(tmp)
+        }
+      })
+
+      // picture edit
+      const pictures = data.pictures
+
+      pictures.forEach((it, index) => {
+        if (it) {
+          let tmp = {
+            id: it.id,
+            url: it.url,
+            name: it.name,
+          }
+          result.contracts.push(tmp)
+        }
+      })
+
+      return result
+
+    },
+
+  }
+
+  return helper
+
+})

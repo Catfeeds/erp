@@ -91,7 +91,7 @@
                 <span>预算管理</span>
             </template>
             <el-menu-item index="budgetList">
-                <a href="../budget/list.html">预算清单</a>
+                <a href="{{url('budget/list')}}">预算清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="check">

@@ -20,7 +20,8 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">供应商名称</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="supplierName" value="xxx">
+                                <input type="hidden" id="supplierId" value="{{$supplier->id}}">
+                                <input type="hidden" id="supplierName" value="{{$supplier->name}}">
                                 <input type="text" v-model="supplierForm.name" placeholder="请输入供应商名称">
                             </div>
                         </div>
@@ -29,7 +30,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">收款银行</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="supplierBank" value="中国银行">
+                                <input type="hidden" id="supplierBank" value="{{$supplier->bank}}">
                                 <input type="text" v-model="supplierForm.bank" placeholder="请输入收款银行">
                             </div>
                         </div>
@@ -38,7 +39,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">收款账号</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="supplierAccount" value="63234234234234234234">
+                                <input type="hidden" id="supplierAccount" value="{{$supplier->account}}">
                                 <input type="text" v-model="supplierForm.account" placeholder="请输入收款账号">
                             </div>
                         </div>

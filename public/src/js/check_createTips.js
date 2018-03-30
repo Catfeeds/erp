@@ -1,1 +1,36 @@
-"use strict";$(document).ready(function(){new Vue({el:"#checkCreateTips",data:{tipsForm:_schemas.checkTips},mounted:function(){$("#checkCreateTips").removeClass("invisible")},methods:{deleteItem:function(e,t,i){this.tipsForm[e].splice(i,1)},addItem:function(e){var t=this.tipsForm[e],i=t.length,s=void 0;s=i>0?t[i-1].id+1:1,this.tipsForm[e].push({id:s})}}})});
+! function () {
+  $(document)
+    .ready(() => {
+      new Vue({
+        el: '#checkCreateTips',
+        data: {
+          tipsForm: _schemas.checkTips
+        },
+        mounted() {
+          $('#checkCreateTips').removeClass('invisible')
+        },
+        methods: {
+
+          //删除第一层数据
+          deleteItem(name, item, index) {
+            this.tipsForm[name].splice(index, 1)
+          },
+
+          //新增第一层数据
+          addItem(name) {
+            const tipsForm = this.tipsForm[name]
+            const length = tipsForm.length
+            let id
+            if (length > 0) {
+              id = tipsForm[length - 1].id + 1
+            } else {
+              id = 1
+            }
+            this.tipsForm[name].push({
+              id
+            })
+          }
+        }
+      })
+    })
+}()
