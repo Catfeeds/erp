@@ -13,7 +13,7 @@
         {{json_encode($types)}}
     </div>
     <div style="display:none;" id="contractTax">
-        [{"id":1,"name":"5%"},{"id":2,"name":"9%"},{"id":3,"name":"15%"}]
+        {{json_encode($rates)}}
     </div>
 
     <h1 class="ui red header blue center aligned">项目立项</h1>

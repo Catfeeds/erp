@@ -14,6 +14,7 @@ use App\Models\ProjectSituations;
 use App\Models\ProjectType;
 use App\Models\Receipt;
 use App\Models\SituationList;
+use App\Models\TaxRate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -33,7 +34,8 @@ class ProjectController extends Controller
             dd($project);
         }else{
             $types = ProjectType::select(['id','name'])->get()->toArray();
-            return view('project.create',['types'=>$types]);
+            $rates = TaxRate::select(['id','rate as name'])->get()->toArray();
+            return view('project.create',['types'=>$types,'rates'=>$rates]);
         }
     }
     public function listProject()
@@ -186,6 +188,13 @@ class ProjectController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    public function addBudgetPage()
+    {
+        $project_id = Input::get('project_id');
+        $project = Project::find($project_id);
+        $types = ProjectType::select(['id','name'])->get()->toArray();
+        return view('budget.create',['project'=>$project,'types'=>$types]);
+    }
     public function addBudget(Request $budgetPost)
     {
         $budgets = $budgetPost->get('budgets');
@@ -220,10 +229,7 @@ class ProjectController extends Controller
             ]);
         }
     }
-    public function addBudgetPage()
-    {
 
-    }
 
     public function outputBudget()
     {

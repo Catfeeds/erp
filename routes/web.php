@@ -44,5 +44,6 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/type/create','SystemController@createProjectTypePage');
    Route::get('project/types/list','SystemController@createTeamPage');
    Route::post('project/type/create','SystemController@createTeamPage');
-
+   Route::post('create/budget','ProjectController@addBudget');
+   Route::get('create/budget','ProjectController@addBudgetPage');
 });

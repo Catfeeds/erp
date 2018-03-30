@@ -125,9 +125,9 @@ class SystemController extends Controller
                 'return_msg'=>'不支持的文件格式'
             ]);
         }
-        $md5 = md5_file($file);
+//        $md5 = md5_file($file);
         $name = $name[1];
-        $name = $md5.'.'.$name;
+        $name = date('Y-m-d H:i:s',time()).'.'.$name;
         if (!$file){
             return response()->json([
                 'return_code'=>'FAIL',
