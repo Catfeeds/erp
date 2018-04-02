@@ -37,9 +37,20 @@ class UserController extends Controller
     {
 
     }
-    public function register()
+    public function register(Request $post)
     {
         $user = new User();
+        $user->username = $post->get('username');
+        $user->department = $post->get('department');
+        $user->phone = $post->get('phone');
+        $user->name = $post->get('username');
+        $user->password = bcrypt($post->get('password'));
+        if ($user->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
     public function index()
     {
@@ -47,6 +58,16 @@ class UserController extends Controller
             return view('index');
         }
         return redirect('login');
+    }
+    public function getUsers()
+    {
+        $type = Input::get('type');
+        $users = User::all();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$users
+        ]);
     }
 
 
