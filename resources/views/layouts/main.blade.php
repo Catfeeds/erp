@@ -68,7 +68,7 @@
 <div class="index-aside invisible print-hide" id="navbar">
     <el-menu :unique-opened="true" :default-active="navActive" class="el-menu-vertical-demo">
         <el-menu-item index="index" style="padding:0;">
-            <a href="../index/index.html" slot="title" style="padding-left:20px">
+            <a href="{{url('')}}" slot="title" style="padding-left:20px">
                 <i class="icon home"></i>
                 <span>首页</span>
             </a>
@@ -79,10 +79,10 @@
                 <span>项目立项管理</span>
             </template>
             <el-menu-item index="projectDetail">
-                <a href="../project/detail.html">项目明细清单</a>
+                <a href="{{url('project/detail')}}">项目明细清单</a>
             </el-menu-item>
             <el-menu-item index="projectList">
-                <a href="{{url('project/list')}}">已立项清单</a>
+                <a href="../project/list.html">已立项清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="budget">
@@ -91,7 +91,7 @@
                 <span>预算管理</span>
             </template>
             <el-menu-item index="budgetList">
-                <a href="{{url('budget/list')}}">预算清单</a>
+                <a href="../budget/list.html">预算清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="check">
@@ -118,10 +118,10 @@
                 <a href="../buy/project_list.html">采购立项清单</a>
             </el-menu-item>
             <el-menu-item index="buyPayList">
-                <a href="#">采购付款清单</a>
+                <a href="../buy/pay_list.html">采购付款清单</a>
             </el-menu-item>
             <el-menu-item index="buyChargeList">
-                <a href="#">采购收票清单</a>
+                <a href="../buy/charge_list.html">采购收票清单</a>
             </el-menu-item>
             <el-menu-item index="buyCollect">
                 <a href="../buy/collect.html">采购汇总清单</a>
@@ -136,16 +136,19 @@
                 <span>库存管理</span>
             </template>
             <el-menu-item index="stockList">
-                <a href="#">库存清单</a>
+                <a href="../stock/list.html">库存清单</a>
             </el-menu-item>
             <el-menu-item index="stockBuyList">
-                <a href="#">采购收货清单</a>
+                <a href="../stock/buy_list.html">采购收货清单</a>
             </el-menu-item>
             <el-menu-item index="stockReturnList">
-                <a href="#">退料入货清单</a>
+                <a href="../stock/return_list.html">退料入库清单</a>
             </el-menu-item>
             <el-menu-item index="stockGetList">
-                <a href="#">领料出货清单</a>
+                <a href="../stock/get_list.html">领料出库清单</a>
+            </el-menu-item>
+            <el-menu-item index="stockOutList">
+                <a href="../stock/out_list.html">退货出库清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="build">
@@ -154,19 +157,19 @@
                 <span>施工管理</span>
             </template>
             <el-menu-item index="buildList">
-                <a href="#">施工费清单</a>
+                <a href="../build/list.html">施工费清单</a>
             </el-menu-item>
             <el-menu-item index="buildDealList">
-                <a href="#">备案合同清单</a>
+                <a href="../build/deal_list.html">备案合同清单</a>
             </el-menu-item>
             <el-menu-item index="buildFinishList">
-                <a href="#">完工请款清单</a>
+                <a href="../build/finish_list.html">完工请款清单</a>
             </el-menu-item>
             <el-menu-item index="buildPayList">
-                <a href="#">施工付款清单</a>
+                <a href="../build/pay_list.html">施工付款清单</a>
             </el-menu-item>
             <el-menu-item index="buildGetList">
-                <a href="#">施工收票清单</a>
+                <a href="../build/get_list.html">施工收票清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="loan">
@@ -175,7 +178,19 @@
                 <span>报销与借款管理</span>
             </template>
             <el-menu-item index="loanList">
-                <a href="#">报销与借款清单</a>
+                <a href="../loan/list.html">报销与借款清单</a>
+            </el-menu-item>
+            <el-menu-item index="loanDetailList">
+                <a href="../loan/detail_list.html">查询明细</a>
+            </el-menu-item>
+            <el-menu-item index="loanLoanList">
+                <a href="../loan/loan_list.html">借款清单</a>
+            </el-menu-item>
+            <el-menu-item index="loanSubmitList">
+                <a href="../loan/submit_list.html">报销申请清单</a>
+            </el-menu-item>
+            <el-menu-item index="loanPayList">
+                <a href="../loan/pay_list.html">报销付款清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="pay">
@@ -184,7 +199,7 @@
                 <span>费用付款管理</span>
             </template>
             <el-menu-item index="payList">
-                <a href="#">付款审批清单</a>
+                <a href="../pay/list.html">付款审批清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="data">
@@ -193,7 +208,10 @@
                 <span>数据维护</span>
             </template>
             <el-menu-item index="dataAuth">
-                <a href="#">人员权限</a>
+                <a href="../data/auth_list.html">人员权限</a>
+            </el-menu-item>
+            <el-menu-item index="dataType">
+                <a href="{{url('project/types/list')}}">项目类别</a>
             </el-menu-item>
             <el-menu-item index="dataSupplier">
                 <a href="{{url('supplier/list')}}">供应商</a>
@@ -207,11 +225,14 @@
             <el-menu-item index="dataBank">
                 <a href="{{url('bank/list')}}">银行账户</a>
             </el-menu-item>
+            <el-menu-item index="dataInvoice">
+                <a href="{{url('invoice/list')}}">发票类型</a>
+            </el-menu-item>
             <el-menu-item index="dataTeam">
                 <a href="{{url('team/list')}}">施工队</a>
             </el-menu-item>
             <el-menu-item index="dataPayment">
-                <a href="#">报销费用类型</a>
+                <a href="{{url('project/types/list')}}">报销费用类型</a>
             </el-menu-item>
         </el-submenu>
     </el-menu>

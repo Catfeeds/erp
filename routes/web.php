@@ -23,6 +23,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');
    Route::get('project/create','ProjectController@createProjectPage');
+   Route::get('project/detail','ProjectController@listProjectsDetail');
    //数据维护
    Route::get('supplier/list','SystemController@listSupplierPage');
    Route::post('supplier/create','SystemController@createSupplier');

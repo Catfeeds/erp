@@ -223,6 +223,11 @@ class ProjectController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    public function listProjectsDetail()
+    {
+        $project = Project::paginate();
+        return view('project.detail',['projects'=>$project]);
+    }
     public function addBudgetPage()
     {
         $project_id = Input::get('project_id');
