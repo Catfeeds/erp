@@ -23,7 +23,9 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');
    Route::get('project/create','ProjectController@createProjectPage');
+   Route::post('project/create','ProjectController@createProject');
    Route::get('project/detail','ProjectController@listProjectsDetail');
+   Route::get('project/check','ProjectController@showProjectsDetail');
    //数据维护
    Route::get('supplier/list','SystemController@listSupplierPage');
    Route::post('supplier/create','SystemController@createSupplier');
@@ -50,7 +52,13 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('create/budget','ProjectController@addBudget');
    Route::get('create/budget','ProjectController@addBudgetPage');
    Route::get('budget/list','ProjectController@listBudgetsPage');
+//   Route::get('budget/detail','ProjectController@showBudgetPage');
    Route::post('create/user','UserController@register');
+   Route::get('user/list','UserController@listUsers');
+   Route::get('user/create','UserController@createUserPage');
+   Route::get('auth/check','UserController@listUserRole');
+   Route::get('auth/edit','UserController@editUserRoles');
+   Route::post('auth/edit','UserController@addUserRoles');
    //费用付款管理
    Route::get('pay/add','PayController@createPayApplyPage');
    Route::post('pay/add','PayController@createPayApply');
@@ -59,4 +67,9 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('create/contract','ConstructionController@addContract');
    Route::post('finish/add','PayController@addRequestPayment');
    Route::post('pay/apply','PayController@createFinishPayApply');
+   //验收和收款管理
+   Route::get('check/list','ProjectController@checkListsPage');
+   Route::get('check/detail','ProjectController@checkDetailPage');
+   //预算管理
+   Route::get('budget/detail','ProjectController@detailBudgetsPage');
 });

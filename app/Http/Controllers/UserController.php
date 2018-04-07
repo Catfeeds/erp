@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Login;
+use App\Models\Role;
 use App\Providers\AuthServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
@@ -68,6 +69,51 @@ class UserController extends Controller
             'msg'=>'SUCCESS',
             'data'=>$users
         ]);
+    }
+    public function listUsers()
+    {
+        $users = User::paginate(10);
+        return view('auth.list',['users'=>$users]);
+    }
+    public function createUserPage()
+    {
+        $id = Input::get('id');
+        if ($id){
+            $user = User::find($id);
+        }else{
+            $user = new User();
+        }
+        return view('auth.create',['user'=>$user]);
+    }
+    public function createAuth()
+    {
+
+    }
+    public function listUserRole()
+    {
+        $id = Input::get('id');
+        $rolelists = Role::where('user_id','=',$id)->get();
+        return view('auth.check',['lists'=>$rolelists,'id'=>$id]);
+    }
+    public function addUserRoles()
+    {
+        $data = Input::all();
+        $id = $data['id'];
+        unset($data['id']);
+        foreach ($data as $item =>$value){
+            $role = Role::where('user_id','=',$id)->where('role_name','=',$item)->first();
+            if (empty($role)){
+                $role = new Role();
+                $role->user_id = $id;
+                $role->role_name = $item;
+            }
+            $role->role_value = $value;
+            dd($role);
+        }
+    }
+    public function editUserRoles()
+    {
+        return view('auth.edit');
     }
 
 

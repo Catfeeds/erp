@@ -12,9 +12,14 @@ use App\Models\Project;
 use App\Models\ProjectPicture;
 use App\Models\ProjectSituations;
 use App\Models\ProjectType;
+use App\Models\Purchase;
+use App\Models\PurchaseContract;
+use App\Models\PurchaseList;
 use App\Models\Receipt;
 use App\Models\SituationList;
+use App\Models\Supplier;
 use App\Models\TaxRate;
+use App\Models\Tip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -80,7 +85,7 @@ class ProjectController extends Controller
             }else{
                 $project = new Project();
                 $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();;
-                $project->number = 'XM'.date('Ymd',time()).sprintf("%03d", $count);
+                $project->number = 'XM'.date('Ymd',time()).sprintf("%03d", $count+1);
             }
             $project->name = $projectData['name'];
             $project->PartyA = $projectData['PartyA'];
@@ -225,8 +230,25 @@ class ProjectController extends Controller
     }
     public function listProjectsDetail()
     {
-        $project = Project::paginate();
+        $project = Project::paginate(10);
         return view('project.detail',['projects'=>$project]);
+    }
+    public function listBudgetsPage()
+    {
+        $projects = Project::all();
+        return view('budget.list',['projects'=>$projects]);
+    }
+    public function showBudgetPage()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('budget.detail',['project'=>$project]);
+    }
+    public function showProjectsDetail()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('project.check',['project'=>$project]);
     }
     public function addBudgetPage()
     {
@@ -270,10 +292,12 @@ class ProjectController extends Controller
             ]);
         }
     }
-    public function listBudgetsPage()
+    public function detailBudgetsPage()
     {
-        $project = Project::first();
-        return view('budget.list');
+        $id = Input::get('id');
+        $project = Project::find($id);
+//        $projects = Project::all();
+        return view('budget.detail',['project'=>$project]);
     }
 
 
@@ -282,6 +306,76 @@ class ProjectController extends Controller
 
     }
     public function importBudget()
+    {
+
+    }
+    public function checkListsPage()
+    {
+        $projects = Project::paginate(10);
+        return view('check.list',['projects'=>$projects]);
+    }
+    public function checkDetailPage()
+    {
+        return view('check.detail');
+    }
+    public function createTips(Request $post)
+    {
+        $id = $post->get('project_id');
+        $tips = $post->get('tips');
+        foreach ($tips as $item){
+            $tip = new Tip();
+            $tip->project_id = $id;
+            $tip->pay_date = $item['pay_date'];
+            $tip->price = $item['price'];
+            $tip->pay_unit = $item['payee'];
+            $tip->remark = $item['remark'];
+            $tip->type = $item['type'];
+            $tip->save();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function createPurchase(Request $post)
+    {
+        $project_id = $post->get('project_id');
+        $basic = $post->get('info');
+        $lists = $post->get('lists');
+        $contracts = $post->get('contracts');
+        $purchase = new Purchase();
+        $purchase->project_id = $project_id;
+        $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
+        $purchase->number = 'CG'.date('Ymd',time()).sprintf("%03d", $count+1);
+        $supplier = Supplier::find($basic['supplier_id']);
+        $purchase->date = $basic['date'];
+        $purchase->supplier = $supplier->name;
+        $purchase->bank = $supplier->bank;
+        $purchase->account = $supplier->account;
+        $purchase->condition = $basic['condition'];
+        $purchase->content = $basic['content'];
+        if ($purchase->save()){
+            foreach ($lists as $item){
+                $list = new PurchaseList();
+                $list->purchase_id = $purchase->id;
+                $list->material_id = $item['material_id'];
+                $list->number = $item['number'];
+                $list->price = $item['price'];
+                $list->cost = $item['cost'];
+                $list->warranty_date = $item['warranty_date'];
+                $list->warranty_time = $item['warranty_time'];
+                $list->save();
+            }
+            foreach ($contracts as $item) {
+                $contract = new PurchaseContract();
+                $contract->purchase_id = $purchase->id;
+                $contract->name = $item['name'];
+                $contract->href = $item['href'];
+                $contract->save();
+            }
+        }
+    }
+    public function createPurchasePayment()
     {
 
     }

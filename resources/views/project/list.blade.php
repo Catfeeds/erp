@@ -11,7 +11,7 @@
 <!-- 操作区域 -->
 <div class="content-operation flex-row flex-between">
     <div>
-        <a class="ui primary button" href="javascript:_helper.fullWindow('../project/create.html');">
+        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('project/create')}}');">
             <i class="icon plus"></i>
             <span>新建立项</span>
         </a>
@@ -61,7 +61,7 @@
         @foreach($projects as $project)
         <tr>
             <td>
-                <a href="{{url('project/check')}}/{{$project->id}}">{{$project->number}}</a>
+                <a href="{{url('project/check')}}?id={{$project->id}}">{{$project->number}}</a>
             </td>
             <td>{{date('Y-m-d'),$project->createTime}}</td>
             <td class="table-content">{{$project->name}}</td>

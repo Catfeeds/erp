@@ -82,7 +82,7 @@
                 <a href="{{url('project/detail')}}">项目明细清单</a>
             </el-menu-item>
             <el-menu-item index="projectList">
-                <a href="../project/list.html">已立项清单</a>
+                <a href="{{url('project/list')}}">已立项清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="budget">
@@ -91,7 +91,7 @@
                 <span>预算管理</span>
             </template>
             <el-menu-item index="budgetList">
-                <a href="../budget/list.html">预算清单</a>
+                <a href="{{url('budget/list')}}">预算清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="check">
@@ -100,7 +100,7 @@
                 <span>验收与收款管理</span>
             </template>
             <el-menu-item index="checkCheck">
-                <a href="../check/list.html">验收与收款清单</a>
+                <a href="{{url('check/list')}}">验收与收款清单</a>
             </el-menu-item>
             <el-menu-item index="checkTips">
                 <a href="../check/tips.html">收款提示</a>
@@ -208,7 +208,7 @@
                 <span>数据维护</span>
             </template>
             <el-menu-item index="dataAuth">
-                <a href="../data/auth_list.html">人员权限</a>
+                <a href="{{url('user/list')}}">人员权限</a>
             </el-menu-item>
             <el-menu-item index="dataType">
                 <a href="{{url('project/types/list')}}">项目类别</a>

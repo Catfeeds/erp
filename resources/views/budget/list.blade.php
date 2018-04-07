@@ -50,14 +50,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($projects as $project)
                 <tr>
                     <td rowspan="6">基本</td>
                     <td>项目号</td>
-                    <td>1234232</td>
+                    <td>{{$project->number}}</td>
                     <td rowspan="2">
                         <div class="flex-row flex-between">
                             <span>项目实际金额</span>
-                            <span>12,423,222 ￥</span>
+                            <span>{{$project->price}} ￥</span>
                         </div>
                     </td>
                     <td>主合同金额</td>
@@ -65,13 +66,13 @@
                 </tr>
                 <tr>
                     <td>项目内容</td>
-                    <td class="detail__content">这是项目内容这是项目内容这是项目内容这是项目内容</td>
+                    <td class="detail__content">{{$project->name}}</td>
                     <td>分包合同金额</td>
                     <td>12,423,222 ￥</td>
                 </tr>
                 <tr>
                     <td>项目经理</td>
-                    <td>程先生</td>
+                    <td>{{$project->pm}}</td>
                     <td rowspan="3">
                         <div class="flex-row flex-between">
                             <span>预算总金额</span>
@@ -154,12 +155,13 @@
                 </tr>
                 <tr>
                     <td class="center aligned" style="font-size: 40px;" colspan="3">
-                        <a href="javascript:_helper.fullWindow('../budget/detail.html?id=1')">查看</a>
+                        <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>
                     <td>退料成本</td>
                     <td>12,423,222 ￥</td>
                 </tr>
                 </tbody>
+                @endforeach
             </table>
         </div>
         <!-- / 表格循环 -->

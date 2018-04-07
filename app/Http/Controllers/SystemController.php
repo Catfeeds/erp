@@ -462,6 +462,11 @@ class SystemController extends Controller
         }
         return view('type.create',['type'=>$type]);
     }
+    public function listProjectTypesPage()
+    {
+        $type = ProjectType::paginate(10);
+        return view('type.list',['types'=>$type]);
+    }
     public function addCategory(Request $post)
     {
         $category = new Category();

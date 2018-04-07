@@ -61,7 +61,7 @@
 <div class="index-aside invisible print-hide" id="navbar">
     <el-menu :unique-opened="true" :default-active="navActive" class="el-menu-vertical-demo">
         <el-menu-item index="index" style="padding:0;">
-            <a href="../index/index.html" slot="title" style="padding-left:20px">
+            <a href="{{url('')}}" slot="title" style="padding-left:20px">
                 <i class="icon home"></i>
                 <span>首页</span>
             </a>
