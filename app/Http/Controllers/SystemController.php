@@ -411,6 +411,20 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function getTeams()
+    {
+        $name = Input::get('name');
+        $dbObj = DB::table('teams')->select(['id','name','manager']);
+        if ($name){
+            $dbObj->where('name','like','%'.$name.'%');
+        }
+        $data = $dbObj->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
     public function createTeamPage()
     {
         $id = Input::get('id');

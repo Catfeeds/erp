@@ -18,6 +18,8 @@ Route::get('login','UserController@loginPage');
 Route::get('logout','UserController@logout');
 //Route::post('project/create','ProjectController@createProject');
 Route::get('projects','ProjectController@searchProject');
+
+Route::get('teams','SystemController@getTeams');
 Route::get('users','UserController@getUsers');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');

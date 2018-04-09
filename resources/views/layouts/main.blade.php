@@ -115,19 +115,19 @@
                 <a href="{{url('purchases/list')}}">采购清单</a>
             </el-menu-item>
             <el-menu-item index="buyProjectList">
-                <a href="../buy/project_list.html">采购立项清单</a>
+                <a href="{{url('project/purchases/list')}}">采购立项清单</a>
             </el-menu-item>
             <el-menu-item index="buyPayList">
-                <a href="../buy/pay_list.html">采购付款清单</a>
+                <a href="{{url('purchase/pay/list')}}">采购付款清单</a>
             </el-menu-item>
             <el-menu-item index="buyChargeList">
-                <a href="../buy/charge_list.html">采购收票清单</a>
+                <a href="{{url('purchase/charge/list')}}">采购收票清单</a>
             </el-menu-item>
             <el-menu-item index="buyCollect">
-                <a href="../buy/collect.html">采购汇总清单</a>
+                <a href="{{url('purchase/collect/list')}}">采购汇总清单</a>
             </el-menu-item>
             <el-menu-item index="buyParity">
-                <a href="../buy/parity.html">物料采购比价</a>
+                <a href="{{url('purchase/parity/list')}}">物料采购比价</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="stock">
