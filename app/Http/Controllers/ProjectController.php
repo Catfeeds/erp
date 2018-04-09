@@ -379,5 +379,33 @@ class ProjectController extends Controller
     {
 
     }
+    public function checkTipsPage()
+    {
+        return view('check.tips');
+    }
+    public function listPurchasesPage()
+    {
+        return view('buy.list');
+    }
+    public function listProjectPurchasesPage()
+    {
+        return view('buy.project_list');
+    }
+    public function listPurchasesPayPage()
+    {
+        return view('buy.pay_list');
+    }
+    public function listPurchasesChargePage()
+    {
+        return view('buy.charge_list');
+    }
+    public function purchaseCollectPage()
+    {
+        return view('buy.collect');
+    }
+    public function purchaseParityPage()
+    {
+        return view('buy.parity');
+    }
 
 }

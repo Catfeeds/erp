@@ -70,6 +70,15 @@ Route::group(['middleware'=>'auth'],function (){
    //验收和收款管理
    Route::get('check/list','ProjectController@checkListsPage');
    Route::get('check/detail','ProjectController@checkDetailPage');
+   Route::get('check/tips','ProjectController@checkTipsPage');
    //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
+   //采购管理
+    Route::get('purchases/list','ProjectController@listPurchasesPage');
+    Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
+//    Route::get('purchase/pay/list','ProjectController@listProjectPurchasesPage');
+    Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage');
+    Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage');
+    Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
+    Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
 });

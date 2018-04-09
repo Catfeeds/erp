@@ -59,17 +59,17 @@
                     <td rowspan="2">
                         <div class="flex-row flex-between">
                             <p>项目实际金额</p>
-                            <p>12,423,222 ￥</p>
+                            <p>{{$project->mainContract()->sum('price')+$project->outContract()->sum('price')}} ￥</p>
                         </div>
                     </td>
                     <td>主合同金额</td>
-                    <td>12,423,222 ￥</td>
+                    <td>{{$project->mainContract()->sum('price')}} ￥</td>
                 </tr>
                 <tr>
                     <td>项目内容</td>
                     <td class="detail__content">{{$project->content}}</td>
                     <td>分包合同金额</td>
-                    <td>12,423,222 ￥</td>
+                    <td>{{$project->outContract()->sum('price')}} ￥</td>
                 </tr>
                 <tr>
                     <td>项目经理</td>

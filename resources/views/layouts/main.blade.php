@@ -103,7 +103,7 @@
                 <a href="{{url('check/list')}}">验收与收款清单</a>
             </el-menu-item>
             <el-menu-item index="checkTips">
-                <a href="../check/tips.html">收款提示</a>
+                <a href="{{url('check/tips')}}">收款提示</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="buy">
@@ -112,7 +112,7 @@
                 <span>采购管理</span>
             </template>
             <el-menu-item index="buyList">
-                <a href="../buy/list.html">采购清单</a>
+                <a href="{{url('purchases/list')}}">采购清单</a>
             </el-menu-item>
             <el-menu-item index="buyProjectList">
                 <a href="../buy/project_list.html">采购立项清单</a>
