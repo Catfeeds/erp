@@ -7,40 +7,10 @@
           buildFinishAdd: _schemas.buildFinishAdd,
 
           //施工队
-          build_teams: [{
-              id: 1,
-              name: '施工队一',
-              manager: '陈经理'
-            },
-            {
-              id: 2,
-              name: '施工队二',
-              manager: '刘经理'
-            },
-            {
-              id: 3,
-              name: '施工队三',
-              manager: '海经理'
-            }
-          ],
+          build_teams: [],
 
           //项目
-          projects: [{
-              id: 1,
-              content: '这是内容一',
-              manager: '陈经理'
-            },
-            {
-              id: 2,
-              content: '这是内容三',
-              manager: '刘经理'
-            },
-            {
-              id: 3,
-              content: '这是内容三',
-              manager: '张经理'
-            }
-          ],
+          projects: [],
 
           checkedMen: [],
           menList: [{
@@ -64,6 +34,12 @@
               name: '何求'
             }
           ],
+
+          throttle: {
+            id_timer: null,
+            name_timer: null,
+            team_timer: null
+          }
         },
         mounted() {
           $('#buildFinishAdd').removeClass('invisible')
@@ -77,7 +53,7 @@
             }
             let sum = 0
             list.forEach((it, index) => {
-              const amount = it.amount
+              const amount = it.total
               if (amount) {
                 sum += amount * 1
               }
@@ -87,75 +63,137 @@
         },
         methods: {
           querySearchBuild(queryString, cb) {
-            var build_teams = this.build_teams
-            var results = queryString ? build_teams.filter(this.createFilterBuild(queryString)) : build_teams;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterBuild(queryString) {
-            return (restaurant) => {
-              return (restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.team_timer) {
+              clearTimeout(this.throttle.team_timer)
+            }
+            this.throttle.team_timer = setTimeout(() => {
+              const searchKey = {
+                id: queryString
+              }
+              _http.TeamManager.searchTeam(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectBuild(item) {
-            this.buildFinishAdd.build_id = item.id
+            this.buildFinishAdd.team = item.id
             this.buildFinishAdd.build_name = item.name
             this.buildFinishAdd.build_manager = item.manager
           },
 
           //项目搜索
           querySearchProjectId(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilterProjectId(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterProjectId(queryString) {
-            return (restaurant) => {
-              return (restaurant.id.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.id_timer) {
+              clearTimeout(this.throttle.id_timer)
+            }
+            this.throttle.id_timer = setTimeout(() => {
+              const searchKey = {
+                id: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectProjectId(item) {
-            this.buildFinishAdd.project_id = item.id
-            this.buildFinishAdd.project_content = item.content
-            this.buildFinishAdd.project_manager = item.manager
+            this.payForm.project_id = item.number
+            this.payForm.project_content = item.name
+            this.buildFinishAdd.project_manager = item.pm
           },
-
           querySearchProjectContent(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilterProjectContent(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterProjectContent(queryString) {
-            return (restaurant) => {
-              return (restaurant.content.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.name_timer) {
+              clearTimeout(this.throttle.name_timer)
+            }
+            this.throttle.name_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectProjectContent(item) {
-            this.buildFinishAdd.project_id = item.id
-            this.buildFinishAdd.project_content = item.content
-            this.buildFinishAdd.project_manager = item.manager
+            this.buildFinishAdd.project_id = item.number
+            this.buildFinishAdd.project_content = item.name
+            this.buildFinishAdd.project_manager = item.pm
           },
 
           //提交
           submit() {
             console.log(this.buildFinishAdd)
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            _http.TeamManager.createFinish(this.buildFinishAdd)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').addClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
           //新增项

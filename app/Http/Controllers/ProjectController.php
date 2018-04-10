@@ -352,7 +352,22 @@ class ProjectController extends Controller
     }
     public function checkDetailPage()
     {
-        return view('check.detail');
+        $project_id = Input::get('id');
+        $project = Project::find($project_id);
+        return view('check.detail',[
+            'project'=>$project
+        ]);
+    }
+    public function acceptancePage()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('check.acceptance',['project'=>$project]);
+    }
+    public function acceptanceProject(Request $post)
+    {
+        $project_id = $post->get('project_id');
+        $project = Project::find($project_id);
     }
     public function createTips(Request $post)
     {
@@ -372,6 +387,12 @@ class ProjectController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS'
         ]);
+    }
+    public function createTipsPage()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('check.createTips',['project'=>$project]);
     }
     public function createPurchase(Request $post)
     {

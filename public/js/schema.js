@@ -108,22 +108,23 @@
 
   //收款提示
   const checkTips = {
-    margins: [{ //date, amount, payee, remark
+    margins: [{ //pay_date, price, payee, remark
       id: 1,
     }],
-    requirepayment: [{ //date, amount, company, remark
+    requirepayment: [{ //pay_date, price, payee, remark
       id: 1,
     }]
   }
 
   //开票
   const checkInvoice = {
+    project_id: '', //项目 id
     company: '', //付款单位
-    company_id: '', //付款单位
+    payee: '', //付款单位
     date: '', //开票日期
-    tax: '', //税率
-    amount: '', //开票金额
-    invoices: [ //  number, amount, tax_amount, clear_amount, summary
+    rate: '', //税率
+    price: '', //开票金额
+    lists: [ //  number, with_tax, tax, without_tax, remark
       {
         id: 1,
       }
@@ -134,70 +135,81 @@
   const checkCollect = {
     margins: {
       payee: '',
-      date: '',
-      amount: '',
-      bank: '',
+      pay_date: '',
+      price: '',
+      bank_id: '',
       account: ''
     },
     masterContract: {
       payee: '',
-      date: '',
-      amount: '',
-      bank: '',
+      pay_date: '',
+      price: '',
+      bank_id: '',
       account: ''
     },
     subContract: {
       payee: '',
-      date: '',
-      amount: '',
-      bank: '',
+      pay_date: '',
+      price: '',
+      bank_id: '',
       account: ''
     },
     subCompany: {
-      date: '',
-      amount: '',
+      pay_date: '',
+      price: '',
     }
   }
 
   //预算内采购
   const budgetary_buy = {
-    date: '', //日期
-    supplier: { //供应商: 名称, 银行, 银行账号
-      name: '',
-      bank: '',
-      account: ''
-    },
-    amount: '', //当前物料采购总金额
+    lists: [], //采购物料清单列表： 物料 { 名称，性能， 型号， 生产厂家， 单位，单价， 数量}, 已采购数量， 剩余未采购数量， 新信息 { 本次数量，本次单价，本次金额，截至日期，保修时间 }
+    contracts: [], //采购合同：名称
+
     project_id: '', //项目 id
-    project_content: '', //项目内容
-    invoice_condition: '', //发票条件
-    payment_condition: '', //付款条件
-    list: [], //采购物料清单列表： 物料 { 名称，性能， 型号， 生产厂家， 单位，单价， 数量}, 已采购数量， 剩余未采购数量， 新信息 { 本次数量，本次单价，本次金额，截至日期，保修时间 }
-    contracts: [] //采购合同：名称
+    info: {
+      supplier_id: '', //供应商 id
+      date: '', //日期
+      condition: '',  //条件
+      content: '', //
+      type: 1  //立项内标志
+    }
   }
 
 
   //预算外采购 第一步
   const extrabudgetary = {
-    date: '', //日期
-    supplier: { //供应商: 名称, 银行, 银行账号
-      name: '',
-      bank: '',
-      account: ''
-    },
-    amount: '', //当前物料采购总金额
+    // date: '', //日期
+    // supplier: { //供应商: 名称, 银行, 银行账号
+    //   name: '',
+    //   bank: '',
+    //   account: ''
+    // },
+    // amount: '', //当前物料采购总金额
+    // project_id: '', //项目 id
+    // project_content: '', //项目内容
+    // invoice_condition: '', //发票条件
+    // payment_condition: '', //付款条件
+    // list: [], //采购清单
+    // contracts: [] //采购合同
+
+    
+    lists: [], //采购物料清单列表： 物料 { 名称，性能， 型号， 生产厂家， 单位，单价， 数量}, 已采购数量， 剩余未采购数量， 新信息 { 本次数量，本次单价，本次金额，截至日期，保修时间 }
+    contracts: [], //采购合同：名称
+
     project_id: '', //项目 id
-    project_content: '', //项目内容
-    invoice_condition: '', //发票条件
-    payment_condition: '', //付款条件
-    list: [], //采购清单
-    contracts: [] //采购合同
+    info: {
+      supplier_id: '', //供应商 id
+      date: '', //日期
+      condition: '',  //条件
+      content: '', //
+      type: 2  //立项外标志
+    }
   }
 
   const invoiceCreate = {
     date: '', //收票日期
     operator: '', //收票经办人
-    list: [{ // date, type, number, amount_without_tax, tax, amount
+    lists: [{ // date, type, number, amount_without_tax, tax, amount
       id: 1
     }]
   }
@@ -233,19 +245,19 @@
 
   const buildDealAdd = {
     date: '', //日期
-    build_id: '', //施工队,id
+    team: '', //施工队,id
     build_name: '', //施工队, name
-    build_manager: '', //施工队, manager
+    manager: '', //施工队, manager
     project_id: '', //项目id
     project_content: '', //项目内容
     project_manger: '', //项目经理
-    list: [] //合同清单
+    lists: [] //合同清单
   }
 
   const buildFinishAdd = {
     date: '', //日期
-    amount: '', //金额
-    build_id: '', //施工队,id
+    price: '', //金额
+    team: '', //施工队,id
     build_name: '', //施工队, name
     build_manager: '', //施工队, manager
     project_id: '', //项目id

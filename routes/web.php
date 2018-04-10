@@ -74,9 +74,14 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('pay/apply','PayController@createFinishPayApply');
    //验收和收款管理
    Route::get('check/list','ProjectController@checkListsPage');
+   Route::post('project/acceptance','ProjectController@acceptanceProject');
+   Route::get('project/acceptance','ProjectController@acceptancePage');
    Route::get('check/detail','ProjectController@checkDetailPage');
    Route::get('check/tips','ProjectController@checkTipsPage');
-   //预算管理
+   Route::get('create/tips','ProjectController@createTipsPage');
+   Route::post('create/tips','ProjectController@createTips');
+//   Route::get('check/tips','ProjectController@checkTipsPage');
+//   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
    //采购管理
     Route::get('purchases/list','ProjectController@listPurchasesPage');

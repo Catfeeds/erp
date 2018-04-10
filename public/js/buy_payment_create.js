@@ -5,8 +5,9 @@
         el: '#paymentCreate',
         data: {
           form: {
-            pay_date: '',
-            amount: ''
+            date: '',
+            price: '',
+            purchase_id: ''
           },
           checkedMen: [],
           menList: [{
@@ -32,18 +33,24 @@
           ],
         },
         mounted() {
-          this.form.pay_date = $('#hiddenDate').val() || ''
-          this.form.amount = $('#hiddenAmount').val() || ''
+          this.form.purchase_id = $('#purchaseId').val() || ''
+          this.form.date = $('#hiddenDate').val() || ''
+          this.form.price = $('#hiddenAmount').val() || ''
         },
         methods: {
 
           //提交
           submitForm() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功！',
-              type: 'success'
-            })
+            for (let it in this.form) {
+              if (this.form[it] === '') {
+                this.$notify({
+                  title: '错误',
+                  message: '不能有空信息！',
+                  type: 'error'
+                })
+                return false
+              }
+            }
             $('.ui.dimmer').addClass('active')
           },
 
@@ -54,12 +61,33 @@
 
           //提交审核人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了复核人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            let data = this.form
+            data.user_id = this.checkedMen
+            _http.BuyManager.createPayApply(data)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+                $('.ui.dimmer').removeClass('active')
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+                $('.ui.dimmer').removeClass('active')
+              })
           }
         }
       })

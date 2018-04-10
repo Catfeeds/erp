@@ -54,7 +54,7 @@
                 @foreach($projects as $project)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">{{$project->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$project->id}}');">{{$project->number}}</a>
                     </td>
                     <td>{{$project->number}}</td>
                     <td>{{$project->pm}}</td>

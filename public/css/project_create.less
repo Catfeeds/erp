@@ -1,0 +1,51 @@
+#projectCreate {
+    border: 1px solid #b9b2f3;
+    padding: 20px;
+    margin: 0 auto;
+    .form-wrap.bg-hover {
+        .relative:hover {
+            background-color: #efefef;
+            transition: all .5s;
+        }
+    }
+    #margins {
+        .hor-divider {
+            position: relative;
+            top: -2rem;
+            color: #3a75cf;
+        }
+        .margin-divider {
+            left: -10px;
+            >span {
+                display: block;
+                width: 1em;
+                transform: translateY(-50%);
+                line-height: 3;
+                color: #3a75cf;
+            }
+        }
+        .margin-delete {
+            position: absolute;
+            right: 10px;
+            bottom: 30px;
+        }
+    }
+}
+
+.slide-down-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.slide-down-enter-active {
+    transition: all 1s;
+}
+
+.slide-down-leave-active {
+    transition: all .25s;
+}
+
+.slide-down-enter,
+.slide-down-leave-to {
+    opacity: 0;
+}

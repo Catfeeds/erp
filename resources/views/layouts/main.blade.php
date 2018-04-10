@@ -253,10 +253,10 @@
 <script src="{{url('plugins/axios/qs.min.js')}}"></script>
 <!-- <script src="../../plugins/nprogress/nprogress.js"></script> -->
 <!-- <script src="../../plugins/layDate/laydate.js"></script> -->
-<script src="{{url('src/js/helper.js')}}"></script>
-<script src="{{url('src/js/api.js')}}"></script>
-<script src="{{url('src/js/schema.js')}}"></script>
-<script src="{{url('src/js/global.js')}}"></script>
+<script src="{{url('js/helper.js')}}"></script>
+<script src="{{url('js/api.js')}}"></script>
+<script src="{{url('js/schema.js')}}"></script>
+<script src="{{url('js/global.js')}}"></script>
 <!-- / 全局依赖 js === 通用 -->
 <!-- 独立 js -->
 @yield('pageJs')

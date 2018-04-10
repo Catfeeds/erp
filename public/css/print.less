@@ -1,0 +1,47 @@
+@media print {
+    table {
+        border-radius: 0!important;
+    }
+    .print-hide {
+        display: none!important;
+    }
+    h1 {
+        font-size: 18px!important;
+    }
+    tr,
+    th,
+    td {
+        font-family: 'SimSun'!important;
+        font-size: 12px;
+        line-height: 1.5em;
+    }
+    .print-normal {
+        font-style: normal!important;
+    }
+    .print-no-padding {
+        padding: 0!important;
+    }
+    .print-table {
+        table-layout: fixed!important;
+        margin: 0 auto!important;
+        width: auto!important;
+    }
+    .print-bold {
+        font-weight: 600;
+    }
+    #budgetaryPrint {
+        .no-padding>th {
+            padding-left: 2px;
+            padding-right: 2px;
+            text-align: center;
+        }
+    }
+}
+
+.print-title {
+    min-width: 250px;
+    text-align: left;
+    font-size: 13px;
+    padding-top: 10px;
+    margin: 0;
+}
