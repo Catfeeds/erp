@@ -46,6 +46,42 @@ class ProjectController extends Controller
         ]);
 
     }
+    public function searchProjectUnit()
+    {
+        $id = Input::get('project_id');
+        $name = Input::get('payee');
+        if ($id){
+            $obj = MainContract::where('project_id','=',$id);
+            $obj2 = OutContract::where('project_id','=',$id);
+        }else{
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>[]
+            ]);
+        }
+        if ($name){
+            $obj->where('unit','like','%'.$name.'%');
+            $obj2->where('unit','like','%'.$name.'%');
+        }
+        $data = $obj->select('unit')->get()->toArray();
+        $data2 = $obj2->select('unit')->get()->toArray();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>array_merge($data,$data2)
+        ]);
+    }
+    public function searchProjectMaterial()
+    {
+        $project_id = Input::get('project_id');
+        $data = Budget::where('project_id','=',$project_id)->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
     public function addProject()
     {
 

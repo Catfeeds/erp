@@ -199,6 +199,34 @@ class SystemController extends Controller
         }
         return view('supplier.add',['supplier'=>$supplier]);
     }
+    public function searchSupplier()
+    {
+        $name = Input::get('name');
+        $db = DB::table('suppliers');
+        if ($name){
+            $db->where('name','like','%'.$name.'%');
+        }
+        $data = $db->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
+    public function searchBank()
+    {
+        $name = Input::get('name');
+        $db = DB::table('bank_accounts');
+        if ($name){
+            $db->where('name','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
+        }
+        $data = $db->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
     //物料列表
     public function listMaterialPage()
     {

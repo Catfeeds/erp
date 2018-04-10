@@ -18,8 +18,11 @@ Route::get('login','UserController@loginPage');
 Route::get('logout','UserController@logout');
 //Route::post('project/create','ProjectController@createProject');
 Route::get('projects','ProjectController@searchProject');
-
+Route::get('project/unit','ProjectController@searchProjectUnit');
 Route::get('teams','SystemController@getTeams');
+Route::get('suppliers','SystemController@searchSupplier');
+Route::get('project/material','ProjectController@searchProjectMaterial');
+Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
