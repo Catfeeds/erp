@@ -53,45 +53,21 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($stocks as $stock)
                 <tr>
-                    <td>1</td>
+                    <td>{{$stock->id}}</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">物料一</a>
                     </td>
-                    <td>ak-47</td>
-                    <td>个</td>
-                    <td>321 ￥</td>
-                    <td>213,523,123</td>
-                    <td>123,522,321 ￥</td>
+                    <td>{{$stock->material()->name}}</td>
+                    <td>{{$stock->material()->unit}}</td>
+                    <td>{{$stock->material()->price}} ￥</td>
+                    <td>{{$stock->number}}</td>
+                    <td>{{$stock->material()->price*$stock->number}} ￥</td>
                     <td>21,523 ￥</td>
-                    <td>仓库一</td>
+                    <td>{{$stock->warehouse()->name}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">物料一</a>
-                    </td>
-                    <td>ak-47</td>
-                    <td>个</td>
-                    <td>321 ￥</td>
-                    <td>213,523,123</td>
-                    <td>123,522,321 ￥</td>
-                    <td>21,523 ￥</td>
-                    <td>仓库一</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">物料一</a>
-                    </td>
-                    <td>ak-47</td>
-                    <td>个</td>
-                    <td>321 ￥</td>
-                    <td>213,523,123</td>
-                    <td>123,522,321 ￥</td>
-                    <td>21,523 ￥</td>
-                    <td>仓库一</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

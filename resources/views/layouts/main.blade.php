@@ -136,7 +136,7 @@
                 <span>库存管理</span>
             </template>
             <el-menu-item index="stockList">
-                <a href="../stock/list.html">库存清单</a>
+                <a href="{{url('stock/list')}}">库存清单</a>
             </el-menu-item>
             <el-menu-item index="stockBuyList">
                 <a href="../stock/buy_list.html">采购收货清单</a>
