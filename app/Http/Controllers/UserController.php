@@ -118,10 +118,10 @@ class UserController extends Controller
     }
     public function searchUser()
     {
-        $permisson = Input::get('permission');
+        $permission = Input::get('permission');
         $project_id = Input::get('project_id');
         $idArr = RoleDetail::where([
-            'permission'=>$permisson,
+            'permission'=>$permission,
             'project_id'=>$project_id
         ])->pluck('user_id');
         $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
