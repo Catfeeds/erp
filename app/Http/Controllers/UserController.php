@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Login;
 use App\Models\Role;
+use App\Models\RoleDetail;
 use App\Providers\AuthServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
@@ -114,6 +115,21 @@ class UserController extends Controller
     public function editUserRoles()
     {
         return view('auth.edit');
+    }
+    public function searchUser()
+    {
+        $permisson = Input::get('permission');
+        $project_id = Input::get('project_id');
+        $idArr = RoleDetail::where([
+            'permission'=>$permisson,
+            'project_id'=>$project_id
+        ])->pluck('user_id');
+        $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$users
+        ]);
     }
 
 

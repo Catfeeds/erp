@@ -24,6 +24,9 @@ class CreateProjectsTable extends Migration
             $table->integer('createTime')->commit('createTime');
             $table->string('condition')->commit('condition');
             $table->tinyInteger('state')->default(0);
+            $table->string('acceptance_date')->nullable();
+            $table->string('remark')->nullable();
+            $table->string('deadline')->nullable();
             $table->timestamps();
         });
     }

@@ -25,8 +25,8 @@
                                         <i class="el-icon-edit el-input__icon" slot="suffix">
                                         </i>
                                         <template slot-scope="props">
-                                            <div class="name">{{ props.item.name }}</div>
-                                            <span class="addr">{{ props.item.address }}</span>
+                                            <div class="name">@{{ props.item.name }}</div>
+                                            <span class="addr">@{{ props.item.address }}</span>
                                         </template>
                                     </el-autocomplete>
                                 </div>
@@ -36,7 +36,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">性能及技术参数</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">{{currentMaterials.parameter || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterials.parameter || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">品牌型号</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">{{currentMaterials.model || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterials.model || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">生产商家</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">{{currentMaterials.address || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterials.address || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">单位</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">{{currentMaterials.unit || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterials.unit || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>

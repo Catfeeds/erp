@@ -284,7 +284,13 @@ class ProjectController extends Controller
     {
         $id = Input::get('id');
         $project = Project::find($id);
-        return view('project.check',['project'=>$project]);
+        $mainContracts = $project->mainContract()->get();
+        $outContracts = $project->outContract()->get();
+        return view('project.check',[
+            'project'=>$project,
+            'mainContracts'=>$mainContracts,
+            'outContracts'=>$outContracts,
+        ]);
     }
     public function addBudgetPage()
     {
@@ -368,6 +374,18 @@ class ProjectController extends Controller
     {
         $project_id = $post->get('project_id');
         $project = Project::find($project_id);
+        if ($post->get('to_warranty')==1){
+            $project->state = 2;
+        }
+        $project->acceptance_date = $post->get('acceptance_date');
+        $project->remark = $post->get('remark');
+        $project->deadline = $post->get('deadline');
+        if ($project->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
     public function createTips(Request $post)
     {

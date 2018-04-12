@@ -91,6 +91,20 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage');
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
+    Route::post('purchase/create','ProjectController@createPurchase');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
+    Route::get('stock/buy/list','StockController@listBuyList');
+    Route::get('stock/return/list','StockController@listReturnList');
+    Route::get('stock/get/list','StockController@listGetList');
+    Route::get('stock/out/list','StockController@listOutList');
+    //施工管理
+    Route::get('build/list','BuildController@listBuildPage');
+    Route::get('build/deal/list','BuildController@listDealPage');
+    Route::get('build/deal/create','BuildController@addDealPage');
+    Route::get('build/finish/list','BuildController@listFinishPage');
+    Route::get('build/finish/create','BuildController@createFinishPage');
+    Route::get('build/pay/list','BuildController@listPayPage');
+    Route::get('build/get/list','BuildController@listGetPage');
+    //
 });

@@ -139,16 +139,16 @@
                 <a href="{{url('stock/list')}}">库存清单</a>
             </el-menu-item>
             <el-menu-item index="stockBuyList">
-                <a href="../stock/buy_list.html">采购收货清单</a>
+                <a href="{{url('stock/buy/list')}}">采购收货清单</a>
             </el-menu-item>
             <el-menu-item index="stockReturnList">
-                <a href="../stock/return_list.html">退料入库清单</a>
+                <a href="{{url('stock/return/list')}}">退料入库清单</a>
             </el-menu-item>
             <el-menu-item index="stockGetList">
-                <a href="../stock/get_list.html">领料出库清单</a>
+                <a href="{{url('stock/get/list')}}">领料出库清单</a>
             </el-menu-item>
             <el-menu-item index="stockOutList">
-                <a href="../stock/out_list.html">退货出库清单</a>
+                <a href="{{url('stock/out/list')}}">退货出库清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="build">
@@ -157,19 +157,19 @@
                 <span>施工管理</span>
             </template>
             <el-menu-item index="buildList">
-                <a href="../build/list.html">施工费清单</a>
+                <a href="{{url('build/list')}}">施工费清单</a>
             </el-menu-item>
             <el-menu-item index="buildDealList">
-                <a href="../build/deal_list.html">备案合同清单</a>
+                <a href="{{url('build/deal/list')}}">备案合同清单</a>
             </el-menu-item>
             <el-menu-item index="buildFinishList">
-                <a href="../build/finish_list.html">完工请款清单</a>
+                <a href="{{url('build/finish/list')}}">完工请款清单</a>
             </el-menu-item>
             <el-menu-item index="buildPayList">
-                <a href="../build/pay_list.html">施工付款清单</a>
+                <a href="{{url('build/pay/list')}}">施工付款清单</a>
             </el-menu-item>
             <el-menu-item index="buildGetList">
-                <a href="../build/get_list.html">施工收票清单</a>
+                <a href="{{url('build/get/list')}}">施工收票清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="loan">

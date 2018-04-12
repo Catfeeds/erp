@@ -29,4 +29,8 @@ class StockController extends Controller
     {
         return view('stock.out_list');
     }
+    public function checkBuy()
+    {
+
+    }
 }

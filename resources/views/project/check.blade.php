@@ -54,7 +54,7 @@
                         <div class="inline fields">
                             <label class="four wide field">预计完工日期</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">{{$project->finishTime}}</div>
+                                <div class="fake-input">{{date('Y-m-d',$project->finishTime)}}</div>
                             </div>
                         </div>
                     </div>
@@ -88,34 +88,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    <div class="ui three column doubling stackable grid center aligned">
-                        <div class="two wide column">
-                            <div class="fake-input">1</div>
+                    @foreach($mainContracts as $mainContract)
+                        <div class="ui three column doubling stackable grid center aligned">
+                            <div class="two wide column">
+                                <div class="fake-input">{{$mainContract->id}}</div>
+                            </div>
+                            <div class="four wide column">
+                                <div class="fake-input">{{$mainContract->unit}}</div>
+                            </div>
+                            <div class="four wide column">
+                                <div class="fake-input">{{$mainContract->price}}￥</div>
+                            </div>
+                            <div class="six wide column">
+                                <div class="fake-input">{{$mainContract->remark}}</div>
+                            </div>
                         </div>
-                        <div class="four wide column">
-                            <div class="fake-input">单位A</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
-                        </div>
-                        <div class="six wide column">
-                            <div class="fake-input">这是一些备注</div>
-                        </div>
-                    </div>
-                    <div class="ui three column doubling stackable grid center aligned">
-                        <div class="two wide column">
-                            <div class="fake-input">2</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">单位B</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
-                        </div>
-                        <div class="six wide column">
-                            <div class="fake-input">这是一些备注这是一些备注</div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- /主合同中标情况 -->
@@ -130,34 +118,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
+                    @foreach($outContracts as $outContract)
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">1</div>
+                            <div class="fake-input">{{$outContract->id}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">发包单位A</div>
+                            <div class="fake-input">{{$outContract->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
+                            <div class="fake-input">{{$outContract->price}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">这是一些备注</div>
+                            <div class="fake-input">{{$outContract->remark}}</div>
                         </div>
                     </div>
-                    <div class="ui three column doubling stackable grid center aligned">
-                        <div class="two wide column">
-                            <div class="fake-input">2</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">发包单位B</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
-                        </div>
-                        <div class="six wide column">
-                            <div class="fake-input">这是一些备注这是一些备注</div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- /合同分包情况 -->
