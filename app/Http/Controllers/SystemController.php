@@ -563,5 +563,17 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function searchCategory()
+    {
+        $categories = Category::all();
+        for($i=0;$i<count($categories);$i++){
+            $categories[$i]->kinds = $categories[$i]->kinds()->get();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$categories
+        ]);
+    }
 
 }

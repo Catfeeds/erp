@@ -21,6 +21,7 @@ Route::get('projects','ProjectController@searchProject');
 Route::get('project/unit','ProjectController@searchProjectUnit');
 Route::get('teams','SystemController@getTeams');
 Route::get('suppliers','SystemController@searchSupplier');
+Route::get('search/category','SystemController@searchCategory');
 Route::get('project/material','ProjectController@searchProjectMaterial');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
