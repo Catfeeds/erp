@@ -298,5 +298,17 @@ class PayController extends Controller
             ]);
         }
     }
+    public function addLoanPage()
+    {
+        return view('loan.loan_add');
+    }
+    public function createSubmitOtherPage()
+    {
+        return view('loan.submit_other');
+    }
+    public function createSubmitProjectPage()
+    {
+        return view('loan.submit_project');
+    }
 
 }

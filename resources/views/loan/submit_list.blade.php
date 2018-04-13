@@ -48,11 +48,11 @@
                 </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../loan/submit_other.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('loan/submit/other')}}')">
                             <i class="icon plus"></i>
                             <span>期间费用报销</span>
                         </a>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../loan/submit_project.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('loan/submit/project')}}')">
                             <i class="icon plus"></i>
                             <span>项目成本报销</span>
                         </a>

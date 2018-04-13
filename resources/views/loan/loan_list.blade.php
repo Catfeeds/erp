@@ -12,7 +12,7 @@
 
         <!-- 操作区域 -->
         <div class="content-operation">
-            <a class="ui primary button" href="javascript:_helper.fullWindow('../loan/loan_add.html')">
+            <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('loan/loan/add')}}')">
                 <i class="icon plus"></i>
                 <span>新增借款申请</span>
             </a>

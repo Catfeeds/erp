@@ -113,9 +113,12 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/list','PayController@listLoanPage');
     Route::get('loan/detail/list','PayController@listDetailPage');
     Route::get('loan/loan/list','PayController@listLoanListPage');
+    Route::get('loan/loan/add','PayController@addLoanPage');
     Route::get('loan/submit/list','PayController@listSubmitListPage');
     Route::post('loan/submit/other','PayController@createSubmitList');
+    Route::get('loan/submit/other','PayController@createSubmitOtherPage');
     Route::post('loan/submit/project','PayController@createSubmitProject');
+    Route::get('loan/submit/project','PayController@createSubmitProjectPage');
     Route::post('loan/pay/add','PayController@createLoanPay');
     Route::get('loan/pay/list','PayController@listLoanPayPage');
     //费用付款管理
