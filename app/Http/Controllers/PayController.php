@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\FinishPayApply;
 use App\Models\LoanList;
+use App\Models\LoanSubmit;
+use App\Models\LoanSubmitList;
 use App\Models\PayApply;
+use App\Models\Project;
 use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -22,13 +27,14 @@ class PayController extends Controller
     {
         $count = PayApply::whereDate('created_at', date('Y-m-d',time()))->count();
         $apply = new PayApply();
-        $apply->apply_date = $post->get('apply_date');
+        $project = Project::find($post->get('project_id'));
+        $apply->apply_date = $post->get('date');
         $apply->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
         $apply->price = $post->get('price');
-        $apply->use = $post->get('use');
-        $apply->project_number = $post->get('project_number');
-        $apply->project_content = $post->get('project_content');
-        $apply->proposer = $post->get('proposer');
+        $apply->use = $post->get('application');
+        $apply->project_number = $project->number;
+        $apply->project_content = $project->name;
+//        $apply->proposer = $post->get('proposer');
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',
@@ -85,8 +91,9 @@ class PayController extends Controller
     public function createLoanApply(Request $post)
     {
         $apply = new LoanList();
-        $apply->borrower = $post->get('borrower');
-        $apply->apply_date = $post->get('apply_date');
+        $apply->borrower = Auth::user()->name;
+        $apply->borrower_id = Auth::id();
+        $apply->apply_date = $post->get('date');
         $apply->price = $post->get('price');
         $apply->reason = $post->get('reason');
         if ($apply->save()){
@@ -110,6 +117,94 @@ class PayController extends Controller
                 'msg'=>'SUCCESS'
             ]);
         }
+    }
+    public function listLoanPage()
+    {
+        $lists = LoanList::paginate(10);
+        return view('loan.list',['lists'=>$lists]);
+    }
+    public function listDetailPage()
+    {
+        $username = Input::get('username');
+        $uid = User::where('username','=',$username)->pluck('id')->first();
+        return view('loan.detail_list');
+    }
+    public function listLoanListPage()
+    {
+        $lists = LoanList::paginate(10);
+        return view('loan.loan_list',['lists'=>$lists]);
+    }
+    public function listSubmitListPage()
+    {
+        $lists = LoanSubmit::paginate(10);
+        return view('loan.submit_list',['lists'=>$lists]);
+    }
+    public function createSubmitList(Request $post)
+    {
+        $id = $post->get('id');
+        $lists = $post->get('lists');
+        if ($id){
+            $loan = LoanSubmit::find($id);
+        }else{
+            $loan = new LoanSubmit();
+            $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+            $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
+        }
+        $loan->user_id = Auth::id();
+        $loan->type = 1;
+        $loan->date = $post->get('date');
+        $loan->price = $post->get('price');
+        if ($loan->save()){
+            foreach ($lists as $item){
+                $list = new LoanSubmitList();
+                $list->loan_id = $loan->id;
+                $list->kind_id = $item['kind_id'];
+                $list->number = $item['number'];
+                $list->price = $item['price'];
+                $list->remark = $item['remark'];
+                $list->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function createSubmitProject(Request $post)
+    {
+        $id = $post->get('id');
+        $lists = $post->get('lists');
+        if ($id){
+            $loan = LoanSubmit::find($id);
+        }else{
+            $loan = new LoanSubmit();
+            $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+            $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
+        }
+        $loan->user_id = Auth::id();
+        $loan->type = 2;
+        $loan->date = $post->get('date');
+        $loan->price = $post->get('price');
+        $loan->project_id = $post->get('project_id');
+        if ($loan->save()){
+            foreach ($lists as $item){
+                $list = new LoanSubmitList();
+                $list->loan_id = $loan->id;
+                $list->kind_id = $item['kind_id'];
+                $list->number = $item['number'];
+                $list->price = $item['price'];
+                $list->remark = $item['remark'];
+                $list->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function listLoanPayPage()
+    {
+        return view('loan.');
     }
     public function changeLoanApplyState()
     {
@@ -169,4 +264,5 @@ class PayController extends Controller
             ]);
         }
     }
+
 }

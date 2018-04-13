@@ -1,7 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: zeng
- * Date: 2018/4/9
- * Time: 上午10:56
- */
+@extends('layouts.main')
+@section('title','已立项清单')
+@section('content')
+@endsection
+@section('pageJs')
+    <script src="{{url('js/project_list.js')}}"></script>
+@endsection

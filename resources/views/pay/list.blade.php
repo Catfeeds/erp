@@ -71,12 +71,12 @@
                 @foreach($lists as $list)
                     <tr>
                         <td>
-                            <a href="javascript:_helper.fullWindow('../pay/single.html?id=1')">FK20171103001</a>
+                            <a href="javascript:_helper.fullWindow('../pay/single.html?id=1')">{{$list->number}}</a>
                         </td>
-                        <td>123,232￥</td>
-                        <td style="max-width:350px;">这是一些用途</td>
-                        <td>XM203212321</td>
-                        <td class="table-content">这是项目内容</td>
+                        <td>{{$list->price}}￥</td>
+                        <td style="max-width:350px;">{{$list->use}}</td>
+                        <td>{{$list->project_number}}</td>
+                        <td class="table-content">{{$list->project_content}}</td>
                         <td>刘琦斐</td>
                         @if(empty($list->approver))
                         <td>未审批</td>

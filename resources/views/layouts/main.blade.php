@@ -178,16 +178,16 @@
                 <span>报销与借款管理</span>
             </template>
             <el-menu-item index="loanList">
-                <a href="../loan/list.html">报销与借款清单</a>
+                <a href="{{url('loan/list')}}">报销与借款清单</a>
             </el-menu-item>
             <el-menu-item index="loanDetailList">
-                <a href="../loan/detail_list.html">查询明细</a>
+                <a href="{{url('loan/detail/list')}}">查询明细</a>
             </el-menu-item>
             <el-menu-item index="loanLoanList">
-                <a href="../loan/loan_list.html">借款清单</a>
+                <a href="{{url('loan/loan/list')}}">借款清单</a>
             </el-menu-item>
             <el-menu-item index="loanSubmitList">
-                <a href="../loan/submit_list.html">报销申请清单</a>
+                <a href="{{url('loan/submit/list')}}">报销申请清单</a>
             </el-menu-item>
             <el-menu-item index="loanPayList">
                 <a href="../loan/pay_list.html">报销付款清单</a>
@@ -199,7 +199,7 @@
                 <span>费用付款管理</span>
             </template>
             <el-menu-item index="payList">
-                <a href="../pay/list.html">付款审批清单</a>
+                <a href="{{url('pay/list')}}">付款审批清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="data">

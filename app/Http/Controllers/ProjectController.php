@@ -114,6 +114,8 @@ class ProjectController extends Controller
     }
     public function createProject(Request $post)
     {
+        DB::beginTransaction();
+        try{
         $projectData = $post->get('project');
         if (!empty($projectData)){
             if (isset($projectData['id'])){
@@ -259,10 +261,18 @@ class ProjectController extends Controller
                 $picture->save();
             }
         }
+        DB::commit();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'
         ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'ERROR'
+            ]);
+        }
     }
     public function listProjectsDetail()
     {
