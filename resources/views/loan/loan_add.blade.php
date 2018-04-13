@@ -67,7 +67,7 @@
                             <div class="dialog_header">选择审批人</div>
                             <div class="dialog_content">
                                 <el-checkbox-group v-model="checkedMen" @change="handleCheckManChange">
-                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">{{man.name}}</el-checkbox>
+                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">@{{man.name}}</el-checkbox>
                                 </el-checkbox-group>
                             </div>
                             <div class="diolag_footer">

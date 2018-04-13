@@ -61,7 +61,7 @@
                 <button class="ui button positive" @click="addItem">新增单据</button>
             </div>
             <h4 class="inline-center">报销单据清单</h4>
-            <h5 class="ui header right aligned">合计总额：{{ sumAmount.toLocaleString('en-US') }} ￥</h5>
+            <h5 class="ui header right aligned">合计总额：@{{ sumAmount.toLocaleString('en-US') }} ￥</h5>
             <div class="ui form form-item">
                 <div class="ui five column doubling stackable grid font-size-13">
                     <div class="one wide column form-thead">序号</div>
@@ -75,13 +75,13 @@
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                     <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in submitOtherForm.lists" :key="item.id">
                         <div class="one wide column">
-                            <div class="fake-input">{{ index + 1 }}</div>
+                            <div class="fake-input">@{{ index + 1 }}</div>
                         </div>
                         <div class="three wide column">
-                            <div class="fake-input">{{ item.type }}</div>
+                            <div class="fake-input">@{{ item.type }}</div>
                         </div>
                         <div class="three wide column">
-                            <div class="fake-input">{{ item.detailType }}</div>
+                            <div class="fake-input">@{{ item.detailType }}</div>
                         </div>
                         <div class="three wide column">
                             <input type="text" v-model="item.remark" placeholder="备注">
@@ -115,7 +115,7 @@
                             <div class="dialog_header">选择复核人</div>
                             <div class="dialog_content">
                                 <el-checkbox-group v-model="checkedMen" @change="handleCheckManChange">
-                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">{{man.name}}</el-checkbox>
+                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">@{{man.name}}</el-checkbox>
                                 </el-checkbox-group>
                             </div>
                             <div class="diolag_footer">
