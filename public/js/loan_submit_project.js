@@ -6,9 +6,9 @@
         data: {
 
           submitProjectForm: {
-            people: '',
+            loan_user: '',
             date: '',
-            amount: '',
+            price: '',
             project_id: '',
             project_content: '',
             list: []
@@ -18,41 +18,11 @@
           paymentData: {
             currentTypeIndex: '',
             currentType: {},
-            typeList: [{
-                id: 1,
-                name: '交通运输费',
-              },
-              {
-                id: 2,
-                name: '业务招待费',
-              },
-              {
-                id: 3,
-                name: '差旅费',
-              }
-            ],
+            typeList: [],
             currentDetailTypeIndex: '',
             currentDetailType: {},
             detailTypeList: []
           },
-
-          //项目
-          projects: [{
-              id: 1,
-              content: '这是内容一',
-              manager: '陈经理'
-            },
-            {
-              id: 2,
-              content: '这是内容三',
-              manager: '刘经理'
-            },
-            {
-              id: 3,
-              content: '这是内容三',
-              manager: '张经理'
-            }
-          ],
 
           checkedMen: [],
           menList: [{
@@ -76,6 +46,11 @@
               name: '何求'
             }
           ],
+
+          throttle: {
+            project_id_timer: null,
+            project_content_timer: null,
+          }
         },
         mounted() {
           $('#loanSubmitOther').removeClass('invisible')
@@ -90,7 +65,7 @@
             }
             let sum = 0
             list.forEach((it, index) => {
-              const amount = it.amount
+              const amount = it.price
               if (amount) {
                 sum += amount * 1
               }
@@ -102,53 +77,87 @@
 
           //项目搜索
           querySearchProjectId(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilterProjectId(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterProjectId(queryString) {
-            return (item) => {
-              return (item.id.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.project_id_timer) {
+              clearTimeout(this.throttle.project_id_timer)
+            }
+            this.throttle.project_id_timer = setTimeout(() => {
+              const searchKey = {
+                id: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectProjectId(item) {
-            this.submitProjectForm.project_id = item.id
-            this.submitProjectForm.project_content = item.content
+            this.submitProjectForm.project_id = item.number
+            this.submitProjectForm.project_content = item.name
           },
 
           querySearchProjectContent(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilterProjectContent(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterProjectContent(queryString) {
-            return (item) => {
-              return (item.content.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.project_content_timer) {
+              clearTimeout(this.throttle.project_content_timer)
+            }
+            this.throttle.project_content_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectProjectContent(item) {
-            this.submitProjectForm.project_id = item.id
-            this.submitProjectForm.project_content = item.content
+            this.submitProjectForm.project_id = item.number
+            this.submitProjectForm.project_content = item.name
           },
 
           //新增项
           addItem() {
-            if (this.paymentData.currentDetailTypeIndex !== '') {
-              const list = this.submitProjectForm.list
+
+            const fatherIndex = this.paymentData.currentTypeIndex
+            const sonIndex = this.paymentData.currentDetailTypeIndex
+            if (fatherIndex !== '') {
+              const list = this.submitProjectForm.lists
               let data = {
                 id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-                type: this.paymentData.currentType.name,
-                detailType: this.paymentData.currentDetailType.name,
+                kind_id: sonIndex ? sonIndex : fatherIndex,
+                type: this.paymentData.currentType.title,
+                detailType: this.paymentData.currentDetailType.title,
               }
-              this.submitProjectForm.list.push(data)
+              this.submitProjectForm.lists.push(data)
             } else {
               this.$notify({
                 title: '错误',
@@ -165,53 +174,11 @@
 
           //选择器
           typeChange(typeIndex) {
-            let data = {
-              1: [{
-                  id: 1,
-                  name: '油费',
-                },
-                {
-                  id: 2,
-                  name: '路桥费',
-                },
-                {
-                  id: 3,
-                  name: '汽车维修费',
-                },
-                {
-                  id: 4,
-                  name: '车辆保修',
-                }
-              ],
-              2: [{
-                  id: 1,
-                  name: '餐费'
-                },
-                {
-                  id: 2,
-                  name: '其他'
-                }
-              ],
-              3: [{
-                  id: 1,
-                  name: '打车费'
-                },
-                {
-                  id: 2,
-                  name: '餐补'
-                },
-                {
-                  id: 3,
-                  name: '其他'
-                }
-              ]
-            }
-
             const currentType = this.paymentData.typeList[typeIndex]
             this.paymentData.currentType = currentType
-            const tmp = data[currentType.id]
             this.paymentData.currentDetailTypeIndex = ''
-            this.paymentData.detailTypeList = tmp.length ? tmp : []
+            this.paymentData.detailTypeList = currentType.kinds.length ? currentType.kinds : []
+
           },
 
           detailTypeChange(detailTypeIndex) {
@@ -221,12 +188,30 @@
 
           //提交
           submit() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            _http.LoanManager.createSubmitProject(this.loanForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').addClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
           //选择审批人
           handleCheckManChange(value) {

@@ -6,8 +6,8 @@
         el: '#dataPaymentAdd',
         data: {
           paymentForm: {
-            name: '',
-            list: []
+            title: '',
+            kinds: []
           },
           inputValue: '',
           inputVisible: false
@@ -37,14 +37,31 @@
           },
           //提交
           submit() {
-            console.log(this.paymentForm)
-            this.paymentForm.name = ''
-            this.paymentForm.list = []
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
+            _http.PaymentManager.createPayment(this.paymentForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.paymentForm.title = ''
+                  this.paymentForm.kinds = []
+                  this.$notify({
+                    title: '成功',
+                    message: '提交成功',
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
         }
       })

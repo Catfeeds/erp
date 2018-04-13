@@ -126,9 +126,9 @@
                         @endif
                     </td>
                     <td>{{\App\User::find($list->user_id)->name}}</td>
-                    <td>何不祥</td>
-                    <td>赵启明</td>
-                    <td>未付款</td>
+                    <td>{{\App\User::find($list->checker)->name}}</td>
+                    <td>{{\App\User::find($list->worker)->name}}</td>
+                    <td>{{$list->state==0?'未付款':'已付款'}}</td>
                     <td>BXFK20171103001</td>
                 </tr>
                 @endforeach

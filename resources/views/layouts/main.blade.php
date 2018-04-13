@@ -180,9 +180,9 @@
             <el-menu-item index="loanList">
                 <a href="{{url('loan/list')}}">报销与借款清单</a>
             </el-menu-item>
-            <el-menu-item index="loanDetailList">
-                <a href="{{url('loan/detail/list')}}">查询明细</a>
-            </el-menu-item>
+            {{--<el-menu-item index="loanDetailList">--}}
+                {{--<a href="{{url('loan/detail/list')}}">查询明细</a>--}}
+            {{--</el-menu-item>--}}
             <el-menu-item index="loanLoanList">
                 <a href="{{url('loan/loan/list')}}">借款清单</a>
             </el-menu-item>
@@ -190,7 +190,7 @@
                 <a href="{{url('loan/submit/list')}}">报销申请清单</a>
             </el-menu-item>
             <el-menu-item index="loanPayList">
-                <a href="../loan/pay_list.html">报销付款清单</a>
+                <a href="{{url('loan/pay/list')}}">报销付款清单</a>
             </el-menu-item>
         </el-submenu>
         <el-submenu index="pay">
@@ -232,7 +232,7 @@
                 <a href="{{url('team/list')}}">施工队</a>
             </el-menu-item>
             <el-menu-item index="dataPayment">
-                <a href="{{url('project/types/list')}}">报销费用类型</a>
+                <a href="{{url('category/list')}}">报销费用类型</a>
             </el-menu-item>
         </el-submenu>
     </el-menu>

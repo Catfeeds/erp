@@ -48,7 +48,7 @@
     id: 1, //id
     name: '', //物料名称
     param: '', //参数
-    brand: '', //型号
+    model: '', //型号
     factory: '', //生产厂家
     unit: '', //单位
     price: '', //单价
@@ -215,32 +215,33 @@
   }
 
   const stockBuyAdd = {
-    projectId: '',
+    purchase_id: '',
     date: '', //收货日期
-    receiver: '', //收货人
-    stock: '', //仓库
-    list: [], //采购列表
+    warehouse_name: '', //仓库名字
+    warehouse_id: '', //仓库 id
+    worker: '',  //收货人
+    lists: [], //采购列表
   }
 
   const stockReturnAdd = {
     project_id: '', //项目id
-    project_content: '', //项目内容
-    project_manger: '', //项目经理
-    return_people: '', //退料人
-    receiver: '', //收货人
-    stock_id: '', //入库仓库 id
-    stock_name: '', //仓库名称
-    list: [], //退料清单
+    project_content: '', //项目content
+    returnee: '',  //退料人
+    worker: '', //收货人
+    warehouse_id: '', //入库仓库 id
+    warehouse_name: '', //仓库名称
+    lists: [], //退料清单
   }
 
   const stockGetAdd = {
     project_id: '', //项目id
     project_content: '', //项目内容
     project_manger: '', //项目经理
-    get_people: '', //领料人
-    stock_id: '', //出货仓库, id
-    stock_name: '', //出货仓库
-    list: [], //领料清单
+    worker: '', //领料人
+    warehouse_id: '', //出货仓库, id
+    warehouse_name: '', //出货仓库
+    lists: [], //领料清单,
+    type: ''
   }
 
   const buildDealAdd = {

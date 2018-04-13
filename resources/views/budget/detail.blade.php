@@ -23,23 +23,23 @@
                         <div class="inline fields">
                             <label class="four wide field">立项日期</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">2018-01-02</div>
+                                <div class="fake-input">{{date('Y-m-d',$project->createTime)}}</div>
                             </div>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="inline fields">
-                            <label class="four wide field">单位名</label>
-                            <div class="twelve wide field">
-                                <div class="fake-input">这是单位名</div>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="column">--}}
+                        {{--<div class="inline fields">--}}
+                            {{--<label class="four wide field">单位名</label>--}}
+                            {{--<div class="twelve wide field">--}}
+                                {{--<div class="fake-input">这是单位名</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="column">
                         <div class="inline fields">
                             <label class="four wide field">甲方</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">甲方</div>
+                                <div class="fake-input">{{$project->partyA}}</div>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目合同金额</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">123,523￥</div>
+                                <div class="fake-input">{{$project->price}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="inline fields">
                             <label class="four wide field">预计完工日期</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">2018-01-22</div>
+                                <div class="fake-input">{{date('Y-m-d',$project->finishTime)}}</div>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目经理</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">陈一发</div>
+                                <div class="fake-input">{{$project->pm}}</div>
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="inline fields">
                             <label class="four wide field">维护要求</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">这是维护要求</div>
+                                <div class="fake-input">{{$project->condition}}</div>
                             </div>
                         </div>
                     </div>
@@ -89,34 +89,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
+                    @foreach($mainContracts as $mainContract)
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">1</div>
+                            <div class="fake-input">{{$mainContract->id}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">单位A</div>
+                            <div class="fake-input">{{$mainContract->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
+                            <div class="fake-input">{{$mainContract->price}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">这是一些备注</div>
+                            <div class="fake-input">{{$mainContract->remark}}</div>
                         </div>
                     </div>
-                    <div class="ui three column doubling stackable grid center aligned">
-                        <div class="two wide column">
-                            <div class="fake-input">2</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">单位B</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
-                        </div>
-                        <div class="six wide column">
-                            <div class="fake-input">这是一些备注这是一些备注</div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- /主合同中标情况 -->
@@ -131,34 +119,23 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
+                    @foreach($outContracts as $outContract  )
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">1</div>
+                            <div class="fake-input">{{$outContract->id}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">发包单位A</div>
+                            <div class="fake-input">{{$outContract->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
+                            <div class="fake-input">{{$outContract->price}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">这是一些备注</div>
+                            <div class="fake-input">{{$outContract->remark}}</div>
                         </div>
                     </div>
-                    <div class="ui three column doubling stackable grid center aligned">
-                        <div class="two wide column">
-                            <div class="fake-input">2</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">发包单位B</div>
-                        </div>
-                        <div class="four wide column">
-                            <div class="fake-input">123,523￥</div>
-                        </div>
-                        <div class="six wide column">
-                            <div class="fake-input">这是一些备注这是一些备注</div>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
             <!-- /合同分包情况 -->
@@ -181,85 +158,52 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td rowspan="3">主合同</td>
-                        <td rowspan="3">123,542,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容二</td>
-                        <td>5%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>9%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">主合同后期追加</td>
-                        <td rowspan="2">42,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>13,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>5%</td>
-                        <td>23,100 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">分包合同</td>
-                        <td rowspan="2">123,542,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>9%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="1">分包合同后期追加</td>
-                        <td rowspan="1">42,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>13,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
+                    @for($i=0;$i<count($situations);$i++)
+                        <tr>
+                            @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
+                                <td rowspan="{{count($situations)}}">主合同</td>
+                            @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
+                                <td rowspan="{{count($situations)}}">主合同后期追加或减少</td>
+                            @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
+                                <td rowspan="{{count($situations)}}">分包合同</td>
+                            @else
+                                <td rowspan="{{count($situations)}}">分包合同后期追加或减少</td>
+                            @endif
+                            <td rowspan="{{count($situations)}}">{{$situations[$i]->price}} ￥</td>
+                        </tr>
+                        @foreach($situations[$i]->lists as $list)
+                            <tr>
+                                <td>{{$list->name}}</td>
+                                <td>{{$list->tax}}%</td>
+                                <td>{{$list->price}} ￥</td>
+                                <td>{{$list->remark}}</td>
+                            </tr>
+                        @endforeach
+                        {{--@endforeach--}}
+                    @endfor
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th rowspan="3">合计</th>
-                        <th rowspan="3">123,542,000 ￥</th>
-                        <th>内容一</th>
-                        <th>17%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
-                    <tr>
-                        <th>内容二</th>
-                        <th>9%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
-                    <tr>
-                        <th>内容三</th>
-                        <th>9%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
-                    </tfoot>
+                    {{--<tfoot>--}}
+                    {{--<tr>--}}
+                        {{--<th rowspan="3">合计</th>--}}
+                        {{--<th rowspan="3">123,542,000 ￥</th>--}}
+                        {{--<th>内容一</th>--}}
+                        {{--<th>17%</th>--}}
+                        {{--<th>123,000 ￥</th>--}}
+                        {{--<th>/</th>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<th>内容二</th>--}}
+                        {{--<th>9%</th>--}}
+                        {{--<th>123,000 ￥</th>--}}
+                        {{--<th>/</th>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<th>内容三</th>--}}
+                        {{--<th>9%</th>--}}
+                        {{--<th>123,000 ￥</th>--}}
+                        {{--<th>/</th>--}}
+                    {{--</tr>--}}
+                    {{--</tfoot>--}}
                 </table>
             </div>
             <!-- /项目实际情况 -->
@@ -278,23 +222,20 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr>
-                        <td rowspan="3">预算总额</td>
-                        <td rowspan="3">111,542,000 ￥</td>
-                        <td>物料采购金额</td>
-                        <td>111,542,000 ￥</td>
+                        <td rowspan="{{count($budgets)}}">预算总额</td>
+                        <td rowspan="{{count($budgets)}}">{{$project->budget()->sum('price')}} ￥</td>
                         <td rowspan="3">
                             <a href="javascript:_helper.fullWindow('../budget/print.html');">查看预算清单</a>
                         </td>
                     </tr>
+                    @for($i=0;$i<count($budgets);$i++)
                     <tr>
-                        <td>工程金额</td>
-                        <td>111,542,000 ￥</td>
+                        <td>{{$budget[$i]->type}}</td>
+                        <td>{{$budget[$i]->price}} ￥</td>
                     </tr>
-                    <tr>
-                        <td>其他</td>
-                        <td>111,542,000 ￥</td>
-                    </tr>
+                    @endfor
                     </tbody>
                 </table>
             </div>

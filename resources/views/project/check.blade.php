@@ -156,84 +156,29 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @for($i=0;$i<count($situations);$i++)
                     <tr>
-                        <td rowspan="3">主合同</td>
-                        <td rowspan="3">123,542,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
+                        @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
+                        <td rowspan="{{count($situations)}}">主合同</td>
+                        @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
+                            <td rowspan="{{count($situations)}}">主合同后期追加或减少</td>
+                        @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
+                            <td rowspan="{{count($situations)}}">分包合同</td>
+                        @else
+                            <td rowspan="{{count($situations)}}">分包合同后期追加或减少</td>
+                        @endif
+                        <td rowspan="{{count($situations)}}">{{$situations[$i]->price}} ￥</td>
                     </tr>
+                    @foreach($situations[$i]->lists as $list)
                     <tr>
-                        <td>内容二</td>
-                        <td>5%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
+                        <td>{{$list->name}}</td>
+                        <td>{{$list->tax}}%</td>
+                        <td>{{$list->price}} ￥</td>
+                        <td>{{$list->remark}}</td>
                     </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>9%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">主合同后期追加</td>
-                        <td rowspan="2">42,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>13,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>5%</td>
-                        <td>23,100 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">分包合同</td>
-                        <td rowspan="2">123,542,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td>内容三</td>
-                        <td>9%</td>
-                        <td>123,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="1">分包合同后期追加</td>
-                        <td rowspan="1">42,000 ￥</td>
-                        <td>内容一</td>
-                        <td>17%</td>
-                        <td>13,000 ￥</td>
-                        <td>这是备注</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th rowspan="3">合计</th>
-                        <th rowspan="3">123,542,000 ￥</th>
-                        <th>内容一</th>
-                        <th>17%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
-                    <tr>
-                        <th>内容二</th>
-                        <th>9%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
-                    <tr>
-                        <th>内容三</th>
-                        <th>9%</th>
-                        <th>123,000 ￥</th>
-                        <th>/</th>
-                    </tr>
+                    @endforeach
+                    {{--@endforeach--}}
+                    @endfor
                     </tfoot>
                 </table>
             </div>
@@ -263,53 +208,37 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($bails as $bail)
                     <tr>
-                        <td>1</td>
-                        <td>xxxx单位</td>
-                        <td>123,523￥</td>
-                        <td>2018-02-11</td>
-                        <td>12,321</td>
-                        <td>这是其他信息</td>
-                        <td>2018-02-12</td>
-                        <td>1,232￥</td>
-                        <td>陈一发</td>
-                        <td>中国银行 60294825472829122234</td>
-                        <td>这是回收条件</td>
+                        <td>{{$bail->id}}</td>
+                        <td>{{$bail->unit}}</td>
+                        <td>{{$bail->price}}￥</td>
+                        <td>{{$bail->term}}</td>
+                        <td>{{$bail->cost}}</td>
+                        <td>{{$bail->other}}</td>
+                        <td>{{$bail->pay_date}}</td>
+                        <td>{{$bail->pay_price}}￥</td>
+                        <td>{{$bail->payee}}</td>
+                        <td>{{$bail->bank}} {{$bail->account}}</td>
+                        <td>{{$bail->condition}}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td colspan="5">暂无数据</td>
-                        <td>2018-02-12</td>
-                        <td>1,232￥</td>
-                        <td>陈一发</td>
-                        <td>中国银行 60294825472829122234</td>
-                        <td>这是回收条件</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>xxxx单位</td>
-                        <td>123,523￥</td>
-                        <td>2018-02-11</td>
-                        <td>12,321</td>
-                        <td>这是其他信息</td>
-                        <td colspan="5">暂无数据</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>合计</th>
-                        <th></th>
-                        <th>11,232￥</th>
-                        <th></th>
-                        <th>11,232￥</th>
-                        <th></th>
-                        <th>11,232￥</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </tfoot>
+                    @endforeach
+
+                    {{--<tfoot>--}}
+                    {{--<tr>--}}
+                        {{--<th>合计</th>--}}
+                        {{--<th></th>--}}
+                        {{--<th>11,232￥</th>--}}
+                        {{--<th></th>--}}
+                        {{--<th>11,232￥</th>--}}
+                        {{--<th></th>--}}
+                        {{--<th>11,232￥</th>--}}
+                        {{--<th></th>--}}
+                        {{--<th></th>--}}
+                        {{--<th></th>--}}
+                        {{--<th></th>--}}
+                    {{--</tr>--}}
+                    {{--</tfoot>--}}
                 </table>
             </div>
             <!-- / 履约保证金情况 -->
@@ -326,21 +255,13 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($receipts as $receipt)
                     <tr>
-                        <td>17%</td>
-                        <td>200,000,232 ￥</td>
-                        <td>回收条件回收条件回收条件回收条件回收条件回收条件</td>
+                        <td>{{$receipt->ratio}} %</td>
+                        <td>{{$receipt->price}} ￥</td>
+                        <td>{{$receipt->condition}}</td>
                     </tr>
-                    <tr>
-                        <td>8%</td>
-                        <td>200,000,232 ￥</td>
-                        <td>回收条件回收条件回收条件回收条件回收条件回收条件</td>
-                    </tr>
-                    <tr>
-                        <td>5%</td>
-                        <td>200,000,232 ￥</td>
-                        <td>回收条件回收条件回收条件回收条件回收条件回收条件</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
                     <tr>
@@ -357,21 +278,13 @@
             <h4 class="ui dividing header blue margin-top-50">合同</h4>
             <div class="check-item">
                 <div class="ui three column doubling stackable grid">
+                    @foreach($pictures as $picture)
                     <div class="column">
-                        <a class="check-link" href="https://www.huaguo.cn/resources/images/ht/hb1.jpg" target="_blank">
-                            <img class="check-img" src="https://www.huaguo.cn/resources/images/ht/hb1.jpg" alt="合同一">
+                        <a class="check-link" href="{{$picture->url}}" target="_blank">
+                            <img class="check-img" src="{{$picture->url}}" alt="合同一">
                         </a>
                     </div>
-                    <div class="column">
-                        <a class="check-link" href="https://www.huaguo.cn/resources/images/ht/hb1.jpg" target="_blank">
-                            <img class="check-img" src="https://www.huaguo.cn/resources/images/ht/hb1.jpg" alt="合同二">
-                        </a>
-                    </div>
-                    <div class="column">
-                        <a class="check-link" href="https://www.huaguo.cn/resources/images/ht/hb1.jpg" target="_blank">
-                            <img class="check-img" src="https://www.huaguo.cn/resources/images/ht/hb1.jpg" alt="合同三">
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- / 合同 -->

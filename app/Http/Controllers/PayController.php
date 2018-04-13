@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\FinishPayApply;
 use App\Models\LoanList;
+use App\Models\LoanPay;
+use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
 use App\Models\LoanSubmitList;
 use App\Models\PayApply;
@@ -204,7 +206,39 @@ class PayController extends Controller
     }
     public function listLoanPayPage()
     {
-        return view('loan.');
+        return view('loan.pay_list');
+    }
+    public function createLoanPay(Request $post)
+    {
+        $id = $post->get('id');
+        if ($id){
+            $pay = LoanPay::find($id);
+        }else{
+            $pay = new LoanPay();
+            $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
+            $pay->number = 'BXFK'.date('Ymd',time()).sprintf("%03d", $count+1);
+        }
+        $pay->user_id = $post->get('user_id');
+        $pay->date = $post->get('date');
+        $pay->daduction = $post->get('daduction');
+        $pay->cash = $post->get('cash');
+        $pay->transfer = $post->get('transfer');
+        $pay->bank = $post->get('bank');
+        $pay->account = $post->get('account');
+        $pay->worker = Auth::id();
+        $lists = $post->get('lists');
+        if ($pay->save()){
+            foreach ($lists as $item){
+                $list = new LoanPayList();
+                $list->loan_id = $item;
+                $list->pay_id = $pay->id;
+                $list->save();
+            }
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
     }
     public function changeLoanApplyState()
     {

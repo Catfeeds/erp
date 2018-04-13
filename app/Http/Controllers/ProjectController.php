@@ -296,10 +296,21 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $mainContracts = $project->mainContract()->get();
         $outContracts = $project->outContract()->get();
+        $situations = $project->situation()->get();
+        for ($i=0;$i<count($situations);$i++){
+            $situations[$i]->lists = $situations[$i]->lists()->get();
+        }
+        $bails =  $project->bail()->get();
+        $receipts = $project->receipt()->get();
+        $picture = $project->picture()->get();
         return view('project.check',[
             'project'=>$project,
             'mainContracts'=>$mainContracts,
             'outContracts'=>$outContracts,
+            'situations'=>$situations,
+            'bails'=>$bails,
+            'receipts'=>$receipts,
+            'pictures'=>$picture
         ]);
     }
     public function addBudgetPage()
@@ -348,8 +359,18 @@ class ProjectController extends Controller
     {
         $id = Input::get('id');
         $project = Project::find($id);
+        $mainContracts = $project->mainContract()->get();
+        $outContracts = $project->outContract()->get();
+        $situations = $project->situation()->get();
+        $budgets = $project->budget()->get();
 //        $projects = Project::all();
-        return view('budget.detail',['project'=>$project]);
+        return view('budget.detail',[
+            'project'=>$project,
+            'mainContracts'=>$mainContracts,
+            'outContracts'=>$outContracts,
+            'situations'=>$situations,
+            'budgets'=>$budgets
+        ]);
     }
 
 
@@ -370,9 +391,35 @@ class ProjectController extends Controller
     {
         $project_id = Input::get('id');
         $project = Project::find($project_id);
+        $mainContracts = $project->mainContract()->get();
+        $outContracts = $project->outContract()->get();
+        $situations = $project->situation()->get();
+        $budgets = $project->budget()->get();
+        $pictures = $project->picture()->get();
+        $receipts = $project->receipt()->get();
+//        $projects = Project::all();
         return view('check.detail',[
-            'project'=>$project
+            'project'=>$project,
+            'mainContracts'=>$mainContracts,
+            'outContracts'=>$outContracts,
+            'situations'=>$situations,
+            'budgets'=>$budgets,
+            'receipts'=>$receipts,
+            'pictures'=>$pictures
         ]);
+
+    }
+    public function checkInvoicePage()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('check.invoice',['project'=>$project]);
+    }
+    public function checkCollectPage()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        return view('check.invoice',['project'=>$project]);
     }
     public function acceptancePage()
     {
@@ -466,7 +513,8 @@ class ProjectController extends Controller
     }
     public function checkTipsPage()
     {
-        return view('check.tips');
+        $tips = Tip::paginate(10);
+        return view('check.tips',['tips'=>$tips]);
     }
     public function listPurchasesPage()
     {

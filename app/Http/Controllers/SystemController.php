@@ -507,7 +507,15 @@ class SystemController extends Controller
     public function listProjectTypesPage()
     {
         $type = ProjectType::paginate(10);
-        return view('type.list',['types'=>$type]);
+        return view('data.type_list',['types'=>$type]);
+    }
+    public function listCategoryPage()
+    {
+        $categories = Category::paginate(10);
+        for ($i=0;$i<count($categories);$i++){
+            $categories[$i]->kinds = $categories[$i]->kinds()->pluck('title')->toArray();
+        }
+        return view('data.payment_list',['categories'=>$categories]);
     }
     public function addCategory(Request $post)
     {
@@ -525,6 +533,10 @@ class SystemController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS'
         ]);
+    }
+    public function addCategoryPage()
+    {
+        return view('data.payment_add');
     }
     public function addKinds(Request $post)
     {

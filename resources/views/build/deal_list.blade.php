@@ -61,42 +61,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>1</td>
-                    <td>2018-01-21</td>
-                    <td>xxx施工队</td>
-                    <td>xxx内容</td>
-                    <td>程经理</td>
-                    <td>XM2012322</td>
-                    <td>刘经理</td>
+                    <td>{{$list->id}}</td>
+                    <td>{{$list->date}}</td>
+                    <td>{{$list->team}}</td>
+                    <td>{{$list->project_content}}</td>
+                    <td>{{$list->manager}}</td>
+                    <td>{{$list->project_nubmer}}</td>
+                    <td>{{$list->manager}}</td>
                     <td>
                         <a class="ui mini button primary" href="#">查看合同</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2018-01-21</td>
-                    <td>xxx施工队</td>
-                    <td>xxx内容</td>
-                    <td>程经理</td>
-                    <td>XM2012322</td>
-                    <td>刘经理</td>
-                    <td>
-                        <a class="ui mini button primary" href="#">查看合同</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2018-01-21</td>
-                    <td>xxx施工队</td>
-                    <td>xxx内容</td>
-                    <td>程经理</td>
-                    <td>XM2012322</td>
-                    <td>刘经理</td>
-                    <td>
-                        <a class="ui mini button primary" href="#">查看合同</a>
-                    </td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

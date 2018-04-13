@@ -5,94 +5,35 @@
       new Vue({
         el: '#returnAdd',
         data: {
-          projects: [{
-              id: 'XM21232312222',
-              name: '项目一',
-              manager: '刘经理'
-            },
-            {
-              id: 'XM21235671222',
-              name: '项目二',
-              manager: '陈经理'
-            },
-            {
-              id: 'XM2126783222',
-              name: '项目三',
-              manager: '刘经理'
-            }
-          ],
           stockReturnAdd: _schemas.stockReturnAdd,
-          stocks: [{
-              id: 1,
-              name: '仓库一',
-              manger: '陈先生'
-            },
-            {
-              id: 2,
-              name: '仓库二',
-              manger: '刘先生'
-            },
-            {
-              id: 3,
-              name: '仓库三',
-              manger: '洪先生'
-            }
-          ],
           currentMaterial: '',
           currentMaterialName: '',
-          materials: [{
-              id: 1,
-              name: '物料一',
-              model: '型号一',
-              unit: '个',
-              parameter: '这是参数型号',
-              manufacturer: 'xx厂家'
-            },
-            {
-              id: 2,
-              name: '物料二',
-              model: '型号二',
-              unit: '个',
-              parameter: '这是参数型号',
-              manufacturer: 'xx厂家'
-            },
-            {
-              id: 3,
-              name: '物料三',
-              model: '型号三',
-              unit: '个',
-              parameter: '这是参数型号',
-              manufacturer: 'xx厂家'
-            },
-            {
-              id: 4,
-              name: '物料四',
-              model: '型号四',
-              unit: '个',
-              parameter: '这是参数型号',
-              manufacturer: 'xx厂家'
-            },
-          ],
 
           currentMaterialListDialog: false,
           currentMaterialListLoader: true,
           currentMaterialList: [],
+
+          throttle: {
+            stock_timer: null,
+            project_timer: null,
+            material_timer: null
+          }
         },
         mounted() {
+          this.stockReturnAdd.returnee = $('#returneeVal').val() || ''
           $('#returnAdd').removeClass('invisible')
-          this.commodities = this.loadAll()
         },
         computed: {
           sumAmount() {
-            const list = this.stockReturnAdd.list
+            const list = this.stockReturnAdd.lists
             if (!list.length) {
               return 0
             }
             let sum = 0
             list.forEach((it, index) => {
-              const return_quantity = it.return_quantity
-              if (return_quantity) {
-                sum += return_quantity * (it.price || 0)
+              const number = it.number
+              if (number) {
+                sum += number * (it.price || 0)
               }
             })
             return sum
@@ -104,61 +45,109 @@
            * 搜索相关
            */
           querySearch(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilter(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilter(queryString) {
-            return (restaurant) => {
-              return (restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.project_timer) {
+              clearTimeout(this.throttle.project_timer)
+            }
+            this.throttle.project_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
 
-          //仓库名称
-          querySearchStock(queryString, cb) {
-            var stocks = this.stocks
-            var results = queryString ? stocks.filter(this.createFilterStock(queryString)) : stocks;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterStock(queryString) {
-            return (restaurant) => {
-              return (restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
-          },
-
-          //物料
-          querySearchMaterial(queryString, cb) {
-            var materials = this.materials
-            var results = queryString ? materials.filter(this.createFilterMaterial(queryString)) : materials;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterMaterial(queryString) {
-            return (restaurant) => {
-              return (restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
-          },
           handleSelect(item) {
             this.stockReturnAdd.project_id = item.id
             this.stockReturnAdd.project_content = item.name
             this.stockReturnAdd.project_manger = item.manager
           },
+
+          //仓库搜索       
           handleSelectStock(item) {
-            this.stockReturnAdd.stock_id = item.id
-            this.stockReturnAdd.stock_name = item.name
-            this.stockReturnAdd.receiver = item.manger
+            this.stockReturnAdd.warehouse_id = item.id
+            this.stockReturnAdd.warehouse_name = item.name
+            this.stockReturnAdd.worker = item.manager
           },
+          querySearchStock(queryString, cb) {
+
+            if (this.throttle.stock_timer) {
+              clearTimeout(this.throttle.stock_timer)
+            }
+            this.throttle.stock_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.StockManager.searchStock(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
+          },
+
+          //物料
+          querySearchMaterial(queryString, cb) {
+            if (this.throttle.material_timer) {
+              clearTimeout(this.throttle.material_timer)
+            }
+            this.throttle.material_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.MaterialManager.searchProjectMaterial(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
+          },
+
           handleSelectMaterial(item) {
             this.currentMaterial = item
             this.currentMaterialName = item.name
@@ -173,12 +162,16 @@
               })
               return false
             }
-            const list = this.stockReturnAdd.list
+            const list = this.stockReturnAdd.lists
+            const currentMaterial = this.currentMaterial
             let data = {
               id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-              material: this.currentMaterial
+              material_id: currentMaterial.id,
+              price: currentMaterial.price,
+              number: 0,
+              material: currentMaterial
             }
-            this.stockReturnAdd.list.push(data)
+            this.stockReturnAdd.lists.push(data)
           },
 
           //删除
@@ -189,6 +182,29 @@
           //提交
           submit() {
             console.log(this.stockReturnAdd)
+            _http.StockManager.createReturnAdd(data)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
           //查询单价

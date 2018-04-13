@@ -52,8 +52,10 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('team/create','SystemController@createTeamPage');
    Route::post('project/type/create','SystemController@createProjectType');
    Route::get('project/type/create','SystemController@createProjectTypePage');
-   Route::get('project/types/list','SystemController@createTeamPage');
+   Route::get('project/types/list','SystemController@listProjectTypesPage');
    Route::post('category/create','SystemController@addCategory');
+   Route::get('category/create','SystemController@addCategoryPage');
+   Route::get('category/list','SystemController@listCategoryPage');
    Route::post('create/budget','ProjectController@addBudget');
    Route::get('create/budget','ProjectController@addBudgetPage');
    Route::get('budget/list','ProjectController@listBudgetsPage');
@@ -66,8 +68,8 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('auth/edit','UserController@addUserRoles');
 
    //施工管理
-   Route::post('create/contract','ConstructionController@addContract');
-   Route::post('finish/add','PayController@addRequestPayment');
+
+
    Route::post('pay/apply','PayController@createFinishPayApply');
    //验收和收款管理
    Route::get('check/list','ProjectController@checkListsPage');
@@ -76,6 +78,8 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/detail','ProjectController@checkDetailPage');
    Route::get('check/tips','ProjectController@checkTipsPage');
    Route::get('create/tips','ProjectController@createTipsPage');
+   Route::get('check/invoice','ProjectController@checkInvoicePage');
+   Route::get('check/collect','ProjectController@checkCollectPage');
    Route::post('create/tips','ProjectController@createTips');
 //   Route::get('check/tips','ProjectController@checkTipsPage');
 //   //预算管理
@@ -99,6 +103,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/list','BuildController@listBuildPage');
     Route::get('build/deal/list','BuildController@listDealPage');
     Route::get('build/deal/create','BuildController@addDealPage');
+    Route::post('create/contract','ConstructionController@addContract');
+    Route::post('finish/add','PayController@addRequestPayment');
     Route::get('build/finish/list','BuildController@listFinishPage');
     Route::get('build/finish/create','BuildController@createFinishPage');
     Route::get('build/pay/list','BuildController@listPayPage');
@@ -110,6 +116,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/submit/list','PayController@listSubmitListPage');
     Route::post('loan/submit/other','PayController@createSubmitList');
     Route::post('loan/submit/project','PayController@createSubmitProject');
+    Route::post('loan/pay/add','PayController@createLoanPay');
+    Route::get('loan/pay/list','PayController@listLoanPayPage');
     //费用付款管理
     Route::get('pay/add','PayController@createPayApplyPage');
     Route::post('pay/add','PayController@createPayApply');

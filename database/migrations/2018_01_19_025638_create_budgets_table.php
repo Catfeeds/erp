@@ -18,7 +18,7 @@ class CreateBudgetsTable extends Migration
             $table->unsignedInteger('project_id');
             $table->string('name');
             $table->string('param');
-            $table->string('brand');
+            $table->string('model');
             $table->string('factory');
             $table->string('unit');
             $table->float('price');

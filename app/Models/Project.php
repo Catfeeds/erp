@@ -29,4 +29,16 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\Budget','project_id','id');
     }
+    public function picture()
+    {
+        return $this->hasMany('App\Models\ProjectPicture','project_id','id');
+    }
+    public function situation()
+    {
+        return $this->hasMany('App\Models\ProjectSituations','project_id','id');
+    }
+    public function receipt()
+    {
+        return $this->hasMany('App\Models\Receipt','project_id','id');
+    }
 }

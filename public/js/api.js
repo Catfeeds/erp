@@ -3,7 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://localhost/erp/public'
+  const url = 'http://119.23.202.220:8080'
 
   class ProjectManager {
     constructor() {
@@ -103,6 +103,24 @@
       return this._http.get(`/project/material`, {
         params: search
       })
+    }
+
+    //搜索采购项目材料
+    searchBuyMaterial(search = {}) {
+      return this._http.get(`/search/purchase/material`, {
+        params: search
+      })
+    }
+
+    //预算内采购项目材料
+    searchBudgetMaterial(id, search = {}){
+      return this._http.get(`/search/budget?project=${id}`, {
+        params: search
+      })
+    }
+
+    searchPurchase(id){
+      return this._http.get(`/search/purchase?budget=${id}`)
     }
   }
 
@@ -212,6 +230,22 @@
     createFinish(data = {}) {
       return this._http.post('/finish/add', data, this.dataMethodDefaults)
     }
+
+    // 施工   付款申请录入
+    createPayApply(data = {}) {
+      return this._http.post('/build/pay/apply', data, this.dataMethodDefaults)
+    }
+
+
+    // 施工   付款申请  付款
+    createPayAdd(data = {}) {
+      return this._http.post('/build/pay/add', data, this.dataMethodDefaults)
+    }
+
+    //施工   收票
+    createGetAdd(data = {}) {
+      return this._http.post('/build/get/add', data, this.dataMethodDefaults)
+    }
   }
 
   //上传
@@ -268,8 +302,16 @@
     createUser(data = {}) {
       return this._http.post(`/create/user`, data, this.dataMethodDefaults)
     }
+
+    //搜索成员
+    searchUsers(search = {}) {
+      return this._http.get(`/search/users`, {
+        params: search
+      })
+    }
   }
 
+  //费用付款管理
   class PaymentManager {
     constructor() {
       this._http = axios.create({
@@ -289,6 +331,12 @@
     createPayment(data = {}) {
       return this._http.post(`/category/create`, data, this.dataMethodDefaults)
     }
+
+    //申请付款
+    createPayAdd(data = {}) {
+      return this._http.post(`/pay/add`, data, this.dataMethodDefaults)
+    }
+
   }
 
   // 验收
@@ -365,6 +413,92 @@
     }
   }
 
+
+  class StockManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //采购收货入库
+    createBuyAdd(data = {}) {
+      return this._http.post(`/stock/buy/add`, data, this.dataMethodDefaults)
+    }
+
+    //退料入库
+    createReturnAdd(data = {}) {
+      return this._http.post(`/stock/return/add`, data, this.dataMethodDefaults)
+    }
+
+    // 领料出库
+    createGetAdd(data = {}) {
+      return this._http.post(`/stock/get/add`, data, this.dataMethodDefaults)
+    }
+
+
+    // 领料出库
+    createOutAdd(data = {}) {
+      return this._http.post(`/stock/out/add`, data, this.dataMethodDefaults)
+    }
+
+    //仓库查询
+    searchStock(search = {}) {
+      return this._http.get(`/search/warehouse`, {
+        params: search
+      })
+    }
+  }
+
+  // 报销借款
+  class LoanManager {
+    constructor() {
+      this._http = axios.create({
+        baseURL: url,
+        withCredentials: true
+      })
+      this.dataMethodDefaults = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [function (data) {
+          return Qs.stringify(data)
+        }]
+      }
+    }
+    //借款申请
+    createLoanAdd(data = {}) {
+      return this._http.post(`/loan/add`, data, this.dataMethodDefaults)
+    }
+
+    //期间费用报销
+    createSubmit(data = {}) {
+      return this._http.post(`/loan/submit/other`, data, this.dataMethodDefaults)
+    }
+
+    //项目成本报销
+    createSubmitProject(data = {}) {
+      return this._http.post(`/loan/submit/project`, data, this.dataMethodDefaults)
+    }
+
+    //报销种类检索
+    searchCategory(search = {}) {
+      return this._http.get(`/search/category`, {
+        params: search
+      })
+    }
+
+  }
+
+
   const http = {
     BankManager: new BankManager(),
     BudgetManager: new BudgetManager(),
@@ -378,7 +512,9 @@
     UserManager: new UserManager(),
     WarehouseManager: new WarehouseManager(),
     CheckManager: new CheckManager(),
-    BuyManager: new BuyManager()
+    BuyManager: new BuyManager(),
+    StockManager: new StockManager(),
+    LoanManager: new LoanManager()
   }
 
   return http

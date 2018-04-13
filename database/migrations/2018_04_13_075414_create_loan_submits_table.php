@@ -20,6 +20,9 @@ class CreateLoanSubmitsTable extends Migration
             $table->tinyInteger('type')->default(1);
             $table->string('date');
             $table->float('price');
+            $table->unsignedInteger('checker');
+            $table->unsignedInteger('worker');
+            $table->tinyInteger('state')->default(0);
             $table->unsignedInteger('project_id')->default(0);
             $table->timestamps();
         });

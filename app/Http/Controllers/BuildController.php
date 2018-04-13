@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConstructionContract;
 use Illuminate\Http\Request;
 
 class BuildController extends Controller
@@ -17,7 +18,8 @@ class BuildController extends Controller
     }
     public function listDealPage()
     {
-        return view('build.deal_list');
+        $lists = ConstructionContract::paginate(10);
+        return view('build.deal_list',['lists'=>$lists]);
     }
     public function createFinishPage()
     {

@@ -6,29 +6,17 @@
         data: {
 
           submitOtherForm: {
-            people: '',
+            loan_user: '',
             date: '',
-            amount: '',
-            list: []
+            price: '',
+            lists: []
           },
 
           //费用类型
           paymentData: {
             currentTypeIndex: '',
             currentType: {},
-            typeList: [{
-                id: 1,
-                name: '交通运输费',
-              },
-              {
-                id: 2,
-                name: '业务招待费',
-              },
-              {
-                id: 3,
-                name: '差旅费',
-              }
-            ],
+            typeList: [],
             currentDetailTypeIndex: '',
             currentDetailType: {},
             detailTypeList: []
@@ -58,21 +46,40 @@
           ],
         },
         mounted() {
-          $('#loanSubmitOther').removeClass('invisible')
           this.submitOtherForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          _http.LoanManager.searchCategory()
+            .then(res => {
+              if (res.data.code === '200') {
+                this.paymentData.typeList = res.data.data
+              } else {
+                this.$notify({
+                  title: '错误',
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
+            })
+            .catch(err => {
+              this.$notify({
+                title: '错误',
+                message: '服务器出错',
+                type: 'error'
+              })
+            })
+          $('#loanSubmitOther').removeClass('invisible')
         },
         computed: {
 
           sumAmount() {
-            const list = this.submitOtherForm.list
+            const list = this.submitOtherForm.lists
             if (!list.length) {
               return 0
             }
             let sum = 0
             list.forEach((it, index) => {
-              const amount = it.amount
-              if (amount) {
-                sum += amount * 1
+              const price = it.price
+              if (price) {
+                sum += price * 1
               }
             })
             return sum
@@ -82,14 +89,17 @@
 
           //新增项
           addItem() {
-            if (this.paymentData.currentDetailTypeIndex !== '') {
-              const list = this.submitOtherForm.list
+            const fatherIndex = this.paymentData.currentTypeIndex
+            const sonIndex = this.paymentData.currentDetailTypeIndex
+            if (fatherIndex !== '') {
+              const list = this.submitOtherForm.lists
               let data = {
                 id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-                type: this.paymentData.currentType.name,
-                detailType: this.paymentData.currentDetailType.name,
+                kind_id: sonIndex ? sonIndex : fatherIndex,
+                type: this.paymentData.currentType.title,
+                detailType: this.paymentData.currentDetailType.title,
               }
-              this.submitOtherForm.list.push(data)
+              this.submitOtherForm.lists.push(data)
             } else {
               this.$notify({
                 title: '错误',
@@ -106,53 +116,11 @@
 
           //选择器
           typeChange(typeIndex) {
-            let data = {
-              1: [{
-                  id: 1,
-                  name: '油费',
-                },
-                {
-                  id: 2,
-                  name: '路桥费',
-                },
-                {
-                  id: 3,
-                  name: '汽车维修费',
-                },
-                {
-                  id: 4,
-                  name: '车辆保修',
-                }
-              ],
-              2: [{
-                  id: 1,
-                  name: '餐费'
-                },
-                {
-                  id: 2,
-                  name: '其他'
-                }
-              ],
-              3: [{
-                  id: 1,
-                  name: '打车费'
-                },
-                {
-                  id: 2,
-                  name: '餐补'
-                },
-                {
-                  id: 3,
-                  name: '其他'
-                }
-              ]
-            }
 
             const currentType = this.paymentData.typeList[typeIndex]
             this.paymentData.currentType = currentType
-            const tmp = data[currentType.id]
             this.paymentData.currentDetailTypeIndex = ''
-            this.paymentData.detailTypeList = tmp.length ? tmp : []
+            this.paymentData.detailTypeList = currentType.kinds.length ? currentType.kinds : []
           },
 
           detailTypeChange(detailTypeIndex) {
@@ -162,12 +130,30 @@
 
           //提交
           submit() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            _http.LoanManager.createSubmit(this.loanForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').addClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
           //选择审批人
           handleCheckManChange(value) {

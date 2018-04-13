@@ -41,30 +41,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($tips as $tip)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">154376453254</a>
+                        <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$tip->project_id}}');">{{$tip->project()->number}}</a>
                     </td>
-                    <td>这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>10万/20万</td>
-                    <td>2017-12-01</td>
-                    <td>20万</td>
-                    <td>xxx公司</td>
-                    <td>这是一大串备注</td>
+                    <td>{{$tip->project()->name}}</td>
+                    <td>{{$tip->project()->pm}}</td>
+                    <td>{{$tip->price}}万/20万</td>
+                    <td>{{$tip->pay_date}}</td>
+                    <td>{{$tip->price}}万</td>
+                    <td>{{$tip->unit}}</td>
+                    <td>{{$tip->remark}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">154376453254</a>
-                    </td>
-                    <td>这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>10万/20万</td>
-                    <td>2017-12-01</td>
-                    <td>20万</td>
-                    <td>xxx公司</td>
-                    <td>这是一大串备注</td>
-                </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

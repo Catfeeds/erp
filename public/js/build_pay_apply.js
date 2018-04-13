@@ -6,10 +6,12 @@
         data: {
           applyForm: {
             date: _helper.timeFormat(new Date(), 'YYY-MM-DD'),
-            amount: '',
-            payment: '',
+            price: '',
+            payee: '',
             bank: '',
-            account: ''
+            account: '',
+            project_id: '',
+            team_id: ''
           },
 
           checkedMen: [],
@@ -35,16 +37,37 @@
             }
           ],
         },
-        mounted() {},
+        mounted() {
+          this.applyForm.project_id = $('#projectId').val()
+          this.applyForm.team_id = $('#teamId').val()
+        },
         methods: {
 
           submit() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            _http.TeamManager.createPayApply(this.applyForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').addClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
           //选择审核人

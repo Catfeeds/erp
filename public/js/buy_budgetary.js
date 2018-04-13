@@ -8,68 +8,66 @@
             content: '',
             id: ''
           },
-          projects: [{
-              id: 'XM23141231232',
-              name: '项目一'
-            },
-            {
-              id: 'XM23523111232',
-              name: '项目二'
-            },
-            {
-              id: 'XM23145423121',
-              name: '项目三'
-            }
-          ],
 
           materialType: _schemas.budget_type_reverse,
           //预算物料列表
-          preMaterialsList: {
-            count1: 123123,
-            count2: 4224231,
-            count3: 2414214124,
-            data: [{
-                id: 1,
-                name: '物料一',
-                parameter: '参数一。性能一',
-                model: '型号一',
-                manufacturer: '厂家一',
-                unit: '个',
-                prePrice: 213,
-                preQuantity: 21321,
-                preAmount: 5213123,
-                type: 1,
-                realQuantity: 2431,
-                realAmount: 52132,
-                leftQuantity: 25321,
-                leftAmount: 53213,
-              },
-              {
-                id: 2,
-                name: '物料二',
-                parameter: '参数二。性能二',
-                model: '型号二',
-                manufacturer: '厂家二',
-                unit: '件',
-                prePrice: 213,
-                preQuantity: 2413,
-                preAmount: 52132312123,
-                type: 2,
-                realQuantity: 21,
-                realAmount: 5212332,
-                leftQuantity: 1223,
-                leftAmount: 2423232,
-              }
-            ]
-          },
+          preMaterialsList: [],
 
           //物料 dialog
           materialsDialog: false,
           loader: true,
-          materialsDetail: {}
+          currentMaterial: {},
+          materialsDetail: [],
+          throttle: {
+            project_id_timer: null,
+            project_content_timer: null
+          }
         },
         mounted() {
           $('#buyBudgetary').removeClass('invisible')
+        },
+
+        computed: {
+          amountCost() {
+            const list = this.preMaterialsList
+            let result = {
+              count1: 0,
+              count2: 0,
+              count3: 0
+            }
+
+            if (list.lenght) {
+              list.forEach((item, index) => {
+                result.count1 += item.cost
+                result.count2 += item.buy_number * item.price
+                result.count3 += item.need_buy * item.price
+              })
+            }
+
+            return result
+          },
+
+          singleCost() {
+            const list = this.materialsDetail
+            let result = {
+              number: 0,
+              amount: 0
+            }
+
+            let count = 0
+            let sum = 0
+            if (list.lenght) {
+              list.forEach((item, index) => {
+                count += item.number
+                sum += parseFloat(item.cost) * item.price
+              })
+              result.number = this.currentMaterial.number - count
+              result.amount = this.currentMaterial.number * this.currentMaterial.price - sum
+            }
+
+            return result
+          }
+
         },
         methods: {
 
@@ -77,42 +75,96 @@
            * 搜索相关
            */
           querySearch(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilter(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilter(queryString) {
-            return (item) => {
-              return (item.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.project_content_timer) {
+              clearTimeout(this.throttle.project_content_timer)
+            }
+            this.throttle.project_content_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelect(item) {
-            this.project.id = item.id
+            this.project.id = item.number
             this.project.content = item.name
           },
 
           //项目搜索
           querySearchProjectId(queryString, cb) {
-            var projects = this.projects
-            var results = queryString ? projects.filter(this.createFilterProjectId(queryString)) : projects;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterProjectId(queryString) {
-            return (item) => {
-              return (item.id.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.project_id_timer) {
+              clearTimeout(this.throttle.project_id_timer)
+            }
+            this.throttle.project_id_timer = setTimeout(() => {
+              const searchKey = {
+                id: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectProjectId(item) {
-            this.project.id = item.id
+            this.project.id = item.number
             this.project.content = item.name
+            this.searchMaterials()
+          },
+
+          searchMaterials() {
+
+            _http.MaterialManager.searchBudgetMaterial(this.project.id, {})
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.preMaterialsList = res.data.data
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
 
@@ -120,42 +172,29 @@
           checkDetail(item, index) {
             this.loader = true
             this.materialsDialog = true
-            setTimeout(() => {
-              this.loader = false
-              this.materialsDetail = {
-                name: '物料一',
-                parameter: '这是性能参数这是性能参数',
-                model: 'ak-47',
-                unit: '个',
-                manufacturer: 'xxx厂家',
-                pre: {
-                  quantity: 50,
-                  price: 500,
-                  amount: 52500
-                },
-                data: [{
-                    id: 1,
-                    number: 'CG123151231232',
-                    quantity: -5,
-                    price: 500,
-                    amount: -2500,
-                    manufacturer: 'aaa供货商'
-                  },
-                  {
-                    id: 2,
-                    number: 'CG123123242122',
-                    quantity: -50,
-                    price: 500,
-                    amount: -25000,
-                    manufacturer: 'bbb供货商'
-                  }
-                ],
-                left: {
-                  quantity: 0,
-                  amount: 0
+            this.currentMaterial = item
+
+            _http.MaterialManager.searchPurchase(item.id)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.materialsDetail = res.data.data
+                  this.loader = false
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
                 }
-              }
-            }, 1000)
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+
           },
 
           //提交
