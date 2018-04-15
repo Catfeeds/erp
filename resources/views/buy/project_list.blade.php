@@ -57,51 +57,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1')">154376453254</a>
+                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1')">{{$list->number}}</a>
                     </td>
-                    <td>xx供货商</td>
+                    <td>{{$list->supplier}}</td>
                     <td>123,233,421 ￥</td>
-                    <td>5123421312</td>
-                    <td class="table-content" title="这是一大段内容这是一大段内容这是一大段内容这是一大段内容这是一大段内容">这是一大段内容</td>
-                    <td>张喜</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
+                    <td class="table-content" title="这是一大段内容这是一大段内容这是一大段内容这是一大段内容这是一大段内容">{{\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>专用票17%</td>
                     <td>专用票11%</td>
                     <td>张三</td>
                     <td>李四</td>
                     <td>内</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1')">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,233,421 ￥</td>
-                    <td>5123421312</td>
-                    <td class="table-content" title="这是一大段内容这是一大段内容这是一大段内容这是一大段内容这是一大段内容">这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>专用票17%</td>
-                    <td>专用票11%</td>
-                    <td>张三</td>
-                    <td>李四</td>
-                    <td>内</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../buy/extrabudgetary_check.html?id=1')">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,233,421 ￥</td>
-                    <td>5123421312</td>
-                    <td class="table-content">这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>专用票17%</td>
-                    <td>专用票11%</td>
-                    <td>张三</td>
-                    <td>李四</td>
-                    <td>外</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -109,8 +81,8 @@
         <div class="ui page dimmer">
             <div class="content">
                 <div class="center">
-                    <a href="javascript:_helper.fullWindow('../buy/budgetary.html')" class="ui inverted teal approve button">预算内采购</a>
-                    <a href="javascript:_helper.fullWindow('../buy/extrabudgetary.html')" class="ui inverted blue approve button">预算外采购</a>
+                    <a href="javascript:_helper.fullWindow('{{url('buy/budgetary')}}')" class="ui inverted teal approve button">预算内采购</a>
+                    <a href="javascript:_helper.fullWindow('{{url('buy/extrabudgetary')}}')" class="ui inverted blue approve button">预算外采购</a>
                 </div>
             </div>
         </div>

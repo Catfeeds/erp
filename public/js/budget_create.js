@@ -18,6 +18,7 @@
           //新增预算
           addNewBudget() {
             let newData = Object.assign({}, this.newBudget)
+            console.log(newData)
             for (let it in newData) {
               if (newData[it] === '' || typeof newData[it] === 'undefined') {
                 this.$notify.error({

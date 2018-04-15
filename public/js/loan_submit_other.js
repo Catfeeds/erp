@@ -89,13 +89,14 @@
 
           //新增项
           addItem() {
-            const fatherIndex = this.paymentData.currentTypeIndex
-            const sonIndex = this.paymentData.currentDetailTypeIndex
-            if (fatherIndex !== '') {
+            const category_id = this.paymentData.currentType.id
+            const kind_id = this.paymentData.currentDetailType.id
+            if (category_id !== '') {
               const list = this.submitOtherForm.lists
               let data = {
                 id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-                kind_id: sonIndex ? sonIndex : fatherIndex,
+                kind_id: kind_id,
+                category_id: category_id,
                 type: this.paymentData.currentType.title,
                 detailType: this.paymentData.currentDetailType.title,
               }
@@ -107,6 +108,7 @@
                 type: 'error'
               })
             }
+
           },
 
           //删除
@@ -128,9 +130,32 @@
             this.paymentData.currentDetailType = currentDetailType
           },
 
+          formatData(data) {
+            let result = {
+              loan_user: data.loan_user,
+              date: data.date,
+              price: data.price,
+              lists: []
+            }
+            const list = data.lists
+            for(let i = 0; i < list.length; i++){
+              let tmp = {
+                category_id: list[i].category_id,
+                kind_id: list[i].kind_id,
+                remark: list[i].remark,
+                number: list[i].number,
+                price: list[i].price,
+              }
+              result.lists.push(tmp)
+            }
+            return result
+          },
+
           //提交
           submit() {
-            _http.LoanManager.createSubmit(this.loanForm)
+            const postData = this.formatData(this.submitOtherForm)
+            console.log(postData)
+            _http.LoanManager.createSubmit(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

@@ -77,7 +77,7 @@
             }, 500)
           },
           handleSelectProjectId(item) {
-            this.payForm.project_id = item.number
+            this.payForm.project_id = item.id
             this.payForm.project_content = item.name
           },
 
@@ -109,7 +109,7 @@
             }, 500)
           },
           handleSelectProjectContent(item) {
-            this.payForm.project_id = item.number
+            this.payForm.project_id = item.id
             this.payForm.project_content = item.name
           },
 

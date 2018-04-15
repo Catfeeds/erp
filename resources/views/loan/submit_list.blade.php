@@ -125,9 +125,17 @@
                         @else
                         @endif
                     </td>
-                    <td>{{\App\User::find($list->user_id)->name}}</td>
+                    <td>{{$list->loan_user}}</td>
+                    @if($list->checker!=0)
                     <td>{{\App\User::find($list->checker)->name}}</td>
-                    <td>{{\App\User::find($list->worker)->name}}</td>
+                    @else
+                        <td>待复核</td>
+                    @endif
+                    @if($list->worker!=0)
+                        <td>{{\App\User::find($list->worker)->name}}</td>
+                    @else
+                        <td>待审核</td>
+                    @endif
                     <td>{{$list->state==0?'未付款':'已付款'}}</td>
                     <td>BXFK20171103001</td>
                 </tr>

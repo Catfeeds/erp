@@ -35,22 +35,18 @@
                 <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->title}}</td>
-                    <td style="max-width:600px;">{{explode('/',$category->kinds)}}</td>
+                    @if(!empty($category->kinds))
+                    <td style="max-width:600px;">{{implode('/',$category->kinds)}}</td>
+                    @else
+                        <td style="max-width:600px;"></td>
+                    @endif
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('category/create')}}?id={{$category->id}}')">录入事项</a>
                         <button class="ui mini button negative dataPaymentDelete">删除</button>
                     </td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td>2</td>
-                    <td>业务招待费</td>
-                    <td>餐费/其他</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/payment_edit.html?id=1')">录入事项</a>
-                        <button class="ui mini button negative dataPaymentDelete">删除</button>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
         </div>

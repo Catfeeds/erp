@@ -122,16 +122,17 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1');">154376453254</a>
+                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1');">{{$list->number}}</a>
                     </td>
-                    <td>xx供货商</td>
+                    <td>{{$list->supplier}}</td>
                     <td>123,232,231 ￥</td>
-                    <td>xm125232213</td>
-                    <td class="table-content">这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>内</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
+                    <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
+                    <td>{{$list->type==1?'内':'外'}}</td>
                     <td>200</td>
                     <td>400</td>
                     <td>5000 ￥</td>
@@ -141,25 +142,7 @@
                     <td>2400 ￥</td>
                     <td>未结清</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../buy/extrabudgetary_check.html?id=1');">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,232,231 ￥</td>
-                    <td>xm125232213</td>
-                    <td class="table-content">这是一大段内容</td>
-                    <td>张喜</td>
-                    <td>外</td>
-                    <td>200</td>
-                    <td>400</td>
-                    <td>5000 ￥</td>
-                    <td>5600 ￥</td>
-                    <td>条件二</td>
-                    <td>2000 ￥</td>
-                    <td>2400 ￥</td>
-                    <td>已结清</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

@@ -15,7 +15,7 @@
         },
         mounted() {
           $('#checkInvoice').removeClass('invisible')
-          this.project_id = $('#prokectId').val()
+          this.checkInvoice.project_id = $('#prokectId').val()
           const invoiceType = $('#invoiceType').text().trim()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
         },
@@ -29,7 +29,7 @@
             this.throttle.unit_timer = setTimeout(() => {
               const searchKey = {
                 payee: queryString,
-                project_id: this.project_id || ''
+                project_id: this.checkInvoice.project_id || ''
               }
               _http.ProjectManager.searchProjectUnit(searchKey)
                 .then(res => {

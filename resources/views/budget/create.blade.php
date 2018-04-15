@@ -14,7 +14,7 @@
 
         <h1 class="ui header blue center aligned">预算录入 - 项目号 {{$project->number}}</h1>
 
-        <div class="invisible" id="budgetCreate">
+        <div class="invisible" id="budgetCreate" data-id="{{$project->id}}">
 
             <!-- 操作 -->
             <div class="content-operation">
@@ -46,13 +46,13 @@
                             <input v-model="newBudget.name" type="text" placeholder="请输入物料名称">
                         </div>
                         <div class="two wide column">
-                            <input type="text" v-model="newBudget.parameter" placeholder="请输入性能及技术参数">
+                            <input type="text" v-model="newBudget.param" placeholder="请输入性能及技术参数">
                         </div>
                         <div class="two wide column">
                             <input v-model="newBudget.model" type="text" placeholder="请输入品牌型号">
                         </div>
                         <div class="two wide column">
-                            <input v-model="newBudget.manufacturer" type="text" placeholder="请输入生产厂家">
+                            <input v-model="newBudget.factory" type="text" placeholder="请输入生产厂家">
                         </div>
                         <div class="one wide column">
                             <input v-model="newBudget.unit" type="text" placeholder="单位">
@@ -61,10 +61,10 @@
                             <input v-model.number="newBudget.price" type="number" placeholder="单价">
                         </div>
                         <div class="two wide column">
-                            <input v-model.number="newBudget.quantity" type="number" placeholder="数量">
+                            <input v-model.number="newBudget.number" type="number" placeholder="数量">
                         </div>
                         <div class="two wide column">
-                            <input v-model.number="newBudget.amount" type="number" placeholder="金额">
+                            <input v-model.number="newBudget.cost" type="number" placeholder="金额">
                         </div>
                         <div class="one wide column">
                             <el-select v-model="newBudget.type" placeholder="类型">
@@ -104,13 +104,13 @@
                             <div class="fake-input">@{{ item.name }}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.parameter }}</div>
+                            <div class="fake-input">@{{ item.param }}</div>
                         </div>
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.model }}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.manufacturer }}</div>
+                            <div class="fake-input">@{{ item.factory }}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.unit }}</div>
@@ -119,10 +119,10 @@
                             <div class="fake-input">@{{ item.price.toLocaleString('en-US') }} ￥</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.quantity.toLocaleString('en-US')}}</div>
+                            <div class="fake-input">@{{ item.number.toLocaleString('en-US')}}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{item.amount.toLocaleString('en-US')}} ￥</div>
+                            <div class="fake-input">@{{item.cost.toLocaleString('en-US')}} ￥</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{budgetType[item.type * 1 - 1].name}}</div>
@@ -138,7 +138,7 @@
             <!-- / 录入结果 -->
 
             <div class="inline-center margin-top-20">
-                <button class="ui button green large">
+                <button class="ui button green large" @click="submit">
                     <i class="icon hand pointer"></i>
                     <span>提交</span>
                 </button>

@@ -23,8 +23,8 @@ class CreateBudgetsTable extends Migration
             $table->string('unit');
             $table->float('price');
             $table->integer('number');
-            $table->integer('buy_number');
-            $table->integer('need_buy');
+            $table->integer('buy_number')->default(0);
+            $table->integer('need_buy')->default(0);
             $table->float('cost');
             $table->string('type');
             $table->timestamps();

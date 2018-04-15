@@ -64,48 +64,22 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($applies as $apply)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../build/finish_single.html?id=1')">QK2023122</a>
+                        <a href="javascript:_helper.fullWindow('../build/finish_single.html?id=1')">{{$apply->number}}</a>
                     </td>
-                    <td>施工队一</td>
-                    <td>刘经理</td>
-                    <td>XM20192312</td>
-                    <td class="table-content">这是项目内容</td>
-                    <td>李经理</td>
-                    <td>123,521 ￥</td>
+                    <td>{{$apply->team}}</td>
+                    <td>{{$apply->manager}}</td>
+                    <td>{{$apply->project_number}}</td>
+                    <td class="table-content">{{$apply->project_content}}</td>
+                    <td>{{$apply->project_manager}}</td>
+                    <td>{{$apply->price}} ￥</td>
                     <td>吴海</td>
                     <td>未复核</td>
                     <td>未审批</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../build/finish_single.html?id=1')">QK2023122</a>
-                    </td>
-                    <td>施工队一</td>
-                    <td>刘经理</td>
-                    <td>XM20192312</td>
-                    <td class="table-content">这是项目内容</td>
-                    <td>李经理</td>
-                    <td>123,521 ￥</td>
-                    <td>吴海</td>
-                    <td>未复核</td>
-                    <td>未审批</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../build/finish_single.html?id=1')">QK2023122</a>
-                    </td>
-                    <td>施工队一</td>
-                    <td>刘经理</td>
-                    <td>XM20192312</td>
-                    <td class="table-content">这是项目内容</td>
-                    <td>李经理</td>
-                    <td>123,521 ￥</td>
-                    <td>吴海</td>
-                    <td>未复核</td>
-                    <td>未审批</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

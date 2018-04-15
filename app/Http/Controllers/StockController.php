@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
+use App\Models\Project;
+use App\Models\Purchase;
+use App\Models\PurchaseList;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class StockController extends Controller
 {
@@ -15,7 +20,8 @@ class StockController extends Controller
     }
     public function listBuyList()
     {
-        return view('stock.buy_list');
+        $lists = Purchase::paginate(10);
+        return view('stock.buy_list',['lists'=>$lists]);
     }
     public function listReturnList()
     {
@@ -33,4 +39,50 @@ class StockController extends Controller
     {
 
     }
+    public function addBuy()
+    {
+
+    }
+    public function addReturn()
+    {
+
+    }
+    public function addGet()
+    {
+
+    }
+    public function addOut()
+    {
+
+    }
+    public function buyBudgetary(Request $post)
+    {
+        $id = $post->get('id');
+//        dd($id);
+        $project = Project::find($id);
+        $invoice = Invoice::all();
+        $budgets = $project->budget()->get();
+//        dd($budgets);
+        return view('buy.budgetary_buy',[
+            'project'=>$project,
+            'invoices'=>$invoice,
+            'budgets'=>$budgets
+        ]);
+    }
+    public function buyCheckPage()
+    {
+        $id = \Illuminate\Support\Facades\Input::get('id');
+        $purchase = Purchase::find($id);
+        $lists = PurchaseList::where('purchase_id','=',$id)->get();
+        return view('stock.buy_check',[
+            'purchase'=>$purchase,
+            'lists'=>$lists
+        ]);
+    }
+    public function addBuyPage()
+    {
+
+        return view('stock.buy_add');
+    }
+    public function check
 }

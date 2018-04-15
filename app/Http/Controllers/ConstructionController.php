@@ -15,7 +15,7 @@ class ConstructionController extends Controller
     {
         $lists = $post->get('lists');
         $contract = new ConstructionContract();
-        $team = Team::find($post->get('team_id'));
+        $team = Team::find($post->get('team'));
         $contract->date = $post->get('date');
         $contract->team = $team->name;
         $contract->manager = $team->manager;

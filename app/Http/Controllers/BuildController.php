@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConstructionContract;
+use App\Models\RequestPayment;
 use Illuminate\Http\Request;
 
 class BuildController extends Controller
@@ -27,7 +28,8 @@ class BuildController extends Controller
     }
     public function listFinishPage()
     {
-        return view('build.finish_list');
+        $applies = RequestPayment::paginate(10);
+        return view('build.finish_list',['applies'=>$applies]);
     }
     public function listPayPage()
     {

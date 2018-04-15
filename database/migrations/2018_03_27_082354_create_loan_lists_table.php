@@ -15,6 +15,7 @@ class CreateLoanListsTable extends Migration
     {
         Schema::create('loan_lists', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number');
             $table->string('borrower');
             $table->unsignedInteger('borrower_id');
             $table->float('price');

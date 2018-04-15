@@ -78,7 +78,8 @@
             }, 500)
           },
           handleSelectProjectId(item) {
-            this.extrabudgetary.project_id = item.number
+            this.extrabudgetary.project_id = item.id
+            this.extrabudgetary.project_number = item.number
             this.extrabudgetary.project_content = item.name
           },
 
@@ -110,7 +111,8 @@
             }, 500)
           },
           handleSelectProjectContent(item) {
-            this.extrabudgetary.project_id = item.number
+            this.extrabudgetary.project_id = item.id
+            this.extrabudgetary.project_number = item.number
             this.extrabudgetary.project_content = item.name
           },
 
@@ -161,10 +163,10 @@
               __type: newMaterial.status ? 'old' : 'new'
             }
 
-            if(newMaterial.status){
+            if (newMaterial.status) {
               data.material = newMaterial
               data.material_id = newMaterial.id
-            }else {
+            } else {
               data.name = newMaterial.name
             }
             this.extrabudgetary.lists.push(data)
@@ -173,7 +175,7 @@
           //物料自动提示函数
 
           querySearchMaterial(queryString, cb) {
-            
+
             if (this.throttle.material_timer) {
               clearTimeout(this.throttle.material_timer)
             }
@@ -258,9 +260,42 @@
             }
           },
 
+          dataFormat(data) {
+            let result = {
+              info: data.info,
+              project_id: data.project_id,
+              contracts: data.contracts,
+              lists: []
+            }
+
+            const list = data.lists
+            for (let i = 0; i < list.length; i++) {
+              const currentData = list[i]
+              let tmp = {
+                material_id: currentData.material_id || ''
+              }
+              if (currentData.__type === 'new') {
+                tmp.name = currentData.name
+                tmp.param = currentData.param
+                tmp.model = currentData.model
+                tmp.factory = currentData.factory
+                tmp.unit = currentData.unit
+                tmp.price = currentData.price
+              }
+              tmp.number = currentData.number
+              tmp.cost = currentData.cost
+              tmp.warranty_date = currentData.warranty_date
+              tmp.warranty_time = currentData.warranty_time
+              result.lists.push(tmp)
+            }
+            return result
+          },
+
           //提交
           submitForm() {
-            _http.BuyManager.createPurchase(this.extrabudgetary)
+            const postData = this.dataFormat(this.extrabudgetary)
+            console.log(postData)
+            _http.BuyManager.createPurchase(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify.success({

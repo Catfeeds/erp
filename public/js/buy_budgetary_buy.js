@@ -80,10 +80,10 @@
           
           //供应商输入提示
           handleSelectSupplier(item) {
-            this.extrabudgetary.info.supplier_id = item.id
-            this.extrabudgetary.info.supplier_name = item.name
-            this.extrabudgetary.info.bank = item.bank
-            this.extrabudgetary.info.account = item.account
+            this.budgetary_buy.info.supplier_id = item.id
+            this.budgetary_buy.info.supplier_name = item.name
+            this.budgetary_buy.info.bank = item.bank
+            this.budgetary_buy.info.account = item.account
           },
           querySearchSupplier(queryString, cb) {
 
@@ -174,10 +174,36 @@
                 })
             }
           },
+          
+          dataFormat(data) {
+            let result = {
+              info: data.info,
+              project_id: data.project_id,
+              contracts: data.contracts,
+              lists: []
+            }
+
+            const list = data.lists
+            for (let i = 0; i < list.length; i++) {
+              const currentData = list[i]
+              let tmp = {
+                material_id: currentData.material_id || ''
+              }
+              tmp.number = currentData.number
+              tmp.price = currentData.price
+              tmp.cost = currentData.cost
+              tmp.warranty_date = currentData.warranty_date
+              tmp.warranty_time = currentData.warranty_time
+              result.lists.push(tmp)
+            }
+            return result
+          },
 
           //提交
           submitForm() {
-            _http.BuyManager.createPurchase(this.budgetary_buy)
+            const postData = this.dataFormat(this.budgetary_buy)
+            console.log(postData)
+            _http.BuyManager.createPurchase(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify.success({

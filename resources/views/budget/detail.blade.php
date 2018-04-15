@@ -27,14 +27,6 @@
                             </div>
                         </div>
                     </div>
-                    {{--<div class="column">--}}
-                        {{--<div class="inline fields">--}}
-                            {{--<label class="four wide field">单位名</label>--}}
-                            {{--<div class="twelve wide field">--}}
-                                {{--<div class="fake-input">这是单位名</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                     <div class="column">
                         <div class="inline fields">
                             <label class="four wide field">甲方</label>
@@ -179,31 +171,8 @@
                                 <td>{{$list->remark}}</td>
                             </tr>
                         @endforeach
-                        {{--@endforeach--}}
                     @endfor
                     </tbody>
-                    {{--<tfoot>--}}
-                    {{--<tr>--}}
-                        {{--<th rowspan="3">合计</th>--}}
-                        {{--<th rowspan="3">123,542,000 ￥</th>--}}
-                        {{--<th>内容一</th>--}}
-                        {{--<th>17%</th>--}}
-                        {{--<th>123,000 ￥</th>--}}
-                        {{--<th>/</th>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<th>内容二</th>--}}
-                        {{--<th>9%</th>--}}
-                        {{--<th>123,000 ￥</th>--}}
-                        {{--<th>/</th>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<th>内容三</th>--}}
-                        {{--<th>9%</th>--}}
-                        {{--<th>123,000 ￥</th>--}}
-                        {{--<th>/</th>--}}
-                    {{--</tr>--}}
-                    {{--</tfoot>--}}
                 </table>
             </div>
             <!-- /项目实际情况 -->
@@ -232,8 +201,8 @@
                     </tr>
                     @for($i=0;$i<count($budgets);$i++)
                     <tr>
-                        <td>{{$budget[$i]->type}}</td>
-                        <td>{{$budget[$i]->price}} ￥</td>
+                        <td>{{$budgets[$i]->type}}</td>
+                        <td>{{$budgets[$i]->price}} ￥</td>
                     </tr>
                     @endfor
                     </tbody>

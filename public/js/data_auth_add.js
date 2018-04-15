@@ -21,7 +21,7 @@
         methods: {
           //提交
           submit() {
-            _http.BankManager.createUser(this.authForm)
+            _http.UserManager.createUser(this.authForm)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

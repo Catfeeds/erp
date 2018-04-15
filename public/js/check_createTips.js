@@ -4,9 +4,11 @@
       new Vue({
         el: '#checkCreateTips',
         data: {
-          tipsForm: _schemas.checkTips
+          tipsForm: _schemas.checkTips,
+          projectId: ''
         },
         mounted() {
+          this.projectId = $('#projectId').val()
           $('#checkCreateTips').removeClass('invisible')
         },
         methods: {
@@ -57,8 +59,11 @@
           },
 
           submit() {
-            const postData = this.formatData()
-            if (postData.length <= 0) {
+            let postData = {
+              tips: this.formatData(),
+              project_id: this.projectId
+            }
+            if (postData.tips.length <= 0) {
               this.$notify({
                 title: '错误',
                 message: '请填写数据！',
@@ -67,6 +72,7 @@
               return false
             }
 
+            console.log(postData)
             _http.CheckManager.createTips(postData)
               .then(res => {
                 if (res.data.code === '200') {

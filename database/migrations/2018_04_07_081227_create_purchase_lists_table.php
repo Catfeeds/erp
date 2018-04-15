@@ -18,7 +18,7 @@ class CreatePurchaseListsTable extends Migration
             $table->unsignedInteger('purchase_id');
             $table->unsignedInteger('material_id');
             $table->integer('number');
-            $table->float('price');
+            $table->float('price')->default(0);
             $table->float('cost');
             $table->string('warranty_date');
             $table->string('warranty_time');

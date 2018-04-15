@@ -11,7 +11,7 @@
             price: '',
             project_id: '',
             project_content: '',
-            list: []
+            lists: [],
           },
 
           //费用类型
@@ -53,13 +53,32 @@
           }
         },
         mounted() {
-          $('#loanSubmitOther').removeClass('invisible')
+          _http.LoanManager.searchCategory()
+            .then(res => {
+              if (res.data.code === '200') {
+                this.paymentData.typeList = res.data.data
+              } else {
+                this.$notify({
+                  title: '错误',
+                  message: res.data.msg || '未知错误',
+                  type: 'error'
+                })
+              }
+            })
+            .catch(err => {
+              this.$notify({
+                title: '错误',
+                message: '服务器出错',
+                type: 'error'
+              })
+            })
           this.submitProjectForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          $('#loanSubmitOther').removeClass('invisible')
         },
         computed: {
 
           sumAmount() {
-            const list = this.submitProjectForm.list
+            const list = this.submitProjectForm.lists
             if (!list.length) {
               return 0
             }
@@ -106,7 +125,8 @@
             }, 500)
           },
           handleSelectProjectId(item) {
-            this.submitProjectForm.project_id = item.number
+            this.submitProjectForm.project_id = item.id
+            this.submitProjectForm.project_number = item.number
             this.submitProjectForm.project_content = item.name
           },
 
@@ -140,20 +160,22 @@
             }, 500)
           },
           handleSelectProjectContent(item) {
-            this.submitProjectForm.project_id = item.number
+            this.submitProjectForm.project_id = item.id
+            this.submitProjectForm.project_number = item.number
             this.submitProjectForm.project_content = item.name
           },
 
           //新增项
           addItem() {
 
-            const fatherIndex = this.paymentData.currentTypeIndex
-            const sonIndex = this.paymentData.currentDetailTypeIndex
-            if (fatherIndex !== '') {
+            const category_id = this.paymentData.currentType.id
+            const kind_id = this.paymentData.currentDetailType.id
+            if (category_id !== '') {
               const list = this.submitProjectForm.lists
               let data = {
                 id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-                kind_id: sonIndex ? sonIndex : fatherIndex,
+                kind_id: kind_id,
+                category_id: category_id,
                 type: this.paymentData.currentType.title,
                 detailType: this.paymentData.currentDetailType.title,
               }
@@ -186,9 +208,33 @@
             this.paymentData.currentDetailType = currentDetailType
           },
 
+          formatData(data) {
+            let result = {
+              loan_user: data.loan_user,
+              date: data.date,
+              price: data.price,
+              project_id: data.project_id,
+              lists: []
+            }
+            const list = data.lists
+            for(let i = 0; i < list.length; i++){
+              let tmp = {
+                category_id: list[i].category_id,
+                kind_id: list[i].kind_id,
+                remark: list[i].remark,
+                number: list[i].number,
+                price: list[i].price,
+              }
+              result.lists.push(tmp)
+            }
+            return result
+          },
+
           //提交
           submit() {
-            _http.LoanManager.createSubmitProject(this.loanForm)
+            const postData = this.formatData(this.submitProjectForm)
+            console.log(postData)
+            _http.LoanManager.createSubmitProject(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

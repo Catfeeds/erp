@@ -15,6 +15,7 @@ class CreateRequestPaymentsTable extends Migration
     {
         Schema::create('request_payments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number');
             $table->string('team');
             $table->string('manager');
             $table->string('project_number');

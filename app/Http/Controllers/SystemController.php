@@ -145,7 +145,7 @@ class SystemController extends Controller
                 'data'=>[
                     'size'=>$count+1,
                     'name'=>$name,
-                    'url'=>'http://119.23.202.220:8080/'.($destinationPath.'/'.$name),
+                    'url'=>'http://193.112.181.116:8080/'.($destinationPath.'/'.$name),
                 ]
             ]);
         }

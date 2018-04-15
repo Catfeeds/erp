@@ -14,7 +14,7 @@
 Route::get('/','UserController@index');
 Route::post('login','UserController@login');
 Route::any('upload','SystemController@upload');
-Route::get('login','UserController@loginPage');
+Route::get('login','UserController@loginPage')->name('login');
 Route::get('logout','UserController@logout');
 //Route::post('project/create','ProjectController@createProject');
 Route::get('projects','ProjectController@searchProject');
@@ -23,6 +23,7 @@ Route::get('teams','SystemController@getTeams');
 Route::get('suppliers','SystemController@searchSupplier');
 Route::get('search/category','SystemController@searchCategory');
 Route::get('project/material','ProjectController@searchProjectMaterial');
+Route::get('search/budget','ProjectController@searchBudget');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
 Route::group(['middleware'=>'auth'],function (){
@@ -45,9 +46,9 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('bank/create','SystemController@createBankAccountPage');
    Route::get('bank/list','SystemController@listBankAccountsPage');
    Route::post('bank/create','SystemController@createBankAccount');
-   Route::get('invoice/create','SystemController@createInvoice');
+   Route::get('invoice/create','SystemController@createInvoicePage');
    Route::get('invoice/list','SystemController@listInvoicesPage');
-   Route::post('invoice/create','SystemController@createInvoicePage');
+   Route::post('invoice/create','SystemController@createInvoice');
    Route::post('team/create','SystemController@createTeam');
    Route::get('team/list','SystemController@listTeamsPage');
    Route::get('team/create','SystemController@createTeamPage');
@@ -57,8 +58,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('category/create','SystemController@addCategory');
    Route::get('category/create','SystemController@addCategoryPage');
    Route::get('category/list','SystemController@listCategoryPage');
-   Route::post('create/budget','ProjectController@addBudget');
-   Route::get('create/budget','ProjectController@addBudgetPage');
+
    Route::get('budget/list','ProjectController@listBudgetsPage');
 //   Route::get('budget/detail','ProjectController@showBudgetPage');
    Route::post('create/user','UserController@register');
@@ -79,12 +79,16 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/detail','ProjectController@checkDetailPage');
    Route::get('check/tips','ProjectController@checkTipsPage');
    Route::get('create/tips','ProjectController@createTipsPage');
+   Route::post('project/invoice','ProjectController@createInvoice');
+   Route::post('project/collect','ProjectController@createCollect');
    Route::get('check/invoice','ProjectController@checkInvoicePage');
    Route::get('check/collect','ProjectController@checkCollectPage');
    Route::post('create/tips','ProjectController@createTips');
 //   Route::get('check/tips','ProjectController@checkTipsPage');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
+    Route::post('create/budget','ProjectController@addBudget');
+    Route::get('create/budget','ProjectController@addBudgetPage');
    //采购管理
     Route::get('purchases/list','ProjectController@listPurchasesPage');
     Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
@@ -94,12 +98,18 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
     Route::post('purchase/create','ProjectController@createPurchase');
+    Route::get('buy/budgetary','ProjectController@createBudgetaryPage');
+    Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
     Route::get('stock/buy/list','StockController@listBuyList');
     Route::get('stock/return/list','StockController@listReturnList');
     Route::get('stock/get/list','StockController@listGetList');
     Route::get('stock/out/list','StockController@listOutList');
+    Route::get('stock/add/buy','StockController@addBuyPage');
+    Route::get('store/buy_check','StockController@buyCheckPage');
+    Route::get('buy/budgetary_buy','StockController@buyBudgetary');
+
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');
     Route::get('build/deal/list','BuildController@listDealPage');
@@ -115,6 +125,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/detail/list','PayController@listDetailPage');
     Route::get('loan/loan/list','PayController@listLoanListPage');
     Route::get('loan/loan/add','PayController@addLoanPage');
+    Route::post('loan/add','PayController@createLoanApply');
     Route::get('loan/submit/list','PayController@listSubmitListPage');
     Route::post('loan/submit/other','PayController@createSubmitList');
     Route::get('loan/submit/other','PayController@createSubmitOtherPage');

@@ -16,7 +16,7 @@
             <form action="" class="ui form">
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../data/invoice_add.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('invoice/create')}}')">
                             <i class="icon plus"></i>
                             <span>新增发票类型</span>
                         </a>

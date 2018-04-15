@@ -14,7 +14,7 @@
             <div class="active section">开票</div>
         </div>
 
-        <input type="hidden" id="projectId" value="XM15823910212">
+        <input type="hidden" id="projectId" value="{{$project->id}}">
         <div id="invoiceType" style="display:none">[{"id":1,"value":5},{"id":2,"value":5},{"id":3,"value":5}]</div>
 
         <h1 class="ui red header blue center aligned">开票</h1>
@@ -27,6 +27,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目编号</label>
                             <div class="twelve wide field">
+
                                 <div class="fake-input">{{$project->number}}</div>
                             </div>
                         </div>
@@ -35,6 +36,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目内容</label>
                             <div class="twelve wide field">
+
                                 <div class="fake-input">{{$project->name}}</div>
                             </div>
                         </div>

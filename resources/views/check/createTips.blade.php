@@ -24,6 +24,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目编号</label>
                             <div class="twelve wide field">
+                                <input type="hidden" id="projectId" value="{{$project->id}}">
                                 <div class="fake-input">{{$project->number}}</div>
                             </div>
                         </div>

@@ -12,6 +12,7 @@ use App\Models\PayApply;
 use App\Models\Project;
 use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
+use App\Models\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,11 +33,11 @@ class PayController extends Controller
         $project = Project::find($post->get('project_id'));
         $apply->apply_date = $post->get('date');
         $apply->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
-        $apply->price = $post->get('price');
-        $apply->use = $post->get('application');
+        $apply->price = $post->get('amount');
+        $apply->use = $post->get('usage');
         $apply->project_number = $project->number;
         $apply->project_content = $project->name;
-//        $apply->proposer = $post->get('proposer');
+        $apply->proposer = $post->get('people');
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',
@@ -90,13 +91,16 @@ class PayController extends Controller
         $data = $DbObj->paginate(10);
         return view('pay.list',['lists'=>$data]);
     }
+    //借款
     public function createLoanApply(Request $post)
     {
         $apply = new LoanList();
-        $apply->borrower = Auth::user()->name;
+        $apply->borrower = $post->get('loan_user');
         $apply->borrower_id = Auth::id();
+        $count = LoanList::whereDate('created_at', date('Y-m-d',time()))->count();
+        $apply->number = 'JK'.date('Ymd',time()).sprintf("%03d", $count+1);
         $apply->apply_date = $post->get('date');
-        $apply->price = $post->get('price');
+        $apply->price = $post->get('preice');
         $apply->reason = $post->get('reason');
         if ($apply->save()){
             return response()->json([
@@ -143,6 +147,7 @@ class PayController extends Controller
     }
     public function createSubmitList(Request $post)
     {
+//        dd($post->all());
         $id = $post->get('id');
         $lists = $post->get('lists');
         if ($id){
@@ -156,11 +161,15 @@ class PayController extends Controller
         $loan->type = 1;
         $loan->date = $post->get('date');
         $loan->price = $post->get('price');
+        $loan->loan_user = $post->get('loan_user');
         if ($loan->save()){
             foreach ($lists as $item){
                 $list = new LoanSubmitList();
                 $list->loan_id = $loan->id;
-                $list->kind_id = $item['kind_id'];
+                if (!empty($item['kind_id'])){
+                    $list->kind_id = $item['kind_id'];
+                }
+                $list->category_id = $item['category_id'];
                 $list->number = $item['number'];
                 $list->price = $item['price'];
                 $list->remark = $item['remark'];
@@ -188,11 +197,15 @@ class PayController extends Controller
         $loan->date = $post->get('date');
         $loan->price = $post->get('price');
         $loan->project_id = $post->get('project_id');
+        $loan->loan_user = $post->get('loan_user');
         if ($loan->save()){
             foreach ($lists as $item){
                 $list = new LoanSubmitList();
                 $list->loan_id = $loan->id;
-                $list->kind_id = $item['kind_id'];
+                if (!empty($item['kind_id'])){
+                    $list->kind_id = $item['kind_id'];
+                }
+                $list->category_id = $item['category_id'];
                 $list->number = $item['number'];
                 $list->price = $item['price'];
                 $list->remark = $item['remark'];
@@ -253,14 +266,18 @@ class PayController extends Controller
     }
     public function addRequestPayment(Request $post)
     {
-        $lists = $post->get('lists');
+        $lists = $post->get('list');
         $payment = new RequestPayment();
-        $payment->team = $post->get('team');
-        $payment->manager = $post->get('manager');
-        $payment->project_number = $post->get('project_number');
+        $team = Team::find($post->get('team'));
+        $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
+        $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
+        $payment->team = $team->name;
+        $payment->manager = $team->manager;
+//        $project = Project::where('number','=',$post->get('project_id'))->first();
+        $payment->project_number = $post->get('project_id');
         $payment->project_content = $post->get('project_content');
         $payment->project_manager = $post->get('project_manager');
-        $payment->request_date = $post->get('request_date');
+        $payment->request_date = $post->get('date');
         $payment->price = $post->get('price');
         $payment->save();
         if (!empty($lists)){
@@ -268,7 +285,7 @@ class PayController extends Controller
                 $list = new RequestPaymentList();
                 $list->payment_id = $payment->id;
                 $list->name = $item['name'];
-                $list->param = $item['param'];
+                $list->param = $item['para'];
                 $list->number = $item['number'];
                 $list->unit = $item['unit'];
                 $list->price = $item['price'];

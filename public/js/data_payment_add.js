@@ -19,7 +19,7 @@
 
           //移除标签
           handleClose(tag, index) {
-            this.paymentForm.list.splice(index, 1)
+            this.paymentForm.kinds.splice(index, 1)
           },
           showInput() {
             this.inputVisible = true
@@ -30,7 +30,7 @@
           handleInputConfirm() {
             let inputValue = this.inputValue
             if (inputValue) {
-              this.paymentForm.list.push(inputValue)
+              this.paymentForm.kinds.push(inputValue)
             }
             this.inputVisible = false
             this.inputValue = ''

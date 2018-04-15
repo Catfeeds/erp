@@ -19,7 +19,7 @@
         methods: {
           //提交
           submit() {
-            _http.InvoiceManager.createInvoice(this.teamForm)
+            _http.TeamManager.createTeam(this.teamForm)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

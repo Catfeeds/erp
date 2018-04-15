@@ -105,6 +105,7 @@
           },
           handleSelect(item) {
             this.project.id = item.number
+            this.project.project_id = item.id
             this.project.content = item.name
           },
 
@@ -140,6 +141,7 @@
           },
           handleSelectProjectId(item) {
             this.project.id = item.number
+            this.project.project_id = item.id
             this.project.content = item.name
             this.searchMaterials()
           },
@@ -197,11 +199,11 @@
 
           },
 
-          //提交
           submit() {
             if (this.project.id && this.project.content) {
-              _helper.fullWindow(`../buy/budgetary_buy.html?id=${this.project.id}`)
+              _helper.fullWindow(`../buy/budgetary_buy?id=${this.project.project_id}`)
             } else {
+              return false
               this.$notify({
                 type: 'error',
                 title: '错误',
@@ -209,6 +211,7 @@
               })
             }
           }
+
         }
       })
     })

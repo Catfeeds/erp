@@ -6,9 +6,13 @@ use App\Http\Requests\BudgetPost;
 use App\Http\Requests\CreateProjectPost;
 use App\Models\Bail;
 use App\Models\Budget;
+use App\Models\Invoice;
+use App\Models\InvoiceList;
 use App\Models\MainContract;
 use App\Models\OutContract;
 use App\Models\Project;
+use App\Models\ProjectCollect;
+use App\Models\ProjectInvoice;
 use App\Models\ProjectPicture;
 use App\Models\ProjectSituations;
 use App\Models\ProjectType;
@@ -46,6 +50,23 @@ class ProjectController extends Controller
         ]);
 
     }
+    public function searchBudget()
+    {
+        $number = Input::get('project');
+        $project = Project::where('number','=',$number)->first();
+        if ($project){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>$project->budget()->get()
+                ]);
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>[]
+        ]);
+    }
     public function searchProjectUnit()
     {
         $id = Input::get('project_id');
@@ -66,10 +87,15 @@ class ProjectController extends Controller
         }
         $data = $obj->select('unit')->get()->toArray();
         $data2 = $obj2->select('unit')->get()->toArray();
+        $data = array_merge($data,$data2);
+        $swap = [];
+        for ($i=0;$i<count($data);$i++){
+            $swap[$i] = $data[$i]['unit'];
+        }
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
-            'data'=>array_merge($data,$data2)
+            'data'=>$swap
         ]);
     }
     public function searchProjectMaterial()
@@ -94,7 +120,7 @@ class ProjectController extends Controller
             dd($project);
         }else{
             $types = ProjectType::select(['id','name'])->get()->toArray();
-            $rates = TaxRate::select(['id','rate as name'])->get()->toArray();
+            $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
             return view('project.create',['types'=>$types,'rates'=>$rates]);
         }
     }
@@ -322,21 +348,25 @@ class ProjectController extends Controller
     }
     public function addBudget(Request $budgetPost)
     {
-        $project_id = $budgetPost->get('project_id');
-        $budgets = $budgetPost->get('budgets');
+        $data = $budgetPost->all();
+        $project_id = $data['project_id'];
+        unset($data['project_id']);
+        $budgets = $data;
+//        dd($budgets);
         if (!empty($budgets)){
             foreach ($budgets as $item){
                 $budget = new Budget();
                 $budget->project_id = $project_id;
                 $budget->name = $item['name'];
                 $budget->param = $item['param'];
-                $budget->brand = $item['brand'];
+                $budget->model = $item['model'];
                 $budget->factory = $item['factory'];
                 $budget->unit = $item['unit'];
                 $budget->price = $item['price'];
                 $budget->number = $item['number'];
                 $budget->cost = $item['cost'];
                 $budget->type = $item['type'];
+                $budget->need_buy = $item['number'];
                 $budget->save();
             }
         }
@@ -419,7 +449,52 @@ class ProjectController extends Controller
     {
         $id = Input::get('id');
         $project = Project::find($id);
-        return view('check.invoice',['project'=>$project]);
+        return view('check.collect',['project'=>$project]);
+    }
+    public function createInvoice(Request $post)
+    {
+        $project_id = $post->get('project_id');
+        $lists = $post->get('lists');
+        $invoice = new ProjectInvoice();
+        $invoice->project_id = $project_id;
+        $invoice->unit = $post->get('payee');
+        $invoice->date = $post->get('date');
+        $invoice->rate = $post->get('rate');
+        $invoice->price = $post->get('price');
+        if ($invoice->save()){
+            foreach ($lists as $item){
+                $list = new InvoiceList();
+                $list->invoice_id = $invoice->id;
+                $list->number = $item['number'];
+                $list->tax_include = $item['with_tax'];
+                $list->tax_price = $item['tax'];
+                $list->tax_without = $item['without_tax'];
+                $list->remark = $item['remark'];
+                $list->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function createCollect(Request $post)
+    {
+        $type = $post->get('type');
+        $project_id = $post->get('project_id');
+        $collect = new ProjectCollect();
+        $collect->project_id = $project_id;
+        $collect->payee = $post->get('payee');
+        $collect->date = $post->get('pay_date');
+        $collect->price = $post->get('price');
+        $collect->bank = $post->get('bank');
+        $collect->account = $post->get('account');
+        $collect->type = $type;
+        $collect->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
     }
     public function acceptancePage()
     {
@@ -446,8 +521,11 @@ class ProjectController extends Controller
     }
     public function createTips(Request $post)
     {
+//        echo 'ddd';
         $id = $post->get('project_id');
+//        dd($id);
         $tips = $post->get('tips');
+//        dd($tips);
         foreach ($tips as $item){
             $tip = new Tip();
             $tip->project_id = $id;
@@ -485,18 +563,25 @@ class ProjectController extends Controller
         $purchase->bank = $supplier->bank;
         $purchase->account = $supplier->account;
         $purchase->condition = $basic['condition'];
-        $purchase->content = $basic['content'];
+        $purchase->type = $basic['type'];
+//        dd($basic);
+//        $invoice = Invoice::find($basic['content']);
+//        dd($invoice);
+        $purchase->content = Invoice::find($basic['content'])->name;
         if ($purchase->save()){
             foreach ($lists as $item){
-                $list = new PurchaseList();
-                $list->purchase_id = $purchase->id;
-                $list->material_id = $item['material_id'];
-                $list->number = $item['number'];
-                $list->price = $item['price'];
-                $list->cost = $item['cost'];
-                $list->warranty_date = $item['warranty_date'];
-                $list->warranty_time = $item['warranty_time'];
-                $list->save();
+                if ($item['material_id']){
+                    $list = new PurchaseList();
+                    $list->purchase_id = $purchase->id;
+                    $list->material_id = $item['material_id'];
+                    $list->number = $item['number'];
+//                    $list->price = $item['price'];
+                    $list->cost = $item['cost'];
+                    $list->warranty_date = $item['warranty_date'];
+                    $list->warranty_time = $item['warranty_time'];
+                    $list->save();
+                }
+
             }
             foreach ($contracts as $item) {
                 $contract = new PurchaseContract();
@@ -505,6 +590,10 @@ class ProjectController extends Controller
                 $contract->href = $item['href'];
                 $contract->save();
             }
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
         }
     }
     public function createPurchasePayment()
@@ -518,11 +607,13 @@ class ProjectController extends Controller
     }
     public function listPurchasesPage()
     {
-        return view('buy.list');
+        $lists = Purchase::paginate(10);
+        return view('buy.list',['lists'=>$lists]);
     }
     public function listProjectPurchasesPage()
     {
-        return view('buy.project_list');
+        $lists = Purchase::paginate(10);
+        return view('buy.project_list',['lists'=>$lists]);
     }
     public function listPurchasesPayPage()
     {
@@ -539,6 +630,15 @@ class ProjectController extends Controller
     public function purchaseParityPage()
     {
         return view('buy.parity');
+    }
+    public function createBudgetaryPage()
+    {
+        return view('buy.budgetary');
+    }
+    public function createExtraBudgetaryPage()
+    {
+        $invoice = Invoice::all();
+        return view('buy.extrabudgetary',['invoice'=>$invoice]);
     }
 
 }
