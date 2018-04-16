@@ -26,19 +26,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="inline fields">
-                            <label class="four wide field">单位名</label>
-                            <div class="twelve wide field">
-                                <div class="fake-input">这是单位名</div>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="column">--}}
+                        {{--<div class="inline fields">--}}
+                            {{--<label class="four wide field">单位名</label>--}}
+                            {{--<div class="twelve wide field">--}}
+                                {{--<div class="fake-input">这是单位名</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="column">
                         <div class="inline fields">
                             <label class="four wide field">甲方</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">{{$project->partyA}}</div>
+                                <div class="fake-input">{{$project->PartyA}}</div>
                             </div>
                         </div>
                     </div>

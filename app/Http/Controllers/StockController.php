@@ -81,7 +81,6 @@ class StockController extends Controller
     }
     public function addBuyPage()
     {
-
         return view('stock.buy_add');
     }
 //    public function check

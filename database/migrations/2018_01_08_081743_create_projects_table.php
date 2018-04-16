@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('number');
             $table->string('name')->commit('name');
             $table->string('PartyA')->commit('PartyA');
-            $table->float('price')->default(0)->commit('price');
+            $table->float('price',18,2)->default(0)->commit('price');
             $table->integer('finishTime')->commit('finishTime');
             $table->string('pm')->commit('project manager');
             $table->integer('createTime')->commit('createTime');

@@ -12,7 +12,7 @@ class Project extends Model
      */
     public function bail()
     {
-        return $this->hasMany('App\Models\ProjectBail','project_id','id');
+        return $this->hasMany('App\Models\Bail','project_id','id');
     }
 
     public function mainContract()
