@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ConstructionContract;
 use App\Models\RequestPayment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class BuildController extends Controller
 {
@@ -38,5 +39,11 @@ class BuildController extends Controller
     public function listGetPage()
     {
         return view('build.get_list');
+    }
+    public function finishSinglePage()
+    {
+        $id = Input::get('id');
+        $apply = RequestPayment::find($id);
+        return view('build.finish_single',['apply'=>$apply]);
     }
 }

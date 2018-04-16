@@ -23,8 +23,8 @@
                 <tbody>
                 @foreach($lists as $list)
                 <tr>
-                    <td>{{$list}}</td>
-                    <td>123,523￥</td>
+                    <td>{{$list->name}}</td>
+                    <td>{{\App\Models\LoanList::where('borrower','=',$list->name)->sum('price')}}￥</td>
                     <td>12,523￥</td>
                 </tr>
                 @endforeach

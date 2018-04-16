@@ -126,7 +126,7 @@ class PayController extends Controller
     }
     public function listLoanPage()
     {
-        $lists = LoanList::paginate(10);
+        $lists = User::paginate(10);
         return view('loan.list',['lists'=>$lists]);
     }
     public function listDetailPage()

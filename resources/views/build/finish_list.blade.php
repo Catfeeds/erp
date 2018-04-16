@@ -67,7 +67,7 @@
                 @foreach($applies as $apply)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../build/finish_single.html?id=1')">{{$apply->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('build/finish/single')}}?id={{$apply->id}}')">{{$apply->number}}</a>
                     </td>
                     <td>{{$apply->team}}</td>
                     <td>{{$apply->manager}}</td>
