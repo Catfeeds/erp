@@ -84,5 +84,5 @@ class StockController extends Controller
 
         return view('stock.buy_add');
     }
-    public function check
+//    public function check
 }
