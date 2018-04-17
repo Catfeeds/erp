@@ -42,10 +42,10 @@
                     <td>{{$list->price}}￥</td>
                     <td style="max-width:300px">{{$list->reason}}</td>
                     <td>{{$list->borrower}}</td>
-                    @if($list->approver==0)
+                    @if($list->approver_id==0)
                     <td>未审批</td>
                     @else
-                        <td>{{\App\User::find($list->approver)->name}}</td>
+                        <td>{{\App\User::find($list->approver_id)->name}}</td>
                     @endif
                     @if(!$list->pay_date)
                     <td colspan="4">暂无数据</td>
@@ -56,8 +56,14 @@
                         <td>{{$list->manager}}</td>
                         @endif
                     <td style="white-space:nowrap;">
+                        @if($list->state==1)
                         <button class="ui mini button negative loanLoanListCancel">撤销</button>
                         <button class="ui mini button positive loanLoanListCheck">审批</button>
+                            @elseif($list->state==2)
+                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('loan/pay')}}?id={{$list->id}}')">录入/修改</a>
+                            <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$list->id}}')">凭证</a>
+                            @else
+                        @endif
                     </td>
                 </tr>
                 @endforeach

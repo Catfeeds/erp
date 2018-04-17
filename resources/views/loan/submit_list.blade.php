@@ -105,7 +105,7 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../loan/submit_single.html?id=1')">BX20171103001</a>
+                        <a href="javascript:_helper.fullWindow('{{url('loan/submit/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     @if($list->type==1)
                     <td>期间报销</td>

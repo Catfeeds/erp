@@ -27,310 +27,41 @@
           },
 
           //保函 / 付款
-          marginPay: {
-            count1: 123123,
-            count2: 123123,
-            count3: 213421252,
-            data: [{
-                id: 1,
-                guarantee: {
-                  company: '单位一',
-                  amount: 12315412,
-                  date: '2018-02-11',
-                  cost: 5232,
-                  others: '其他信息'
-                },
-                payment: {
-                  date: '2018-02-04',
-                  amount: 52321,
-                  payee: '张先生',
-                  bank: '广发银行',
-                  account: 6009876787523154281,
-                  recyle: '回收条件条件'
-                }
-              },
-              {
-                id: 2,
-                guarantee: {
-                  company: '单位二',
-                  amount: 223542,
-                  date: '2018-02-15',
-                  cost: 6234,
-                  others: '其他信息'
-                },
-                payment: {
-                  date: '2018-02-04',
-                  amount: 52321,
-                  payee: '张先生',
-                  bank: '广发银行',
-                  account: 6009876787523154281,
-                  recyle: '回收条件条件'
-                }
-              }
-            ]
-          },
+          marginPay: {},
 
           //履约保证金
-          marginRecyle: {
-            count: 1111111,
-            leftCount: 2321,
-            data: [{
-                id: 1,
-                preDate: '2018-01-02',
-                preAmount: 12342213,
-                prePeople: '张先生',
-                preRemark: '这是备注',
-                realDate: '2018-02-01',
-                realBank: '中国银行',
-                realAmount: 231523,
-                realPeople: '张先生',
-                realAccount: 60002321523215231234
-              },
-              {
-                id: 2,
-                preDate: '2018-03-02',
-                preAmount: 5232124,
-                prePeople: '成先生',
-                preRemark: '这是备注',
-                realDate: '2018-04-01',
-                realBank: '广发银行',
-                realAmount: 2342,
-                realPeople: '成先生',
-                realAccount: 60002321523215231234
-              }
-            ]
-          },
+          marginRecyle: {},
 
           //预计请款
-          requirement: {
-            count: 123123,
-            data: [{
-                id: 1,
-                date: '2018-10-22',
-                amount: 123142,
-                company: 'xxx单位',
-                remark: '这是备注~'
-              },
-              {
-                id: 2,
-                date: '2017-12-22',
-                amount: 123,
-                company: 'xxx单位',
-                remark: '这是备注这是备注~'
-              }
-            ]
-          },
+          requirement: {},
 
           //开票
-          invoice: {
-            count: 2312312,
-            data: [{
-                id: 1,
-                date: '2018-01-02',
-                amount: 2132,
-                company: {
-                  id: 1,
-                  value: '单位一',
-                },
-                tax: {
-                  id: 1,
-                  value: 5
-                }
-              },
-              {
-                id: 2,
-                date: '2018-01-02',
-                amount: 2132,
-                company: {
-                  id: 1,
-                  value: '单位一',
-                },
-                tax: {
-                  id: 1,
-                  value: 5
-                }
-              },
-              {
-                id: 3,
-                date: '2018-01-02',
-                amount: 2132,
-                company: {
-                  id: 2,
-                  value: '单位二',
-                },
-                tax: {
-                  id: 2,
-                  value: 9
-                }
-              },
-              {
-                id: 4,
-                date: '2018-01-02',
-                amount: 2132,
-                company: {
-                  id: 3,
-                  value: '单位三',
-                },
-                tax: {
-                  id: 3,
-                  value: 15
-                }
-              },
-              {
-                id: 5,
-                date: '2018-01-02',
-                amount: 2132,
-                company: {
-                  id: 3,
-                  value: '单位三',
-                },
-                tax: {
-                  id: 1,
-                  value: 5
-                }
-              }
-            ]
-          },
+          invoice: {},
 
           //开票公司
-          invoiceCompany: [{
-              id: 1,
-              value: '单位一',
-            },
-            {
-              id: 2,
-              value: '单位二',
-            },
-            {
-              id: 3,
-              value: '单位三',
-            }
-          ],
+          invoiceCompany: [],
 
           //key--value copy
-          invoiceCompanyCopy: {
-            1: '单位一',
-            2: '单位二',
-            3: '单位三',
-          },
+          invoiceCompanyCopy: {},
 
           //开票税率
-          invoiceTax: [{
-              id: 1,
-              value: 5,
-            },
-            {
-              id: 2,
-              value: 9,
-            },
-            {
-              id: 3,
-              value: 15,
-            }
-          ],
+          invoiceTax: [],
 
           //发包公司收款情况
-          subCompany: {
-            count: 323123,
-            data: [{
-                id: 1,
-                date: '2018-01-02',
-                amount: 213123,
-                remark: '这是备注啊~'
-              },
-              {
-                id: 2,
-                date: '2018-01-02',
-                amount: 3212,
-                remark: '这是备注啊~'
-              },
-              {
-                id: 3,
-                date: '2018-01-02',
-                amount: 4274,
-                remark: '这是备注啊~'
-              }
-            ]
-          },
+          subCompany: {},
 
           //主合同收款
-          masterContract: {
-            count: 123123,
-            data: [{
-                id: 1,
-                date: '2018-09-21',
-                amount: 213123,
-                bank: '中国银行',
-                account: 6034232123523673112,
-                remark: '这是备注~'
-              },
-              {
-                id: 2,
-                date: '2018-09-21',
-                amount: 6423,
-                bank: '中国银行',
-                account: 603423212123473112,
-                remark: '这是备注~'
-              },
-              {
-                id: 3,
-                date: '2018-09-21',
-                amount: 6321,
-                bank: '广发银行',
-                account: 6034232123242673112,
-                remark: '这是备注~'
-              },
-              {
-                id: 4,
-                date: '2018-09-21',
-                amount: 32421,
-                bank: '中国银行',
-                account: 6034232123523673112,
-                remark: '这是备注~'
-              }
-            ]
-          },
+          masterContract: {},
 
           //分包合同收款
-          subContract: {
-            count: 123123,
-            data: [{
-                id: 1,
-                date: '2018-09-21',
-                amount: 213123,
-                bank: '中国银行',
-                account: 6034232123523673112,
-                remark: '这是备注~'
-              },
-              {
-                id: 2,
-                date: '2018-09-21',
-                amount: 6423,
-                bank: '中国银行',
-                account: 603423212123473112,
-                remark: '这是备注~'
-              },
-              {
-                id: 3,
-                date: '2018-09-21',
-                amount: 6321,
-                bank: '广发银行',
-                account: 6034232123242673112,
-                remark: '这是备注~'
-              },
-              {
-                id: 4,
-                date: '2018-09-21',
-                amount: 32421,
-                bank: '中国银行',
-                account: 6034232123523673112,
-                remark: '这是备注~'
-              }
-            ]
-          }
+          subContract: {}
         },
 
         mounted() {
+          this.init()
+          this.invoiceCompanyCopy = this.copyData(this.invoiceCompany)
+          console.log(this)
+
           $('#checkDetail').removeClass('invisible')
         },
 
@@ -338,6 +69,9 @@
 
           //实际履约保证金合计
           marginCount() {
+            if(!this.marginRecyle.data){
+              return 0
+            }
             const data = this.marginRecyle.data
             let sum = 0
             data.forEach((item, index) => {
@@ -348,6 +82,9 @@
 
           //预计保证金
           preMarginCount() {
+            if(!this.marginRecyle.data){
+              return 0
+            }
             const data = this.marginRecyle.data
             let sum = 0
             data.forEach((item, index) => {
@@ -364,6 +101,9 @@
 
           //请款合计
           requirementCount() {
+            if(!this.requirement.data){
+              return 0
+            }
             const data = this.requirement.data
             let sum = 0
             data.forEach((item, index) => {
@@ -374,6 +114,9 @@
 
           //收票合计
           invoiceCount() {
+            if(!this.invoice.data){
+              return 0
+            }
             const data = this.invoice.data
             let sum = 0
             data.forEach((item, index) => {
@@ -384,6 +127,9 @@
 
           //收票统计
           invoiceTaxCount() {
+            if(!this.invoice.data){
+              return []
+            }
             const vm = this
             const data = this.invoice.data
             let tmpObj = {}
@@ -422,6 +168,9 @@
 
           //分包公司合计
           subCompanyCount() {
+            if(!this.subCompany.data){
+              return 0
+            }
             const data = this.subCompany.data
             let sum = 0
             data.forEach((item, index) => {
@@ -432,6 +181,9 @@
 
           //主合同合计
           masterContractCount() {
+            if(!this.masterContract.data){
+              return 0
+            }
             const data = this.masterContract.data
             let sum = 0
             data.forEach((item, index) => {
@@ -442,6 +194,9 @@
 
           //分包合同合计
           subContractCount() {
+            if(!this.subContract.data){
+              return 0
+            }
             const data = this.subContract.data
             let sum = 0
             data.forEach((item, index) => {
@@ -450,7 +205,49 @@
             return sum
           },
         },
+
         methods: {
+
+          init() {
+
+            const marginPay = $('#marginPay').text().trim()
+            this.marginPay = marginPay === '' ? {} : JSON.parse(marginPay)
+
+            const marginRecyle = $('#marginRecyle').text().trim()
+            this.marginRecyle = marginRecyle === '' ? {} : JSON.parse(marginRecyle)
+
+            const requirement = $('#requirement').text().trim()
+            this.requirement = requirement === '' ? {} : JSON.parse(requirement)
+
+            const invoice = $('#invoice').text().trim()
+            this.invoice = invoice === '' ? {} : JSON.parse(invoice)
+
+            const invoiceCompany = $('#invoiceCompany').text().trim()
+            this.invoiceCompany = invoiceCompany === '' ? {} : JSON.parse(invoiceCompany)
+
+            const invoiceTax = $('#invoiceTax').text().trim()
+            this.invoiceTax = invoiceTax === '' ? {} : JSON.parse(invoiceTax)
+
+            const subCompany = $('#subCompany').text().trim()
+            this.subCompany = subCompany === '' ? {} : JSON.parse(subCompany)
+
+            const masterContract = $('#masterContract').text().trim()
+            this.masterContract = masterContract === '' ? {} : JSON.parse(masterContract)
+
+            const subContract = $('#subContract').text().trim()
+            this.subContract = subContract === '' ? {} : JSON.parse(subContract)
+
+          },
+
+          copyData(data) {
+            let result = {}
+            for (let it in data) {
+              const id = data[it].id
+              const value = data[it].value
+              result[id] = value
+            }
+            return result
+          },
 
           // 修改校验
           dataValidate(data) {

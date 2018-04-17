@@ -24,6 +24,7 @@ Route::get('suppliers','SystemController@searchSupplier');
 Route::get('search/category','SystemController@searchCategory');
 Route::get('project/material','ProjectController@searchProjectMaterial');
 Route::get('search/budget','ProjectController@searchBudget');
+Route::get('search/material','SystemController@searchMaterial');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
 Route::group(['middleware'=>'auth'],function (){
@@ -127,16 +128,27 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/loan/list','PayController@listLoanListPage');
     Route::get('loan/loan/add','PayController@addLoanPage');
     Route::post('loan/add','PayController@createLoanApply');
+    Route::get('loan/cancel','PayController@cancelLoan');
+    Route::get('loan/confirm','PayController@confirmLoan');
+    Route::post('loan/select','PayController@selectLoanApprover');
     Route::get('loan/submit/list','PayController@listSubmitListPage');
     Route::post('loan/submit/other','PayController@createSubmitList');
     Route::get('loan/submit/other','PayController@createSubmitOtherPage');
     Route::post('loan/submit/project','PayController@createSubmitProject');
     Route::get('loan/submit/project','PayController@createSubmitProjectPage');
+    Route::get('loan/submit/single','PayController@loanSubmitSingle');
     Route::post('loan/pay/add','PayController@createLoanPay');
+    Route::post('loan/pay/finish','PayController@finishLoan');
+    Route::get('loan/pay','PayController@showLoanPay');
     Route::get('loan/pay/list','PayController@listLoanPayPage');
     //费用付款管理
     Route::get('pay/add','PayController@createPayApplyPage');
     Route::post('pay/add','PayController@createPayApply');
     Route::get('pay/list','PayController@listPayApply');
     Route::post('pay/pay','PayController@listPayApply');
+    Route::get('pay/pay','PayController@payPage');
+    Route::get('pay/single','PayController@paySinglePage');
+    Route::get('pay/cancel','PayController@cancelApply');
+    Route::get('pay/confirm','PayController@confirmApply');
+    Route::post('pay/select','PayController@selectApprover');
 });

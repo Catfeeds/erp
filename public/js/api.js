@@ -3,7 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8080/'
+  const url = 'http://localhost/erp/public'
 
   class ProjectManager {
     constructor() {
@@ -113,14 +113,20 @@
     }
 
     //预算内采购项目材料
-    searchBudgetMaterial(id, search = {}){
+    searchBudgetMaterial(id, search = {}) {
       return this._http.get(`/search/budget?project=${id}`, {
         params: search
       })
     }
 
-    searchPurchase(id){
+    searchPurchase(id) {
       return this._http.get(`/search/purchase?budget=${id}`)
+    }
+
+    searchMaterial(search = {}) {
+      return this._http.get(`/search/material`, {
+        params: search
+      })
     }
   }
 

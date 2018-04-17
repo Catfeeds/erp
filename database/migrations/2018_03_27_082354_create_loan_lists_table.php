@@ -29,6 +29,7 @@ class CreateLoanListsTable extends Migration
             $table->unsignedInteger('manager_id')->default(0);
             $table->string('bank')->nullable();
             $table->string('account')->nullable();
+            $table->tinyInteger('state')->default(1);
             $table->timestamps();
         });
     }

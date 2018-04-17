@@ -575,5 +575,19 @@ class SystemController extends Controller
             'data'=>$categories
         ]);
     }
+    public function searchMaterial()
+    {
+        $name = Input::get('name');
+        $db = DB::table('materials');
+        if ($name){
+            $db->where('name','like','%'.$name.'%');
+        }
+        $data = $db->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
 
 }

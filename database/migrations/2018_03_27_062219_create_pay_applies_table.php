@@ -22,6 +22,7 @@ class CreatePayAppliesTable extends Migration
             $table->string('use');
             $table->string('apply_date');
             $table->string('proposer');
+            $table->unsignedInteger('proposer_id')->default(0);
             $table->string('approver')->nullable();
             $table->unsignedInteger('approver_id')->default(0);
             $table->string('pay_date')->nullable();
@@ -31,7 +32,9 @@ class CreatePayAppliesTable extends Migration
             $table->string('bank')->nullable();
             $table->string('account')->nullable();
             $table->string('manager')->nullable();
+            $table->unsignedInteger('manager_id')->default(0);
             $table->string('remark')->nullable();
+            $table->tinyInteger('state')->default(1);
             $table->timestamps();
         });
     }

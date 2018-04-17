@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\FinishPayApply;
 use App\Models\LoanList;
+use App\Models\LoanListAllow;
 use App\Models\LoanPay;
 use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
 use App\Models\LoanSubmitList;
 use App\Models\PayApply;
+use App\Models\PayApplyAllow;
 use App\Models\Project;
 use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
@@ -45,9 +47,21 @@ class PayController extends Controller
             ]);
         }
     }
+    public function payPage()
+    {
+        $id = Input::get('id');
+        $apply = PayApply::find($id);
+        return view('pay.pay',['apply'=>$apply]);
+    }
     public function finishPayApply(Request $post)
     {
         $apply = PayApply::find($post->get('id'));
+        if ($apply->state!=2){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不能付款！'
+            ]);
+        }
         $apply->pay_date = $post->get('pay_date');
         $apply->cash = $post->get('cash');
         $apply->transfer = $post->get('transfer');
@@ -55,7 +69,63 @@ class PayController extends Controller
         $apply->bank = $post->get('bank');
         $apply->account = $post->get('account');
         $apply->manager = $post->get('manager');
+        $apply->state = 3;
+        $apply->manager_id = Auth::id();
         if($apply->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function cancelApply()
+    {
+        $id = Input::get('id');
+        $apply = PayApply::find($id);
+        if ($apply->state ==1){
+            $apply->state =0;
+            $apply->save();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }else{
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许撤销！'
+            ]);
+        }
+    }
+    public function selectApprover()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        if (!empty($users)){
+            foreach ($users as $user){
+                $allow = new PayApplyAllow();
+                $allow->apply_id = $id;
+                $allow->user_id = $user;
+                $allow->save();
+            }
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function confirmApply()
+    {
+        $id = Input::get('id');
+        $apply = PayApply::find($id);
+        if ($apply->state !=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许审核！'
+            ]);
+        }else{
+            $apply->state = 2;
+            $apply->approver_id = Auth::id();
+            $apply->save();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -109,14 +179,71 @@ class PayController extends Controller
             ]);
         }
     }
+    public function cancelLoan()
+    {
+        $id = Input::get('id');
+        $loan = LoanList::find($id);
+        if ($loan->state!=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许撤销！'
+            ]);
+        }else{
+            $loan->state =0;
+            $loan->save();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function confirmLoan()
+    {
+        $id = Input::get('id');
+        $loan = LoanList::find($id);
+        if ($loan->state!=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许撤销！'
+            ]);
+        }else{
+            $loan->state = 2;
+            $loan->approver = Auth::user()->name;
+            $loan->approver_id = Auth::id();
+            $loan->save();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function selectLoanApprover()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        if (!empty($users)){
+            foreach ($users as $user){
+                $allow = new LoanListAllow();
+                $allow->loan_id = $id;
+                $allow->user_id = $user;
+                $allow->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
     public function finishLoan(Request $post)
     {
         $loan = LoanList::find($post->get('id'));
         $loan->pay_date = $post->get('pay_date');
         $loan->pay_type = $post->get('pay_type');
         $loan->manager = $post->get('manager');
+        $loan->manager_id = Auth::id();
         $loan->bank = $post->get('bank');
         $loan->account = $post->get('account');
+        $loan->manager_id = Auth::id();
         if ($loan->save()){
             return response()->json([
                 'code'=>'200',
@@ -139,6 +266,12 @@ class PayController extends Controller
     {
         $lists = LoanList::paginate(10);
         return view('loan.loan_list',['lists'=>$lists]);
+    }
+    public function showLoanPay()
+    {
+        $id = Input::get('id');
+        $loan = LoanList::find($id);
+        return view('loan.loan_pay',['loan'=>$loan]);
     }
     public function listSubmitListPage()
     {
@@ -181,6 +314,7 @@ class PayController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    //新增报销
     public function createSubmitProject(Request $post)
     {
         $id = $post->get('id');
@@ -220,6 +354,13 @@ class PayController extends Controller
     public function listLoanPayPage()
     {
         return view('loan.pay_list');
+    }
+    public function loanSubmitSingle()
+    {
+        $id = Input::get('id');
+        $loan = LoanSubmit::find($id);
+        $loan->lists = $loan->lists()->get();
+        return view('loan.single',['loan'=>$loan]);
     }
     public function createLoanPay(Request $post)
     {
@@ -326,6 +467,12 @@ class PayController extends Controller
     public function createSubmitProjectPage()
     {
         return view('loan.submit_project');
+    }
+    public function paySinglePage()
+    {
+        $id = Input::get('id');
+        $apply = PayApply::find($id);
+        return view('pay.single',['apply'=>$apply]);
     }
 
 }

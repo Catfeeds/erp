@@ -21,9 +21,11 @@ class CreateLoanSubmitsTable extends Migration
             $table->string('date');
             $table->float('price');
             $table->string('loan_user');
-            $table->unsignedInteger('checker')->default(0);
-            $table->unsignedInteger('worker')->default(0);
-            $table->tinyInteger('state')->default(0);
+            $table->string('checker')->nullable();
+            $table->unsignedInteger('checker_id')->default(0);
+            $table->string('worker')->nullable();
+            $table->unsignedInteger('worker_id')->default(0);
+            $table->tinyInteger('state')->default(1);
             $table->unsignedInteger('project_id')->default(0);
             $table->timestamps();
         });

@@ -71,7 +71,7 @@
                 @foreach($lists as $list)
                     <tr>
                         <td>
-                            <a href="javascript:_helper.fullWindow('../pay/single.html?id=1')">{{$list->number}}</a>
+                            <a href="javascript:_helper.fullWindow('{{url('pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                         </td>
                         <td>{{$list->price}}￥</td>
                         <td style="max-width:350px;">{{$list->use}}</td>

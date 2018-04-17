@@ -63,13 +63,18 @@ class UserController extends Controller
     }
     public function getUsers()
     {
-        $type = Input::get('type');
-        $users = User::all();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS',
-            'data'=>$users
-        ]);
+        $role = Input::get('role');
+        $project_id = Input::get('project_id');
+        if (!$project_id){
+            $idArr = Role::where('role_name','=',$role)->where('role_value','=','all')->pluck('user_id')->toArray();
+            $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>$users
+            ]);
+        }
+
     }
     public function listUsers()
     {
