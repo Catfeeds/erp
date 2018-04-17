@@ -307,7 +307,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_invoice">
+                                <input type="radio" value="any" name="check_invoice">
                                 <label>指定项目有此权限</label>
                             </div>
                         </td>
@@ -315,7 +315,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_invoice">
+                                <input type="radio" value="off" name="check_invoice">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -326,7 +326,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_margins">
+                                <input type="radio" value="all" name="check_get_margins">
                                 <label>所有项目有权限</label>
                             </div>
                         </td>
@@ -334,7 +334,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_margins">
+                                <input type="radio" value="any" name="check_get_margins">
                                 <label>指定项目有此权限</label>
                             </div>
                         </td>
@@ -342,7 +342,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_margins">
+                                <input type="radio" value="off" name="check_get_margins">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -352,7 +352,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_master">
+                                <input type="radio" value="all" name="check_get_master">
                                 <label>所有项目有权限</label>
                             </div>
                         </td>
@@ -360,7 +360,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_master">
+                                <input type="radio" value="any" name="check_get_master">
                                 <label>指定项目有此权限</label>
                             </div>
                         </td>
@@ -368,7 +368,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_master">
+                                <input type="radio" value="off" name="check_get_master">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -378,7 +378,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_sub">
+                                <input type="radio" value="all" name="check_get_sub">
                                 <label>所有项目有权限</label>
                             </div>
                         </td>
@@ -386,7 +386,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_sub">
+                                <input type="radio" value="any" name="check_get_sub">
                                 <label>指定项目有此权限</label>
                             </div>
                         </td>
@@ -394,7 +394,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_sub">
+                                <input type="radio" value="off" name="check_get_sub">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -404,7 +404,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_divide">
+                                <input type="radio" value="all" name="check_get_divide">
                                 <label>所有项目有权限</label>
                             </div>
                         </td>
@@ -412,7 +412,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_divide">
+                                <input type="radio" value="any" name="check_get_divide">
                                 <label>指定项目有此权限</label>
                             </div>
                         </td>
@@ -420,7 +420,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="check_get_divide">
+                                <input type="radio" value="off" name="check_get_divide">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -435,7 +435,7 @@
                         <td colspan="3" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_list">
+                                <input type="radio" value="all" name="buy_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -443,7 +443,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_list">
+                                <input type="radio" value="any" name="buy_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -451,7 +451,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_list">
+                                <input type="radio" value="off" name="buy_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -461,7 +461,7 @@
                         <td rowspan="3" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_whole_list">
+                                <input type="radio" value="all" name="buy_whole_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -469,7 +469,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_whole_list">
+                                <input type="radio" value="any" name="buy_whole_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -477,7 +477,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_whole_list">
+                                <input type="radio" value="off" name="buy_whole_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -487,7 +487,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_parity">
+                                <input type="radio" value="all" name="buy_parity">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -495,7 +495,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_parity">
+                                <input type="radio" value="off" name="buy_parity">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -506,7 +506,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
+                                <input type="radio" value="all" name="buy_project_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -514,7 +514,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
+                                <input type="radio" value="any" name="buy_project_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -522,7 +522,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
+                                <input type="radio" value="off" name="buy_project_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -533,7 +533,7 @@
                         <td rowspan="2">录入、修改、凭证</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_edit">
+                                <input type="radio" value="all" name="buy_bugetary_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -541,7 +541,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_edit">
+                                <input type="radio" value="off" name="buy_bugetary_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -550,7 +550,7 @@
                         <td rowspan="2">复核</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_check">
+                                <input type="radio" value="all" name="buy_bugetary_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -558,7 +558,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_check">
+                                <input type="radio" value="off" name="buy_bugetary_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -567,7 +567,7 @@
                         <td rowspan="2">审批</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_pass">
+                                <input type="radio" value="all" name="buy_bugetary_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -575,7 +575,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_bugetary_pass">
+                                <input type="radio" value="off" name="buy_bugetary_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -585,7 +585,7 @@
                         <td rowspan="2">录入、修改、凭证</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_edit">
+                                <input type="radio" value="all" name="buy_extrabugetary_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -593,7 +593,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_edit">
+                                <input type="radio" value="off" name="buy_extrabugetary_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -602,7 +602,7 @@
                         <td rowspan="2">复核</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_check">
+                                <input type="radio" value="all" name="buy_extrabugetary_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -610,7 +610,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_check">
+                                <input type="radio" value="off" name="buy_extrabugetary_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -619,7 +619,7 @@
                         <td rowspan="2">审批</td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_pass">
+                                <input type="radio" value="all" name="buy_extrabugetary_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -627,7 +627,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_extrabugetary_pass">
+                                <input type="radio" value="off" name="buy_extrabugetary_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -638,7 +638,7 @@
                         <td rowspan="3" colspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
+                                <input type="radio" value="all" name="buy_pay_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -646,7 +646,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
+                                <input type="radio" value="any" name="buy_pay_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -654,7 +654,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
+                                <input type="radio" value="off" name="buy_pay_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -664,7 +664,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_edit">
+                                <input type="radio" value="all" name="buy_pay_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -672,7 +672,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_edit">
+                                <input type="radio" value="off" name="buy_pay_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -682,7 +682,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_pass">
+                                <input type="radio" value="all" name="buy_pay_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -690,7 +690,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_pass">
+                                <input type="radio" value="off" name="buy_pay_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -700,7 +700,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_add">
+                                <input type="radio" value="all" name="buy_pay_add">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -708,7 +708,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_add">
+                                <input type="radio" value="off" name="buy_pay_add">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -719,7 +719,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
+                                <input type="radio" value="all" name="buy_invoice_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -727,7 +727,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
+                                <input type="radio" value="any" name="buy_invoice_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -735,7 +735,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
+                                <input type="radio" value="off" name="buy_invoice_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -745,7 +745,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_edit">
+                                <input type="radio" value="all" name="buy_invoice_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -753,7 +753,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_edit">
+                                <input type="radio" value="off" name="buy_invoice_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -768,7 +768,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_list">
+                                <input type="radio" value="all" name="stock_list">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -776,7 +776,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_list">
+                                <input type="radio" value="off" name="stock_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -786,7 +786,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_record_list">
+                                <input type="radio" value="all" name="stock_record_list">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -794,7 +794,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_record_list">
+                                <input type="radio" value="off" name="stock_record_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -805,7 +805,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
+                                <input type="radio" value="all" name="stock_buy_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -813,7 +813,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
+                                <input type="radio" value="any" name="stock_buy_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -821,7 +821,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
+                                <input type="radio" value="off" name="stock_buy_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -831,7 +831,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_edit">
+                                <input type="radio" value="all" name="stock_buy_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -839,7 +839,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_edit">
+                                <input type="radio" value="off" name="stock_buy_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -850,7 +850,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
+                                <input type="radio" value="all" name="stock_return_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -858,7 +858,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
+                                <input type="radio" value="any" name="stock_return_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -866,7 +866,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
+                                <input type="radio" value="off" name="stock_return_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -876,7 +876,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
+                                <input type="radio" value="all" name="stock_return_edit">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -884,7 +884,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
+                                <input type="radio" value="any" name="stock_return_edit">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -892,7 +892,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
+                                <input type="radio" value="off" name="stock_return_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -903,7 +903,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
+                                <input type="radio" value="all" name="stock_get_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -911,7 +911,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
+                                <input type="radio" value="any" name="stock_get_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -919,7 +919,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
+                                <input type="radio" value="off" name="stock_get_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -929,7 +929,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
+                                <input type="radio" value="all" name="stock_get_edit">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -937,7 +937,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
+                                <input type="radio" value="any" name="stock_get_edit">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -945,7 +945,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
+                                <input type="radio" value="off" name="stock_get_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -956,7 +956,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
+                                <input type="radio" value="all" name="stock_out_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -964,7 +964,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
+                                <input type="radio" value="any" name="stock_out_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -972,7 +972,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
+                                <input type="radio" value="off" name="stock_out_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -982,7 +982,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_edit">
+                                <input type="radio" value="all" name="stock_out_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -990,7 +990,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_edit">
+                                <input type="radio" value="off" name="stock_out_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1005,7 +1005,7 @@
                         <td colspan="3" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
+                                <input type="radio" value="all" name="build_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1013,7 +1013,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
+                                <input type="radio" value="any" name="build_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1021,7 +1021,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
+                                <input type="radio" value="off" name="build_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1032,7 +1032,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
+                                <input type="radio" value="all" name="build_contract_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1040,7 +1040,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
+                                <input type="radio" value="any" name="build_contract_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1048,7 +1048,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
+                                <input type="radio" value="off" name="build_contract_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1058,7 +1058,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
+                                <input type="radio" value="all" name="build_contract_edit">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1066,7 +1066,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
+                                <input type="radio" value="any" name="build_contract_edit">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1074,7 +1074,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
+                                <input type="radio" value="off" name="build_contract_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1085,7 +1085,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
+                                <input type="radio" value="all" name="build_finish_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1093,7 +1093,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
+                                <input type="radio" value="any" name="build_finish_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1101,7 +1101,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
+                                <input type="radio" value="off" name="build_finish_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1111,7 +1111,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
+                                <input type="radio" value="all" name="build_finish_edit">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1119,7 +1119,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
+                                <input type="radio" value="any" name="build_finish_edit">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1127,7 +1127,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
+                                <input type="radio" value="off" name="build_finish_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1137,7 +1137,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
+                                <input type="radio" value="all" name="build_finish_check">
                                 <label>所有项目有权限</label>
                             </div>
                         </td>
@@ -1145,7 +1145,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
+                                <input type="radio" value="any" name="build_finish_check">
                                 <label>指定项目有权限</label>
                             </div>
                         </td>
@@ -1153,7 +1153,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
+                                <input type="radio" value="off" name="build_finish_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1163,7 +1163,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_pass">
+                                <input type="radio" value="all" name="build_finish_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1171,7 +1171,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_pass">
+                                <input type="radio" value="off" name="build_finish_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1182,7 +1182,7 @@
                         <td rowspan="3" colspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
+                                <input type="radio" value="all" name="build_pay_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1190,7 +1190,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
+                                <input type="radio" value="any" name="build_pay_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1198,7 +1198,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
+                                <input type="radio" value="off" name="build_pay_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1208,7 +1208,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_edit">
+                                <input type="radio" value="all" name="build_pay_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1216,7 +1216,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_edit">
+                                <input type="radio" value="off" name="build_pay_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1226,7 +1226,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_check">
+                                <input type="radio" value="all" name="build_pay_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1234,7 +1234,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_check">
+                                <input type="radio" value="off" name="build_pay_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1244,7 +1244,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_pass">
+                                <input type="radio" value="all" name="build_pay_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1252,7 +1252,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_pass">
+                                <input type="radio" value="off" name="build_pay_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1263,7 +1263,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
+                                <input type="radio" value="all" name="build_invoice_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1271,7 +1271,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
+                                <input type="radio" value="any" name="build_invoice_list">
                                 <label>指定项目查看</label>
                             </div>
                         </td>
@@ -1279,7 +1279,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
+                                <input type="radio" value="off" name="build_invoice_list">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1289,7 +1289,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_edit">
+                                <input type="radio" value="off" name="build_invoice_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1297,7 +1297,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_edit">
+                                <input type="radio" value="off" name="build_invoice_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1312,7 +1312,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_list">
+                                <input type="radio" value="all" name="loan_list">
                                 <label>可查看全部人员</label>
                             </div>
                         </td>
@@ -1320,7 +1320,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_list">
+                                <input type="radio" value="only" name="loan_list">
                                 <label>只能查看本人</label>
                             </div>
                         </td>
@@ -1330,7 +1330,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_detail">
+                                <input type="radio" value="all" name="loan_detail">
                                 <label>可查看全部人员</label>
                             </div>
                         </td>
@@ -1338,7 +1338,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_detail">
+                                <input type="radio" value="only" name="loan_detail">
                                 <label>只能查看本人</label>
                             </div>
                         </td>
@@ -1349,7 +1349,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_list">
+                                <input type="radio" value="all" name="loan_loan_list">
                                 <label>可查看全部人员</label>
                             </div>
                         </td>
@@ -1357,7 +1357,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_list">
+                                <input type="radio" value="only" name="loan_loan_list">
                                 <label>只能查看本人</label>
                             </div>
                         </td>
@@ -1367,7 +1367,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_add">
+                                <input type="radio" value="all" name="loan_loan_add">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1375,7 +1375,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_add">
+                                <input type="radio" value="off" name="loan_loan_add">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1385,7 +1385,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_pass">
+                                <input type="radio" value="all" name="loan_loan_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1393,7 +1393,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_pass">
+                                <input type="radio" value="off" name="loan_loan_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1403,7 +1403,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_operate">
+                                <input type="radio" value="all" name="loan_loan_operate">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1411,7 +1411,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_operate">
+                                <input type="radio" value="off" name="loan_loan_operate">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1422,7 +1422,7 @@
                         <td colspan="2" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
+                                <input type="radio" value="all" name="loan_submit_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1430,7 +1430,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
+                                <input type="radio" value="only" name="loan_submit_list">
                                 <label>可查看本人所有记录</label>
                             </div>
                         </td>
@@ -1438,7 +1438,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
+                                <input type="radio" value="any" name="loan_submit_list">
                                 <label>可查看指定项目和空白项目</label>
                             </div>
                         </td>
@@ -1449,7 +1449,7 @@
                         <td rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_edit">
+                                <input type="radio" value="all" name="loan_submit_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1457,7 +1457,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_edit">
+                                <input type="radio" value="off" name="loan_submit_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1467,7 +1467,7 @@
                         <td rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_check">
+                                <input type="radio" value="all" name="loan_submit_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1475,7 +1475,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_check">
+                                <input type="radio" value="off" name="loan_submit_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1485,7 +1485,7 @@
                         <td rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_pass">
+                                <input type="radio" value="all" name="loan_submit_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1493,7 +1493,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_pass">
+                                <input type="radio" value="off" name="loan_submit_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1504,7 +1504,7 @@
                         <td rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
+                                <input type="radio" value="all" name="loan_project_submit_edit">
                                 <label>所有项目报销</label>
                             </div>
                         </td>
@@ -1512,7 +1512,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
+                                <input type="radio" value="any" name="loan_project_submit_edit">
                                 <label>指定项目报销</label>
                             </div>
                         </td>
@@ -1520,7 +1520,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
+                                <input type="radio" value="off" name="loan_project_submit_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1530,7 +1530,7 @@
                         <td rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_check">
+                                <input type="radio" value="all" name="loan_project_submit_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1538,7 +1538,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_check">
+                                <input type="radio" value="off" name="loan_project_submit_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1548,7 +1548,7 @@
                         <td rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_pass">
+                                <input type="radio" value="all" name="loan_project_submit_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1556,7 +1556,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_pass">
+                                <input type="radio" value="off" name="loan_project_submit_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1567,7 +1567,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_pay_list">
+                                <input type="radio" value="all" name="loan_pay_list">
                                 <label>可查看全部人员</label>
                             </div>
                         </td>
@@ -1575,7 +1575,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_pay_list">
+                                <input type="radio" value="only" name="loan_pay_list">
                                 <label>只查看本人</label>
                             </div>
                         </td>
@@ -1585,7 +1585,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_pay_edit">
+                                <input type="radio" value="all" name="loan_pay_edit">
                                 <label>可查看全部人员</label>
                             </div>
                         </td>
@@ -1593,7 +1593,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_pay_edit">
+                                <input type="radio" value="only" name="loan_pay_edit">
                                 <label>只查看本人</label>
                             </div>
                         </td>
@@ -1608,7 +1608,7 @@
                         <td rowspan="3" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
+                                <input type="radio" value="all" name="pay_list">
                                 <label>可全部查看</label>
                             </div>
                         </td>
@@ -1616,7 +1616,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
+                                <input type="radio" value="only" name="pay_list">
                                 <label>只能查看本人记录</label>
                             </div>
                         </td>
@@ -1624,7 +1624,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
+                                <input type="radio" value="any" name="pay_list">
                                 <label>可查看指定项目和空白项目</label>
                             </div>
                         </td>
@@ -1634,7 +1634,7 @@
                         <td colspan="3" rowspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
+                                <input type="radio" value="all" name="pay_add">
                                 <label>所有项目</label>
                             </div>
                         </td>
@@ -1642,7 +1642,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
+                                <input type="radio" value="any" name="pay_add">
                                 <label>可查看指定项目和空白项目</label>
                             </div>
                         </td>
@@ -1650,7 +1650,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
+                                <input type="radio" value="off" name="pay_add">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1660,7 +1660,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_pass">
+                                <input type="radio" value="all" name="pay_pass">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1668,7 +1668,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_pass">
+                                <input type="radio" value="off" name="pay_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1678,7 +1678,7 @@
                         <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_operate">
+                                <input type="radio" value="all" name="pay_operate">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1686,7 +1686,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_operate">
+                                <input type="radio" value="off" name="pay_operate">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1701,7 +1701,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_user">
+                                <input type="radio" value="all" name="data_user">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1709,7 +1709,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_user">
+                                <input type="radio" value="off" name="data_user">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1719,7 +1719,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_project_type">
+                                <input type="radio" value="all" name="data_project_type">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1727,7 +1727,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_project_type">
+                                <input type="radio" value="off" name="data_project_type">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1737,7 +1737,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_supplier">
+                                <input type="radio" value="all" name="data_supplier">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1745,7 +1745,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_supplier">
+                                <input type="radio" value="off" name="data_supplier">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1755,7 +1755,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_material">
+                                <input type="radio" value="all" name="data_material">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1763,7 +1763,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_material">
+                                <input type="radio" value="off" name="data_material">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1773,7 +1773,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_stock">
+                                <input type="radio" value="all" name="data_stock">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1781,7 +1781,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_stock">
+                                <input type="radio" value="off" name="data_stock">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1791,7 +1791,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_bank">
+                                <input type="radio" value="all" name="data_bank">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1799,7 +1799,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_bank">
+                                <input type="radio" value="off" name="data_bank">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1809,7 +1809,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_invoice_type">
+                                <input type="radio" value="all" name="data_invoice_type">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1817,7 +1817,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_invoice_type">
+                                <input type="radio" value="off" name="data_invoice_type">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1827,7 +1827,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_build_team">
+                                <input type="radio" value="all" name="data_build_team">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1835,7 +1835,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_build_team">
+                                <input type="radio" value="off" name="data_build_team">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1845,7 +1845,7 @@
                         <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_payment">
+                                <input type="radio" value="all" name="data_payment">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1853,7 +1853,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="data_payment">
+                                <input type="radio" value="off" name="data_payment">
                                 <label>无此权限</label>
                             </div>
                         </td>

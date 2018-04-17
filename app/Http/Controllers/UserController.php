@@ -93,8 +93,10 @@ class UserController extends Controller
     public function listUserRole()
     {
         $id = Input::get('id');
-        $rolelists = Role::where('user_id','=',$id)->get();
-        return view('auth.check',['lists'=>$rolelists,'id'=>$id]);
+        $user = User::find($id);
+        $rolelists = Role::where('user_id','=',$id)->select(['role_name','role_value'])->get()->toArray();
+        $lists = array_column($rolelists, 'role_value','role_name');
+        return view('auth.check',['lists'=>$lists,'user'=>$user]);
     }
     public function addUserRoles()
     {
@@ -109,8 +111,9 @@ class UserController extends Controller
                 $role->role_name = $item;
             }
             $role->role_value = $value;
-            dd($role);
+            $role->save();
         }
+        return redirect()->back()->with('status','操作成功！');
     }
     public function editUserRoles()
     {
