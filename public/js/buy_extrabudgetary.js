@@ -17,6 +17,14 @@
             name_timer: null,
             supplier_timer: null,
             material_timer: null
+          },
+          
+          //复核人dialog
+          checkedMen: [],
+          menList: [],
+
+          selectData: {
+            id: ''
           }
         },
 
@@ -169,7 +177,6 @@
             } else {
               data.name = newMaterial.name
             }
-            console.log(data, '============================')
             this.extrabudgetary.lists.push(data)
           },
 
@@ -303,7 +310,58 @@
                     title: '成功',
                     message: '提交成功！'
                   })
-                  $('.ui.dimmer').addClass('active')
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                    role: 'buy_extrabudgetary_check',
+                    project_id: this.extrabudgetary.project_id
+                  })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          },
+
+          
+          //选择审核人
+          handleCheckManChange(value) {
+            console.log(this.checkedMen)
+          },
+
+          //提交审核人
+          confirmRecheck() {
+            this.selectData.users = this.checkedMen
+            _http.BuyManager.selectCheck(this.selectData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了复核人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
                 } else {
                   this.$notify({
                     title: '错误',

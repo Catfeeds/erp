@@ -13,30 +13,14 @@
 
           //复核人dialog
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
 
           throttle: {
             supplier_timer: null,
+          },
+
+          selectData: {
+            id: ''
           }
         },
         mounted() {
@@ -210,7 +194,24 @@
                     title: '成功',
                     message: '提交成功！'
                   })
-                  $('.ui.dimmer').addClass('active')
+                  
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                    role: 'buy_budgetary_check',
+                    project_id: this.budgetary_buy.project_id
+                  })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
                 } else {
                   this.$notify({
                     title: '错误',
@@ -235,12 +236,31 @@
 
           //提交审核人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了复核人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            this.selectData.users = this.checkedMen
+            _http.BuyManager.selectCheck(this.selectData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了复核人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

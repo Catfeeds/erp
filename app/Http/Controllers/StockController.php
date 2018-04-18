@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuyStock;
+use App\Models\BuyStockList;
 use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\Project;
@@ -9,6 +11,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseList;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -55,8 +58,35 @@ class StockController extends Controller
     {
 
     }
-    public function addBuy()
+    public function addBuy(Request $post)
     {
+        $buy = new BuyStock();
+        $buy->date = $post->get('date');
+        $buy->manager = Auth::user()->name;
+        $buy->manager_id = Auth::id();
+        $buy->warehouse_id = $post->get('warehouse_id');
+        $lists = $post->get('lists');
+        if ($buy->save()){
+            foreach ($lists as $list){
+                $purchase = PurchaseList::find($list['id']);
+                $item = new BuyStockList();
+                $item->purchase_id = $purchase->id;
+                $item->number = $list['number'];
+                $item->save();
+                $purchase->received+=$list['number'];
+                $purchase->need = $purchase->number-$purchase->received;
+                $purchase->save();
+                $stock = new Stock();
+                $stock->warehouse_id = $buy->warehouse_id;
+                $stock->material_id = $purchase->material_id;
+                $stock->number = $list['number'];
+                $stock->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
 
     }
     public function addReturn()
@@ -105,7 +135,11 @@ class StockController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        return view('stock.buy_add',['purchase'=>$purchase]);
+        $lists = $purchase->lists()->get();
+        foreach ($lists as $list){
+            $list->material = Material::find($list->material_id);
+        }
+        return view('stock.buy_add',['purchase'=>$purchase,'lists'=>$lists]);
     }
     public function budgetaryCheckPage()
     {
@@ -114,5 +148,8 @@ class StockController extends Controller
         $purchase->lists = $purchase->lists()->get();
         return view('buy.budgetary_check',['purchase'=>$purchase]);
     }
-//    public function check
+    public function addReturnPage()
+    {
+        return view('stock.return_add');
+    }
 }

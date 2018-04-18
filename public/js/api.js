@@ -3,7 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8080/'
+  const url = 'http://localhost/erp/public'
 
   class ProjectManager {
     constructor() {
@@ -447,6 +447,48 @@
     //采购收票
     createInvoice(data = {}) {
       return this._http.post(`/purchase/invoice`, data, this.dataMethodDefaults)
+    }
+
+    //采购复核
+    createCheck(data = {}){
+      return this._http.get(`/purchase/check`, {
+        params: search
+      })
+    }
+
+    
+    //采购复核人选择
+    selectCheck(data = {}) {
+      return this._http.post(`/purchase/select/check`, data, this.dataMethodDefaults)
+    }
+
+    //采购审批
+    createCheck(data = {}){
+      return this._http.get(`/purchase/pass`, {
+        params: search
+      })
+    }
+    
+    //采购审批人选择
+    selectPass(data = {}) {
+      return this._http.post(`/purchase/select/pass`, data, this.dataMethodDefaults)
+    }
+
+    //采购付款申请
+    createPayment(data = {}){
+      return this._http.post(`/purchase/payment/create`, data, this.dataMethodDefaults)
+    }
+
+    //采购付款复核
+    paymentCheck(data = {}){
+      return this._http.get(`/purchase/payment/check`, {
+        params: search
+      })
+    }
+
+    // 选择复核人员
+    selectPaymentCheck(data = {}){
+      return this._http.post(`/purchase/payment/select/check`, data, this.dataMethodDefaults)
     }
   }
 

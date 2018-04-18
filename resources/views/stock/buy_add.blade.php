@@ -16,8 +16,8 @@
 
         <input type="hidden" id="projectId" value="">
         <input type="hidden" id="purchaseId" value="{{$purchase->id}}">
-        <input type="hidden" id="stockReceiver" value="">
-        <div style="display: none;" id="buyMaterials">[{"id":1,"name":"物料一","model":"型号一","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":2,"name":"物料二","model":"型号二","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":3,"name":"物料三","model":"型号三","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":4,"name":"物料四","model":"型号四","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034}]</div>
+        <input type="hidden" id="stockReceiver" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+        <div style="display: none;" id="buyMaterials">{{json_encode($lists)}}</div>
 
         <h1 class="ui red header blue center aligned">收货入库</h1>
         <div class="invisible" id="stockBuyAdd">
@@ -157,13 +157,13 @@
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                     <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in stockBuyAdd.lists" :key="item.id">
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.material && item.material.name || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.material.name || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.material.model || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.material.unit || '无'}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.price.toLocaleString('en-US') + ' ￥' || '无'}}</div>
@@ -175,10 +175,10 @@
                             <div class="fake-input">@{{ item.material && item.material.cost.toLocaleString('en-US') + ' ￥' || '无'}}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.material && item.material.buy_number.toLocaleString('en-US') || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.received.toLocaleString('en-US') || '无'}}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.material && item.material.need_number.toLocaleString('en-US') || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.need.toLocaleString('en-US') || '无'}}</div>
                         </div>
                         <div class="two wide column">
                             <input v-model.number="item.number" :min="0" :max="item.material.need_number" type="number" placeholder="本次入库数量">

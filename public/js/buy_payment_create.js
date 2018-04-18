@@ -10,32 +10,17 @@
             purchase_id: ''
           },
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+          project_id: '',
+          selectData: {
+            id: ''
+          }
         },
         mounted() {
           this.form.purchase_id = $('#purchaseId').val() || ''
           this.form.date = $('#hiddenDate').val() || ''
           this.form.price = $('#hiddenAmount').val() || ''
+          this.project_id = $('#projectId').val() || ''
         },
         methods: {
 
@@ -51,7 +36,46 @@
                 return false
               }
             }
-            $('.ui.dimmer').addClass('active')
+            _http.BuyManager.createPayment(this.form)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: `提交成功`,
+                    type: 'success'
+                  })
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                    role: 'buy_pay_pass',
+                    project_id: this.project_id
+                  })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
           //选择审核人
@@ -61,16 +85,16 @@
 
           //提交审核人
           confirmRecheck() {
-            let data = this.form
-            data.user_id = this.checkedMen
-            _http.BuyManager.createPayApply(data)
+            this.selectData.users = this.checkedMen
+            _http.BuyManager.selectPaymentCheck(this.selectData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({
                     title: '成功',
-                    message: `提交成功`,
+                    message: '已选择了复核人',
                     type: 'success'
                   })
+                  $('.ui.dimmer').removeClass('active')
                 } else {
                   this.$notify({
                     title: '错误',
@@ -78,7 +102,6 @@
                     type: 'error'
                   })
                 }
-                $('.ui.dimmer').removeClass('active')
               })
               .catch(err => {
                 this.$notify({
@@ -86,7 +109,6 @@
                   message: '服务器出错',
                   type: 'error'
                 })
-                $('.ui.dimmer').removeClass('active')
               })
           }
         }

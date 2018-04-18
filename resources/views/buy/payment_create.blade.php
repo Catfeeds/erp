@@ -9,14 +9,14 @@
             <div class="divider"> / </div>
             <a class="section" href="../buy/pay_list.html">采购付款清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/payment_list.html?id=CG12512312521">采购付款查询 - CG12512312521</a>
+            <a class="section" href="../buy/payment_list.html?id=CG12512312521">采购付款查询 - {{$purchase->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">付款申请</div>
         </div>
-
-        <input id="purchaseId" type="hidden" value="CG12512312521">
-        <input id="hiddenDate" type="hidden" value="2018-03-05">
-        <input id="hiddenAmount" type="hidden" value="222">
+        <input id="projectId" type="hidden" value="{{$purchase->project_id}}">
+        <input id="purchaseId" type="hidden" value="{{$purchase->id}}">
+        <input id="hiddenDate" type="hidden" value="{{date('Y-m-d')}}">
+        <input id="hiddenAmount" type="hidden" value="0">
         <h1 class="ui red header blue center aligned">付款申请</h1>
         <div id="paymentCreate">
 
@@ -36,7 +36,7 @@
                         <div class="inline fields">
                             <label class="four wide field">供货商</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">xxx供货商</div>
+                                <div class="fake-input">{{$purchase->supplier}}</div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="inline fields">
                             <label class="four wide field">供货商收款银行</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">中国银行</div>
+                                <div class="fake-input">{{$purchase->bank}}</div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="inline fields">
                             <label class="four wide field">供货商收款账号</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">63432423432423423</div>
+                                <div class="fake-input">{{$purchase->account}}</div>
                             </div>
                         </div>
                     </div>
