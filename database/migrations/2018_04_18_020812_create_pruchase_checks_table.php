@@ -15,8 +15,8 @@ class CreatePruchaseChecksTable extends Migration
     {
         Schema::create('pruchase_checks', function (Blueprint $table) {
             $table->increments('id');
-            $table->increments('purchase_id');
-            $table->increments('user_id');
+            $table->unsignedInteger('purchase_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }
