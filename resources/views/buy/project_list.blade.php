@@ -60,7 +60,7 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../buy/budgetary_check.html?id=1')">{{$list->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/check/budgetary')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
                     <td>123,233,421 ￥</td>

@@ -9,6 +9,7 @@ use App\Models\Budget;
 use App\Models\Invoice;
 use App\Models\InvoiceList;
 use App\Models\MainContract;
+use App\Models\Material;
 use App\Models\OutContract;
 use App\Models\Project;
 use App\Models\ProjectCollect;
@@ -55,10 +56,14 @@ class ProjectController extends Controller
         $number = Input::get('project');
         $project = Project::where('number','=',$number)->first();
         if ($project){
+            $budgets = $project->budget()->get();
+            foreach ($budgets as $budget){
+                $budget->material = Material::find($budget->material_id);
+            }
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
-                'data'=>$project->budget()->get()
+                'data'=>$budgets
                 ]);
         }
         return response()->json([
@@ -355,19 +360,34 @@ class ProjectController extends Controller
 //        dd($budgets);
         if (!empty($budgets)){
             foreach ($budgets as $item){
-                $budget = new Budget();
-                $budget->project_id = $project_id;
-                $budget->name = $item['name'];
-                $budget->param = $item['param'];
-                $budget->model = $item['model'];
-                $budget->factory = $item['factory'];
-                $budget->unit = $item['unit'];
-                $budget->price = $item['price'];
-                $budget->number = $item['number'];
-                $budget->cost = $item['cost'];
-                $budget->type = $item['type'];
-                $budget->need_buy = $item['number'];
-                $budget->save();
+                if (isset($item['material_id'])){
+                    $budget = new Budget();
+                    $budget->project_id = $project_id;
+                    $budget->material_id = $item['material_id'];
+                    $budget->price = $item['price'];
+                    $budget->number = $item['number'];
+                    $budget->cost = $item['cost'];
+                    $budget->type = $item['type'];
+                    $budget->need_buy = $item['number'];
+                    $budget->save();
+                }else{
+                    $materail = new Material();
+                    $materail->name = $item['name'];
+                    $materail->param = $item['param'];
+                    $materail->model = $item['model'];
+                    $materail->factory = $item['factory'];
+                    $materail->unit = $item['unit'];
+                    $materail->save();
+                    $budget = new Budget();
+                    $budget->project_id = $project_id;
+                    $budget->material_id = $materail->id;
+                    $budget->price = $item['price'];
+                    $budget->number = $item['number'];
+                    $budget->cost = $item['cost'];
+                    $budget->type = $item['type'];
+                    $budget->need_buy = $item['number'];
+                    $budget->save();
+                }
             }
         }
         return response()->json([
@@ -560,22 +580,28 @@ class ProjectController extends Controller
         $supplier = Supplier::find($basic['supplier_id']);
         $purchase->date = $basic['date'];
         $purchase->supplier = $supplier->name;
+        $purchase->supplier_id = $basic['supplier_id'];
         $purchase->bank = $supplier->bank;
         $purchase->account = $supplier->account;
         $purchase->condition = $basic['condition'];
         $purchase->type = $basic['type'];
-//        dd($basic);
-//        $invoice = Invoice::find($basic['content']);
-//        dd($invoice);
         $purchase->content = Invoice::find($basic['content'])->name;
         if ($purchase->save()){
             foreach ($lists as $item){
                 if ($item['material_id']){
                     $list = new PurchaseList();
                     $list->purchase_id = $purchase->id;
-                    $list->material_id = $item['material_id'];
+                    if ($purchase->type ==1){
+                        $list->budget_id = $item['material_id'];
+                        $budget = Budget::find($item['material_id']);
+                        $budget->buy_number += $item['number'];
+                        $budget->need_buy = $budget->number-$budget->buy_number;
+                        $budget->save();
+                    }else{
+                        $list->material_id = $item['material_id'];
+                    }
+                    $list->price = $item['price'];
                     $list->number = $item['number'];
-//                    $list->price = $item['price'];
                     $list->cost = $item['cost'];
                     $list->warranty_date = $item['warranty_date'];
                     $list->warranty_time = $item['warranty_time'];
@@ -592,7 +618,11 @@ class ProjectController extends Controller
             }
             return response()->json([
                 'code'=>'200',
-                'msg'=>'SUCCESS'
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$purchase->id,
+                    'type'=>$purchase->type
+                ]
             ]);
         }
     }
@@ -617,7 +647,8 @@ class ProjectController extends Controller
     }
     public function listPurchasesPayPage()
     {
-        return view('buy.pay_list');
+        $lists = Purchase::paginate(10);
+        return view('buy.pay_list',['lists'=>$lists]);
     }
     public function listPurchasesChargePage()
     {

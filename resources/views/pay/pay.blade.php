@@ -13,7 +13,8 @@
             <div class="divider"> / </div>
             <div class="active section">付款</div>
         </div>
-
+        <input type="hidden" id="payId" value="{{$apply->id}}">
+        <input type="hidden" id="manager" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
         <h1 class="ui header blue aligned center">付款</h1>
         <div id="payPay">
             <h4 class="ui dividing header blue">信息录入</h4>

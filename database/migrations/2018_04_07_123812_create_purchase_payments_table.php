@@ -15,6 +15,17 @@ class CreatePurchasePaymentsTable extends Migration
     {
         Schema::create('purchase_payments', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('purchase_id');
+            $table->string('date');
+            $table->float('price');
+            $table->float('pay_price')->default(0);
+            $table->string('pay_date')->nullable();
+            $table->string('worker')->nullable();
+            $table->unsignedInteger('bank_id')->default(0);
+            $table->unsignedInteger('check')->default(0);
+            $table->unsignedInteger('worker_id')->default(0);
+            $table->string('remark')->nullable();
+            $table->tinyInteger('state')->default(1);
             $table->timestamps();
         });
     }

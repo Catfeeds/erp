@@ -16,11 +16,12 @@ class CreateBudgetsTable extends Migration
         Schema::create('budgets', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_id');
-            $table->string('name');
-            $table->string('param');
-            $table->string('model');
-            $table->string('factory');
-            $table->string('unit');
+//            $table->string('name');
+//            $table->string('param');
+//            $table->string('model');
+//            $table->string('factory');
+//            $table->string('unit');
+            $table->unsignedInteger('material_id');
             $table->float('price');
             $table->integer('number');
             $table->integer('buy_number')->default(0);

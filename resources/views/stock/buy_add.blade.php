@@ -9,14 +9,14 @@
             <div class="divider"> / </div>
             <a class="section" href="../stock/buy_list.html">采购收购清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../stock/buy_check.html?id=CG1231532311">采购收货查询 - CG1231532311</a>
+            <a class="section" href="../stock/buy_check.html?id=CG1231532311">采购收货查询 - {{$purchase->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">收货入库</div>
         </div>
 
         <input type="hidden" id="projectId" value="">
-        <input type="hidden" id="purchaseId" value="">
-        <input type="hidden" id="stockReceiver" value="陈经理">
+        <input type="hidden" id="purchaseId" value="{{$purchase->id}}">
+        <input type="hidden" id="stockReceiver" value="">
         <div style="display: none;" id="buyMaterials">[{"id":1,"name":"物料一","model":"型号一","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":2,"name":"物料二","model":"型号二","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":3,"name":"物料三","model":"型号三","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034},{"id":4,"name":"物料四","model":"型号四","unit":"个","price":253,"number":2534,"cost":50876,"buy_number":1500,"need_number":1034}]</div>
 
         <h1 class="ui red header blue center aligned">收货入库</h1>
@@ -28,7 +28,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">采购编号</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">CG1231532311</div>
+                                <div class="fake-input">{{$purchase->number}}</div>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">采购日期</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">2018-09-10</div>
+                                <div class="fake-input">{{$purchase->date}}</div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">供货商名称</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">xxx供货商</div>
+                                <div class="fake-input">{{$purchase->supplier}}</div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">采购金额</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">123,121,521 ￥</div>
+                                <div class="fake-input">{{$purchase->lists()->sum('cost')}} ￥</div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目编号</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">XM123125412321</div>
+                                <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->number}}</div>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目内容</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">这是一段项目内容xxxxx</div>
+                                <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->name}}</div>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目经理</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">陈经理</div>
+                                <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->pm}}</div>
                             </div>
                         </div>
                     </div>

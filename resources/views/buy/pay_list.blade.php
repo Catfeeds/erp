@@ -89,34 +89,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../buy/payment_list.html')">CG1231532311</a>
+                        <a href="javascript:_helper.fullWindow('{{url('buy/payment/list')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
-                    <td>xx供货商</td>
-                    <td>123,521 ￥</td>
-                    <td>XM1352123124</td>
-                    <td class="table-content">这是项目内容xzxx</td>
-                    <td>陈经理</td>
+                    <td>{{$list->supplier}}</td>
+                    <td>{{$list->lists()->sum('cost')}} ￥</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
+                    <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>123,521 ￥</td>
                     <td>52,212 ￥</td>
                     <td>已结清</td>
                     <td>待处理</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../buy/payment_list.html')">CG1231532311</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,521 ￥</td>
-                    <td>XM1352123124</td>
-                    <td class="table-content">这是项目内容xzxx</td>
-                    <td>何经理</td>
-                    <td>123,521 ￥</td>
-                    <td>52,212 ￥</td>
-                    <td>未结清</td>
-                    <td>已处理</td>
-                </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>

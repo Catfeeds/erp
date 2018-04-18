@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                 @foreach($lists as $list)
-                <tr>
+                <tr data-id="{{$list->id}}">
                     <td>{{$list->number}}</td>
                     <td>{{$list->price}}￥</td>
                     <td style="max-width:300px">{{$list->reason}}</td>

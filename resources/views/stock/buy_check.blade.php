@@ -9,38 +9,38 @@
             <div class="divider"> / </div>
             <a class="section" href="../stock/buy_list.html">采购收购清单</a>
             <div class="divider"> / </div>
-            <div class="active section">采购收货查询 - CG1231532311</div>
+            <div class="active section">采购收货查询 - {{$purchase->number}}</div>
         </div>
 
-        <h1 class="ui header center aligned">采购收货查询 - CG1231532311</h1>
+        <h1 class="ui header center aligned">采购收货查询 - {{$purchase->number}}</h1>
         <div class="flex-row flex-between table-head-nowrap" id="stockBuyCheck">
 
             <table class="ui celled structured table center aligned unstackable" style="width:65%;">
                 <thead>
                 <tr>
                     <th>采购编号</th>
-                    <th class="fake-td" colspan="3">CG213123213</th>
+                    <th class="fake-td" colspan="3">{{$purchase->number}}</th>
                     <th>采购日期</th>
-                    <th class="fake-td" colspan="3">2018-02-03</th>
+                    <th class="fake-td" colspan="3">{{$purchase->date}}</th>
                     <th>收货入库记录</th>
                 </tr>
                 <tr>
                     <th>项目编号</th>
-                    <th class="fake-td" colspan="3">XM16312412321</th>
+                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
                     <th>项目内容</th>
-                    <th class="fake-td" colspan="3">这是内容xxx</th>
+                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
                     <th>收货入库编号</th>
                 </tr>
                 <tr>
                     <th>采购商</th>
-                    <th class="fake-td" colspan="7">xxx 采购商</th>
+                    <th class="fake-td" colspan="7">{{$purchase->supplier}}</th>
                     <th>入库日期</th>
                 </tr>
                 <tr>
                     <th>项目经理</th>
-                    <th class="fake-td" colspan="3">陈先生</th>
+                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->pm}}</th>
                     <th>采购金额</th>
-                    <th class="fake-td" colspan="3">123,523,123 ￥</th>
+                    <th class="fake-td" colspan="3">{{$purchase->lists()->sum('cost')}} ￥</th>
                     <th>收货人</th>
                 </tr>
                 <tr>
@@ -59,44 +59,25 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>1</td>
-                    <td>线缆</td>
-                    <td>这是性能参数</td>
-                    <td>xxx</td>
-                    <td>xxx厂家</td>
-                    <td>个</td>
-                    <td>20 ￥</td>
-                    <td>500</td>
-                    <td>10,000 ￥</td>
+                    <td>{{$list->id}}</td>
+                    <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
+                    <td>{{$list->material->model}}</td>
+                    <td>{{$list->material->factory}}</td>
+                    <td>{{$list->material->unit}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->number}}</td>
+                    <td>{{$list->cost}} ￥</td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td>线缆</td>
-                    <td>这是性能参数</td>
-                    <td>xxx</td>
-                    <td>xxx厂家</td>
-                    <td>个</td>
-                    <td>20 ￥</td>
-                    <td>500</td>
-                    <td>10,000 ￥</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>线缆</td>
-                    <td>这是性能参数</td>
-                    <td>xxx</td>
-                    <td>xxx厂家</td>
-                    <td>个</td>
-                    <td>20 ￥</td>
-                    <td>500</td>
-                    <td>10,000 ￥</td>
-                </tr>
+                @endforeach
+
                 </tbody>
                 <tfoot>
                 <tr>
                     <th colspan="8">合计</th>
-                    <th>10,000￥</th>
+                    <th>{{$purchase->lists()->sum('cost')}} ￥</th>
                 </tr>
                 </tfoot>
             </table>

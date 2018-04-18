@@ -9,7 +9,7 @@
             name: '',
             param: '',
             model: '',
-            factor: '',
+            factory: '',
             unit: ''
           }
         },
@@ -18,7 +18,7 @@
           this.materialForm.name = $('#materialName').val() || ''
           this.materialForm.param = $('#materialParam').val() || ''
           this.materialForm.model = $('#materialModel').val() || ''
-          this.materialForm.factor = $('#materialFactor').val() || ''
+          this.materialForm.factory = $('#materialFactor').val() || ''
           this.materialForm.unit = $('#materialUnit').val() || ''
         },
         methods: {

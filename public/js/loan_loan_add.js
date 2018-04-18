@@ -13,27 +13,10 @@
           },
 
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+          selectData: {
+            id: ''
+          }
         },
         mounted() {
           this.loanForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
@@ -51,7 +34,22 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                  $('.ui.dimmer').addClass('active')
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                    role: 'loan_loan_pass'
+                  })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
                 } else {
                   this.$notify({
                     title: '错误',
@@ -75,12 +73,31 @@
 
           //提交审批人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了审批人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            this.selectData.users = this.checkedMen
+            _http.LoanManager.selectLoan(this.selectData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了审批人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

@@ -139,7 +139,7 @@
                             </i>
                             <template slot-scope="props">
                                 <div class="name">@{{ props.item.name }}</div>
-                                <span class="addr">@{{ props.item.address }}</span>
+                                <span class="addr">@{{ props.item.model }}</span>
                             </template>
                         </el-autocomplete>
                         <button class="ui mini button positive" @click="addMaterial">添加物料</button>
@@ -200,10 +200,11 @@
                             <div class="one wide column">
                                 <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                             </div>
-                            <div class="one wide column">
-                                <div class="fake-input">@{{ item.material && item.material.price.toLocaleString('en-US') || 0}} ￥</div>
-                            </div>
+
                         </template>
+                        <div class="one wide column">
+                            <input v-model.number="item.price" type="number" min="0" placeholder="单价">
+                        </div>
                         <div class="one wide column">
                             <input v-model.number="item.number" type="number" min="0" placeholder="数量">
                         </div>

@@ -6,11 +6,11 @@
         data: {
 
           payForm: {
-            people: '',
-            date: '',
+            manager: '',
+            pay_date: '',
             cash: '',
-            amount: '',
-            others: '',
+            transfer: '',
+            other: '',
             bank: '',
             account: '',
             remark: '',
@@ -18,19 +18,38 @@
 
         },
         mounted() {
+          this.payForm.id = $('#payId').val() || ''
+          this.payForm.manager = $('#manager').val() || ''
+          this.payForm.pay_date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           $('#payPay').removeClass('invisible')
-          this.payForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
         },
         methods: {
 
           //提交
           submit() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            _http.PaymentManager.createPayPay(this.payForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify.success({
+                    title: '成功',
+                    message: '提交成功！'
+                  })
+                  $('.ui.dimmer').addClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
         }
       })

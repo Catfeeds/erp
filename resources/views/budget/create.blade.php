@@ -66,7 +66,7 @@
                         <div class="inline fields">
                             <label class="four wide field">生产厂家</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">@{{ newMaterial.factor || '暂无参数' }}</div>
+                                <div class="fake-input">@{{ newMaterial.factory || '暂无参数' }}</div>
                             </div>
                         </div>
                     </div>

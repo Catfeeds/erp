@@ -133,11 +133,11 @@
                 <tbody>
                 <template v-if="materialsComputed && materialsComputed.length">
                     <tr v-for="(item, index) in materialsComputed" :key="item.id">
-                        <td>@{{ item.name }}</td>
-                        <td>@{{ item.param }}</td>
-                        <td>@{{ item.model }}</td>
-                        <td>@{{ item.factory }}</td>
-                        <td>@{{ item.unit }}</td>
+                        <td>@{{ item.material.name }}</td>
+                        <td>@{{ item.material.param }}</td>
+                        <td>@{{ item.material.model }}</td>
+                        <td>@{{ item.material.factory }}</td>
+                        <td>@{{ item.material.unit }}</td>
                         <td>@{{ item.price.toLocaleString('en-US') }}</td>
                         <td>@{{ item.number.toLocaleString('en-US') }}</td>
                         <td>@{{ item.buy_number.toLocaleString('en-US') }}</td>

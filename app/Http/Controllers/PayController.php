@@ -43,7 +43,10 @@ class PayController extends Controller
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',
-                'msg'=>'SUCCESS'
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$apply->id
+                ]
             ]);
         }
     }
@@ -372,7 +375,7 @@ class PayController extends Controller
             $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
             $pay->number = 'BXFK'.date('Ymd',time()).sprintf("%03d", $count+1);
         }
-        $pay->user_id = $post->get('user_id');
+//        $pay->user_id = $post->get('user_id');
         $pay->date = $post->get('date');
         $pay->daduction = $post->get('daduction');
         $pay->cash = $post->get('cash');
@@ -386,6 +389,9 @@ class PayController extends Controller
                 $list = new LoanPayList();
                 $list->loan_id = $item;
                 $list->pay_id = $pay->id;
+                $submit = LoanSubmit::find($item);
+                $submit->state=4;
+                $submit->save();
                 $list->save();
             }
             return response()->json([

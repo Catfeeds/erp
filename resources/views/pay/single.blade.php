@@ -11,6 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">付款审批查询 - {{$apply->number}}</div>
         </div>
+        <input type="hidden" id="payId" value="{{$apply->id}}">
 
         <h3 class="ui header center aligned">付款审批查询 -  {{$apply->number}}</h3>
         <table class="ui celled center aligned table unstackable">

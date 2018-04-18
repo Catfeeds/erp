@@ -84,11 +84,11 @@
                         <tbody>
                         <tr v-for="(item, index) in preMaterialsList" :key="item.id">
                             <td>@{{ index + 1 }}</td>
-                            <td>@{{ item.name }}</td>
-                            <td>@{{ item.param }}</td>
-                            <td>@{{ item.model }}</td>
-                            <td>@{{ item.factor }}</td>
-                            <td>@{{ item.unit }}</td>
+                            <td>@{{ item.material.name }}</td>
+                            <td>@{{ item.material.param }}</td>
+                            <td>@{{ item.material.model }}</td>
+                            <td>@{{ item.material.factory }}</td>
+                            <td>@{{ item.material.unit }}</td>
                             <td>@{{ item.price.toLocaleString('en-US') }} ￥</td>
                             <td>@{{ item.number.toLocaleString('en-US') }}</td>
                             <td>@{{ item.cost.toLocaleString('en-US') }} ￥</td>
@@ -136,17 +136,17 @@
                         <thead>
                         <tr>
                             <th>物料名称</th>
-                            <th class="font-normal">@{{ currentMaterial.name }}</th>
+                            <th class="font-normal">@{{ currentMaterial.material.name }}</th>
                             <th>性能技术参数</th>
-                            <th class="font-normal table-content">@{{ currentMaterial.param }}</th>
+                            <th class="font-normal table-content">@{{ currentMaterial.material.param }}</th>
                             <th>品牌型号</th>
-                            <th class="font-normal">@{{ currentMaterial.model }}</th>
+                            <th class="font-normal">@{{ currentMaterial.material.model }}</th>
                         </tr>
                         <tr>
                             <th>单位</th>
-                            <th class="font-normal">@{{ currentMaterial.unit }}</th>
+                            <th class="font-normal">@{{ currentMaterial.material.unit }}</th>
                             <th>生产厂家</th>
-                            <th class="font-normal" colspan="3">@{{ currentMaterial.factor }}</th>
+                            <th class="font-normal" colspan="3">@{{ currentMaterial.material.factory }}</th>
                         </tr>
                         <tr>
                             <th>采购编号</th>

@@ -25,6 +25,8 @@ Route::get('search/category','SystemController@searchCategory');
 Route::get('project/material','ProjectController@searchProjectMaterial');
 Route::get('search/budget','ProjectController@searchBudget');
 Route::get('search/material','SystemController@searchMaterial');
+Route::get('search/loan/user','LoanController@searchLoanUser');
+Route::get('search/warehouse','StockController@searchWarehouse');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
 Route::group(['middleware'=>'auth'],function (){
@@ -99,8 +101,21 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
     Route::post('purchase/create','ProjectController@createPurchase');
+    Route::get('purchase/check','PurchaseController@checkPurchase');
+    Route::get('purchase/pass','PurchaseController@passPurchase');
+    Route::post('purchase/select/pass','PurchaseController@selectPass');
+    Route::post('purchase/select/check','PurchaseController@selectCheck');
+    Route::post('purchase/payment/create','PurchaseController@createPayment');
+    Route::get('purchase/payment/check','PurchaseController@checkPayment');
+    Route::post('purchase/payment/select/check','PurchaseController@selectPaymentCheck');
+    Route::post('purchase/payment/finish','PurchaseController@finishPayment');
+    Route::post('purchase/invoice/create','PurchaseController@createInvoices');
     Route::get('buy/budgetary','ProjectController@createBudgetaryPage');
     Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage');
+    Route::get('buy/budgetary_buy','StockController@buyBudgetary');
+    Route::get('buy/payment/list','PurchaseController@listBuyPayment');
+    Route::get('buy/payment/create','PurchaseController@createBuyPayment');
+    Route::get('stock/check/budgetary','StockController@budgetaryCheckPage');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
     Route::get('stock/buy/list','StockController@listBuyList');
@@ -109,7 +124,6 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('stock/out/list','StockController@listOutList');
     Route::get('stock/add/buy','StockController@addBuyPage');
     Route::get('store/buy_check','StockController@buyCheckPage');
-    Route::get('buy/budgetary_buy','StockController@buyBudgetary');
 
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');
@@ -141,11 +155,13 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('loan/pay/finish','PayController@finishLoan');
     Route::get('loan/pay','PayController@showLoanPay');
     Route::get('loan/pay/list','PayController@listLoanPayPage');
+    Route::post('loan/submit/other/check','LoanController@selectSubmitCheck');
+    Route::post('loan/submit/other/pass','LoanController@selectSubmitPass');
     //费用付款管理
     Route::get('pay/add','PayController@createPayApplyPage');
     Route::post('pay/add','PayController@createPayApply');
     Route::get('pay/list','PayController@listPayApply');
-    Route::post('pay/pay','PayController@listPayApply');
+    Route::post('pay/pay','PayController@finishPayApply');
     Route::get('pay/pay','PayController@payPage');
     Route::get('pay/single','PayController@paySinglePage');
     Route::get('pay/cancel','PayController@cancelApply');
