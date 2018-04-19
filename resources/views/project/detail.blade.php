@@ -103,7 +103,9 @@
                     <td>12,423,222 ￥</td>
                 </tr>
                 <tr>
-                    <td class="center aligned" style="font-size:40px;" colspan="3" rowspan="5">\</td>
+                    <td class="center aligned" style="font-size:40px;" colspan="3" rowspan="5">
+                        <a href="javascript:_helper.fullWindow('{{url('project/auth')}}?id={{$project->id}}')">权限设置</a>
+                    </td>
                     <td rowspan="5">
                         <div class="flex-row flex-between">
                             <p>已发生成本</p>
@@ -129,6 +131,7 @@
                     <td>退料成本</td>
                     <td>12,423,222 ￥</td>
                 </tr>
+
                     @endforeach
                 </tbody>
             </table>

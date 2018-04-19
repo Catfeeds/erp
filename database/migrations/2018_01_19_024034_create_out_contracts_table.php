@@ -18,7 +18,7 @@ class CreateOutContractsTable extends Migration
             $table->unsignedInteger('project_id');
             $table->string('unit');
             $table->float('price');
-            $table->string('remark');
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
     }

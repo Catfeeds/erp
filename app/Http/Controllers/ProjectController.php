@@ -597,6 +597,7 @@ class ProjectController extends Controller
                         $budget->buy_number += $item['number'];
                         $budget->need_buy = $budget->number-$budget->buy_number;
                         $budget->save();
+                        $list->material_id = $budget->material_id;
                     }else{
                         $list->material_id = $item['material_id'];
                     }
@@ -670,6 +671,10 @@ class ProjectController extends Controller
     {
         $invoice = Invoice::all();
         return view('buy.extrabudgetary',['invoice'=>$invoice]);
+    }
+    public function showProjectsAuth()
+    {
+        return view('project.auth');
     }
 
 }

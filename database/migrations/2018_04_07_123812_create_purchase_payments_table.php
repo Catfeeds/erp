@@ -20,6 +20,7 @@ class CreatePurchasePaymentsTable extends Migration
             $table->float('price');
             $table->float('pay_price')->default(0);
             $table->string('pay_date')->nullable();
+            $table->unsignedInteger('apply_id');
             $table->string('worker')->nullable();
             $table->unsignedInteger('bank_id')->default(0);
             $table->unsignedInteger('check')->default(0);

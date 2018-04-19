@@ -96,7 +96,16 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        return view('buy.payment_list',['purchase'=>$purchase]);
+        $lists = $purchase->payments()->get();
+//        dd($lists);
+        return view('buy.payment_list',['purchase'=>$purchase,'lists'=>$lists]);
+    }
+    public function editPaymentPage()
+    {
+        $id = Input::get('id');
+        $payment = PurchasePayment::find($id);
+        $purchase = Purchase::find($payment->purchase_id);
+        return view('buy.payment_edit',['payment'=>$payment,'purchase'=>$purchase]);
     }
     public function createBuyPayment()
     {
@@ -106,12 +115,20 @@ class PurchaseController extends Controller
     }
     public function createPayment()
     {
-        $id = Input::get('purchase_id');
-        $payment = new PurchasePayment();
-        $payment->purchase_id = $id;
-        $payment->date = Input::get('date');
-        $payment->price = Input::get('price');
-        if ($payment){
+        $payment_id = Input::get('id');
+        if ($payment_id){
+            $payment = PurchasePayment::find($payment_id);
+            $payment->date = Input::get('date');
+            $payment->price = Input::get('price');
+        }else{
+            $id = Input::get('purchase_id');
+            $payment = new PurchasePayment();
+            $payment->purchase_id = $id;
+            $payment->date = Input::get('date');
+            $payment->price = Input::get('price');
+            $payment->apply_id = Auth::id();
+        }
+        if ($payment->save()){
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -154,11 +171,17 @@ class PurchaseController extends Controller
             ]);
         }
     }
+    public function finishPaymentPage()
+    {
+        $id = Input::get('id');
+        $payment = PurchasePayment::find($id);
+        return view('buy.payment_finish',['payment'=>$payment]);
+    }
     public function finishPayment(Request $post)
     {
         $id = $post->get('id');
         $payment = PurchasePayment::find($id);
-        $payment->pay_price = $post->get('pay_price');
+        $payment->pay_price = $payment->price;
         $payment->pay_date = $post->get('pay_date');
         $payment->bank_id = $post->get('bank_id');
         $payment->worker = Auth::user()->name;

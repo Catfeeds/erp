@@ -36,6 +36,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('project/create','ProjectController@createProject');
    Route::get('project/detail','ProjectController@listProjectsDetail');
    Route::get('project/check','ProjectController@showProjectsDetail');
+   Route::get('project/auth','ProjectController@showProjectsAuth');
    //数据维护
    Route::get('supplier/list','SystemController@listSupplierPage');
    Route::post('supplier/create','SystemController@createSupplier');
@@ -106,9 +107,11 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('purchase/select/pass','PurchaseController@selectPass');
     Route::post('purchase/select/check','PurchaseController@selectCheck');
     Route::post('purchase/payment/create','PurchaseController@createPayment');
+    Route::get('buy/edit/payment','PurchaseController@editPaymentPage');
     Route::get('purchase/payment/check','PurchaseController@checkPayment');
     Route::post('purchase/payment/select/check','PurchaseController@selectPaymentCheck');
     Route::post('purchase/payment/finish','PurchaseController@finishPayment');
+    Route::get('purchase/payment/finish','PurchaseController@finishPaymentPage');
     Route::post('purchase/invoice/create','PurchaseController@createInvoices');
     Route::get('buy/budgetary','ProjectController@createBudgetaryPage');
     Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage');

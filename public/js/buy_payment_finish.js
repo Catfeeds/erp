@@ -15,7 +15,7 @@
           this.getBanks()
           this.form.pay_date = $('#hiddenDate').val() || ''
           this.form.bank_id = $('#bankAccount').val() || ''
-          this.form.ask_id = $('#askId').val() || ''
+          this.form.id = $('#askId').val() || ''
           this.form.remark = $('#remark').val() || ''
           $('.ui.dropdown').dropdown()
           $('#paymentFinish').removeClass('invisible')
@@ -40,7 +40,7 @@
           //提交
           submitForm() {
             console.log(this.form)
-            _http.BuyManager.createPay(data)
+            _http.BuyManager.createPaymentAdd(this.form)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

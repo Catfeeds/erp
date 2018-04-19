@@ -9,11 +9,13 @@
             id: '',
             name: '',
             remark: '',
+            rate: '',
           }
         },
         mounted() {
           this.invoiceForm.id = $('#invoiceId').val()
           this.invoiceForm.name = $('#invoiceName').val()
+          this.invoiceForm.rate = $('#invoiceRate').val()
           this.invoiceForm.remark = $('#invoiceRemark').val()
         },
         methods: {

@@ -397,6 +397,7 @@ class SystemController extends Controller
         }
         $invoice->name = $post->get('name');
         $invoice->remark = $post->get('remark');
+        $invoice->rate = $post->get('rate');
         if ($invoice->save()){
             return response()->json([
                 'code'=>'200',

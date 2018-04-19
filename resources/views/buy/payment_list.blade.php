@@ -73,64 +73,39 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>1</td>
-                    <td>2018-09-11</td>
-                    <td>200,000.00 ￥</td>
-                    <td>陈秋芳</td>
-                    <td>何琦真</td>
+                    <td>{{$list->id}}</td>
+                    <td>{{$list->date}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{\App\User::find($list->apply_id)->username}}</td>
+                    <td>{{$list->check==0?'':\App\User::find($list->check)->name}}</td>
+                    @if($list->worker_id==0)
                     <td colspan="6">暂无数据</td>
+                    @else
+                        <td>{{$list->pay_date}}</td>
+                        <td>{{$list->pay_price}} ￥</td>
+                        <td>{{\App\Models\BankAccount::find($list->bank_id)->name}}</td>
+                        <td>{{\App\Models\BankAccount::find($list->bank_id)->account}}</td>
+                        <td class="table-content">{{$list->remark}}</td>
+                        <td>{{$list->worker}}</td>
+                    @endif
                     <td style="white-space:nowrap;">
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('../buy/payment_create.html?id=1')" title="修改付款申请">修改</a>
+                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/payment')}}?id={{$list->id}}')" title="修改付款申请">修改</a>
                         <a class="ui mini positive button" href="#" title="复核">复核</a>
-                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('../buy/payment_finish.html?id=1')" title="录入/修改实际付款">录入</a>
+                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$list->id}}')" title="录入/修改实际付款">录入</a>
                     </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2018-09-11</td>
-                    <td>200,000.00 ￥</td>
-                    <td>陈秋芳</td>
-                    <td>何琦真</td>
-                    <td>2018-10-11</td>
-                    <td>200,000.00 ￥</td>
-                    <td>中国银行</td>
-                    <td>62305231232421321</td>
-                    <td class="table-content">这是备注xxx</td>
-                    <td>刘一飞</td>
-                    <td>
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('../buy/payment_create.html?id=2')" title="修改付款申请">修改</a>
-                        <a class="ui mini positive button" href="#" title="复核">复核</a>
-                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('../buy/payment_finish.html?id=2')" title="录入/修改实际付款">录入</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2018-09-11</td>
-                    <td>200,000.00 ￥</td>
-                    <td>陈秋芳</td>
-                    <td>何琦真</td>
-                    <td>2018-10-11</td>
-                    <td>200,000.00 ￥</td>
-                    <td>中国银行</td>
-                    <td>62305231232421321</td>
-                    <td class="table-content">这是备注xxx</td>
-                    <td>刘一飞</td>
-                    <td>
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('../buy/payment_create.html?id=3')" title="修改付款申请">修改</a>
-                        <a class="ui mini positive button" href="#" title="复核">复核</a>
-                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('../buy/payment_finish.html?id=3')" title="录入/修改实际付款">录入</a>
-                    </td>
+                    @endforeach
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
                     <th colspan="2">合计</th>
-                    <th>200,000.00 ￥</th>
+                    <th>{{$purchase->payments()->sum('price')}} ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>200,000.00 ￥</th>
+                    <th>{{$purchase->payments()->sum('pay_price')}}  ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>

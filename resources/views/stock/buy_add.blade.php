@@ -181,7 +181,7 @@
                             <div class="fake-input">@{{ item.material && item.material.need.toLocaleString('en-US') || '无'}}</div>
                         </div>
                         <div class="two wide column">
-                            <input v-model.number="item.number" :min="0" :max="item.material.need_number" type="number" placeholder="本次入库数量">
+                            <input v-model.number="item.number" :min="0" :max="item.material.need" type="number" placeholder="本次入库数量">
                         </div>
                         <div class="one wide column flex-row">
                             <div class="fake-input">

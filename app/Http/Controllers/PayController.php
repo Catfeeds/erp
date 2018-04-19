@@ -86,8 +86,8 @@ class PayController extends Controller
         $id = Input::get('id');
         $apply = PayApply::find($id);
         if ($apply->state ==1){
-            $apply->state =0;
-            $apply->save();
+//            $apply->state =0;
+            $apply->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -192,8 +192,7 @@ class PayController extends Controller
                 'msg'=>'当前状态不允许撤销！'
             ]);
         }else{
-            $loan->state =0;
-            $loan->save();
+            $loan->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'

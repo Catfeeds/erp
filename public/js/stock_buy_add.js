@@ -22,7 +22,7 @@
             this.stockBuyAdd.worker = $('#stockReceiver').val() || ''
             this.stockBuyAdd.purchase_id = $('#purchaseId').val() || ''
             this.stockBuyAdd.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
-            const projectId = $('#projectId').val()
+            const projectId = $('#projectId').val() || ''
             this.stockBuyAdd.projectId = projectId ? projectId : false
 
             const materials = $('#buyMaterials').text().trim()
@@ -91,10 +91,29 @@
             this.stockBuyAdd[name].splice(index, 1)
           },
 
+          dataFormat(data){
+            let result = {
+              date: data.date,
+              warehouse_id: data.warehouse_id,
+              worker: data.worker,
+              lists: []
+            }
+            const list = data.lists
+            list.forEach(item => {
+              result.lists.push({
+                id: item.id,
+                number: item.number
+              })
+            })
+
+            return result
+          },
+
           //提交
           submit() {
-            console.log(this.stockBuyAdd)
-            _http.StockManager.createBuyAdd(data)
+            const postData = this.dataFormat(this.stockBuyAdd)
+            console.log(postData)
+            _http.StockManager.createBuyAdd(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

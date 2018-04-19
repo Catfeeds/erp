@@ -446,7 +446,7 @@
 
     //采购收票
     createInvoice(data = {}) {
-      return this._http.post(`/purchase/invoice`, data, this.dataMethodDefaults)
+      return this._http.post(`/purchase/invoice/create`, data, this.dataMethodDefaults)
     }
 
     //采购复核
@@ -489,6 +489,11 @@
     // 选择复核人员
     selectPaymentCheck(data = {}){
       return this._http.post(`/purchase/payment/select/check`, data, this.dataMethodDefaults)
+    }
+
+    // 付款录入
+    createPaymentAdd(data = {}){
+      return this._http.post(`/purchase/payment/finish`, data, this.dataMethodDefaults)
     }
   }
 

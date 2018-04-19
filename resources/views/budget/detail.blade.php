@@ -31,7 +31,7 @@
                         <div class="inline fields">
                             <label class="four wide field">甲方</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">{{$project->partyA}}</div>
+                                <div class="fake-input">{{$project->PartyA}}</div>
                             </div>
                         </div>
                     </div>
@@ -191,20 +191,23 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     <tr>
-                        <td rowspan="{{count($budgets)}}">预算总额</td>
-                        <td rowspan="{{count($budgets)}}">{{$project->budget()->sum('price')}} ￥</td>
+                        <td rowspan="3">预算总额</td>
+                        <td rowspan="3">{{$project->budget()->sum('cost')}} ￥</td>
+                        <td>物料采购金额</td>
+                        <td>{{$project->budget()->where('type','=',1)->sum('cost')}} ￥</td>
                         <td rowspan="3">
                             <a href="javascript:_helper.fullWindow('../budget/print.html');">查看预算清单</a>
                         </td>
                     </tr>
-                    @for($i=0;$i<count($budgets);$i++)
                     <tr>
-                        <td>{{$budgets[$i]->type}}</td>
-                        <td>{{$budgets[$i]->price}} ￥</td>
+                        <td>工程金额</td>
+                        <td>{{$project->budget()->where('type','=',2)->sum('cost')}} ￥</td>
                     </tr>
-                    @endfor
+                    <tr>
+                        <td>其他</td>
+                        <td>{{$project->budget()->where('type','=',3)->sum('cost')}} ￥</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
