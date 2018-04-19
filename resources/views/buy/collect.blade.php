@@ -38,15 +38,16 @@
         <h1 class="ui header center aligned">项目采购物料清单</h1>
 
         <div class="table-head-nowrap">
+            @foreach($projects as $project)
             <table class="ui celled structured table center aligned unstackable">
                 <thead>
                 <tr>
                     <th>项目编号</th>
-                    <th class="fake-td">xm21312521312</th>
+                    <th class="fake-td">{{$project->number}}</th>
                     <th>项目内容</th>
-                    <th class="fake-td" colspan="9">这是项目内容</th>
+                    <th class="fake-td" colspan="9">{{$project->name}}</th>
                     <th>项目保修截止日期</th>
-                    <th class="fake-td">2018-06-02</th>
+                    <th class="fake-td">{{$project->deadline}}</th>
                 </tr>
                 <tr>
                     <th>序号</th>
@@ -66,79 +67,49 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($project->purchases as $purchase)
                 <tr>
-                    <td>1</td>
-                    <td>2018-02-03</td>
-                    <td>52132132</td>
-                    <td>内</td>
-                    <td>供应商一</td>
-                    <td>物料一</td>
-                    <td>xx性能xx技术</td>
-                    <td>ak-47</td>
-                    <td>xx厂家</td>
-                    <td>件</td>
-                    <td>20 ￥</td>
-                    <td>123,421</td>
-                    <td>523,123,521 ￥</td>
-                    <td>2018-03-22</td>
+                    <td colspan="{{count($purchase->lists)}}">{{$purchase->id}}</td>
+                    <td colspan="{{count($purchase->lists)}}">{{$purchase->date}}</td>
+                    <td colspan="{{count($purchase->lists)}}">{{$purchase->number}}</td>
+                    <td >内</td>
+
+                    <td colspan="{{count($purchase->lists)}}">{{$purchase->supplier}}</td>
+                    @if(!empty($purchase->lists))
+                        @foreach($purchase->lists as $list)
+                    <td>{{\App\Models\Material::find($list->material_id)->name}}</td>
+                    <td>{{\App\Models\Material::find($list->material_id)->param}}</td>
+                    <td>{{\App\Models\Material::find($list->material_id)->model}}</td>
+                    <td>{{\App\Models\Material::find($list->material_id)->factory}}</td>
+                    <td>{{\App\Models\Material::find($list->material_id)->unit}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->number}}</td>
+                    <td>{{$list->cost}} ￥</td>
+                    <td>{{$list->warranty_date}}</td>
+                        @endforeach
+                        @else
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    @endif
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2018-02-03</td>
-                    <td>52132132</td>
-                    <td>外</td>
-                    <td>供应商二</td>
-                    <td>物料三</td>
-                    <td>xx性能xx技术</td>
-                    <td>ak-47</td>
-                    <td>xx厂家</td>
-                    <td>件</td>
-                    <td>20 ￥</td>
-                    <td>123,421</td>
-                    <td>523,123,521 ￥</td>
-                    <td>2018-03-22</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2018-02-03</td>
-                    <td>52132132</td>
-                    <td>外</td>
-                    <td>供应商二</td>
-                    <td>物料三</td>
-                    <td>xx性能xx技术</td>
-                    <td>ak-47</td>
-                    <td>xx厂家</td>
-                    <td>件</td>
-                    <td>20 ￥</td>
-                    <td>123,421</td>
-                    <td>523,123,521 ￥</td>
-                    <td>2018-03-22</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>2018-02-03</td>
-                    <td>52132132</td>
-                    <td>内</td>
-                    <td>供应商五</td>
-                    <td>物料三</td>
-                    <td>xx性能xx技术</td>
-                    <td>ak-47</td>
-                    <td>xx厂家</td>
-                    <td>件</td>
-                    <td>20 ￥</td>
-                    <td>123,421</td>
-                    <td>523,123,521 ￥</td>
-                    <td>2018-03-22</td>
-                </tr>
+                @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <th colspan="12">合计</th>
-                    <th>123,123,123 ￥</th>
+                    <th>{{$purchase->lists()->sum('cost')}} ￥</th>
                     <th></th>
                 </tr>
                 </tfoot>
             </table>
+                @endforeach
         </div>
 
     </div>

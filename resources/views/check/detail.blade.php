@@ -38,7 +38,7 @@
                         <div class="inline fields">
                             <label class="four wide field">甲方</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">{{$project->partyA}}</div>
+                                <div class="fake-input">{{$project->PartyA}}</div>
                             </div>
                         </div>
                     </div>

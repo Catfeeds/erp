@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\PruchaseCheck;
 use App\Models\PruchasePass;
 use App\Models\Purchase;
@@ -219,4 +220,19 @@ class PurchaseController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    public function listInvoices()
+    {
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        $purchase->invoices = $purchase->invoices()->get();
+        return view('buy.invoice_list',['purchase'=>$purchase]);
+    }
+    public function createInvoicePage()
+    {
+        $id = Input::get('purchase_id');
+        $purchase = Purchase::find($id);
+        $invoice = Invoice::select(['id','name'])->get();
+        return view('buy.invoice_create',['purchase'=>$purchase,'invoice'=>$invoice]);
+    }
+
 }

@@ -289,6 +289,7 @@ class ProjectController extends Controller
                     $picture->project_id = $project->id;
                 }
                 $picture->url = $item['url'];
+                $picture->name = $item['name'];
                 $picture->save();
             }
         }
@@ -653,11 +654,20 @@ class ProjectController extends Controller
     }
     public function listPurchasesChargePage()
     {
-        return view('buy.charge_list');
+        $purchases = Purchase::paginate(10);
+        return view('buy.charge_list',['purchases'=>$purchases]);
     }
     public function purchaseCollectPage()
     {
-        return view('buy.collect');
+        $projects = Project::paginate(10);
+        foreach ($projects as $project){
+            $purchases = $project->purchases()->get();
+            foreach ($purchases as $purchase){
+                $purchase->lists = $purchase->lists()->get();
+            }
+            $project->purchases = $purchases;
+        }
+        return view('buy.collect',['projects'=>$projects]);
     }
     public function purchaseParityPage()
     {

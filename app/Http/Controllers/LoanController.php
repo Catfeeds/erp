@@ -78,8 +78,8 @@ class LoanController extends Controller
             ]);
         }else{
             $loan->state = 3;
-            $loan->worker_id = Auth::id();
-            $loan->worker = Auth::user()->name;
+            $loan->passer_id = Auth::id();
+            $loan->passer = Auth::user()->name;
             $loan->save();
             return response()->json([
                 'code'=>'200',
