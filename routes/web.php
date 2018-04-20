@@ -160,12 +160,12 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/submit/single','PayController@loanSubmitSingle');
     Route::post('loan/pay/add','PayController@createLoanPay');
     Route::post('loan/pay/finish','PayController@finishLoan');
-    Route::get('search/loan/user','PayController@searchLoanUser');
-    Route::get('search/loan/submit','PayController@searchLoanSubmit');
-    Route::get('check/submit','PayController@checkSubmit');
-    Route::get('pass/submit','PayController@passSubmit');
-    Route::post('select/check/submit','PayController@selectSubmitCheck');
-    Route::post('select/pass/submit','PayController@selectSubmitPass');
+    Route::get('search/loan/user','LoanController@searchLoanUser');
+    Route::get('search/loan/submit','LoanController@searchLoanSubmit');
+    Route::get('check/submit','LoanController@checkSubmit');
+    Route::get('pass/submit','LoanController@passSubmit');
+    Route::post('select/check/submit','LoanController@selectSubmitCheck');
+    Route::post('select/pass/submit','LoanController@selectSubmitPass');
     Route::get('loan/pay','PayController@showLoanPay');
     Route::get('loan/pay/list','PayController@listLoanPayPage');
     Route::post('loan/submit/other/check','LoanController@selectSubmitCheck');
