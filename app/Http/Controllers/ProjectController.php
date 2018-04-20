@@ -171,16 +171,16 @@ class ProjectController extends Controller
         $mainContracts = $post->get('mainContracts');
         if (!empty($mainContracts)){
             foreach ($mainContracts as $mainContract){
-                if (isset($mainContract['id'])){
-                    $contract = MainContract::find($mainContract['id']);
-                    if (empty($contract)){
-                        $contract = new MainContract();
-                        $contract->project_id = $project->id;
-                    }
-                }else{
+//                if (isset($mainContract['id'])){
+//                    $contract = MainContract::find($mainContract['id']);
+//                    if (empty($contract)){
+//                        $contract = new MainContract();
+//                        $contract->project_id = $project->id;
+//                    }
+//                }else{
                     $contract = new MainContract();
                     $contract->project_id = $project->id;
-                }
+//                }
                 $contract->unit = $mainContract['unit'];
                 $contract->price = $mainContract['price'];
                 $contract->remark = $mainContract['remark'];
@@ -190,16 +190,16 @@ class ProjectController extends Controller
         $outContracts = $post->get('outContracts');
         if (!empty($outContracts)){
             foreach ($outContracts as $outContract){
-                if (isset($outContract['id'])){
-                    $out_contract = OutContract::find($outContract['id']);
-                    if (empty($out_contract)){
-                        $out_contract = new OutContract();
-                        $out_contract->project_id = $project->id;
-                    }
-                }else{
+//                if (isset($outContract['id'])){
+//                    $out_contract = OutContract::find($outContract['id']);
+//                    if (empty($out_contract)){
+//                        $out_contract = new OutContract();
+//                        $out_contract->project_id = $project->id;
+//                    }
+//                }else{
                     $out_contract = new OutContract();
                     $out_contract->project_id = $project->id;
-                }
+//                }
                 $out_contract->unit = $outContract['unit'];
                 $out_contract->price = $outContract['price'];
                 $out_contract->remark = $outContract['remark'];
@@ -209,28 +209,28 @@ class ProjectController extends Controller
         $situations = $post->get('situations');
         if (!empty($situations)){
             foreach($situations as $situation){
-                if (isset($situation['id'])){
-                    $situ = ProjectSituations::find($situation['id']);
-                    if (empty($situ)){
-                        $situ = new ProjectSituations();
-                        $situ->project_id = $project->id;
-                    }
-                }else{
+//                if (isset($situation['id'])){
+//                    $situ = ProjectSituations::find($situation['id']);
+//                    if (empty($situ)){
+//                        $situ = new ProjectSituations();
+//                        $situ->project_id = $project->id;
+//                    }
+//                }else{
                     $situ = new ProjectSituations();
                     $situ->project_id = $project->id;
-                }
+//                }
                 $situ->price = $situation['price'];
                 $situ->type = $situation['type'];
                 $situ->is_main = $situation['is_main'];
                 $situ->save();
                 if (!empty($situation['lists'])){
                     foreach ($situation['lists'] as $list){
-                        if (isset($list['id'])){
-                            $lis = SituationList::find($list['id']);
-                        }else{
+//                        if (isset($list['id'])){
+//                            $lis = SituationList::find($list['id']);
+//                        }else{
                             $lis = new SituationList();
                             $lis->situation_id = $situ->id;
-                        }
+//                        }
                         $lis->name = $list['name'];
                         $lis->tax = $list['tax'];
                         $lis->price = $list['price'];
@@ -243,12 +243,12 @@ class ProjectController extends Controller
         $bails = $post->get('bails');
         if (!empty($bails)){
             foreach ($bails as $item){
-                if (isset($item['id'])){
-                    $bail = Bail::find($item['id']);
-                }else{
+//                if (isset($item['id'])){
+//                    $bail = Bail::find($item['id']);
+//                }else{
                     $bail = new Bail();
                     $bail->project_id = $project->id;
-                }
+//                }
                 $bail->unit = $item['unit'];
                 $bail->price = $item['price'];
                 $bail->term = $item['term'];
@@ -266,12 +266,12 @@ class ProjectController extends Controller
         $receipts = $post->get('receipts');
         if (!empty($receipts)){
             foreach ($receipts as $item){
-                if (isset($item['id'])){
-                    $receipt = Receipt::find($item['id']);
-                }else{
+//                if (isset($item['id'])){
+//                    $receipt = Receipt::find($item['id']);
+//                }else{
                     $receipt = new Receipt();
                     $receipt->project_id = $project->id;
-                }
+//                }
                 $receipt->ratio = $item['radio'];
                 $receipt->price = $item['price'];
                 $receipt->condition = $item['condition'];
@@ -281,16 +281,16 @@ class ProjectController extends Controller
         $pictures = $post->get('pictures');
         if (!empty($pictures)){
             foreach ($pictures as $item){
-                if (isset($item['id'])){
-                    $picture = ProjectPicture::find($item['id']);
-                    if (empty($picture)){
-                        $picture = new ProjectPicture();
-                        $picture->project_id = $project->id;
-                    }
-                }else{
+//                if (isset($item['id'])){
+//                    $picture = ProjectPicture::find($item['id']);
+//                    if (empty($picture)){
+//                        $picture = new ProjectPicture();
+//                        $picture->project_id = $project->id;
+//                    }
+//                }else{
                     $picture = new ProjectPicture();
                     $picture->project_id = $project->id;
-                }
+//                }
                 $picture->url = $item['url'];
                 $picture->name = $item['name'];
                 $picture->save();

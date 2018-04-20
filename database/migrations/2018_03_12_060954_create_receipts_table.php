@@ -17,7 +17,7 @@ class CreateReceiptsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->string('ratio');
-            $table->float('price');
+            $table->float('price',18,2);
             $table->string('condition');
             $table->timestamps();
         });

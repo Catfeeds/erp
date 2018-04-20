@@ -17,12 +17,12 @@ class CreateBailsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->string('unit');
-            $table->float('price');
+            $table->float('price',18,2);
             $table->string('term');
-            $table->float('cost');
+            $table->float('cost',18,2);
             $table->string('other')->nullable();
             $table->string('pay_date');
-            $table->float('pay_price');
+            $table->float('pay_price',18,2);
             $table->string('payee');
             $table->string('bank')->nullable();
             $table->string('bank_account')->nullable();

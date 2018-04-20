@@ -16,7 +16,7 @@ class CreateProjectSituationsTable extends Migration
         Schema::create('project_situations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_id');
-            $table->float('price')->default(0);
+            $table->float('price',18,2)->default(0);
             $table->tinyInteger('type')->default(1);
             $table->tinyInteger('is_main')->default(0);
             $table->timestamps();

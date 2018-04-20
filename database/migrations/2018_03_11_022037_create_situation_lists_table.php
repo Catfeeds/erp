@@ -18,7 +18,7 @@ class CreateSituationListsTable extends Migration
             $table->unsignedInteger('situation_id');
             $table->string('name');
             $table->string('tax');
-            $table->float('price');
+            $table->float('price',18,2);
             $table->string('remark')->nullable();
             $table->timestamps();
         });

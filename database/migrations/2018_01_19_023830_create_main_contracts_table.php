@@ -17,7 +17,7 @@ class CreateMainContractsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->string('unit');
-            $table->float('price');
+            $table->float('price',18,2);
             $table->string('remark')->nullable();
             $table->timestamps();
         });
