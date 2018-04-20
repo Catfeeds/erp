@@ -125,7 +125,7 @@ class ProjectController extends Controller
             dd($project);
         }else{
             $types = ProjectType::select(['id','name'])->get()->toArray();
-            $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
+            $rates = Invoice::select(['id','rate as name'])->get()->toArray();
             return view('project.create',['types'=>$types,'rates'=>$rates]);
         }
     }
