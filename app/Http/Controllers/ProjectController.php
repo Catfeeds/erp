@@ -141,6 +141,9 @@ class ProjectController extends Controller
             $projectDb->where('name','like','%'.$name.'%');
         }
         $projects = $projectDb->paginate(10);
+        foreach ($projects as $project){
+            $project->unit = MainContract::where('project_id','=',$project->id)->pluck('unit')->toArray();
+        }
         return view('project.list',['projects'=>$projects]);
     }
     public function createProject(Request $post)
