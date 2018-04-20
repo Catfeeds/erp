@@ -101,7 +101,7 @@
             const list = data.lists
             list.forEach(item => {
               result.lists.push({
-                id: item.id,
+                id: item.material_id,
                 number: item.number
               })
             })
