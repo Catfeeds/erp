@@ -67,7 +67,7 @@
             <td class="table-content">{{$project->name}}</td>
             <td>{{$project->pm}}</td>
             <td>{{$project->price}}</td>
-            <td>{{\App\Models\MainContract::where('project_id','=',$project->id)->sum('price')+\App\Models\OutContract::where('project_id','=',$project->id)->sum('price')}}万</td>
+            <td>{{\App\Models\MainContract::where('project_id','=',$project->id)->sum('price')+\App\Models\OutContract::where('project_id','=',$project->id)->sum('price')}}</td>
             <td>{{$project->PartyA}}</td>
             <td>{{\App\Models\MainContract::where('project_id','=',$project->id)->sum('price')}}</td>
             <td>{{implode('|',$project->unit)}}</td>
