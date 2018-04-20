@@ -17,6 +17,7 @@ class CreateProjectPicturesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->string('url');
+            $table->string('name');
             $table->timestamps();
         });
     }
