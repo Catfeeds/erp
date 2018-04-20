@@ -18,6 +18,7 @@ class CreateProjectRolesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('project_id');
             $table->string('role_value');
+            $table->tinyInteger('type')->default(1);
             $table->integer('start');
             $table->integer('end');
             $table->timestamps();

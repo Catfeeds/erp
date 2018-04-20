@@ -12,6 +12,7 @@
         mounted() {
           const invoiceType = $('#invoiceType').text().trim()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
+          this.invoiceCreate.purchase_id = $('#purchaseId').val()
           this.invoiceCreate.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           $('#buyInvoiceCreate').removeClass('invisible')
         },

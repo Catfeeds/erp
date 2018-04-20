@@ -37,6 +37,8 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/detail','ProjectController@listProjectsDetail');
    Route::get('project/check','ProjectController@showProjectsDetail');
    Route::get('project/auth','ProjectController@showProjectsAuth');
+   Route::get('project/auth_edit','ProjectController@createProjectAuthPage');
+   Route::post('project/auth_edit','ProjectController@createProjectAuth');
    //数据维护
    Route::get('supplier/list','SystemController@listSupplierPage');
    Route::post('supplier/create','SystemController@createSupplier');

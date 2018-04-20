@@ -1,41 +1,103 @@
 ! function () {
   $(document)
     .ready(() => {
+      const currentType = $('#type').val()
+      const projectId = $('#projectId').val()
+      const loanId = $('#loanId').val()
       new Vue({
         el: '#submitSingleDialog',
         data: {
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+          selectData: {
+            id: ''
+          }
         },
         mounted() {
           const self = this
           $('#submitSingleCheck').on('click', function () {
-            self.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
+            _http.LoanManager.checkSubmit({
+              id: loanId
             })
-            $('.ui.dimmer').addClass('active')
+              .then(res => {
+                if (res.data.code === '200') {
+                  self.$notify({
+                    title: '成功',
+                    message: `已复核`,
+                    type: 'success'
+                  })
+                  $(this).parents('button').remove()
+                  self.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                      role: currentType == 1 ? 'loan_submit_pass' : 'loan_project_submit_pass',
+                      project_id: projectId
+                    })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        self.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        self.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
+                } else {
+                  self.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                self.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          })
+
+          $("#submitSinglePass").on('click', function(){
+            self.$confirm('确认审批, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              _http.LoanManager.passSubmit({
+                id: loanId
+              })
+                .then(res => {
+                  if (res.data.code === '200') {
+                    self.$notify({
+                      title: '成功',
+                      message: '已审批',
+                      type: 'success'
+                    })
+                  } else {
+                    self.$notify({
+                      title: '错误',
+                      message: res.data.msg,
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  self.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }).catch(() => {
+              self.$message({
+                type: 'info',
+                message: '已取消'
+              });          
+            });
           })
         },
         methods: {
@@ -47,12 +109,32 @@
 
           //提交审批人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了审批人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            let postData = this.selectData
+            postData.users = this.checkedMen
+            _http.LoanManager.selectPassSubmit(postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了审批人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

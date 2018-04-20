@@ -288,8 +288,8 @@
                 tmp.model = currentData.model
                 tmp.factory = currentData.factory
                 tmp.unit = currentData.unit
-                tmp.price = currentData.price
               }
+              tmp.price = currentData.price
               tmp.number = currentData.number
               tmp.cost = currentData.cost
               tmp.warranty_date = currentData.warranty_date

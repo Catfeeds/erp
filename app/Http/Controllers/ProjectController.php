@@ -15,16 +15,19 @@ use App\Models\Project;
 use App\Models\ProjectCollect;
 use App\Models\ProjectInvoice;
 use App\Models\ProjectPicture;
+use App\Models\ProjectRole;
 use App\Models\ProjectSituations;
 use App\Models\ProjectType;
 use App\Models\Purchase;
 use App\Models\PurchaseContract;
 use App\Models\PurchaseList;
 use App\Models\Receipt;
+use App\Models\Role;
 use App\Models\SituationList;
 use App\Models\Supplier;
 use App\Models\TaxRate;
 use App\Models\Tip;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -687,7 +690,36 @@ class ProjectController extends Controller
     }
     public function showProjectsAuth()
     {
-        return view('project.auth');
+        $id = Input::get('id');
+        $project = Project::find($id);
+        $id_arr = Role::where('role_value','=','any')->pluck('user_id')->toArray();
+        $user = User::whereIn('id',$id_arr)->select(['id','name'])->get();
+        $list1 = ProjectRole::where('project_id','=',$id)->where('type','=',1)->select(['id','user_id'])->get();
+        $list2 = ProjectRole::where('project_id','=',$id)->where('type','=',2)->select(['id','user_id'])->get();
+        $list3 = ProjectRole::where('project_id','=',$id)->where('type','=',3)->select(['id','user_id'])->get();
+        return view('project.auth',[
+            'users'=>$user,
+            'project'=>$project,
+            'lists1'=>$list1,
+            'lists2'=>$list2,
+            'lists3'=>$list3
+        ]);
+    }
+    public function createProjectAuthPage()
+    {
+        $id = Input::get('user_id');
+        $user = User::find($id);
+        $type = Input::get('type');
+        $project = Project::find(Input::get('project_id'));
+        return view('project.auth_edit',[
+            'type'=>$type,
+            'user'=>$user,
+            'project'=>$project
+        ]);
+    }
+    public function createProjectAuth()
+    {
+        dd(Input::all());
     }
 
 }

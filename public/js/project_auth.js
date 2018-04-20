@@ -11,10 +11,26 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          $(self).parents('tr').remove()
-          ele.Notification.success({
-            title: '成功',
-            message: '撤销成功!'
+          _http.ProjectManager.deleteProjectAuth({
+            user_id: $(self).data('id'),
+            project_id:projectId
+          }).then(res => {
+            if(res.data.code === '200'){
+              $(self).parents('tr').remove()
+              ele.Notification.success({
+                title: '成功',
+                message: '撤销成功!'
+              })
+            }else {
+              ele.Message.error({
+                message: res.data.msg
+              })
+            }
+          })
+          .catch(() => {
+            ele.Message.error({
+              message: '服务器错误'
+            })
           })
         }).catch(() => {
           ele.Message.info({
@@ -32,32 +48,18 @@
         $('.ui.dimmer').dimmer('show')
       })
 
+      const projectId = $('#projectId').val()
       new Vue({
         el: '#memberChoose',
         data: {
 
           checkedMen: '',
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+        },
+
+        created() {
+          const persons = $('#person').text().trim()
+          this.menList = persons === '' ? [] : JSON.parse(persons)
         },
         methods: {
           //选择审核人
@@ -71,7 +73,7 @@
 
           //提交审核人
           confirmRecheck() {
-            const url = `../project/auth_edit.html?type=${currentType}&user_id=${this.checkedMen}`
+            const url = `../project/auth_edit?project_id=${projectId}&type=${currentType}&user_id=${this.checkedMen}`
             _helper.fullWindow(url)
             $('.ui.dimmer').dimmer('hide')
           }

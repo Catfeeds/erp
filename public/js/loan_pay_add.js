@@ -6,71 +6,22 @@
         data: {
 
           loanForm: {
-            people: '',
-            people_id: '',
+            name: '',
             date: '',
             bank: '',
             account: '',
-            de_amount: '',
-            cash_amount: '',
-            bank_amount: ''
+            daduction: '',
+            cash: '',
+            transfer: ''
           },
-
-          //报销人
-          payMen: [{
-              id: 1,
-              name: '张朝阳'
-            },
-            {
-              id: 2,
-              name: '李白'
-            }
-          ],
 
           currentList: [],
 
-          backList: {
-            1: [{
-                id: 'BXBH123123123',
-                amount: 213122,
-                checkMan: '陈骁驰',
-                passMan: '罗致'
-              },
-              {
-                id: 'BXBH123123123',
-                amount: 123,
-                checkMan: '周毅强',
-                passMan: '何春'
-              },
-              {
-                id: 'BXBH123123123',
-                amount: 555,
-                checkMan: '海子',
-                passMan: '罗致'
-              },
-              {
-                id: 'BXBH123123123',
-                amount: 12352,
-                checkMan: '赫布',
-                passMan: '张起灵'
-              }
-            ],
-            2: [{
-                id: 'BXBH123123123',
-                amount: 555555,
-                checkMan: '东山',
-                passMan: '黄致列'
-              },
-              {
-                id: 'BXBH123123123',
-                amount: 12352,
-                checkMan: '赫布',
-                passMan: '张起灵'
-              }
-            ]
-          },
-
           submitConfirmDialog: false,
+
+          throttle: {
+            user_timer: null
+          }
 
         },
         mounted() {
@@ -92,28 +43,88 @@
             })
             return result
           },
+
+          listAmount() {
+            const list = this.currentList
+            let sum = 0
+            list.forEach((it, index) => {
+              sum += parseFloat(it.price)
+            })
+            return sum
+          },
+
+          checkAmount() {
+            const list = this.currentCheckedList
+            let sum = 0
+            list.forEach((it, index) => {
+              sum += parseFloat(it.price)
+            })
+            return sum
+          },
+
+          deAmount() {
+            return this.checkAmount - parseFloat(this.loanForm.daduction)
+          }
         },
         methods: {
 
           //报销人搜索
           querySearchMen(queryString, cb) {
-            var payMen = this.payMen
-            var results = queryString ? payMen.filter(this.createFilterMen(queryString)) : payMen;
-            // 调用 callback 返回建议列表的数据
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => {
-              cb(results);
-            }, 1000 * Math.random());
-          },
-          createFilterMen(queryString) {
-            return (item) => {
-              return (item.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            if (this.throttle.user_timer) {
+              clearTimeout(this.throttle.user_timer)
+            }
+            this.throttle.user_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.LoanManager.loanUser(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
           handleSelectMen(item) {
-            this.loanForm.people_id = item.id
-            this.loanForm.people = item.name
-            this.currentList = this.backList[item.id]
+            this.loanForm.name = item.name
+            this.searchList(item.name)
+          },
+
+          searchList(name) {
+            _http.LoanManager.loanListCheck({
+                name
+              })
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.currentList = res.data.data
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
           //确定
@@ -132,12 +143,33 @@
 
           //提交
           submit() {
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
-            $('.ui.dimmer').addClass('active')
+            let postData = this.loanForm
+            postData.list = this.currentCheckedList.reduce((arr, item) => {
+              return arr.concat([item.id])
+            }, [])
+            _http.LoanManager.createPayAddPost(postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '提交成功',
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
 
         }

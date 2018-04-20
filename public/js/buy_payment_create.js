@@ -7,7 +7,8 @@
           form: {
             date: '',
             price: '',
-            purchase_id: ''
+            purchase_id: '',
+            id: ''
           },
           checkedMen: [],
           menList: [],
@@ -20,6 +21,7 @@
           this.form.purchase_id = $('#purchaseId').val() || ''
           this.form.date = $('#hiddenDate').val() || ''
           this.form.price = $('#hiddenAmount').val() || ''
+          this.form.id = $('#createId').val() || ''
           this.project_id = $('#projectId').val() || ''
         },
         methods: {
