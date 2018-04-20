@@ -33,7 +33,7 @@
                             <label class="six wide field flex-center">税率</label>
                             <div class="eleven wide field">
 
-                                <input type="text" v-model="invoiceForm.rate" placeholder="请输入税率">
+                                <input type="text" v-model="invoiceForm.rate" placeholder="请输入税率">%
                             </div>
                         </div>
                     </div>
