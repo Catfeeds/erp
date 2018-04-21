@@ -9,12 +9,12 @@
             <div class="divider"> / </div>
             <a class="section" href="../buy/project_list.html">采购立项清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/budgetary.html">预算内采购</a>
+            <a class="section" href="../buy/budgetary.html">预算{{$purchase->type==1?'内':'外'}}采购</a>
             <div class="divider"> / </div>
             <div class="active section">查询</div>
         </div>
 
-        <h1 class="ui header blue center aligned">预算内采购 - 查询</h1>
+        <h1 class="ui header blue center aligned">预算{{$purchase->type==1?'内':'外'}}采购 - 查询</h1>
         <h4 class="ui dividing header blue">基本信息</h4>
         <table class="ui celled structured center aligned table selectable unstackable">
             <thead>
@@ -51,11 +51,11 @@
             </tr>
             <tr>
                 <th>发票条件</th>
-                <th colspan="3" class="font-normal bg-white">专用票17%</th>
+                <th colspan="3" class="font-normal bg-white">{{$purchase->content}}</th>
             </tr>
             <tr>
                 <th>付款条件</th>
-                <th colspan="3" class="font-normal bg-white">付款条件一</th>
+                <th colspan="3" class="font-normal bg-white">{{$purchase->condition}}</th>
             </tr>
             </thead>
         </table>
@@ -83,38 +83,24 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($purchase->lists as $list)
                 <tr>
-                    <td>物料一</td>
-                    <td>性能xxx参数xxx</td>
-                    <td>ak-47</td>
-                    <td>xxx厂家</td>
-                    <td>个</td>
-                    <td>123 ￥</td>
-                    <td>23,231</td>
-                    <td>20,000</td>
-                    <td>3,000</td>
-                    <td>2,000</td>
-                    <td>200 ￥</td>
-                    <td>523,523 ￥</td>
-                    <td>2018-03-06</td>
-                    <td>30 天</td>
+                    <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
+                    <td>{{$list->material->model}}</td>
+                    <td>{{$list->material->factory}}</td>
+                    <td>{{$list->material->unit}}</td>
+                    <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->price:0}} ￥</td>
+                    <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->number:0}}</td>
+                    <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->buy_number:0}}</td>
+                    <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->need_buy:0}}</td>
+                    <td>{{$list->number}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->cost}} ￥</td>
+                    <td>{{$list->warranty_date}}</td>
+                    <td>{{$list->warranty_time}} 天</td>
                 </tr>
-                <tr>
-                    <td>物料三</td>
-                    <td>性能xxx参数xxx性能xxx参数xxx</td>
-                    <td>ak-47</td>
-                    <td>xxx厂家</td>
-                    <td>个</td>
-                    <td>123 ￥</td>
-                    <td>23,231</td>
-                    <td>20,000</td>
-                    <td>3,000</td>
-                    <td>2,000</td>
-                    <td>200 ￥</td>
-                    <td>523,523 ￥</td>
-                    <td>2018-03-06</td>
-                    <td>30 天</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

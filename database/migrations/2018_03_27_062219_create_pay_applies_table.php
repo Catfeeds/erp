@@ -18,6 +18,7 @@ class CreatePayAppliesTable extends Migration
             $table->string('number');
             $table->string('project_number');
             $table->string('project_content');
+            $table->unsignedInteger('project_id');
             $table->float('price');
             $table->string('use');
             $table->string('apply_date');

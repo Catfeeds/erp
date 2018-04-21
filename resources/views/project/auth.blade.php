@@ -52,7 +52,7 @@
                 </div>
                 <div class="column">
                     <div class="inline fields">
-                        <label class="four wide field">验收日期</label>
+                        <label class="four wide field">预计完工日期</label>
                         <div class="twelve wide field">
                             <div class="fake-input">{{date('Y-m-d',$project->finishTime)}}</div>
                         </div>
@@ -71,7 +71,7 @@
 
         <!-- 第一项 -->
         <h4 class="ui dividing header blue">立项日期
-            <span style="margin: 0 30px;">至验收日期</span> 权限设置情况</h4>
+            <span style="margin: 0 30px;">至预计完工日期</span> 权限设置情况</h4>
         <div style="text-align: right;">
             <button class="ui button positive auth-add" data-type="1">新增人员</button>
         </div>
@@ -89,7 +89,7 @@
                 <td>{{$item->id}}</td>
                 <td>{{\App\User::find($item->user_id)->name}}</td>
                 <td>
-                    <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->id}}&&type=1&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
+                    <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=1&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
                     <button class="ui negative mini button auth-delete" data-id="{{$item->id}}">删除</button>
                 </td>
             </tr>
@@ -118,7 +118,7 @@
                 <td>{{$item->id}}</td>
                 <td>{{\App\User::find($item->user_id)->name}}</td>
                 <td>
-                    <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->id}}&&type=2&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
+                    <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=2&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
                     <button class="ui negative mini button auth-delete" data-id="{{$item->id}}">删除</button>
                 </td>
             </tr>
@@ -147,7 +147,7 @@
                 <td>1</td>
                 <td>张某某</td>
                 <td>
-                    <a href="javascript:_helper.fullWindow('.{{url('project/auth/edit')}}?user_id={{$item->id}}&&type=3&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
+                    <a href="javascript:_helper.fullWindow('.{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=3&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
                     <button class="ui negative mini button auth-delete " data-id="{{$item->id}}">删除</button>
                 </td>
             </tr>

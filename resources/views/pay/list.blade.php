@@ -77,11 +77,20 @@
                         <td style="max-width:350px;">{{$list->use}}</td>
                         <td>{{$list->project_number}}</td>
                         <td class="table-content">{{$list->project_content}}</td>
-                        <td>刘琦斐</td>
-                        @if(empty($list->approver))
-                        <td>未审批</td>
+                        <td>{{$list->proposer}}</td>
+
+                        <td>{{empty($list->approver)?'未审核':$list->approver}}</td>
+                        @if($list->state!=3)
                         <td colspan="7">暂无数据</td>
                             @else
+
+                            <td>{{$list->pay_date}}</td>
+                            <td>{{$list->cash}}￥</td>
+                            <td>{{$list->transfer}}￥</td>
+                            <td>{{$list->bank}} {{$list->account}}</td>
+                            <td>{{$list->other}}￥</td>
+                            <td style="max-width: 250px;">{{$list->remark}}</td>
+                            <td>{{$list->manager}}</td>
                         @endif
                     </tr>
                 @endforeach

@@ -81,12 +81,12 @@
             <h4 class="ui dividing header blue">报销单据录入</h4>
             <div class="flex-row">
                 <el-select @change="typeChange" style="width:250px;margin-right:30px;" v-model="paymentData.currentTypeIndex" placeholder="请选择费用类别">
-                    <el-option v-for="(item, index) in paymentData.typeList" :key="item.id" :label="item.name" :value="index">
+                    <el-option v-for="(item, index) in paymentData.typeList" :key="item.id" :label="item.title" :value="index">
                     </el-option>
                 </el-select>
                 <el-select @change="detailTypeChange" style="width:250px;margin-right:30px;" v-model="paymentData.currentDetailTypeIndex"
                            placeholder="请选择具体事项">
-                    <el-option v-for="(item, index) in paymentData.detailTypeList" :key="item.id" :label="item.name" :value="index">
+                    <el-option v-for="(item, index) in paymentData.detailTypeList" :key="item.id" :label="item.title" :value="index">
                     </el-option>
                 </el-select>
                 <button class="ui button positive" @click="addItem">新增单据</button>

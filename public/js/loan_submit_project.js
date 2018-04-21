@@ -227,6 +227,7 @@
                     type: 'success'
                   })
                   this.selectData.id = res.data.data.id
+                  console.log('send')
                   _http.UserManager.searchAuthUsers({
                       role: 'loan_project_submit_check',
                       project_id: this.submitProjectForm.project_id
@@ -238,7 +239,7 @@
                       } else {
                         this.$notify({
                           title: '错误',
-                          message: res.data.msg,
+                          message: resp.data.msg,
                           type: 'error'
                         })
                       }

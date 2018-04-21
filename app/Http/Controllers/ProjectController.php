@@ -694,9 +694,9 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $id_arr = Role::where('role_value','=','any')->pluck('user_id')->toArray();
         $user = User::whereIn('id',$id_arr)->select(['id','name'])->get();
-        $list1 = ProjectRole::where('project_id','=',$id)->where('type','=',1)->select(['id','user_id'])->get();
-        $list2 = ProjectRole::where('project_id','=',$id)->where('type','=',2)->select(['id','user_id'])->get();
-        $list3 = ProjectRole::where('project_id','=',$id)->where('type','=',3)->select(['id','user_id'])->get();
+        $list1 = DB::table('project_roles')->select(['id','user_id'])->where('project_id','=',$id)->where('type','=',1)->groupby('user_id')->get();
+        $list2 = DB::table('project_roles')->where('project_id','=',$id)->where('type','=',2)->select(['id','user_id'])->groupby('user_id')->get();
+        $list3 = DB::table('project_roles')->where('project_id','=',$id)->where('type','=',3)->select(['id','user_id'])->groupby('user_id')->get();
         return view('project.auth',[
             'users'=>$user,
             'project'=>$project,
@@ -717,9 +717,51 @@ class ProjectController extends Controller
             'project'=>$project
         ]);
     }
-    public function createProjectAuth()
+    public function createProjectAuth(Request $post)
     {
-        dd(Input::all());
+        $data = $post->all();
+        $project_id = $data['project_id'];
+        $type = $data['type'];
+        $user_id = $data['user_id'];
+        unset($data['project_id']);
+        unset($data['type']);
+        unset($data['user_id']);
+        if (!empty($data)){
+            ProjectRole::where('user_id','=',$user_id)->where('project_id','=',$project_id)->where('type','=',$type)->delete();
+            $project = Project::find($project_id);
+            foreach ($data as $datum=>$value){
+                if ($value=='all'){
+                    $role = new ProjectRole();
+                    $role->user_id = $user_id;
+                    $role->project_id = $project_id;
+                    $role->type = $type;
+                    $role->role_value = $datum;
+                    if ($type==1){
+                        $role->start = $project->createTime;
+                        $role->end = $project->finishTime;
+                    }elseif($type==2){
+                        $role->start = strtotime($project->acceptance_date);
+                        $role->end = strtotime($project->deadline);
+                    }else{
+                        $role->start = strtotime($project->deadline);
+                        $role->end = strtotime('2050-12-28');
+                    }
+                    $role->save();
+                }
+            }
+            return redirect()->back()->with('status','操作成功！');
+        }
+    }
+    public function showAuthPage()
+    {
+        $user_id = Input::get('user_id');
+        $project_id = Input::get('project_id');
+        $type = Input::get('type');
+        $user = User::find($user_id);
+        $project = Project::find($project_id);
+        $roles = ProjectRole::where('project_id','=',$project_id)->where('type','=',$type)->where('user_id','=',$user_id)->select('role_value')->get()->toArray();
+        $lists = array_column($roles, 'role_value');
+        return view('project.auth_check',['project'=>$project,'user'=>$user,'lists'=>$lists,'type'=>$type]);
     }
 
 }

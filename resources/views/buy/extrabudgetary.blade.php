@@ -13,7 +13,7 @@
         </div>
         <div id="invoiceType" style="display:none">{{json_encode($invoice)}}</div>
 
-        <input type="hidden" id="purchaseId" value="{{$purchase->id}}">
+        <input type="hidden" id="purchaseId" value="">
         <h1 class="ui red header blue center aligned">预算外采购</h1>
         <div class="invisible" id="buyExtrabudgetary">
 

@@ -39,7 +39,9 @@ class PayController extends Controller
         $apply->use = $post->get('usage');
         $apply->project_number = $project->number;
         $apply->project_content = $project->name;
+        $apply->project_id = $project->id;
         $apply->proposer = $post->get('people');
+        $apply->proposer_id = Auth::id();
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',
@@ -128,6 +130,7 @@ class PayController extends Controller
         }else{
             $apply->state = 2;
             $apply->approver_id = Auth::id();
+            $apply->approver = Auth::user()->name;
             $apply->save();
             return response()->json([
                 'code'=>'200',
@@ -239,10 +242,10 @@ class PayController extends Controller
     public function finishLoan(Request $post)
     {
         $loan = LoanList::find($post->get('id'));
-        $loan->pay_date = $post->get('pay_date');
-        $loan->pay_type = $post->get('pay_type');
-        $loan->manager = $post->get('manager');
-        $loan->manager_id = Auth::id();
+        $loan->pay_date = $post->get('date');
+        $loan->pay_type = $post->get('type');
+        $loan->manager = $post->get('people');
+//        $loan->manager_id = Auth::id();
         $loan->bank = $post->get('bank');
         $loan->account = $post->get('account');
         $loan->manager_id = Auth::id();
@@ -313,7 +316,10 @@ class PayController extends Controller
         }
         return response()->json([
             'code'=>'200',
-            'msg'=>'SUCCESS'
+            'msg'=>'SUCCESS',
+            'data'=>[
+                'id'=>$loan->id
+            ]
         ]);
     }
     //新增报销
@@ -350,7 +356,10 @@ class PayController extends Controller
         }
         return response()->json([
             'code'=>'200',
-            'msg'=>'SUCCESS'
+            'msg'=>'SUCCESS',
+            'data'=>[
+                'id'=>$loan->id
+            ]
         ]);
     }
     public function listLoanPayPage()

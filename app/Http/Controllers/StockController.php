@@ -145,7 +145,11 @@ class StockController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        $purchase->lists = $purchase->lists()->get();
+        $lists = $purchase->lists()->get();
+        foreach ($lists as $list){
+            $list->material = Material::find($list->material_id);
+        }
+        $purchase->lists = $lists;
         return view('buy.budgetary_check',['purchase'=>$purchase]);
     }
     public function addReturnPage()

@@ -47,7 +47,7 @@
                     @else
                         <td>{{\App\User::find($list->approver_id)->name}}</td>
                     @endif
-                    @if(!$list->pay_date)
+                    @if(empty($list->pay_date))
                     <td colspan="4">暂无数据</td>
                     @else
                         <td>{{$list->pay_date}}</td>

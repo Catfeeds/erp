@@ -116,7 +116,7 @@
             </table>
         </div>
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('buy/payment/create')}}?id={{$purchase->id}}')" style="margin:0 10px;">
+            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('buy/payment/create')}}?purchase_id={{$purchase->id}}')" style="margin:0 10px;">
                 <i class="icon yen"></i>
                 <span>付款申请</span>
             </a>

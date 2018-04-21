@@ -15,6 +15,7 @@
         </div>
         <input id="projectId" type="hidden" value="{{$purchase->project_id}}">
         <input id="purchaseId" type="hidden" value="{{$purchase->id}}">
+        <input id="createId" type="hidden" value="{{$payment->id}}">
         <input id="hiddenDate" type="hidden" value="{{$payment->date}}">
         <input id="hiddenAmount" type="hidden" value="{{$payment->price}}">
         <h1 class="ui red header blue center aligned">付款申请</h1>

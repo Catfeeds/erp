@@ -344,24 +344,16 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
-                                <label>可全部查看</label>
+                                <input type="radio" value="all" name="buy_project_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_project_list">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="buy_project_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
@@ -371,128 +363,41 @@
 
 
                     <tr>
-                        <td rowspan="9">采购付款</td>
-                        <td rowspan="3">采购付款清单</td>
-                        <td rowspan="3" colspan="2"></td>
+                        <td rowspan="2">采购付款</td>
+                        <td rowspan="2">采购付款清单</td>
+                        <td rowspan="2" colspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
-                                <label>可全部查看</label>
+                                <input type="radio" value="all" name="buy_pay_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
-                                <label>指定项目查看</label>
+                                <input type="radio" value="off" name="buy_pay_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">采购付款申请、修改、凭证</td>
+                        <td rowspan="2">采购收票</td>
+                        <td rowspan="2">采购收票清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_edit">
-                                <label>有此权限</label>
+                                <input type="radio" value="all" name="buy_invoice_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">采购付款复核</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_pass">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_pass">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">录入采购付款信息</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_add">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_pay_add">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="5">采购收票</td>
-                        <td rowspan="3">采购收票清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">采购收票录入、修改、凭证</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_edit">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="buy_invoice_edit">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="buy_invoice_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
@@ -500,236 +405,121 @@
 
                     <!-- 第六栏 -->
                     <tr>
-                        <td rowspan="26">6</td>
-                        <td rowspan="26">库存管理</td>
-                        <td rowspan="2">库存清单</td>
-                        <td colspan="3" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_list">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
+                        <td rowspan="13">6</td>
+                        <td rowspan="13">库存管理</td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">查询出入库记录</td>
-                        <td colspan="3" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_record_list">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_record_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="5">采购收货入库</td>
-                        <td rowspan="3">采购收货入库清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">采购收货入库操作</td>
+                        <td rowspan="2">采购收货入库</td>
+                        <td rowspan="2">采购收货入库清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_edit">
-                                <label>有此权限</label>
+                                <input type="radio" value="all" name="stock_buy_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_buy_edit">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="stock_buy_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="6">退料入库</td>
-                        <td rowspan="3">退料入库清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">新增退料入库</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_return_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="6">领料出库</td>
-                        <td rowspan="3">领料出库清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">新增领料出库</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_get_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="5">退货出库</td>
-                        <td rowspan="3">退货出库清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">新增退货出库</td>
+                        <td rowspan="4">退料入库</td>
+                        <td rowspan="2">退料入库清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_edit">
-                                <label>有此权限</label>
+                                <input type="radio" value="all" name="stock_return_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="stock_out_edit">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="stock_return_list">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="2">新增退料入库</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="stock_return_edit">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="stock_return_edit">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">领料出库</td>
+                        <td rowspan="2">领料出库清单</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="stock_get_list">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="stock_get_list">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">新增领料出库</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="stock_get_edit">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="stock_get_edit">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">退货出库</td>
+                        <td rowspan="2">退货出库清单</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="stock_out_list">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="stock_out_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
@@ -737,171 +527,50 @@
 
                     <!-- 第七栏 -->
                     <tr>
-                        <td rowspan="34">7</td>
-                        <td rowspan="34">施工管理</td>
-                        <td rowspan="3">施工费清单</td>
-                        <td colspan="3" rowspan="3"></td>
+                        <td rowspan="16">7</td>
+                        <td rowspan="16">施工管理</td>
+                        <td rowspan="2">施工费清单</td>
+                        <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
-                                <label>可全部查看</label>
+                                <input type="radio" value="all" name="build_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
-                                <label>指定项目查看</label>
+                                <input type="radio" value="off" name="build_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="6">施工合同备案</td>
-                        <td rowspan="3">备案合同清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">录入合同</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_contract_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="11">完工请款</td>
-                        <td rowspan="3">完工请款清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">完工请款录入、修改、凭证</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="3">完工请款复核</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
-                                <label>所有项目有权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
-                                <label>指定项目有权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_check">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">完工请款审批</td>
+                        <td rowspan="4">施工合同备案</td>
+                        <td rowspan="2">备案合同清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_pass">
+                                <input type="radio" value="all" name="build_contract_list">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="build_contract_list">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">录入合同</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="build_contract_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -909,44 +578,37 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_finish_pass">
+                                <input type="radio" value="off" name="build_contract_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="9">施工付款</td>
-                        <td rowspan="3">施工付款清单</td>
-                        <td rowspan="3" colspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">付款申请录入、修改、凭证</td>
+                        <td rowspan="6">完工请款</td>
+                        <td rowspan="2">完工请款清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_edit">
+                                <input type="radio" value="all" name="build_finish_list">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="build_finish_list">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">完工请款录入、修改、凭证</td>
+                        <td colspan="2" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="build_finish_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -954,240 +616,111 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_edit">
+                                <input type="radio" value="off" name="build_finish_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td rowspan="2">付款申请复核</td>
+                        <td rowspan="2">完工请款复核</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_check">
+                                <input type="radio" value="all" name="build_finish_check">
                                 <label>有此权限</label>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_check">
+                                <input type="radio" value="off" name="build_finish_check">
                                 <label>无此权限</label>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
-                        <td rowspan="2">付款申请审批</td>
+                        <td rowspan="2">施工付款</td>
+                        <td rowspan="2">施工付款清单</td>
+                        <td rowspan="2" colspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="build_pay_list">
+                                <label>可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="build_pay_list">
+                                <label>不可查看</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">施工收票</td>
+                        <td rowspan="2">施工收票清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_pass">
-                                <label>有此权限</label>
+                                <input type="radio" value="all" name="build_invoice_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="build_pay_pass">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="build_invoice_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td rowspan="5">施工收票</td>
-                        <td rowspan="3">施工收票清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
-                                <label>指定项目查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_list">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">施工收票录入、修改、凭证</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_edit">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="build_invoice_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
+
                     <!-- / 第七栏 -->
 
                     <!-- 第八栏 -->
                     <tr>
-                        <td rowspan="32">8</td>
-                        <td rowspan="32">报销与借款</td>
-                        <td rowspan="2">报销与借款清单</td>
-                        <td colspan="3" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_list">
-                                <label>可查看全部人员</label>
-                            </div>
-                        </td>
+                        <td rowspan="5">8</td>
+                        <td rowspan="5">报销与借款</td>
+
                     </tr>
+
+
+
+
+
                     <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_list">
-                                <label>只能查看本人</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">查询明细</td>
-                        <td colspan="3" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_detail">
-                                <label>可查看全部人员</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_detail">
-                                <label>只能查看本人</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="8">借款</td>
-                        <td rowspan="2">借款清单</td>
+                        <td rowspan="2">报销申请</td>
+                        <td rowspan="2">报销清单</td>
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_list">
-                                <label>可查看全部人员</label>
+                                <input type="radio" value="all" name="loan_submit_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_list">
-                                <label>只能查看本人</label>
+                                <input type="radio" value="off" name="loan_submit_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
-                        <td rowspan="2">新增借款申请</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_add">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_add">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">借款申请审批</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_pass">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_pass">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">借款付款操作</td>
-                        <td colspan="2" rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_operate">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_loan_operate">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="16">报销申请</td>
-                        <td rowspan="3">报销清单</td>
-                        <td colspan="2" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
-                                <label>可全部查看</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
-                                <label>可查看本人所有记录</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_list">
-                                <label>可查看指定项目和空白项目</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="6">期间费用报销</td>
+                        <td rowspan="2">项目成本报销</td>
                         <td rowspan="2">报销申请录入、修改、凭证</td>
-                        <td rowspan="2"></td>
+                        <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_edit">
+                                <input type="radio" value="all" name="loan_project_submit_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
@@ -1195,70 +728,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_edit">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">报销复核</td>
-                        <td rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_check">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_check">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">报销审批</td>
-                        <td rowspan="2"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_pass">
-                                <label>有此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_submit_pass">
-                                <label>无此权限</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="7">项目成本报销</td>
-                        <td rowspan="3">报销申请录入、修改、凭证</td>
-                        <td rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
-                                <label>所有项目报销</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
-                                <label>指定项目报销</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="loan_project_submit_edit">
+                                <input type="radio" value="off" name="loan_project_submit_edit">
                                 <label>无此权限</label>
                             </div>
                         </td>
@@ -1268,56 +738,41 @@
 
                     <!-- 第九栏 -->
                     <tr>
-                        <td rowspan="10">9</td>
-                        <td rowspan="10">费用付款</td>
-                        <td rowspan="3">付款审批清单</td>
-                        <td rowspan="3" colspan="3"></td>
+                        <td rowspan="4">9</td>
+                        <td rowspan="4">费用付款</td>
+                        <td rowspan="2">付款审批清单</td>
+                        <td rowspan="2" colspan="3"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
-                                <label>可全部查看</label>
+                                <input type="radio" value="all" name="pay_list">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
-                                <label>只能查看本人记录</label>
+                                <input type="radio" value="off" name="pay_list">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
+                        <td rowspan="2">付款申请</td>
+                        <td colspan="3" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_list">
-                                <label>可查看指定项目和空白项目</label>
+                                <input type="radio" value="all" name="pay_add">
+                                <label>可查看</label>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td rowspan="3">付款申请</td>
-                        <td colspan="3" rowspan="3"></td>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
-                                <label>所有项目</label>
-                            </div>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
-                                <label>可查看指定项目和空白项目</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="pay_add">
-                                <label>无此权限</label>
+                                <input type="radio" value="off" name="pay_add">
+                                <label>不可查看</label>
                             </div>
                         </td>
                     </tr>

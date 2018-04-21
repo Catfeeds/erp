@@ -110,9 +110,11 @@ class PurchaseController extends Controller
     }
     public function createBuyPayment()
     {
-        $id = Input::get('id');
-        $purchase = Purchase::find($id);
-        return view('buy.payment_create',['purchase'=>$purchase]);
+        $purchase_id = Input::get('purchase_id');
+        $purchase = Purchase::find($purchase_id);
+        $id = Input::get('id',0);
+        return view('buy.payment_create',['purchase'=>$purchase,
+        'id'=>$id]);
     }
     public function createPayment()
     {
@@ -132,7 +134,10 @@ class PurchaseController extends Controller
         if ($payment->save()){
             return response()->json([
                 'code'=>'200',
-                'msg'=>'SUCCESS'
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$payment->id
+                ]
             ]);
         }
     }

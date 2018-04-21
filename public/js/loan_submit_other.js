@@ -148,6 +148,7 @@
                     type: 'success'
                   })
                   this.selectData.id = res.data.data.id
+                  console.log('send') 
                   _http.UserManager.searchAuthUsers({
                       role: 'loan_submit_check'
                     })
@@ -158,7 +159,7 @@
                       } else {
                         this.$notify({
                           title: '错误',
-                          message: res.data.msg,
+                          message: resp.data.msg,
                           type: 'error'
                         })
                       }

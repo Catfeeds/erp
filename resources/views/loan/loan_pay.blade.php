@@ -11,7 +11,10 @@
             <div class="divider"> / </div>
             <div class="active section">付款</div>
         </div>
-
+        <input type="hidden" value="{{$loan->id}}" id="payId">
+        <input type="hidden" value="{{$loan->manager}}" id="manager">
+        <input type="hidden" value="{{$loan->bank}}" id="bank">
+        <input type="hidden" value="{{$loan->account}}" id="account">
         <h1 class="ui header blue aligned center">付款</h1>
         <div id="loanLoanPay">
             <h4 class="ui dividing header blue">基本信息</h4>

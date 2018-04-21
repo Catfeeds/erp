@@ -11,7 +11,9 @@
             <div class="divider"> / </div>
             <div class="active section">报销申请查询 - {{$loan->number}}</div>
         </div>
-
+        <input type="hidden" id="type" value="{{$loan->type}}">
+        <input type="hidden" id="projectId" value="{{$loan->project_id}}">
+        <input type="hidden" id="loanId" value="{{$loan->id}}">
         <h3 class="ui header center aligned">报销申请查询 - {{$loan->number}}</h3>
         <table class="ui celled center aligned table selectable">
             <thead>
@@ -83,7 +85,7 @@
                 <i class="icon legal"></i>
                 <span>复核</span>
             </button>
-            <a class="ui icon button primary" href="#" style="margin:0 20px;">
+            <a class="ui icon button primary" id="submitSinglePass" style="margin:0 20px;">
                 <i class="icon edit"></i>
                 <span>审批</span>
             </a>
