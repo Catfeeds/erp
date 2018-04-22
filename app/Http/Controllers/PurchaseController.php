@@ -7,6 +7,7 @@ use App\Models\PruchaseCheck;
 use App\Models\PruchasePass;
 use App\Models\Purchase;
 use App\Models\PurchaseInvoice;
+use App\Models\PurchaseList;
 use App\Models\PurchasePayment;
 use App\Models\PurchasePaymentCheck;
 use Illuminate\Http\Request;
@@ -239,5 +240,22 @@ class PurchaseController extends Controller
         $invoice = Invoice::select(['id','name'])->get();
         return view('buy.invoice_create',['purchase'=>$purchase,'invoice'=>$invoice]);
     }
+    public function searchPurchase()
+    {
+        $id = Input::get('material_id');
+        $start = Input::get('start');
+        $end = Input::get('end');
+        $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>',$start)
+            ->whereDate('created_at','<',$end)->get();
+        foreach ($lists as $list){
+            $list->purchase = Purchase::find($list->purchase_id);
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$lists
+        ]);
+    }
+
 
 }

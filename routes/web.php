@@ -26,6 +26,7 @@ Route::get('project/material','ProjectController@searchProjectMaterial');
 Route::get('search/budget','ProjectController@searchBudget');
 Route::get('search/material','SystemController@searchMaterial');
 Route::get('search/loan/user','LoanController@searchLoanUser');
+Route::get('search/purchase','PurchaseController@searchPurchase');
 Route::get('search/warehouse','StockController@searchWarehouse');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
@@ -124,6 +125,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('buy/payment/list','PurchaseController@listBuyPayment');
     Route::get('buy/payment/create','PurchaseController@createBuyPayment');
     Route::get('stock/check/budgetary','StockController@budgetaryCheckPage');
+    Route::get('buy/create/invoice','PurchaseController@createInvoicePage');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
     Route::get('stock/buy/list','StockController@listBuyList');

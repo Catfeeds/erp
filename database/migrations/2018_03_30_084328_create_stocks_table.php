@@ -18,6 +18,7 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('warehouse_id');
             $table->unsignedInteger('material_id');
             $table->unsignedInteger('number');
+            $table->float('cost',18,2);
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          console.log(1)
           _http.BuyManager.paymentCheck({
             id: $(self).data('id')
           }).then(res => {
@@ -19,7 +20,7 @@
               $(self).parents('td').html('已复核')
               ele.Notification.success({
                 title: '成功',
-                message: '撤销成功!'
+                message: '复核成功!'
               })
             }else {
               ele.Message.error({
@@ -33,6 +34,7 @@
             })
           })
         }).catch(() => {
+          console.log(2)
           ele.Message.info({
             message: '已取消撤销'
           })

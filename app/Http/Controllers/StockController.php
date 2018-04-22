@@ -10,6 +10,9 @@ use App\Models\Project;
 use App\Models\Purchase;
 use App\Models\PurchaseList;
 use App\Models\Stock;
+use App\Models\StockRecord;
+use App\Models\Supplier;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,28 +63,50 @@ class StockController extends Controller
     }
     public function addBuy(Request $post)
     {
-        $buy = new BuyStock();
-        $buy->date = $post->get('date');
-        $buy->manager = Auth::user()->name;
-        $buy->manager_id = Auth::id();
-        $buy->warehouse_id = $post->get('warehouse_id');
+        $date = $post->get('date');
+        $warehouse_id = $post->get('warehouse_id');
         $lists = $post->get('lists');
-        if ($buy->save()){
-            foreach ($lists as $list){
-                $purchase = PurchaseList::find($list['id']);
-                $item = new BuyStockList();
-                $item->purchase_id = $purchase->id;
-                $item->number = $list['number'];
-                $item->save();
-                $purchase->received+=$list['number'];
-                $purchase->need = $purchase->number-$purchase->received;
-                $purchase->save();
+        $worker = $post->get('worker');
+        foreach ($lists as $list){
+            $purchase = PurchaseList::find($list['id']);
+            $info = Purchase::find($purchase->purchase_id);
+            $record = new StockRecord();
+            $record->type = 1;
+            $count = StockRecord::whereDate('created_at', date('Y-m-d',time()))->where('type','=',1)->count();
+            $record->number = 'SHRK'.date('Ymd',time()).sprintf("%03d", $count+1);
+            $record->date = $post->get('date');
+            $record->worker = $worker;
+            $record->worker_id = Auth::id();
+            $record->warehouse_id = $warehouse_id;
+            $record->material_id = $purchase->material_id;
+            $record->purchase_id = $purchase->purchase_id;
+            $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
+            $record->supplier_id = $info->supplier_id;
+            $record->supplier = Supplier::find($info->supplier_id)->name;
+            $record->price = $purchase->price;
+            $record->cost = $purchase->price*$list['number'];
+            $record->sum = $list['number'];
+            $record->warehouse = Warehouse::find($warehouse_id)->name;
+            $purchase->received+=$list['number'];
+            $purchase->need = $purchase->number-$purchase->received;
+            $purchase->save();
+            $stock = Stock::where('warehouse_id','=',$warehouse_id)
+                ->where('material_id','=',$purchase->material_id)->first();
+            if (empty($stock)){
                 $stock = new Stock();
-                $stock->warehouse_id = $buy->warehouse_id;
-                $stock->material_id = $purchase->material_id;
                 $stock->number = $list['number'];
-                $stock->save();
+                $stock->cost = $list['number']*$purchase->price;
+            }else{
+                $stock->warehouse_id = $warehouse_id;
+                $stock->number += $list['number'];
+                $stock->cost += $list['number']*$purchase->price;
             }
+            $stock->save();
+            $record->stock_number = $stock->number;
+            $record->stock_cost = $stock->cost;
+            $record->stock_price = $stock->cost/$stock->number;
+            $record->save();
+
         }
         return response()->json([
             'code'=>'200',

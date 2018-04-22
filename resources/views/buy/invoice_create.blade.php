@@ -37,7 +37,7 @@
                         <div class="inline fields">
                             <label class="four wide field">收票经办人</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">陈先生</div>
+                                <div class="fake-input">{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
                             </div>
                         </div>
                     </div>

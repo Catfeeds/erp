@@ -159,7 +159,7 @@ class ProjectController extends Controller
                 $project = Project::find($projectData['id']);
             }else{
                 $project = new Project();
-                $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();;
+                $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();
                 $project->number = 'XM'.date('Ymd',time()).sprintf("%03d", $count+1);
             }
             $project->name = $projectData['name'];
@@ -677,7 +677,21 @@ class ProjectController extends Controller
     }
     public function purchaseParityPage()
     {
-        return view('buy.parity');
+        $id = Input::get('material_id');
+        $start = Input::get('s');
+        $end = Input::get('e');
+        if (!empty($start)){
+            $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>',$start)
+                ->whereDate('created_at','<',$end)->get();
+        }else{
+            $lists = [];
+        }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->purchase = Purchase::find($list->purchase_id);
+            }
+        }
+        return view('buy.parity',['lists'=>$lists]);
     }
     public function createBudgetaryPage()
     {

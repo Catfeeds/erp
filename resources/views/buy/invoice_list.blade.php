@@ -66,11 +66,11 @@
                     <td>{{$invoice->date}}</td>
                     <td>{{$invoice->invoice_date}}</td>
                     <td>{{$invoice->number}}</td>
-                    <td>专用票17%</td>
-                    <td>200,000.00 ￥</td>
-                    <td>200,000.00 ￥</td>
-                    <td>200,000.00 ￥</td>
-                    <td>陈秋芳</td>
+                    <td>{{\App\Models\Invoice::find($invoice->type)->name}}</td>
+                    <td>{{$invoice->without_tax}} ￥</td>
+                    <td>{{$invoice->tax}} ￥</td>
+                    <td>{{$invoice->with_tax}}￥</td>
+                    <td>{{\App\User::find($invoice->worker)->name}}</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/invoice')}}?id={{$invoice->id}}')" title="修改">修改</a>
                     </td>
@@ -80,9 +80,9 @@
                 <tfoot>
                 <tr>
                     <th colspan="5">合计</th>
-                    <th>200,000.00 ￥</th>
-                    <th>200,000.00 ￥</th>
-                    <th>200,000.00 ￥</th>
+                    <th>{{$purchase->invoices()->sum('without_tax')}} ￥</th>
+                    <th>{{$purchase->invoices()->sum('tax')}} ￥</th>
+                    <th>{{$purchase->invoices()->sum('with_tax')}} ￥</th>
                     <th></th>
                     <th></th>
                 </tr>

@@ -13,22 +13,23 @@
         <!-- 操作 -->
         <h4 class="ui dividing header blue">录入基本信息</h4>
         <div class="content-operation invisible" id="buyParityForm">
-            <form action="/views/buy/parity.html">
+            <form action="">
                 <div class="ui form">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
                             <div class="inline fields">
                                 <label class="six wide field flex-center">物料名称</label>
                                 <div class="ten wide field">
-                                    <el-autocomplete popper-class="my-autocomplete" name="name" v-model="currentMaterials.name" :fetch-suggestions="querySearch"
+                                    <el-autocomplete popper-class="my-autocomplete" name="name" v-model="currentMaterialName" :fetch-suggestions="querySearch"
                                                      placeholder="请输入物料名称" @select="handleSelect">
                                         <i class="el-icon-edit el-input__icon" slot="suffix">
                                         </i>
                                         <template slot-scope="props">
                                             <div class="name">@{{ props.item.name }}</div>
-                                            <span class="addr">@{{ props.item.address }}</span>
+                                            <span class="addr">@{{ props.item.model }}</span>
                                         </template>
                                     </el-autocomplete>
+                                    <input type="hidden" v-model="currentMaterialId" name="material_id">
                                 </div>
                             </div>
                         </div>
@@ -36,15 +37,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">性能及技术参数</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">@{{currentMaterials.parameter || '暂无数据'}}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="inline fields">
-                                <label class="six wide field flex-center">品牌型号</label>
-                                <div class="ten wide field">
-                                    <div class="fake-input">@{{currentMaterials.model || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterial.model || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +45,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">生产商家</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">@{{currentMaterials.address || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterial.factory || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +53,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">单位</label>
                                 <div class="ten wide field">
-                                    <div class="fake-input">@{{currentMaterials.unit || '暂无数据'}}</div>
+                                    <div class="fake-input">@{{currentMaterial.unit || '暂无数据'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -103,47 +96,36 @@
                     <th>保修时间</th>
                 </tr>
                 </thead>
+                <!-- 无数据的时候 -->
+                @if(empty($lists))
                 <tbody>
                 <tr>
-                    <td>2017-12-01</td>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>条件一</td>
-                    <td>条件xx</td>
-                    <td>123,542,212</td>
-                    <td>20 / 件</td>
-                    <td>2017-12-01</td>
-                </tr>
-                <tr>
-                    <td>2017-12-01</td>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>条件一</td>
-                    <td>条件xx</td>
-                    <td>123,542,212</td>
-                    <td>20 / 件</td>
-                    <td>2017-12-01</td>
-                </tr>
-                <tr>
-                    <td>2017-12-01</td>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../check/detail.html');">154376453254</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>条件一</td>
-                    <td>条件xx</td>
-                    <td>123,542,212</td>
-                    <td>20 / 件</td>
-                    <td>2017-12-01</td>
+                    <td colspan="8">暂无数据</td>
                 </tr>
                 </tbody>
+                @else
+                <!-- /无数据的时候 -->
+
+                <!-- 有数据的时候 -->
+                <tbody>
+                @foreach($lists as $list)
+                <tr>
+                    <td>{{$list->purchase->date}}</td>
+                    <td>
+                        <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$list->purchase->project_id}}');">{{$list->purchase->number}}</a>
+                    </td>
+                    <td>{{$list->purchase->supplier}}</td>
+                    <td>{{$list->purchase->content}}</td>
+                    <td>{{$list->purchase->condition}}</td>
+                    <td>{{$list->number}}</td>
+                    <td>{{$list->price}} / {{\App\Models\Material::find($list->material_id)->unit}}</td>
+                    <td>{{$list->warranty_date}}</td>
+                </tr>
+                    @endforeach
+                </tbody>
+                    @endif
             </table>
         </div>
-
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
