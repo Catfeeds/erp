@@ -454,6 +454,7 @@ class ProjectController extends Controller
         $budgets = $project->budget()->get();
         $pictures = $project->picture()->get();
         $receipts = $project->receipt()->get();
+        $bails = $project->bail()->get();
 //        $projects = Project::all();
         return view('check.detail',[
             'project'=>$project,
@@ -462,7 +463,8 @@ class ProjectController extends Controller
             'situations'=>$situations,
             'budgets'=>$budgets,
             'receipts'=>$receipts,
-            'pictures'=>$pictures
+            'pictures'=>$pictures,
+            'bails'=>$bails
         ]);
 
     }

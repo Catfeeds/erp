@@ -112,4 +112,8 @@ class LoanController extends Controller
             'data'=>$lists
         ]);
     }
+    public function showLoanPayAdd()
+    {
+        return view('loan.pay_add');
+    }
 }

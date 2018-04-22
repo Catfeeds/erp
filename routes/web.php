@@ -172,6 +172,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('select/check/submit','LoanController@selectSubmitCheck');
     Route::post('select/pass/submit','LoanController@selectSubmitPass');
     Route::get('loan/pay','PayController@showLoanPay');
+    Route::get('loan/pay/add','LoanController@showLoanPayAdd');
     Route::get('loan/pay/list','PayController@listLoanPayPage');
     Route::post('loan/submit/other/check','LoanController@selectSubmitCheck');
     Route::post('loan/submit/other/pass','LoanController@selectSubmitPass');

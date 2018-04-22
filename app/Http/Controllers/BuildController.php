@@ -12,7 +12,8 @@ class BuildController extends Controller
     //
     public function listBuildPage()
     {
-        return view('build.list');
+        $list = RequestPayment::paginate();
+        return view('build.list',['lists'=>$list]);
     }
     public function addDealPage()
     {
