@@ -419,6 +419,14 @@ class PayController extends Controller
             ]);
         }
     }
+    public function checkRequestPayment()
+    {
+
+    }
+    public function passRequestPayment()
+    {
+
+    }
     public function addRequestPayment(Request $post)
     {
         $lists = $post->get('list');
@@ -434,6 +442,8 @@ class PayController extends Controller
         $payment->project_manager = $post->get('project_manager');
         $payment->request_date = $post->get('date');
         $payment->price = $post->get('price');
+        $payment->applier = Auth::user()->name;
+        $payment->applier_id = Auth::id();
         $payment->save();
         if (!empty($lists)){
             foreach ($lists as $item){

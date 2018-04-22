@@ -22,6 +22,13 @@ class CreateRequestPaymentsTable extends Migration
             $table->string('project_content');
             $table->string('project_manager');
             $table->string('request_date');
+            $table->string('passer')->nullable();
+            $table->string('checker')->nullable();
+            $table->string('applier')->nullable();
+            $table->unsignedInteger('checker_id')->default(0);
+            $table->unsignedInteger('passer_id')->default(0);
+            $table->unsignedInteger('applier_id')->default(0);
+            $table->tinyInteger('state')->default(1);
             $table->float('price');
             $table->timestamps();
         });
