@@ -472,7 +472,8 @@ class ProjectController extends Controller
     {
         $id = Input::get('id');
         $project = Project::find($id);
-        return view('check.invoice',['project'=>$project]);
+        $invoice = Invoice::select('id','rate as value')->get();
+        return view('check.invoice',['project'=>$project,'invoice'=>$invoice]);
     }
     public function checkCollectPage()
     {

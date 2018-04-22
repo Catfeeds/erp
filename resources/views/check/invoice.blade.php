@@ -15,7 +15,7 @@
         </div>
 
         <input type="hidden" id="projectId" value="{{$project->id}}">
-        <div id="invoiceType" style="display:none">[{"id":1,"value":5},{"id":2,"value":5},{"id":3,"value":5}]</div>
+        <div id="invoiceType" style="display:none">{{json_encode($invoice)}}</div>
 
         <h1 class="ui red header blue center aligned">开票</h1>
         <div class="invisible" id="checkInvoice">
