@@ -36,7 +36,7 @@
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>
                                     <template slot-scope="props">
-                                        <div class="name">{{ props.item.name }}</div>
+                                        <div class="name">@{{ props.item.name }}</div>
                                     </template>
                                 </el-autocomplete>
                             </div>
@@ -46,7 +46,7 @@
             </div>
 
             <h4 class="inline-center">未付款报销清单</h4>
-            <h5 class="ui header right aligned">合计总额：{{ listAmount.toLocaleString('en-US') }} ￥</h5>
+            <h5 class="ui header right aligned">合计总额：@{{ listAmount.toLocaleString('en-US') }} ￥</h5>
             <div class="ui form form-item">
                 <div class="ui five column doubling stackable grid font-size-13">
                     <div class="two wide column form-thead">未支付报销单</div>
@@ -60,19 +60,19 @@
                     <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                         <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in currentList" :key="item.id">
                             <div class="two wide column">
-                                <div class="fake-input">{{ index + 1 }}</div>
+                                <div class="fake-input">@{{ index + 1 }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.id }}</div>
+                                <div class="fake-input">@{{ item.id }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.price.toLocaleString('en-US') }}￥</div>
+                                <div class="fake-input">@{{ item.price.toLocaleString('en-US') }}￥</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.checker }}</div>
+                                <div class="fake-input">@{{ item.checker }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.passer }}</div>
+                                <div class="fake-input">@{{ item.passer }}</div>
                             </div>
                             <div class="two wide column">
                                 <div class="fake-input" style="margin-top:-2px;">
@@ -107,7 +107,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">付款日期</label>
                                 <div class="eleven wide field">
-                                    <div class="fake-input">{{ loanForm.date }}</div>
+                                    <div class="fake-input">@{{ loanForm.date }}</div>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">报销人</label>
                                 <div class="eleven wide field">
-                                    <div class="fake-input">{{ loanForm.name }}</div>
+                                    <div class="fake-input">@{{ loanForm.name }}</div>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">借款余额</label>
                                 <div class="eleven wide field">
-                                    <div class="fake-input">{{ deAmount.toLocaleString('en-US') }}￥</div>
+                                    <div class="fake-input">@{{ deAmount.toLocaleString('en-US') }}￥</div>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                 </div>
-                <h5 class="ui header right aligned">合计总额：{{ checkAmount.toLocaleString('en-US') }} ￥</h5>
+                <h5 class="ui header right aligned">合计总额：@{{ checkAmount.toLocaleString('en-US') }} ￥</h5>
                 <div class="ui form form-item">
                     <div class="ui five column doubling stackable grid font-size-13">
                         <div class="three wide column form-thead">未支付报销单</div>
@@ -181,19 +181,19 @@
                     <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                         <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in currentCheckedList" :key="item.value.id">
                             <div class="three wide column">
-                                <div class="fake-input">{{ index + 1 }}</div>
+                                <div class="fake-input">@{{ index + 1 }}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{ item.value.id }}</div>
+                                <div class="fake-input">@{{ item.value.id }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.value.price.toLocaleString('en-US') }}￥</div>
+                                <div class="fake-input">@{{ item.value.price.toLocaleString('en-US') }}￥</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.value.checker }}</div>
+                                <div class="fake-input">@{{ item.value.checker }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">{{ item.value.passer }}</div>
+                                <div class="fake-input">@{{ item.value.passer }}</div>
                             </div>
                         </div>
                     </transition-group>

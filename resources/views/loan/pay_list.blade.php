@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap">
             <div>
-                <a class="ui primary button" href="javascript:_helper.fullWindow('../loan/pay_add.html')">
+                <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('loan/pay/add')}}')">
                     <i class="icon plus"></i>
                     <span>新增报销付款</span>
                 </a>
