@@ -95,7 +95,7 @@ class LoanController extends Controller
         if ($name){
             $db->where('loan_user','like','%'.$name.'%');
         }
-        $data= $db->groupBy('loan_user')->pluck('loan_user');
+        $data= $db->groupBy('loan_user')->select('loan_user as name')->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

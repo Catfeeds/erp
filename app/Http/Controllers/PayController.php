@@ -385,7 +385,7 @@ class PayController extends Controller
         }
 //        $pay->user_id = $post->get('user_id');
         $pay->date = $post->get('date');
-        $pay->daduction = $post->get('daduction');
+        $pay->deduction = $post->get('daduction');
         $pay->cash = $post->get('cash');
         $pay->transfer = $post->get('transfer');
         $pay->bank = $post->get('bank');
