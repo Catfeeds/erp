@@ -45,4 +45,8 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\Purchase','project_id','id');
     }
+    public function collects()
+    {
+        return $this->hasMany('App\Models\ProjectCollect','project_id','id');
+    }
 }

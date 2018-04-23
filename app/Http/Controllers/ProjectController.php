@@ -455,6 +455,7 @@ class ProjectController extends Controller
         $pictures = $project->picture()->get();
         $receipts = $project->receipt()->get();
         $bails = $project->bail()->get();
+        $invoiceTax = Invoice::select('id','rate as value')->get()->toArray();
 //        $projects = Project::all();
         return view('check.detail',[
             'project'=>$project,
@@ -464,7 +465,8 @@ class ProjectController extends Controller
             'budgets'=>$budgets,
             'receipts'=>$receipts,
             'pictures'=>$pictures,
-            'bails'=>$bails
+            'bails'=>$bails,
+            'invoiceTax'=>$invoiceTax
         ]);
 
     }

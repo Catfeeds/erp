@@ -17,7 +17,7 @@
         <div style="display:none" id="requirement">{"count":123123,"data":[{"id":1,"date":"2018-10-22","amount":123142,"company":"xxx单位","remark":"这是备注~"},{"id":2,"date":"2017-12-22","amount":123,"company":"xxx单位","remark":"这是备注这是备注~"}]}</div>
         <div style="display:none" id="invoice">{"count":2312312,"data":[{"id":1,"date":"2018-01-02","amount":2132,"company":{"id":1,"value":"单位一"},"tax":{"id":1,"value":5}},{"id":2,"date":"2018-01-02","amount":2132,"company":{"id":1,"value":"单位一"},"tax":{"id":1,"value":5}},{"id":3,"date":"2018-01-02","amount":2132,"company":{"id":2,"value":"单位二"},"tax":{"id":2,"value":9}},{"id":4,"date":"2018-01-02","amount":2132,"company":{"id":3,"value":"单位三"},"tax":{"id":3,"value":15}},{"id":5,"date":"2018-01-02","amount":2132,"company":{"id":3,"value":"单位三"},"tax":{"id":1,"value":5}}]}</div>
         <div style="display:none" id="invoiceCompany">[{"id":1,"value":"单位一"},{"id":2,"value":"单位二"},{"id":3,"value":"单位三"}]</div>
-        <div style="display:none" id="invoiceTax">[{"id":1,"value":5},{"id":2,"value":9},{"id":3,"value":15}]</div>
+        <div style="display:none" id="invoiceTax">{{json_encode($invoiceTax)}}</div>
         <div style="display:none" id="subCompany">{"count":323123,"data":[{"id":1,"date":"2018-01-02","amount":213123,"remark":"这是备注啊~"},{"id":2,"date":"2018-01-02","amount":3212,"remark":"这是备注啊~"},{"id":3,"date":"2018-01-02","amount":4274,"remark":"这是备注啊~"}]}</div>
         <div style="display:none" id="masterContract">{"count":123123,"data":[{"id":1,"date":"2018-09-21","amount":213123,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"},{"id":2,"date":"2018-09-21","amount":6423,"bank":"中国银行","account":603423212123473200,"remark":"这是备注~"},{"id":3,"date":"2018-09-21","amount":6321,"bank":"广发银行","account":6034232123242673000,"remark":"这是备注~"},{"id":4,"date":"2018-09-21","amount":32421,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"}]}</div>
         <div style="display:none" id="subContract">{"count":123123,"data":[{"id":1,"date":"2018-09-21","amount":213123,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"},{"id":2,"date":"2018-09-21","amount":6423,"bank":"中国银行","account":603423212123473200,"remark":"这是备注~"},{"id":3,"date":"2018-09-21","amount":6321,"bank":"广发银行","account":6034232123242673000,"remark":"这是备注~"},{"id":4,"date":"2018-09-21","amount":32421,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"}]}</div>
@@ -840,5 +840,5 @@
             <!-- / Vue 渲染部分 -->
 @endsection
 @section('pageJs')
-    <script src="@{{url('js/check_detail.js')}}"></script>
+    <script src="{{url('js/check_detail.js')}}"></script>
 @endsection
