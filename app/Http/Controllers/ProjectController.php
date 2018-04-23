@@ -457,6 +457,8 @@ class ProjectController extends Controller
         $bails = $project->bail()->get();
         $invoiceTax = Invoice::select('id','rate as value')->get()->toArray();
 //        $projects = Project::all();
+        $masterContract = $project->collects()->where('type','=',2)->get();
+        $subContract = $project->collects()->where('type','=',3)->get();
         return view('check.detail',[
             'project'=>$project,
             'mainContracts'=>$mainContracts,
@@ -466,7 +468,9 @@ class ProjectController extends Controller
             'receipts'=>$receipts,
             'pictures'=>$pictures,
             'bails'=>$bails,
-            'invoiceTax'=>$invoiceTax
+            'invoiceTax'=>$invoiceTax,
+            'masterContract'=>$masterContract,
+            'subContract'=>$subContract
         ]);
 
     }
@@ -674,7 +678,9 @@ class ProjectController extends Controller
         foreach ($projects as $project){
             $purchases = $project->purchases()->get();
             foreach ($purchases as $purchase){
-                $purchase->lists = $purchase->lists()->get();
+                if (!empty($purchase)){
+                    $purchase->lists = $purchase->lists()->get();
+                }
             }
             $project->purchases = $purchases;
         }

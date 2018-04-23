@@ -681,13 +681,14 @@
                             <th>收款金额</th>
                             <th>收款银行</th>
                             <th>收款账号</th>
-                            <th>备注</th>
+                            {{--<th>备注</th>--}}
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in masterContract.data" :key="item.id">
-                            <template v-if="index === current.masterContract">
+                        <tr>
+                            @if(empty($masterContract))
+                            <template>
                                 <td>
                                     <el-date-picker v-model="editForm.masterContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">
                                     </el-date-picker>
@@ -707,33 +708,37 @@
                                         <input v-model.number="editForm.masterContract.account" type="number" placeholder="收款账号账号">
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.masterContract.remark" type="text" placeholder="备注D">
-                                    </div>
-                                </td>
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model="editForm.masterContract.remark" type="text" placeholder="备注D">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
                                 <td>
                                     <button class="ui mini button green" @click="masterContractSave(item, index)">保存</button>
                                     <button @click="window._helper.fullWindow('../check/collect_master_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
                                 </td>
                             </template>
-                            <template v-else>
-                                <td>@{{ item.date }}</td>
-                                <td>@{{ item.amount.toLocaleString('en-US') }} ￥</td>
-                                <td>@{{ item.bank }}</td>
-                                <td>@{{ item.account }}</td>
-                                <td>@{{ item.remark }}</td>
+                            @else
+                            <template>
+                                @foreach($masterContract as $item)
+                                <td>{{ $item->date }}</td>
+                                <td>{{ $item->price }} ￥</td>
+                                <td>{{ $item->bank }}</td>
+                                <td>{{ $item->account }}</td>
+                                {{--<td>{{ $item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'masterContract')">修改</button>
                                     <button @click="window._helper.fullWindow('../check/collect_master_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
                                 </td>
+                                    @endforeach
                             </template>
+                                @endif
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="5">@{{ masterContractCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="5">{{$project->collects()->where('type','=',2)->sum('price')}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -754,13 +759,15 @@
                             <th>收款金额</th>
                             <th>收款银行</th>
                             <th>收款账号</th>
-                            <th>备注</th>
+                            {{--<th>备注</th>--}}
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in subContract.data" :key="item.id">
-                            <template v-if="index === current.subContract">
+
+                        <tr >
+                            @if(empty($subContract))
+                            <template >
                                 <td>
                                     <el-date-picker v-model="editForm.subContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">
                                     </el-date-picker>
@@ -780,33 +787,38 @@
                                         <input v-model.number="editForm.subContract.account" type="number" placeholder="收款账号账号">
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.subContract.remark" type="text" placeholder="备注D">
-                                    </div>
-                                </td>
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model="editForm.subContract.remark" type="text" placeholder="备注D">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
                                 <td>
                                     <button class="ui mini button green" @click="subContractSave(item, index)">保存</button>
                                     <button @click="window._helper.fullWindow('../check/collect_sub_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
                                 </td>
                             </template>
-                            <template v-else>
-                                <td>@{{ item.date }}</td>
-                                <td>@{{ item.amount.toLocaleString('en-US') }} ￥</td>
-                                <td>@{{ item.bank }}</td>
-                                <td>@{{ item.account }}</td>
-                                <td>@{{ item.remark }}</td>
+                            @else
+                                @foreach($subContract as $item)
+                            <template >
+                                <td>{{ $item->date }}</td>
+                                <td>{{ $item->price}} ￥</td>
+                                <td>{{ $item->bank }}</td>
+                                <td>{{ $item->account }}</td>
+
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'subContract')">修改</button>
                                     <button @click="window._helper.fullWindow('../check/collect_sub_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
                                 </td>
+
                             </template>
+                                @endforeach
+                                @endif
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="5">@{{ subContractCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="5">{{$project->collects()->where('type','=',3)->sum('price')}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
