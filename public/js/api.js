@@ -4,6 +4,7 @@
 }(window, function () {
 
   const url = 'http://193.112.181.116:8080/'
+  // const url = 'http://localhost/erp/public/'
 
   class ProjectManager {
     constructor() {

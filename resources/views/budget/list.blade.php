@@ -38,130 +38,190 @@
 
         <!-- 表格循环 -->
         <div class="content-wrap table-head-nowrap">
-            <table class="ui celled structured table unstackable center aligned">
+            {{--<table class="ui celled structured table unstackable center aligned">--}}
+                {{--<thead>--}}
+                {{--<tr>--}}
+                    {{--<th rowspan="2">类型</th>--}}
+                    {{--<th rowspan="2">项目</th>--}}
+                    {{--<th rowspan="2">内容</th>--}}
+                    {{--<th rowspan="2">金额相关</th>--}}
+                    {{--<th rowspan="2">金额类型</th>--}}
+                    {{--<th rowspan="2">金额</th>--}}
+                {{--</tr>--}}
+                {{--</thead>--}}
+                {{--<tbody>--}}
+                {{--@foreach($projects as $project)--}}
+                {{--<tr>--}}
+                    {{--<td rowspan="6">基本</td>--}}
+                    {{--<td>项目号</td>--}}
+                    {{--<td>{{$project->number}}</td>--}}
+                    {{--<td rowspan="2">--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>项目实际金额</span>--}}
+                            {{--<span>{{$project->price}} ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                    {{--<td>主合同金额</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>项目内容</td>--}}
+                    {{--<td class="detail__content">{{$project->name}}</td>--}}
+                    {{--<td>分包合同金额</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>项目经理</td>--}}
+                    {{--<td>{{$project->pm}}</td>--}}
+                    {{--<td rowspan="3">--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>预算总金额</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                    {{--<td>物料采购金额</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>合同金额</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>工程金额</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>验收日期</td>--}}
+                    {{--<td>2018-11-21</td>--}}
+                    {{--<td>其他</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>保修截至日期</td>--}}
+                    {{--<td>2018-11-21</td>--}}
+                    {{--<td rowspan="7">--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>已发生成本</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                    {{--<td>领料成本</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td colspan="3" class="font-bold">成本 / 预算</td>--}}
+                    {{--<td>施工成本</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td colspan="2">总成本 / 预算</td>--}}
+                    {{--<td>123,523 / 123,623 = 0.9</td>--}}
+                    {{--<td rowspan="3">--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>报销项目成本</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>报销材料款</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td colspan="2">物料实际成本 / 预算</td>--}}
+                    {{--<td>123,523 / 123,623 = 0.9</td>--}}
+                    {{--<td>--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>报销材料款</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td colspan="2">工程实际成本 / 预算</td>--}}
+                    {{--<td>123,523 / 123,623 = 0.9</td>--}}
+                    {{--<td>--}}
+                        {{--<div class="flex-row flex-between">--}}
+                            {{--<span>报销工程款</span>--}}
+                            {{--<span>12,423,222 ￥</span>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td colspan="2">其他成本 / 预算</td>--}}
+                    {{--<td>123,523 / 123,623 = 0.9</td>--}}
+                    {{--<td>费用付款其他成本</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td class="center aligned" style="font-size: 40px;" colspan="3">--}}
+                        {{--<a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>--}}
+                    {{--</td>--}}
+                    {{--<td>退料成本</td>--}}
+                    {{--<td>12,423,222 ￥</td>--}}
+                {{--</tr>--}}
+                {{--</tbody>--}}
+                {{--@endforeach--}}
+            {{--</table>--}}
+            <table class="ui center aligned table selectable unstackable">
                 <thead>
                 <tr>
-                    <th rowspan="2">类型</th>
-                    <th rowspan="2">项目</th>
-                    <th rowspan="2">内容</th>
-                    <th rowspan="2">金额相关</th>
-                    <th rowspan="2">金额类型</th>
-                    <th rowspan="2">金额</th>
+                    <th>项目号</th>
+                    <th>项目内容</th>
+                    <th>项目经理</th>
+                    <th class="function-toggle-one">项目实际金额（展开）</th>
+                    <th class="function-one">主合同金额</th>
+                    <th class="function-one">分包合同金额</th>
+                    <th class="function-toggle-two">预算总额（展开）</th>
+                    <th class="function-two">物料采购金额</th>
+                    <th class="function-two">工程金额</th>
+                    <th class="function-two">其他</th>
+                    <th class="function-toggle-three">已发生成本（展开）</th>
+                    <th class="function-three">可领料成本</th>
+                    <th class="function-three">施工成本</th>
+                    <th class="function-three">报销材料款</th>
+                    <th class="function-three">报销工程款</th>
+                    <th class="function-three">报销其他费用</th>
+                    <th class="function-three">费用付款其他成本</th>
+                    <th class="function-three">退料成本</th>
+                    <th>总成本 / 预算</th>
+                    <th>物料实际成本 / 预算</th>
+                    <th>工程实际成本 / 预算</th>
+                    <th>其他成本 / 预算</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($projects as $project)
                 <tr>
-                    <td rowspan="6">基本</td>
-                    <td>项目号</td>
                     <td>{{$project->number}}</td>
-                    <td rowspan="2">
-                        <div class="flex-row flex-between">
-                            <span>项目实际金额</span>
-                            <span>{{$project->price}} ￥</span>
-                        </div>
-                    </td>
-                    <td>主合同金额</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td>项目内容</td>
-                    <td class="detail__content">{{$project->name}}</td>
-                    <td>分包合同金额</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td>项目经理</td>
+                    <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
-                    <td rowspan="3">
-                        <div class="flex-row flex-between">
-                            <span>预算总金额</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
-                    <td>物料采购金额</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td>合同金额</td>
-                    <td>12,423,222 ￥</td>
-                    <td>工程金额</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td>验收日期</td>
-                    <td>2018-11-21</td>
-                    <td>其他</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td>保修截至日期</td>
-                    <td>2018-11-21</td>
-                    <td rowspan="7">
-                        <div class="flex-row flex-between">
-                            <span>已发生成本</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
-                    <td>领料成本</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="font-bold">成本 / 预算</td>
-                    <td>施工成本</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td colspan="2">总成本 / 预算</td>
-                    <td>123,523 / 123,623 = 0.9</td>
-                    <td rowspan="3">
-                        <div class="flex-row flex-between">
-                            <span>报销项目成本</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
+                    <td>{{$project->mainContract()->sum('price')+$project->outContract()->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->mainContract()->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->outContract()->sum('price')}}￥</td>
+                    <td>{{$project->budget()->sum('price')}}￥</td>
+                    <td class="function-two">{{$project->budget()->where('type','=',1)->sum('price')}}￥</td>
+                    <td class="function-two">{{$project->budget()->where('type','=',2)->sum('price')}}￥</td>
+                    <td class="function-two">{{$project->budget()->where('type','=',3)->sum('price')}}￥</td>
+                    <td>12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td class="function-three">12,232￥</td>
+                    <td>12,232￥</td>
+                    <td>12,232￥</td>
+                    <td>12,232￥</td>
+                    <td>12,232￥</td>
                     <td>
-                        <div class="flex-row flex-between">
-                            <span>报销材料款</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">物料实际成本 / 预算</td>
-                    <td>123,523 / 123,623 = 0.9</td>
-                    <td>
-                        <div class="flex-row flex-between">
-                            <span>报销材料款</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">工程实际成本 / 预算</td>
-                    <td>123,523 / 123,623 = 0.9</td>
-                    <td>
-                        <div class="flex-row flex-between">
-                            <span>报销工程款</span>
-                            <span>12,423,222 ￥</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">其他成本 / 预算</td>
-                    <td>123,523 / 123,623 = 0.9</td>
-                    <td>费用付款其他成本</td>
-                    <td>12,423,222 ￥</td>
-                </tr>
-                <tr>
-                    <td class="center aligned" style="font-size: 40px;" colspan="3">
                         <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>
-                    <td>退料成本</td>
-                    <td>12,423,222 ￥</td>
                 </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
         </div>
         <!-- / 表格循环 -->
