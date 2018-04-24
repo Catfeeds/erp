@@ -289,7 +289,7 @@
             </div>
             <!-- / 合同 -->
             <div class="inline-center margin-top-50">
-                <a class="ui button primary large" href="javascript:_helper.fullWindow('../project/create.html')">
+                <a class="ui button primary large" href="javascript:_helper.fullWindow('{{url('project/create')}}?id={{$project->id}}')">
                     <i class="icon edit"></i>
                     <span>修改</span>
                 </a>

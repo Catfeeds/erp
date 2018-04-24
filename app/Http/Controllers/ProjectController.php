@@ -125,9 +125,24 @@ class ProjectController extends Controller
         $id = Input::get('id');
         if ($id){
             $project = Project::find($id);
-            dd($project);
+//            $project->mainContract = $project->mainContract()->get();
+//            $project->outContract = $project->outContract()->get();
+            $project->createTime = date('Y-m-d',$project->createTime);
+            $project->finishTime = date('Y-m-d',$project->finishTime);
+//            $situations = $project->situation()->get();
+//            foreach ($situations as $situation){
+//                $situation->list = $situation->lists()->get();
+//            }
+//            $project->situations = $situations;
+//            $project->bails = $project->bail()->get();
+//            $project->receipts = $project->receipt()->get();
+//            $project->pictures = $project->picture()->get();
+//            return response()->json($project);
+            $types =ProjectType::select(['id','name','rate'])->get()->toArray();
+            $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
+            return view('project.create',['types'=>$types,'project'=>$project,'rates'=>$rates]);
         }else{
-            $types = ProjectType::select(['id','name'])->get()->toArray();
+            $types = ProjectType::select(['id','name','rate'])->get()->toArray();
             $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
             return view('project.create',['types'=>$types,'rates'=>$rates]);
         }
