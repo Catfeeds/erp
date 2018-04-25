@@ -43,7 +43,7 @@
                     <td>{{$invoice->remark}}</td>
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('invoice/create')}}?id={{$invoice->id}}')">修改</a>
-                        <button class="ui mini button negative dataInvoiceDelete">删除</button>
+                        <button class="ui mini button negative dataInvoiceDelete" data-id="{{$invoice->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

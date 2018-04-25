@@ -42,7 +42,7 @@
                     @endif
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('category/create')}}?id={{$category->id}}')">录入事项</a>
-                        <button class="ui mini button negative dataPaymentDelete">删除</button>
+                        <button class="ui mini button negative dataPaymentDelete" data-id="{{$category->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

@@ -67,7 +67,7 @@
                     <td>{{$material->unit}}</td>
                     <td style="white-space:nowrap;">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('material/create')}}?id={{$material->id}}')">修改</a>
-                        <button class="ui mini button negative dataMaterialDelete">删除</button>
+                        <button class="ui mini button negative dataMaterialDelete" data-id="{{$material->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

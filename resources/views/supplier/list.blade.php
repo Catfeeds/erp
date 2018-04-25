@@ -64,7 +64,7 @@
                     <td>{{$supplier->account}}</td>
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('supplier/create')}}?id={{$supplier->id}}')">修改</a>
-                        <a class="ui mini button negative" href="{{url('delete/supplier/')}}{{$supplier->id}}">删除</a>
+                        <button class="ui mini button negative dataSupplierDelete" data-id="{{$supplier->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach
@@ -76,5 +76,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/project_list.js')}}"></script>
+    <script src="{{url('js/data_supplier_list.js')}}"></script>
 @endsection

@@ -188,6 +188,17 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function delSupplier()
+    {
+        $id = Input::get('id');
+        $supplier = Supplier::find($id);
+        $supplier->state = 0;
+        $supplier->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
     //创建供应商界面
     public function createSupplierPage()
     {
@@ -327,6 +338,17 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function delWarehouse()
+    {
+        $id = Input::get('id');
+        $warehouse = Warehouse::find($id);
+        $warehouse->state = 0;
+        $warehouse->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
 
     public function listWarehousesPage()
     {
@@ -360,6 +382,17 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function delBank()
+    {
+        $id = Input::get('id');
+        $bank = BankAccount::find($id);
+        $bank->state = 0;
+        $bank->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
 
     public function listBankAccountsPage()
     {
@@ -372,6 +405,7 @@ class SystemController extends Controller
         if ($account){
             $DbObj->where('account','like','%'.$account.'%');
         }
+        $DbObj->where('state','=',1);
         $accounts = $DbObj->paginate(10);
         return view('bank.list',['accounts'=>$accounts]);
     }
@@ -405,6 +439,17 @@ class SystemController extends Controller
                 'msg'=>'SUCCESS'
             ]);
         }
+    }
+    public function delInvoiceType()
+    {
+        $id = Input::get('id');
+        $invoice = Invoice::find($id);
+        $invoice->state = 0;
+        $invoice->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
     }
     public function createInvoicePage()
     {
@@ -440,6 +485,17 @@ class SystemController extends Controller
                 'msg'=>'SUCCESS'
             ]);
         }
+    }
+    public function delTeam()
+    {
+        $id = Input::get('id');
+        $team = Team::find($id);
+        $team->state = 0;
+        $team->save();
+        return response()->json([
+        'code'=>'200',
+        'msg'=>'SUCCESS'
+    ]);
     }
     public function getTeams()
     {
@@ -496,6 +552,17 @@ class SystemController extends Controller
             ]);
         }
     }
+    public function delProjectType()
+    {
+        $id = Input::get('id');
+        $type = ProjectType::find($id);
+        $type -> state = 0;
+        $type->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
     public function createProjectTypePage()
     {
         $id = Input::get('id');
@@ -531,6 +598,17 @@ class SystemController extends Controller
             $kind->title = $item;
             $kind->save();
         }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function delCategory()
+    {
+        $id = Input::get('id');
+        $category = Category::find($id);
+        $category->state = 0;
+        $category->save();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'

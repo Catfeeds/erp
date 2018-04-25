@@ -64,7 +64,7 @@
                     <td>{{$warehouse->admin}}</td>
                     <td style="white-space:nowrap;">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('warehouse/create?id=')}}{{$warehouse->id}}')">修改</a>
-                        <button class="ui mini button negative dataWarehouseDelete">删除</button>
+                        <button class="ui mini button negative dataWarehouseDelete" data-id="{{$warehouse->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach
@@ -77,5 +77,5 @@
 
 @endsection
 @section('pageJs')
-    <script src="{{url('js/project_list.js')}}"></script>
+    <script src="{{url('js/data_warehouse_list.js')}}"></script>
 @endsection

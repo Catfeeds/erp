@@ -148,5 +148,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/project_list.js')}}"></script>
+    <script src="{{url('js/loan_submit_list.js')}}"></script>
 @endsection

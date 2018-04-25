@@ -25,6 +25,10 @@ class UserController extends Controller
         $username = $request->get('username');
         $password = $request->get('password');
         if (Auth::attempt(['username'=>$username,'password'=>$password],true)){
+            if(Auth::user()->state==0){
+                Auth::logout();
+                return redirect()->back()->with('status','用户名或密码错误！');
+            }
             return redirect('index');
         }else{
             return redirect()->back()->with('status','用户名或密码错误！');
@@ -43,6 +47,14 @@ class UserController extends Controller
     }
     public function register(Request $post)
     {
+        $username = $post->get('username');
+        $count = User::where('username','=',$username)->where('state','=',1)->count();
+        if ($count!=0){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'该用户已存在！'
+            ]);
+        }
         $user = new User();
         $user->username = $post->get('username');
         $user->department = $post->get('department');
@@ -89,9 +101,20 @@ class UserController extends Controller
         }
 
     }
+    public function delUser()
+    {
+        $id = Input::get('id');
+        $user = User::find($id);
+        $user->state = 0;
+        $user->save();
+        return response()->json([
+            'code'=>"200",
+            'msg'=>'SUCCESS'
+        ]);
+    }
     public function listUsers()
     {
-        $users = User::paginate(10);
+        $users = User::where('state','=',1)->paginate(10);
         return view('auth.list',['users'=>$users]);
     }
     public function createUserPage()

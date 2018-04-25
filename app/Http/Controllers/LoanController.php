@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoanList;
 use App\Models\LoanSubmit;
 use App\Models\LoanSubmitCheck;
 use App\Models\LoanSubmitPass;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -16,8 +18,24 @@ class LoanController extends Controller
     {
         $id = Input::get('id');
         $users = Input::get('users');
+        $submit = LoanSubmit::find($id);
         if (!empty($users)){
             foreach ($users as $user){
+                $task = new Task();
+                $task->user_id = $user;
+
+                if ($submit->type==2){
+                    $task->type = 'loan_project_submit_check';
+                    $task->title = '项目成本报销复核';
+                    $task->url = 'loan/submit/single?id='.$id;
+                }else{
+                    $task->type = 'loan_submit_check';
+                    $task->title = '期间费用报销复核';
+                    $task->url = 'loan/submit/single?id='.$id;
+                }
+                $task->number = $submit->number;
+                $task->content = $id;
+                $task->save();
                 $check = new LoanSubmitCheck();
                 $check->submit_id = $id;
                 $check->user_id = $user;
@@ -33,8 +51,24 @@ class LoanController extends Controller
     {
         $id = Input::get('id');
         $users = Input::get('users');
+        $submit = LoanSubmit::find($id);
         if (!empty($users)){
             foreach ($users as $user){
+                $task = new Task();
+                $task->user_id = $user;
+
+                if ($submit->type==2){
+                    $task->type = 'loan_project_submit_pass';
+                    $task->title = '项目成本报销审批';
+                    $task->url = 'loan/submit/single?id='.$id;
+                }else{
+                    $task->type = 'loan_submit_pass';
+                    $task->title = '期间费用报销审批';
+                    $task->url = 'loan/submit/single?id='.$id;
+                }
+                $task->number = $submit->number;
+                $task->content = $id;
+                $task->save();
                 $check = new LoanSubmitPass();
                 $check->submit_id = $id;
                 $check->user_id = $user;
@@ -115,5 +149,18 @@ class LoanController extends Controller
     public function showLoanPayAdd()
     {
         return view('loan.pay_add');
+    }
+    public function printLoan()
+    {
+        $id = Input::get('id');
+        $loan = LoanList::find($id);
+        return view('loan.print',['loan'=>$loan]);
+    }
+    public function printLoanSubmit()
+    {
+        $id = Input::get('id');
+        $submit = LoanSubmit::find($id);
+        $lists = $submit->lists()->get();
+        return view('loan.submit_print',['submit'=>$submit,'lists'=>$lists]);
     }
 }

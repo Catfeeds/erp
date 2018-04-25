@@ -3,8 +3,8 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://localhost/erp/public/'
-
+  // const url = 'http://119.23.202.220:8080'
+  const url = 'http://localhost/erp/public'
   class ProjectManager {
     constructor() {
       this._http = axios.create({
@@ -93,7 +93,7 @@
     //删除供应商
     deleteSupplier(data = {}) {
       return this._http.get(`/del/supplier`, {
-        params: search
+        params: data
       })
     }
   }

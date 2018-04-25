@@ -67,6 +67,14 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('category/create','SystemController@addCategoryPage');
    Route::get('category/list','SystemController@listCategoryPage');
    Route::get('del/material','SystemController@delMaterial');
+   Route::get('del/user ','UserController@delUser');
+   Route::get('del/project/type ','SystemController@delProjectType');
+   Route::get('del/supplier ','SystemController@delSupplier');
+   Route::get('del/warehouse ','SystemController@delWarehouse');
+   Route::get('del/bank ','SystemController@delBank');
+   Route::get('del/invoice','SystemController@delInvoiceType');
+   Route::get('del/team ','SystemController@delTeam');
+   Route::get('del/category ','SystemController@delCategory');
    Route::get('budget/list','ProjectController@listBudgetsPage');
 //   Route::get('budget/detail','ProjectController@showBudgetPage');
    Route::post('create/user','UserController@register');
@@ -156,7 +164,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('loan/add','PayController@createLoanApply');
     Route::get('loan/cancel','PayController@cancelLoan');
     Route::get('loan/confirm','PayController@confirmLoan');
-    Route::post('loan/select','PayController@selectLoanApprover');
+    Route::get('loan/select','PayController@selectLoanApprover');
     Route::get('loan/submit/list','PayController@listSubmitListPage');
     Route::post('loan/submit/other','PayController@createSubmitList');
     Route::get('loan/submit/other','PayController@createSubmitOtherPage');
@@ -176,6 +184,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/pay/list','PayController@listLoanPayPage');
     Route::post('loan/submit/other/check','LoanController@selectSubmitCheck');
     Route::post('loan/submit/other/pass','LoanController@selectSubmitPass');
+    Route::get('loan/print','LoanController@printLoan');
+    Route::get('loan/submit/print','LoanController@printLoanSubmit');
     //费用付款管理
     Route::get('pay/add','PayController@createPayApplyPage');
     Route::post('pay/add','PayController@createPayApply');
@@ -184,6 +194,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/pay','PayController@payPage');
     Route::get('pay/single','PayController@paySinglePage');
     Route::get('pay/cancel','PayController@cancelApply');
+    Route::get('pay/print','PayController@printPay');
     Route::get('pay/confirm','PayController@confirmApply');
     Route::post('pay/select','PayController@selectApprover');
 });

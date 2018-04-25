@@ -38,7 +38,7 @@
                     <td>{{$type->rate}}%</td>
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('project/type/create')}}?id={{$type->id}}')">修改</a>
-                        <button class="ui mini button negative dataTypeDelete">删除</button>
+                        <button class="ui mini button negative dataTypeDelete" data-id="{{$type->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

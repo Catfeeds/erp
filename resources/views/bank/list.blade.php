@@ -55,12 +55,12 @@
                 </thead>
                 <tbody>
                 @foreach($accounts as $account)
-                <tr>
+                <tr >
                     <td>{{$account->name}}</td>
                     <td>{{$account->account}}</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('bank/create')}}?id={{$account->id}}')">修改</a>
-                        <button class="ui mini button negative dataBankDelete">删除</button>
+                        <button class="ui mini button negative dataBankDelete" data-id="{{$account->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

@@ -192,7 +192,10 @@ class PayController extends Controller
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',
-                'msg'=>'SUCCESS'
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$apply->id
+                ]
             ]);
         }
     }
@@ -220,13 +223,14 @@ class PayController extends Controller
         if ($loan->state!=1){
             return response()->json([
                 'code'=>'400',
-                'msg'=>'当前状态不允许撤销！'
+                'msg'=>'当前状态不允许审批！'
             ]);
         }else{
             $loan->state = 2;
             $loan->approver = Auth::user()->name;
             $loan->approver_id = Auth::id();
             $loan->save();
+            Task::where('type','=','loan_loan_pass')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -239,6 +243,14 @@ class PayController extends Controller
         $users = Input::get('users');
         if (!empty($users)){
             foreach ($users as $user){
+                $task = new Task();
+                $task->user_id = $user;
+                $task->type = 'loan_loan_pass';
+                $task->title = '借款审批';
+                $task->number = LoanList::find($id)->number;
+                $task->url = 'loan/loan/list';
+                $task->content = $id;
+                $task->save();
                 $allow = new LoanListAllow();
                 $allow->loan_id = $id;
                 $allow->user_id = $user;
@@ -508,6 +520,11 @@ class PayController extends Controller
         $id = Input::get('id');
         $apply = PayApply::find($id);
         return view('pay.single',['apply'=>$apply]);
+    }
+    public function printPay()
+    {
+
+        return view('pay.print');
     }
 
 }

@@ -62,7 +62,7 @@
                     <td>{{$team->manager}}</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('team/create')}}?id={{$team->id}}')">修改</a>
-                        <button class="ui mini button negative dataTeamDelete">删除</button>
+                        <button class="ui mini button negative dataTeamDelete" data-id="{{$team->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach

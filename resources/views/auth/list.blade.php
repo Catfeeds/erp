@@ -60,7 +60,7 @@
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('auth/check')}}?id={{$user->id}}')">查询权限</a>
                         <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('user/create')}}?id={{$user->id}}')">修改</a>
-                        <button class="ui mini button negative authDelete">删除</button>
+                        <button class="ui mini button negative authDelete" data-id="{{$user->id}}">删除</button>
                     </td>
                 </tr>
                 @endforeach
