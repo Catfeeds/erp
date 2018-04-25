@@ -15,7 +15,8 @@
       maintain: '', //维护条件
     },
     masterCompany: [{ //主合同中标情况 { name, amount, remark }
-      id: 1
+      id: 1,
+      name: '本单位'
     }],
     subCompany: [{ //分包情况  { name, amount, remark }
       id: 1

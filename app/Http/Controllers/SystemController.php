@@ -256,7 +256,8 @@ class SystemController extends Controller
                 'msg'=>'Not Found'
             ]);
         }
-        if ($material->delete()){
+        $material->state = 0;
+        if ($material->save()){
             return response()->json([
                 'code'=>'200',
                 'msg'=>'success'

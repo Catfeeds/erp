@@ -3,8 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8080/'
-  // const url = 'http://localhost/erp/public/'
+  const url = 'http://localhost/erp/public/'
 
   class ProjectManager {
     constructor() {
@@ -54,6 +53,13 @@
       })
     }
 
+    //删除项目类型
+    deletProject(data = {}) {
+      return this._http.get(`/del/project/type`, {
+        params: data
+      })
+    }
+
   }
 
   class SupplierManager {
@@ -80,6 +86,13 @@
     //搜索供应商
     searchSuppliers(search = {}) {
       return this._http.get(`/suppliers`, {
+        params: search
+      })
+    }
+
+    //删除供应商
+    deleteSupplier(data = {}) {
+      return this._http.get(`/del/supplier`, {
         params: search
       })
     }
@@ -136,6 +149,12 @@
         params: search
       })
     }
+
+    deleteMaterial(data = {}) {
+      return this._http.get(`/del/material`, {
+        params: data
+      })
+    }
   }
 
   class WarehouseManager {
@@ -156,6 +175,12 @@
     //创建仓库
     createWarehouse(data = {}) {
       return this._http.post('/warehouse/create', data, this.dataMethodDefaults)
+    }
+
+    deleteWarehouse(data = {}) {
+      return this._http.get(`/del/warehouse`, {
+        params: data
+      })
     }
   }
 
@@ -185,6 +210,13 @@
         params: search
       })
     }
+
+    //删除银行
+    deleteBank(data = {}) {
+      return this._http.get(`/del/bank`, {
+        params: data
+      })
+    }
   }
 
   class InvoiceManager {
@@ -202,9 +234,16 @@
         }]
       }
     }
-    //创建银行
+    //创建发票
     createInvoice(data = {}) {
       return this._http.post('/invoice/create', data, this.dataMethodDefaults)
+    }
+
+    //删除发票
+    deleteInvoice(data = {}) {
+      return this._http.get(`/del/invoice`, {
+        params: data
+      })
     }
   }
 
@@ -259,6 +298,13 @@
     //施工   收票
     createGetAdd(data = {}) {
       return this._http.post('/build/get/add', data, this.dataMethodDefaults)
+    }
+
+    //删除施工队
+    deleteTeam(data = {}) {
+      return this._http.get(`/del/team`, {
+        params: data
+      })
     }
   }
 
@@ -330,6 +376,13 @@
         params: search
       })
     }
+
+    //删除员工
+    deleteUser(data = {}) {
+      return this._http.get(`/del/user`, {
+        params: data
+      })
+    }
   }
 
   //费用付款管理
@@ -380,6 +433,13 @@
     //选择审批人
     selectPay(data = {}) {
       return this._http.post(`/pay/select`, data, this.dataMethodDefaults)
+    }
+
+    //删除付费类型
+    deleteCategory(data = {}){
+      return this._http.get(`/del/category`, {
+        params: data
+      })
     }
 
   }
@@ -495,7 +555,7 @@
     //采购付款复核
     paymentCheck(data = {}) {
       return this._http.get(`/purchase/payment/check`, {
-        params: search
+        params: data
       })
     }
 
@@ -507,6 +567,13 @@
     // 付款录入
     createPaymentAdd(data = {}) {
       return this._http.post(`/purchase/payment/finish`, data, this.dataMethodDefaults)
+    }
+
+    //搜索物价比
+    searchPurchase(search = {}) {
+      return this._http.get(`/search/purchase`, {
+        params: search
+      })
     }
   }
 
@@ -534,6 +601,18 @@
     //退料入库
     createReturnAdd(data = {}) {
       return this._http.post(`/stock/return/add`, data, this.dataMethodDefaults)
+    }
+
+    searchStockMaterial(search = {}) {
+      return this._http.get(`/search/stock/get`, {
+        params: search
+      })
+    }
+
+    searchStockMaterialSpecial(search = {}) {
+      return this._http.get(`/search/stock/material`, {
+        params: search
+      })
     }
 
     // 领料出库
@@ -628,12 +707,12 @@
     }
 
     //选择报销复核人
-    selectCheckSubmit(data = {}){
+    selectCheckSubmit(data = {}) {
       return this._http.post(`/select/check/submit`, data, this.dataMethodDefaults)
     }
 
     //选择报销审核人
-    selectPassSubmit(data = {}){
+    selectPassSubmit(data = {}) {
       return this._http.post(`/select/check/submit`, data, this.dataMethodDefaults)
     }
 
@@ -652,14 +731,14 @@
     }
 
     //查询报销人未支付报销单
-    loanListCheck(data = {}){
+    loanListCheck(data = {}) {
       return this._http.get(`/search/loan/submit`, {
         params: data
       })
     }
 
     //报销
-    createPayAddPost(data = {}){
+    createPayAddPost(data = {}) {
       return this._http.post(`/loan/pay/add`, data, this.dataMethodDefaults)
     }
 

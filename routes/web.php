@@ -66,7 +66,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('category/create','SystemController@addCategory');
    Route::get('category/create','SystemController@addCategoryPage');
    Route::get('category/list','SystemController@listCategoryPage');
-
+   Route::get('del/material','SystemController@delMaterial');
    Route::get('budget/list','ProjectController@listBudgetsPage');
 //   Route::get('budget/detail','ProjectController@showBudgetPage');
    Route::post('create/user','UserController@register');

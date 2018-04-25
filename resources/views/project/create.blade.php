@@ -15,9 +15,7 @@
         <div style="display:none;" id="contractContent">
             {{json_encode($types)}}
         </div>
-        <div style="display:none;" id="contractTax">
-            {{json_encode($rates)}}
-        </div>
+
 
         <div style="display:none;" id="projectData">
             {{--@if(!empty($project))--}}
@@ -25,14 +23,13 @@
             {{--@else--}}
                 {{--@endif--}}
             @if(!empty($project))
-            {"project":{{json_encode($project)}},"mainContracts":{{json_encode($project->mainContract()->get())}},"outContracts":{{json_encode($project->outContract()->get())}},"situations":[{"price":"100000","type":1,"id":1,"is_main":1,"lists":[{"name":1,"tax":1,"price":"5000","remark":"备注xxx"},{"name":2,"tax":2,"price":"95000","remark":"备注xx"}]},{"price":"2000","type":1,"id":2,"is_main":0,"lists":[{"name":3,"tax":3,"price":"2000","remark":"备注xxx"}]},{"price":"5000","type":2,"id":3,"is_main":1,"lists":[{"name":2,"tax":1,"price":"3000","remark":"备注xx"},{"name":3,"tax":2,"price":"2000","remark":"备注"}]}],"bails":[{"unit":"开具单位一","price":"12321","term":"2018-03-13","cost":"123213","other":"其他","pay_date":"2018-03-14","pay_price":"213213","payee":"陈胜海","bank":"中国银行","bank_account":"695345343434343","condition":"条件一"},{"unit":"开具单位二","price":"123213","term":"2018-03-17","cost":"213123","other":"其他啊","pay_date":"2018-03-23","pay_price":"213123","payee":"刘飞","bank":"中国银行","bank_account":"656342342343242343","condition":"条件二"}],"receipts":[{"radio":"12","price":"52323","condition":"条件啊"},{"radio":"5","price":"2123","condition":"条件啊"}],"pictures":[{}]}
+            {"project":{{json_encode($project)}},"mainContracts":{{json_encode($project->mainContract()->get())}},"outContracts":{{json_encode($project->outContract()->get())}},"situations":{{json_encode($situations)}},"bails":{{json_encode($project->bail()->get())}},"receipts":{{json_encode($project->receipt()->get())}},"pictures":{{json_encode($project->picture()->get())}}}
             @else
             @endif
         </div>
         <h1 class="ui red header blue center aligned">项目立项</h1>
 
         <div class="invisible" id="projectCreate">
-
             <!-- 项目基本信息 -->
             <h4 class="ui dividing header blue">项目基本信息</h4>
             <div class="ui form form-item">
@@ -232,11 +229,15 @@
                                         </el-option>
                                     </el-select>
                                 </div>
+                                {{--<div class="two wide column">--}}
+                                    {{----}}
+                                    {{--<el-select v-model="subItem.tax" placeholder="请选择税率">--}}
+                                        {{--<el-option v-for="item in contractTax" :key="item.id" :label="item.name" :value="item.id">--}}
+                                        {{--</el-option>--}}
+                                    {{--</el-select>--}}
+                                {{--</div>--}}
                                 <div class="two wide column">
-                                    <el-select v-model="subItem.tax" placeholder="请选择税率">
-                                        <el-option v-for="item in contractTax" :key="item.id" :label="item.name" :value="item.id">
-                                        </el-option>
-                                    </el-select>
+                                    <div class="fake-input">@{{ TaxIDMap[subItem.name]?TaxIDMap[subItem.name] + '%':'暂无'}}</div>
                                 </div>
                                 <div class="two wide column">
                                     <div class="block ui icon input">
@@ -312,11 +313,14 @@
                                         </el-option>
                                     </el-select>
                                 </div>
+                                {{--<div class="two wide column">--}}
+                                    {{--<el-select v-model="subItem.tax" placeholder="请选择税率">--}}
+                                        {{--<el-option v-for="item in contractTax" :key="item.id" :label="item.name" :value="item.id">--}}
+                                        {{--</el-option>--}}
+                                    {{--</el-select>--}}
+                                {{--</div>--}}
                                 <div class="two wide column">
-                                    <el-select v-model="subItem.tax" placeholder="请选择税率">
-                                        <el-option v-for="item in contractTax" :key="item.id" :label="item.name" :value="item.id">
-                                        </el-option>
-                                    </el-select>
+                                    <div class="fake-input">@{{ TaxIDMap[subItem.name]?TaxIDMap[subItem.name] + '%':'暂无'}}</div>
                                 </div>
                                 <div class="two wide column">
                                     <div class="block ui icon input">
@@ -403,7 +407,7 @@
                         <template v-if="sumContent && sumContent.result.length > 0">
                             <tr v-for="(item, index) in sumContent.result" :key="item.name">
                                 <td>@{{item.name}}</td>
-                                <td>@{{item.tax}}</td>
+                                <td>@{{item.tax}} %</td>
                                 <td>@{{item.amount.toLocaleString('en-US')}} ￥</td>
                             </tr>
                         </template>

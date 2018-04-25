@@ -14,6 +14,7 @@ use App\Models\PayApplyAllow;
 use App\Models\Project;
 use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
+use App\Models\Task;
 use App\Models\Team;
 use App\User;
 use Illuminate\Http\Request;
@@ -107,6 +108,15 @@ class PayController extends Controller
         $users = Input::get('users');
         if (!empty($users)){
             foreach ($users as $user){
+                $task = new Task();
+                $task->user_id = $user;
+                $task->content = $id;
+                $task->type = 'pay_pass';
+                $task->title = '付款审批';
+                $task->number = PayApply::find($id)->number;
+                $task->url = 'pay/single?id='.$id;
+                $task->content = $id;
+                $task->save();
                 $allow = new PayApplyAllow();
                 $allow->apply_id = $id;
                 $allow->user_id = $user;
@@ -132,6 +142,7 @@ class PayController extends Controller
             $apply->approver_id = Auth::id();
             $apply->approver = Auth::user()->name;
             $apply->save();
+            Task::where('type','=','pay_pass')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'

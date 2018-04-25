@@ -6,6 +6,7 @@ use App\Http\Requests\Login;
 use App\Models\ProjectRole;
 use App\Models\Role;
 use App\Models\RoleDetail;
+use App\Models\Task;
 use App\Providers\AuthServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
@@ -58,7 +59,8 @@ class UserController extends Controller
     public function index()
     {
         if (Auth::check()){
-            return view('index');
+            $tasks = Task::where('user_id','=',Auth::id())->where('state','=',1)->get();
+            return view('index',['tasks'=>$tasks]);
         }
         return redirect('login');
     }

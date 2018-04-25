@@ -3,7 +3,7 @@
     .ready(function () {
 
       const contractContent = $('#contractContent').text().trim() === '' ? [] : JSON.parse($('#contractContent').text().trim())
-      const contractTax = $('#contractTax').text().trim() === '' ? [] : JSON.parse($('#contractTax').text().trim())
+      // const contractTax = $('#contractTax').text().trim() === '' ? [] : JSON.parse($('#contractTax').text().trim())
       const projectData = $('#projectData').text().trim() === '' ? false : JSON.parse($('#projectData').text().trim())
 
       function idSearch(value) {
@@ -13,22 +13,28 @@
         }
         return newObj
       }
-      const TaxIDMap = idSearch(contractTax)
+      function idSearch2(value) {
+        let newObj = {}
+        for (let it of value) {
+          newObj[it.id] = it.rate
+        }
+        return newObj
+      }
       const ContentIDMap = idSearch(contractContent)
+      const TaxIDMap = idSearch2(contractContent)
 
       new Vue({
         el: '#projectCreate',
         data: {
           project: _schemas.projects,
           contractContent,
-          contractTax,
           TaxIDMap,
           ContentIDMap
         },
         mounted() {
           if (projectData) {
             this.project = _helper.projectGetFormat(projectData)
-          }
+          } 
           $('#projectCreate').removeClass('invisible')
         },
         computed: {

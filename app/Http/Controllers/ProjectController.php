@@ -129,10 +129,10 @@ class ProjectController extends Controller
 //            $project->outContract = $project->outContract()->get();
             $project->createTime = date('Y-m-d',$project->createTime);
             $project->finishTime = date('Y-m-d',$project->finishTime);
-//            $situations = $project->situation()->get();
-//            foreach ($situations as $situation){
-//                $situation->list = $situation->lists()->get();
-//            }
+            $situations = $project->situation()->get();
+            foreach ($situations as $situation){
+                $situation->lists = $situation->lists()->get();
+            }
 //            $project->situations = $situations;
 //            $project->bails = $project->bail()->get();
 //            $project->receipts = $project->receipt()->get();
@@ -140,7 +140,8 @@ class ProjectController extends Controller
 //            return response()->json($project);
             $types =ProjectType::select(['id','name','rate'])->get()->toArray();
             $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
-            return view('project.create',['types'=>$types,'project'=>$project,'rates'=>$rates]);
+//            return response()->json($situations);
+            return view('project.create',['types'=>$types,'project'=>$project,'situations'=>$situations]);
         }else{
             $types = ProjectType::select(['id','name','rate'])->get()->toArray();
             $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
@@ -172,6 +173,16 @@ class ProjectController extends Controller
         if (!empty($projectData)){
             if (isset($projectData['id'])){
                 $project = Project::find($projectData['id']);
+                $project->mainContract()->delete();
+                $project->outContract()->delete();
+                $project->bail()->delete();
+                $project->receipt()->delete();
+                $project->picture()->delete();
+                $situations = $project->situation()->get();
+                foreach ($situations as $situation){
+                    $situation->lists()->delete();
+                }
+                $project->situation()->delete();
             }else{
                 $project = new Project();
                 $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();
