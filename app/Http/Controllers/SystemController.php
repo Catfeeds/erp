@@ -166,7 +166,7 @@ class SystemController extends Controller
         if ($account){
             $DbObj->where('account','like','%'.$account.'%');
         }
-        $data = $DbObj->paginate(10);
+        $data = $DbObj->where('state','=',1)->paginate(10);
         return view('supplier.list',['suppliers'=>$data]);
     }
     //创建供应商
@@ -217,7 +217,7 @@ class SystemController extends Controller
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
-        $data = $db->get();
+        $data = $db->where('state','=',1)->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
@@ -231,7 +231,7 @@ class SystemController extends Controller
         if ($name){
             $db->where('name','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
         }
-        $data = $db->get();
+        $data = $db->where('state','=',1)->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
@@ -254,7 +254,7 @@ class SystemController extends Controller
         if ($factory){
             $DbObj->where('factory','like','%'.$model.'%');
         }
-        $data = $DbObj->paginate(10);
+        $data = $DbObj->where('state','=',1)->paginate(10);
         return view('material.list',['materials'=>$data]);
     }
 
@@ -361,7 +361,7 @@ class SystemController extends Controller
         if ($admin){
             $DbObj->where('admin','like','%'.$admin.'%');
         }
-        $data = $DbObj->paginate(10);
+        $data = $DbObj->where('state','=',1)->paginate(10);
         return view('warehouse.list',['warehouses'=>$data]);
     }
     //银行账号
@@ -464,7 +464,7 @@ class SystemController extends Controller
 
     public function listInvoicesPage()
     {
-        $invoices = Invoice::paginate(10);
+        $invoices = Invoice::where('state','=',1)->paginate(10);
         return view('invoice.list',['invoices'=>$invoices]);
     }
 
@@ -504,7 +504,7 @@ class SystemController extends Controller
         if ($name){
             $dbObj->where('name','like','%'.$name.'%');
         }
-        $data = $dbObj->get();
+        $data = $dbObj->where('state','=',1)->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
@@ -532,7 +532,7 @@ class SystemController extends Controller
         if ($manager){
             $DbObj->where('manager','like','%'.$manager.'%');
         }
-        $teams = $DbObj->paginate(10);
+        $teams = $DbObj->where('state','=',1)->paginate(10);
         return view('team.list',['teams'=>$teams]);
     }
     public function createProjectType(Request $post)
@@ -575,12 +575,12 @@ class SystemController extends Controller
     }
     public function listProjectTypesPage()
     {
-        $type = ProjectType::paginate(10);
+        $type = ProjectType::where('state','=',1)->paginate(10);
         return view('data.type_list',['types'=>$type]);
     }
     public function listCategoryPage()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::where('state','=',1)->paginate(10);
         for ($i=0;$i<count($categories);$i++){
             $categories[$i]->kinds = $categories[$i]->kinds()->pluck('title')->toArray();
         }
@@ -645,7 +645,7 @@ class SystemController extends Controller
     }
     public function searchCategory()
     {
-        $categories = Category::all();
+        $categories = Category::where('state','=',1)->get();
         for($i=0;$i<count($categories);$i++){
             $categories[$i]->kinds = $categories[$i]->kinds()->get();
         }
@@ -662,7 +662,7 @@ class SystemController extends Controller
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
-        $data = $db->get();
+        $data = $db->where('state','=',1)->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
