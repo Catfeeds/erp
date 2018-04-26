@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccount;
 use App\Models\LoanList;
 use App\Models\LoanSubmit;
 use App\Models\LoanSubmitCheck;
@@ -94,6 +95,8 @@ class LoanController extends Controller
             $loan->checker_id = Auth::id();
             $loan->checker = Auth::user()->name;
             $loan->save();
+            Task::where('type','=','loan_project_submit_check')->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','loan_submit_check')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
@@ -115,6 +118,8 @@ class LoanController extends Controller
             $loan->passer_id = Auth::id();
             $loan->passer = Auth::user()->name;
             $loan->save();
+            Task::where('type','=','loan_project_submit_pass')->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','loan_submit_pass')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
@@ -148,7 +153,8 @@ class LoanController extends Controller
     }
     public function showLoanPayAdd()
     {
-        return view('loan.pay_add');
+        $bank = BankAccount::where('state','=',1)->get();
+        return view('loan.pay_add',['bank'=>$bank]);
     }
     public function printLoan()
     {

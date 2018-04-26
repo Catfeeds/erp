@@ -20,6 +20,7 @@
         },
         mounted() {
           this.loanForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.loanForm.loan_user = $('#loanUser').val()
           $('#loanLoanAdd').removeClass('invisible')
         },
         methods: {

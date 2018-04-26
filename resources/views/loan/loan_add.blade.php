@@ -12,6 +12,8 @@
             <div class="active section">新增借款申请</div>
         </div>
 
+        <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
+
         <h1 class="ui header blue aligned center">新增借款申请</h1>
         <div id="loanLoanAdd">
             <h4 class="ui dividing header blue">信息录入</h4>

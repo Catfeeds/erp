@@ -9,6 +9,6 @@ class RequestPayment extends Model
     //
     public function lists()
     {
-        return $this->hasMany('RequestPaymentList','payment_id','id');
+        return $this->hasMany('App\Models\RequestPaymentList','payment_id','id');
     }
 }

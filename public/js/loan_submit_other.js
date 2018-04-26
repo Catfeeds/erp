@@ -30,7 +30,11 @@
           }
         },
         mounted() {
-          this.submitOtherForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.submitOtherForm.price = $('#topAmount').val()
+          this.submitOtherForm.date = $('#date').val() || _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.submitOtherForm.loan_user = $('#loanUser').val()
+          const lists = $('#lists').text().trim()
+          this.submitOtherForm.lists = lists === '' ? [] : JSON.parse(lists)
           _http.LoanManager.searchCategory()
             .then(res => {
               if (res.data.code === '200') {
@@ -122,7 +126,7 @@
               lists: []
             }
             const list = data.lists
-            for(let i = 0; i < list.length; i++){
+            for (let i = 0; i < list.length; i++) {
               let tmp = {
                 category_id: list[i].category_id,
                 kind_id: list[i].kind_id,
@@ -148,7 +152,7 @@
                     type: 'success'
                   })
                   this.selectData.id = res.data.data.id
-                  console.log('send') 
+                  console.log('send')
                   _http.UserManager.searchAuthUsers({
                       role: 'loan_submit_check'
                     })

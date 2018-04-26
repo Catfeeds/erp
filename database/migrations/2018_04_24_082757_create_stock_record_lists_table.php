@@ -15,6 +15,14 @@ class CreateStockRecordListsTable extends Migration
     {
         Schema::create('stock_record_lists', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('record_id');
+            $table->unsignedInteger('material_id')->default(0);
+            $table->integer('sum');
+            $table->float('stock_cost',18,2);
+            $table->float('stock_price',18,2);
+            $table->integer('stock_number');
+            $table->float('price',18,2);
+            $table->float('cost',18,2);
             $table->timestamps();
         });
     }

@@ -12,6 +12,12 @@
             <div class="active section">新增项目成本报销</div>
         </div>
 
+        <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
+        <input type="hidden" id="date" value="">
+        <input type="hidden" id="topAmount" value="">
+        <input type="hidden" id="projectId" value="">
+        <input type="hidden" id="projectContent" value="">
+        <div style="display: none;" id="lists"></div>
         <h1 class="ui header blue aligned center">新增期间费用报销</h1>
         <div id="loanSubmitOther">
             <h4 class="ui dividing header blue">信息录入</h4>

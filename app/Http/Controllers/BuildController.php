@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConstructionContract;
+use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -35,7 +36,9 @@ class BuildController extends Controller
     }
     public function listPayPage()
     {
-        return view('build.pay_list');
+        $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+        $lists = ProjectTeam::whereIn('id',$id)->get();
+        return view('build.pay_list',['lists'=>$lists]);
     }
     public function listGetPage()
     {
@@ -45,6 +48,21 @@ class BuildController extends Controller
     {
         $id = Input::get('id');
         $apply = RequestPayment::find($id);
-        return view('build.finish_single',['apply'=>$apply]);
+        $lists = $apply->lists()->get();
+        return view('build.finish_single',['apply'=>$apply,'lists'=>$lists]);
+    }
+    public function printBuildFinish()
+    {
+        $id = Input::get('id');
+        $apply = RequestPayment::find($id);
+        $lists = $apply->lists()->get();
+        return view('build.finish_print',['apply'=>$apply,'lists'=>$lists]);
+    }
+    public function paySinglePage()
+    {
+        $id = Input::get('id');
+        $projectTeam = ProjectTeam::find($id);
+        $lists = $projectTeam->payments()->where('state','=',3)->get();
+        return view('build.pay_single',['projectTeam'=>$projectTeam,'lists'=>$lists]);
     }
 }

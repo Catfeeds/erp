@@ -3,8 +3,9 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8080'
-  // const url = 'http://localhost/erp/public'
+  // const url = 'http://119.23.202.220:8080'
+  const url = 'http://localhost/erp/public'
+
   class ProjectManager {
     constructor() {
       this._http = axios.create({
@@ -713,7 +714,7 @@
 
     //选择报销审核人
     selectPassSubmit(data = {}) {
-      return this._http.post(`/select/check/submit`, data, this.dataMethodDefaults)
+      return this._http.post(`/select/pass/submit`, data, this.dataMethodDefaults)
     }
 
     //报销审批

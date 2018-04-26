@@ -75,9 +75,17 @@
                     <td class="table-content">{{$apply->project_content}}</td>
                     <td>{{$apply->project_manager}}</td>
                     <td>{{$apply->price}} ￥</td>
-                    <td>吴海</td>
+                    <td>{{$apply->applier}}</td>
+                    @if($apply->state<2)
                     <td>未复核</td>
+                    @else
+                        <td>{{$apply->checker}}</td>
+                    @endif
+                    @if($apply->state<3)
                     <td>未审批</td>
+                        @else
+                    <td>{{$apply->passer}}</td>
+                        @endif
                 </tr>
                 @endforeach
                 </tbody>

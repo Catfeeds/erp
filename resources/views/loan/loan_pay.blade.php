@@ -15,6 +15,7 @@
         <input type="hidden" value="{{$loan->manager}}" id="manager">
         <input type="hidden" value="{{$loan->bank}}" id="bank">
         <input type="hidden" value="{{$loan->account}}" id="account">
+        <div style="display: none" id="banks">{{json_encode($bank)}}</div>
         <h1 class="ui header blue aligned center">付款</h1>
         <div id="loanLoanPay">
             <h4 class="ui dividing header blue">基本信息</h4>
@@ -79,7 +80,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">付款方式</label>
                             <div class="eleven wide field">
-                                <el-select v-model="loanForm.type" placeholder="付款方式">
+                                <el-select v-model="loanForm.pay_type" placeholder="付款方式">
                                     <el-option v-for="item in [{id:1,name:'现金'},{id:2,name:'转账'}]" :key="item.id" :label="item.name" :value="item.id">
                                     </el-option>
                                 </el-select>
@@ -94,12 +95,15 @@
                             </div>
                         </div>
                     </div>
-                    <template v-if="loanForm.type == 2">
+                    <template v-if="loanForm.pay_type == 2">
                         <div class="column">
                             <div class="inline fields">
                                 <label class="six wide field flex-center">转账银行</label>
                                 <div class="eleven wide field">
-                                    <input type="text" v-model="loanForm.bank" placeholder="请输入转账银行">
+                                    <el-select v-model="loanForm.bank_name" placeholder="请输入转账银行" @change="bankChange">
+                                        <el-option v-for="(item, index) in bankList" :key="item.id" :label="item.name" :value="index">
+                                        </el-option>
+                                    </el-select>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +111,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">银行账号</label>
                                 <div class="eleven wide field">
-                                    <input type="number" v-model.number="loanForm.account" placeholder="请输入银行账号">
+                                    <div class="fake-input">@{{ loanForm.account }}</div>
                                 </div>
                             </div>
                         </div>

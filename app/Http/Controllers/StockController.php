@@ -67,26 +67,30 @@ class StockController extends Controller
         $warehouse_id = $post->get('warehouse_id');
         $lists = $post->get('lists');
         $worker = $post->get('worker');
+
+
+        $record = new StockRecord();
+        $record->type = 1;
+        $count = StockRecord::whereDate('created_at', date('Y-m-d',time()))->where('type','=',1)->count();
+        $record->number = 'SHRK'.date('Ymd',time()).sprintf("%03d", $count+1);
+        $record->date = $post->get('date');
+        $record->worker = $worker;
+        $record->worker_id = Auth::id();
+        $record->warehouse_id = $warehouse_id;
+        $record->warehouse = Warehouse::find($warehouse_id)->name;
+        $record->purchase_id = $purchase->purchase_id;
+        $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
+        $record->supplier_id = $info->supplier_id;
+        $record->supplier = Supplier::find($info->supplier_id)->name;
         foreach ($lists as $list){
             $purchase = PurchaseList::find($list['id']);
             $info = Purchase::find($purchase->purchase_id);
-            $record = new StockRecord();
-            $record->type = 1;
-            $count = StockRecord::whereDate('created_at', date('Y-m-d',time()))->where('type','=',1)->count();
-            $record->number = 'SHRK'.date('Ymd',time()).sprintf("%03d", $count+1);
-            $record->date = $post->get('date');
-            $record->worker = $worker;
-            $record->worker_id = Auth::id();
-            $record->warehouse_id = $warehouse_id;
             $record->material_id = $purchase->material_id;
-            $record->purchase_id = $purchase->purchase_id;
-            $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
-            $record->supplier_id = $info->supplier_id;
-            $record->supplier = Supplier::find($info->supplier_id)->name;
+
             $record->price = $purchase->price;
             $record->cost = $purchase->price*$list['number'];
             $record->sum = $list['number'];
-            $record->warehouse = Warehouse::find($warehouse_id)->name;
+
             $purchase->received+=$list['number'];
             $purchase->need = $purchase->number-$purchase->received;
             $purchase->save();

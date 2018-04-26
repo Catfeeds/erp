@@ -12,10 +12,12 @@
             account: '',
             daduction: '',
             cash: '',
-            transfer: ''
+            transfer: '',
+            bank_index: ''
           },
 
           currentList: [],
+          bankList: [],
 
           submitConfirmDialog: false,
 
@@ -27,6 +29,8 @@
         mounted() {
           $('#loanPayAdd').removeClass('invisible')
           this.loanForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          const bankList = $('#banks').text().trim()
+          this.bankList = bankList === '' ? [] : JSON.parse(bankList)
         },
 
         computed: {
@@ -67,6 +71,15 @@
           }
         },
         methods: {
+
+          bankChange(index) {
+            try {
+              this.loanForm.account = this.bankList[index].account
+              this.loanForm.bank = this.bankList[index].id
+            } catch (error) {
+              console.log(error)
+            }
+          },
 
           //报销人搜索
           querySearchMen(queryString, cb) {
@@ -144,7 +157,7 @@
           //提交
           submit() {
             let postData = this.loanForm
-            postData.list = this.currentCheckedList.reduce((arr, item) => {
+            postData.lists = this.currentCheckedList.reduce((arr, item) => {
               return arr.concat([item.id])
             }, [])
             _http.LoanManager.createPayAddPost(postData)

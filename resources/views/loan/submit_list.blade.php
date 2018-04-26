@@ -126,13 +126,13 @@
                         @endif
                     </td>
                     <td>{{$list->loan_user}}</td>
-                    @if($list->checker!=0)
-                    <td>{{\App\User::find($list->checker)->name}}</td>
+                    @if($list->state>=2)
+                    <td>{{$list->checker}}</td>
                     @else
                         <td>待复核</td>
                     @endif
-                    @if($list->worker!=0)
-                        <td>{{\App\User::find($list->worker)->name}}</td>
+                    @if($list->state>=2)
+                        <td>{{$list->passer}}</td>
                     @else
                         <td>待审核</td>
                     @endif

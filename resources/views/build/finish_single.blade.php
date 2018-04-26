@@ -93,41 +93,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>1</td>
-                    <td>设备名称</td>
-                    <td>性能参数xxx</td>
-                    <td>123</td>
-                    <td>个</td>
-                    <td>123,521</td>
-                    <td>12 ￥</td>
-                    <td>这是说明</td>
+                    <td>{{$list->id}}</td>
+                    <td>{{$list->name}}</td>
+                    <td>{{$list->param}}</td>
+                    <td>{{$list->number}}</td>
+                    <td>{{$list->unit}}</td>
+                    <td>{{$list->price}}</td>
+                    <td>{{$list->total}} ￥</td>
+                    <td>{{$list->remark}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>设备名称</td>
-                    <td>性能参数xxx</td>
-                    <td>123</td>
-                    <td>个</td>
-                    <td>123,521</td>
-                    <td>12 ￥</td>
-                    <td>这是说明</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>设备名称</td>
-                    <td>性能参数xxx</td>
-                    <td>123</td>
-                    <td>个</td>
-                    <td>123,521</td>
-                    <td>12 ￥</td>
-                    <td>这是说明</td>
-                </tr>
+                @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <th colspan="6">合计</th>
-                    <th>12,123,523 ￥</th>
+                    <th>{{$apply->lists()->sum('total')}} ￥</th>
                     <th></th>
                 </tr>
                 </tfoot>
@@ -146,7 +128,7 @@
                     <i class="icon edit"></i>
                     <span>审批</span>
                 </a>
-                <a class="ui icon button positive" href="javascript:_helper.fullWindow('../build/finish_print.html')" style="margin:0 10px;">
+                <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('build/finish/print')}}?id={{$apply->id}}')" style="margin:0 10px;">
                     <i class="icon print"></i>
                     <span>凭证</span>
                 </a>

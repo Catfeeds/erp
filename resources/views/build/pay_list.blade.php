@@ -73,48 +73,22 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20123211</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>12,212 ￥</td>
-                    <td>5,231 ￥</td>
-                    <td>10,212 ￥</td>
-                    <td>待处理</td>
+                    <td>{{$list->team}}</td>
+                    <td>{{$list->manager}}</td>
+                    <td>{{$list->project_number}}</td>
+                    <td>{{$list->project_content}}</td>
+                    <td>{{$list->project_manager}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->pay_price}} ￥</td>
+                    <td>{{$list->need_price}} ￥</td>
+                    <td>{{$list->need_price==0?'已处理':'待处理'}}</td>
                     <td style="white-space:nowrap;">
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/pay_single.html?id=1')">查看</a>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/single')}}?id={{$list->id}}')">查看</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20123211</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>12,212 ￥</td>
-                    <td>5,231 ￥</td>
-                    <td>10,212 ￥</td>
-                    <td>待处理</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/pay_single.html?id=1')">查看</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20123211</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>12,212 ￥</td>
-                    <td>5,231 ￥</td>
-                    <td>10,212 ￥</td>
-                    <td>待处理</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/pay_single.html?id=1')">查看</a>
-                    </td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

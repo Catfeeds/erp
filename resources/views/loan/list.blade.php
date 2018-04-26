@@ -21,17 +21,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @if(count($lists)!=0)
                 @foreach($lists as $list)
                 <tr>
-                    <td>{{$list->name}}</td>
-                    <td>{{\App\Models\LoanList::where('borrower','=',$list->name)->sum('price')}}￥</td>
-                    <td>12,523￥</td>
+                    <td>{{$list['name']}}</td>
+                    <td>{{$list['loan_price']}}￥</td>
+                    <td>{{$list['submit_price']}}￥</td>
                 </tr>
                 @endforeach
+                    @else
+                    <tr>
+                        <td colspan="3">暂无数据</td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
-        {{$lists->links()}}
+        {{--{{$lists->links()}}--}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

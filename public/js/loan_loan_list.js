@@ -29,7 +29,7 @@
                   message: '撤销成功!'
                 })
               } else {
-                this.$notify({
+                ele.$notify({
                   title: '错误',
                   message: res.data.msg,
                   type: 'error'
@@ -37,7 +37,7 @@
               }
             })
             .catch(err => {
-              this.$notify({
+              ele.$notify({
                 title: '错误',
                 message: '服务器出错',
                 type: 'error'

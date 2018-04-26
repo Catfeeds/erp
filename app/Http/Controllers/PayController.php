@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccount;
 use App\Models\FinishPayApply;
 use App\Models\LoanList;
 use App\Models\LoanListAllow;
@@ -12,6 +13,7 @@ use App\Models\LoanSubmitList;
 use App\Models\PayApply;
 use App\Models\PayApplyAllow;
 use App\Models\Project;
+use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
 use App\Models\Task;
@@ -281,8 +283,38 @@ class PayController extends Controller
     }
     public function listLoanPage()
     {
-        $lists = User::paginate(10);
-        return view('loan.list',['lists'=>$lists]);
+        $role = getRole('loan_list');
+        if ($role=='all'){
+            $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->groupBy('name')->get()->toArray();
+            $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
+        }else{
+            $list = LoanList::select(['borrower as name','price'])->where('borrower','=',Auth::user()->username)->where('state','=',2)->groupBy('name')->get()->toArray();
+            $list2 = LoanSubmit::select(['loan_user as name','price'])->where('loan_user','=',Auth::user()->username)->where('state','=',3)->groupBy('name')->get()->toArray();
+        }
+//        dd($list2);
+        $swap = array_merge(array_column($list,'name'),array_column($list2,'name'));
+//        dd($swap2);
+        $result = [];
+        for ($i=0;$i<count($swap);$i++){
+            $count = 0;
+            $submit = 0;
+            for ($j=0;$j<count($list);$j++){
+                if ($list[$j]['name']==$swap[$i]){
+                    $count+=$list[$j]['price'];
+                }
+            }
+            for ($k=0;$k<count($list2);$k++){
+                if ($list2[$k]['name']==$swap[$i]){
+                    $submit+=$list2[$k]['price'];
+                }
+            }
+            $result[$i]['name'] = $swap[$i];
+            $result[$i]['loan_price'] = $count;
+            $result[$i]['submit_price'] = $submit;
+        }
+//        dd($result);
+//        $result=[];
+        return view('loan.list',['lists'=>$result]);
     }
     public function listDetailPage()
     {
@@ -299,7 +331,8 @@ class PayController extends Controller
     {
         $id = Input::get('id');
         $loan = LoanList::find($id);
-        return view('loan.loan_pay',['loan'=>$loan]);
+        $bank = BankAccount::where('state','=',1)->get();
+        return view('loan.loan_pay',['loan'=>$loan,'bank'=>$bank]);
     }
     public function listSubmitListPage()
     {
@@ -444,17 +477,107 @@ class PayController extends Controller
     }
     public function checkRequestPayment()
     {
-
+        $id = Input::get('id');
+        $payment = RequestPayment::find($id);
+        if ($payment->state !=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许复核！'
+            ]);
+        }
+        $payment->state=2;
+        $payment->checker_id = Auth::id();
+        $payment->checker = Auth::user()->username;
+        Task::where('type','=','build_finish_check')->where('content','=',$id)->update(['state'=>0]);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
     }
     public function passRequestPayment()
     {
-
+        $id = Input::get('id');
+        $payment = RequestPayment::find($id);
+        if ($payment->state !=2){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许审批！'
+            ]);
+        }
+        $payment->state=2;
+        $payment->checker_id = Auth::id();
+        $payment->checker = Auth::user()->username;
+        Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function selectChecker()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        $payment = RequestPayment::find($id);
+        foreach ($users as $user){
+            $task = new Task();
+            $task->user_id = $user;
+            $task->type = 'build_finish_check';
+            $task->title = '完工请款复核';
+            $task->url = 'build/finish/single?id='.$id;
+            $task->number = $payment->number;
+            $task->content = $id;
+            $task->save();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function selectPasser()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        $payment = RequestPayment::find($id);
+        foreach ($users as $user){
+            $task = new Task();
+            $task->user_id = $user;
+            $task->type = 'build_finish_pass';
+            $task->title = '完工请款审批';
+            $task->url = 'build/finish/single?id='.$id;
+            $task->number = $payment->number;
+            $task->content = $id;
+            $task->save();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
     }
     public function addRequestPayment(Request $post)
     {
+        $project = Project::where('number','=',$post->get('project_id'))->first();
+        $team = Team::find($post->get('team'));
+        $projectTeam = ProjectTeam::where('team_id','=',$post->get('team'))->where('project_id','=',$project->id)->first();
+        if (empty($projectTeam)){
+            $projectTeam = new ProjectTeam();
+            $projectTeam->project_id = $project->id;
+            $projectTeam->project_number = $project->number;
+            $projectTeam->project_content = $project->name;
+            $projectTeam->project_manager = $project->pm;
+            $projectTeam->team_id = $team->id;
+            $projectTeam->team = $team->name;
+            $projectTeam->manager = $team->manager;
+            $projectTeam->price = $post->get('price');
+            $projectTeam->need_price = $post->get('price');
+            $projectTeam->save();
+        }else{
+            $projectTeam->price += $post->get('price');
+            $projectTeam->need_price += $post->get('price');
+            $projectTeam->save();
+        }
         $lists = $post->get('list');
         $payment = new RequestPayment();
-        $team = Team::find($post->get('team'));
+        $payment->project_team = $projectTeam->id;
         $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
         $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
         $payment->team = $team->name;

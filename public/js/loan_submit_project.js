@@ -56,7 +56,12 @@
                 type: 'error'
               })
             })
-          this.submitProjectForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+
+          this.submitProjectForm.price = $('#topAmount').val()
+          this.submitProjectForm.date = $('#date').val() || _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.submitProjectForm.loan_user = $('#loanUser').val()
+          this.submitProjectForm.project_id = $('#projectId').val()
+          this.submitProjectForm.project_content = $('#projectContent').val()
           $('#loanSubmitOther').removeClass('invisible')
         },
         computed: {

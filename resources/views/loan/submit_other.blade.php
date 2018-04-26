@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">新增期间费用报销</div>
         </div>
-
+        <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
         <h1 class="ui header blue aligned center">新增期间费用报销</h1>
         <div id="loanSubmitOther" class="invisible">
             <h4 class="ui dividing header blue">信息录入</h4>
