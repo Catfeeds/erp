@@ -4,23 +4,31 @@
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
 
-        <div class="ui breadcrumb">
+        <div class="ui breadcrumb print-hide">
             <a class="section">费用付款管理</a>
             <div class="divider"> / </div>
             <a class="section" href="../pay/list.html">付款审批清单</a>
             <div class="divider"> / </div>
-            <div class="active section">付款审批查询 - {{$apply->number}}</div>
+            <a class="section" href="../pay/single.html?id=FK20171103001">付款审批查询 - {{$apply->number}}</a>
+            <div class="divider"> / </div>
+            <div class="active section">凭证</div>
         </div>
-        <input type="hidden" id="payId" value="{{$apply->id}}">
 
-        <h3 class="ui header center aligned">付款审批查询 -  {{$apply->number}}</h3>
-        <table class="ui celled center aligned table unstackable">
+        <h1 class="ui header center aligned">付款审批单</h1>
+        <p style="text-align:right;font-size: 13px;padding-right:20px;">
+            {{--<b>记账凭证号：</b>123123123123213</p>--}}
+        <p style="text-align:right;font-size: 13px;padding-right:20px;">
+            <b>附件：</b>
+            <span style="padding:0 20px;"></span>
+            <b>张</b>
+        </p>
+        <table class="ui celled structured center aligned table">
             <thead>
             <tr>
                 <th>付款编号</th>
-                <th class="fake-td"> {{$apply->number}}</th>
+                <th class="fake-td">{{$apply->number}}</th>
                 <th>付款金额</th>
-                <th class="fake-td" colspan="2"> {{$apply->price}}￥</th>
+                <th class="fake-td" colspan="2">{{$apply->price}}￥</th>
             </tr>
             <tr>
                 <th>用途</th>
@@ -81,30 +89,18 @@
             </tr>
             </tfoot>
         </table>
-
-        <div class="flex-row flex-center margin-top-50" id="paySingleBtn">
-            <button class="ui icon button negative" id="paySingleCancel" style="margin:0 20px;">
-                <i class="icon delete"></i>
-                <span>撤销</span>
-            </button>
-            <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
-                <i class="icon edit"></i>
-                <span>审批</span>
-            </button>
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('pay/pay')}}?id={{$apply->id}}')" style="margin:0 20px;">
-                <i class="icon yen"></i>
-                <span>付款</span>
-            </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('pay/print')}}?id={{$apply->id}}')" style="margin:0 20px;">
-                <i class="icon print"></i>
-                <span>凭证</span>
-            </a>
+        <div class="content-operation print-hide">
+            <div class="flex-row flex-end">
+                <a class="ui icon button primary" href="javascript:window.print();">
+                    <i class="icon print"></i>
+                    <span>打印</span>
+                </a>
+            </div>
         </div>
-
 
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/pay_single.js')}}"></script>
+    {{--<script src="{{url('js/project_list.js')}}"></script>--}}
 @endsection

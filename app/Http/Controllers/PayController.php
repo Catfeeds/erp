@@ -523,8 +523,9 @@ class PayController extends Controller
     }
     public function printPay()
     {
-
-        return view('pay.print');
+        $id = Input::get('id');
+        $apply = PayApply::find($id);
+        return view('pay.print',['apply'=>$apply]);
     }
 
 }
