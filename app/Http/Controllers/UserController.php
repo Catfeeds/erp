@@ -24,11 +24,11 @@ class UserController extends Controller
     {
         $username = $request->get('username');
         $password = $request->get('password');
-        if (Auth::attempt(['username'=>$username,'password'=>$password],true)){
-            if(Auth::user()->state==0){
-                Auth::logout();
-                return redirect()->back()->with('status','用户名或密码错误！');
-            }
+        if (Auth::attempt(['username'=>$username,'password'=>$password,'state'=>1],true)){
+//            if(Auth::user()->state==0){
+//                Auth::logout();
+//                return redirect()->back()->with('status','用户名或密码错误！');
+//            }
             return redirect('index');
         }else{
             return redirect()->back()->with('status','用户名或密码错误！');

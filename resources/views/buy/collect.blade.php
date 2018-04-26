@@ -38,6 +38,7 @@
         <h1 class="ui header center aligned">项目采购物料清单</h1>
 
         <div class="table-head-nowrap">
+            @if(count($projects)!=0)
             @foreach($projects as $project)
             <table class="ui celled structured table center aligned unstackable">
                 <thead>
@@ -110,6 +111,9 @@
                 </tfoot>
             </table>
                 @endforeach
+                @else
+                <h1 class="ui header center aligned">暂无数据</h1>
+                @endif
         </div>
 
     </div>

@@ -505,8 +505,8 @@ class PayController extends Controller
             ]);
         }
         $payment->state=2;
-        $payment->checker_id = Auth::id();
-        $payment->checker = Auth::user()->username;
+        $payment->passer_id = Auth::id();
+        $payment->passer = Auth::user()->username;
         Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',

@@ -9,7 +9,7 @@
             <div class="divider"> / </div>
             <a class="section" href="../build/pay_list.html">施工付款款清单</a>
             <div class="divider"> / </div>
-            <div class="active section">付款查询 - SGFK20171103001</div>
+            {{--<div class="active section">付款查询 - SGFK20171103001</div>--}}
         </div>
 
         <h4 class="ui dividing header blue">基本信息</h4>
@@ -19,7 +19,7 @@
                     <div class="inline fields">
                         <label class="six wide field flex-center">施工队</label>
                         <div class="eleven wide field">
-                            <div class="fake-input">xxx施工队</div>
+                            <div class="fake-input">{{$projectTeam->team}}</div>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="inline fields">
                         <label class="six wide field flex-center">施工经理</label>
                         <div class="eleven wide field">
-                            <div class="fake-input">程经理</div>
+                            <div class="fake-input">{{$projectTeam->manager}}</div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="inline fields">
                         <label class="six wide field flex-center">项目经理</label>
                         <div class="eleven wide field">
-                            <div class="fake-input">刘经理</div>
+                            <div class="fake-input">{{$projectTeam->project_manager}}</div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div class="inline fields">
                         <label class="six wide field flex-center">项目编号</label>
                         <div class="eleven wide field">
-                            <div class="fake-input">XM1202312</div>
+                            <div class="fake-input">{{$projectTeam->project_number}}</div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="inline fields">
                         <label class="six wide field flex-center">项目内容</label>
                         <div class="eleven wide field">
-                            <div class="fake-input">这是项目内容</div>
+                            <div class="fake-input">{{$projectTeam->project_content}}</div>
                         </div>
                     </div>
                 </div>
@@ -73,35 +73,21 @@
             </tr>
             </thead>
             <tbody>
+            @foreach($lists as $list)
             <tr>
-                <td>QK29232131</td>
-                <td>2018-02-12</td>
-                <td>123,523 ￥</td>
-                <td>程某</td>
-                <td>李朝友</td>
-                <td>何求</td>
+                <td>{{$list->number}}</td>
+                <td>{{$list->request_date}}</td>
+                <td>{{$list->price}} ￥</td>
+                <td>{{$list->applier}}</td>
+                <td>{{$list->checker}}</td>
+                <td>{{$list->passer}}</td>
             </tr>
-            <tr>
-                <td>QK29232131</td>
-                <td>2018-02-12</td>
-                <td>123,523 ￥</td>
-                <td>程某</td>
-                <td>李朝友</td>
-                <td>何求</td>
-            </tr>
-            <tr>
-                <td>QK29232131</td>
-                <td>2018-02-12</td>
-                <td>123,523 ￥</td>
-                <td>程某</td>
-                <td>李朝友</td>
-                <td>何求</td>
-            </tr>
+            @endforeach
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="2">合计</th>
-                <th>12,123,523 ￥</th>
+                <th>{{$projectTeam->payments()->where('state','=',3)->sum('price')}} ￥</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -189,7 +175,7 @@
         </div>
 
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('../build/pay_apply.html')" style="margin-right:50px;">
+            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('build/pay')}}../build/pay_apply.html')" style="margin-right:50px;">
                 <i class="icon plus"></i>
                 <span>新增付款申请</span>
             </a>

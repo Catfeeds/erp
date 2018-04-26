@@ -158,7 +158,7 @@
           submit() {
             let postData = this.loanForm
             postData.lists = this.currentCheckedList.reduce((arr, item) => {
-              return arr.concat([item.id])
+              return arr.concat([item.value.id])
             }, [])
             _http.LoanManager.createPayAddPost(postData)
               .then(res => {

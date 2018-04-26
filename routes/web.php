@@ -158,6 +158,10 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/finish/single','BuildController@finishSinglePage');
     Route::get('build/finish/print','BuildController@printBuildFinish');
     Route::get('build/pay/single','BuildController@paySinglePage');
+    Route::get('build/finish/check','PayController@checkRequestPayment');
+    Route::get('build/finish/pass','PayController@passRequestPayment');
+    Route::post('build/finish/select/checker','PayController@selectChecker');
+    Route::post('build/finish/select/passer','PayController@selectPasser');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
     Route::get('loan/detail/list','PayController@listDetailPage');

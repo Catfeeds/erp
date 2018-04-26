@@ -700,15 +700,28 @@ class ProjectController extends Controller
     }
     public function purchaseCollectPage()
     {
-        $projects = Project::paginate(10);
-        foreach ($projects as $project){
-            $purchases = $project->purchases()->get();
-            foreach ($purchases as $purchase){
-                if (!empty($purchase)){
-                    $purchase->lists = $purchase->lists()->get();
+        $type = Input::get('seartch-type');
+        $value = Input::get('value');
+//        dd($type);
+        if ($type==1){
+//            dd($value);
+            $projects = Project::where('number','like','%'.$value.'%')->paginate(10);
+        }elseif ($type==2){
+            $projects = Project::where('name','like','%'.$value.'%')->paginate(10);
+        }else{
+            $projects = Project::paginate(10);
+        }
+//        $projects = Project::paginate(10);
+        if (!empty($projects)){
+            foreach ($projects as $project){
+                $purchases = $project->purchases()->get();
+                foreach ($purchases as $purchase){
+                    if (!empty($purchase)){
+                        $purchase->lists = $purchase->lists()->get();
+                    }
                 }
+                $project->purchases = $purchases;
             }
-            $project->purchases = $purchases;
         }
         return view('buy.collect',['projects'=>$projects]);
     }
