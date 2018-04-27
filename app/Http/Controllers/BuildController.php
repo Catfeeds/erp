@@ -65,4 +65,8 @@ class BuildController extends Controller
         $lists = $projectTeam->payments()->where('state','=',3)->get();
         return view('build.pay_single',['projectTeam'=>$projectTeam,'lists'=>$lists]);
     }
+    public function finishBuildPayPage()
+    {
+        $id = Input::get('id');
+    }
 }

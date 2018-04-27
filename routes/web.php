@@ -162,6 +162,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/finish/pass','PayController@passRequestPayment');
     Route::post('build/finish/select/checker','PayController@selectChecker');
     Route::post('build/finish/select/passer','PayController@selectPasser');
+    Route::post('build/pay/finish','BuildController@finishBuildPayPage');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
     Route::get('loan/detail/list','PayController@listDetailPage');

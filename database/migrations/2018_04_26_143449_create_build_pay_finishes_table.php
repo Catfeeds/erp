@@ -34,6 +34,7 @@ class CreateBuildPayFinishesTable extends Migration
             $table->unsignedInteger('worker_id')->default(0);
             $table->unsignedInteger('checker_id')->default(0);
             $table->unsignedInteger('passer_id')->default(0);
+            $table->tinyInteger('state')->default(1);
             $table->timestamps();
         });
     }
