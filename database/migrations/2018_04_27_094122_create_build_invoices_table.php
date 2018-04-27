@@ -17,6 +17,14 @@ class CreateBuildInvoicesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_team');
             $table->string('date');
+            $table->string('worker');
+            $table->unsignedInteger('worker_id')->default(0);
+            $table->string('invoice_date');
+            $table->string('number');
+            $table->string('type');
+            $table->float('without_tax',18,2)->default(0);
+            $table->float('tax',18,2)->default(0);
+            $table->float('with_tax',18,2)->default(0);
             $table->timestamps();
         });
     }
