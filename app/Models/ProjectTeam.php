@@ -11,4 +11,8 @@ class ProjectTeam extends Model
     {
         return $this->hasMany('App\Models\RequestPayment','project_team','id');
     }
+    public function applies()
+    {
+        return $this->hasMany('App\Models\BuildPayFinish','project_team','id');
+    }
 }

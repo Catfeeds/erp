@@ -16,6 +16,7 @@ class CreateBuildPayFinishesTable extends Migration
         Schema::create('build_pay_finishes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_team');
+            $table->string('number');
             $table->string('apply_date');
             $table->float('apply_price',18,2);
             $table->string('payee');

@@ -13,27 +13,10 @@
           projects: [],
 
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+          selectData: {
+            id: ''
+          },
 
           throttle: {
             id_timer: null,
@@ -47,7 +30,7 @@
         },
         computed: {
           sumAmount() {
-            const list = this.buildFinishAdd.list
+            const list = this.buildFinishAdd.lists
             if (!list.length) {
               return 0
             }
@@ -178,7 +161,22 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                  $('.ui.dimmer').addClass('active')
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                      role: 'build_finish_check'
+                    })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: resp.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
                 } else {
                   this.$notify({
                     title: '错误',
@@ -198,11 +196,11 @@
 
           //新增项
           addItem() {
-            const list = this.buildFinishAdd.list
+            const list = this.buildFinishAdd.lists
             let data = {
               id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
             }
-            this.buildFinishAdd.list.push(data)
+            this.buildFinishAdd.lists.push(data)
           },
 
           //删除
@@ -216,12 +214,32 @@
 
           //提交审核人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了复核人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            let postData = this.selectData
+            postData.users = this.checkedMen
+            _http.TeamManager.selectFinishCheck(postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了复核人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

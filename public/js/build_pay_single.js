@@ -5,27 +5,10 @@
         el: '#buildPaySingle',
         data: {
           checkedMen: [],
-          menList: [{
-              id: 1,
-              name: '张先生'
-            },
-            {
-              id: 2,
-              name: '陈一发'
-            },
-            {
-              id: 3,
-              name: '刘芳芳'
-            },
-            {
-              id: 4,
-              name: '乌达奇'
-            },
-            {
-              id: 5,
-              name: '何求'
-            }
-          ],
+          menList: [],
+          selectData: {
+            id: ''
+          }
         },
         mounted() {
           const vm = this
@@ -35,17 +18,95 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              vm.$message({
-                type: 'success',
-                message: '已复核!'
-              })
-              $('.ui.dimmer').addClass('active')
+              _http.TeamManager.checkPay({
+                  id: $(this).data('id')
+                })
+                .then(res => {
+                  if (res.data.code === '200') {
+                    vm.$message({
+                      type: 'success',
+                      message: '已复核!'
+                    })
+                    $(this).remove()
+                    vm.selectData.id = res.data.data.id
+                    _http.UserManager.searchAuthUsers({
+                        role: 'build_finish_pass'
+                      })
+                      .then(resp => {
+                        if (resp.data.code === '200') {
+                          vm.menList = resp.data.data
+                          $('.ui.dimmer').addClass('active')
+                        } else {
+                          vm.$notify({
+                            title: '错误',
+                            message: resp.data.msg,
+                            type: 'error'
+                          })
+                        }
+                      })
+                  } else {
+                    vm.$notify({
+                      title: '错误',
+                      message: res.data.msg,
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  vm.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
             }).catch(() => {
               vm.$message({
                 type: 'info',
                 message: '已取消'
               })
             })
+          })
+
+          $('.payPassBtn').on('click', function () {
+            vm.$confirm('确定审批, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+              .then(() => {
+                _http.TeamManager.passPay({
+                    id: $(this).data('id')
+                  })
+                  .then(res => {
+                    if (res.data.code === '200') {
+                      vm.$notify({
+                        title: '成功',
+                        message: '审批成功',
+                        type: 'success'
+                      })
+                      $(this).remove()
+                    } else {
+                      vm.$notify({
+                        title: '错误',
+                        message: res.data.msg,
+                        type: 'error'
+                      })
+                    }
+                  })
+                  .catch(err => {
+                    vm.$notify({
+                      title: '错误',
+                      message: '服务器出错',
+                      type: 'error'
+                    })
+                  })
+              })
+              .catch(() => {
+                vm.$message({
+                  type: 'info',
+                  message: '已取消'
+                })
+              })
           })
         },
         methods: {
@@ -56,12 +117,32 @@
 
           //提交审核人
           confirmRecheck() {
-            this.$notify({
-              title: '成功',
-              message: '已选择了审批人',
-              type: 'success'
-            })
-            $('.ui.dimmer').removeClass('active')
+            let postData = this.selectData
+            postData.users = this.checkedMen
+            _http.TeamManager.selectPayPasser(postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了审批人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

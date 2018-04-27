@@ -43,7 +43,7 @@
         methods: {
 
           submit() {
-            _http.TeamManager.createPayApply(this.addForm)
+            _http.TeamManager.createPayAdd(this.addForm)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

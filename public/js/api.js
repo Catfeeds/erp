@@ -3,8 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8080'
-  // const url = 'http://localhost/erp/public'
+  const url = 'http://localhost/erp/public'
 
   class ProjectManager {
     constructor() {
@@ -301,6 +300,54 @@
       return this._http.post('/build/get/add', data, this.dataMethodDefaults)
     }
 
+    //施工请款复核人选择
+    selectFinishCheck(data = {}) {
+      return this._http.post('/build/finish/select/checker', data, this.dataMethodDefaults)
+    }
+
+    //复核操作
+    checkFinish(data = {}) {
+      return this._http.get(`/build/finish/check`, {
+        params: data
+      })
+    }
+
+    //提交审批人
+    selectFinishPass(data = {}) {
+      return this._http.post('/build/finish/select/passer', data, this.dataMethodDefaults)
+    }
+
+    //审批
+    passFinish(data = {}) {
+      return this._http.get(`/build/finish/pass`, {
+        params: data
+      })
+    }
+
+    //复核付款
+    checkPay(data = {}){
+      return this._http.get(`/build/pay/check`, {
+        params: data
+      })
+    }
+
+    //选择付款审批人
+    selectPayPasser(data = {}){
+      return this._http.post('/build/pay/select/passer', data, this.dataMethodDefaults)
+    }
+    
+    //选择付款审核人
+    selectPayCheck(data = {}){
+      return this._http.post('/build/pay/select/checker', data, this.dataMethodDefaults)
+    }
+
+    //审批付款
+    passPay(data = {}){
+      return this._http.get(`/build/pay/pass`, {
+        params: data
+      })
+    }
+
     //删除施工队
     deleteTeam(data = {}) {
       return this._http.get(`/del/team`, {
@@ -437,7 +484,7 @@
     }
 
     //删除付费类型
-    deleteCategory(data = {}){
+    deleteCategory(data = {}) {
       return this._http.get(`/del/category`, {
         params: data
       })

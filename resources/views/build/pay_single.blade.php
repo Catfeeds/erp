@@ -122,60 +122,50 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($applies as $apply)
                 <tr>
-                    <td>SGFK20171103001</td>
-                    <td>2018-01-03</td>
-                    <td>123,232 ￥</td>
-                    <td>程xx</td>
-                    <td>中国银行/620932192321293212</td>
-                    <td>刘一飞</td>
-                    <td>何常</td>
-                    <td>白起</td>
-                    <td>2018-09-21</td>
-                    <td>12,523 ￥</td>
-                    <td>中国银行/620932192321293212</td>
-                    <td style="min-width:200px;">这是备注</td>
-                    <td>刘某某</td>
+                    <td>{{$apply->number}}</td>
+                    <td>{{$apply->apply_date}}</td>
+                    <td>{{$apply->apply_price}} ￥</td>
+                    <td>{{$apply->payee}}</td>
+                    <td>{{$apply->bank}}/{{$apply->account}}</td>
+                    <td>{{$apply->worker}}</td>
+                    <td>{{$apply->checker}}</td>
+                    <td>{{$apply->passer}}</td>
+                    @if($apply->state==4)
+                    <td>{{$apply->pay_date}}</td>
+                    <td>{{$apply->pay_price}} ￥</td>
+                    <td>{{$apply->pay_bank}}/{{$apply->pay_account}}</td>
+                    <td style="min-width:200px;">{{$apply->remark}}</td>
+                    <td>{{$apply->pay_worker}}</td>
+                    @else
+                        <td colspan="5">暂未付款</td>
+                    @endif
                     <td style="white-space:nowrap;">
                         <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
-                        <button class="ui mini button primary paySingleBtn" id="1">复核</button>
-                        <a class="ui mini button primary" href="#">审批</a>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/pay_add.html?id=1')">录入</a>
+                        <button class="ui mini button primary paySingleBtn" data-id="{{$apply->id}}">复核</button>
+                        <button class="ui mini button primary payPassBtn" data-id="{{$apply->id}}">审批</button>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/add')}}?id={{$apply->id}}')">录入</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>SGFK20171103001</td>
-                    <td>2018-01-03</td>
-                    <td>123,232 ￥</td>
-                    <td>程xx</td>
-                    <td>中国银行/620932192321293212</td>
-                    <td>刘一飞</td>
-                    <td>何常</td>
-                    <td>白起</td>
-                    <td colspan="5">暂未付款</td>
-                    <td style="white-space:nowrap;">
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
-                        <button class="ui mini button primary paySingleBtn" id="1">复核</button>
-                        <a class="ui mini button primary" href="#">审批</a>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/pay_add.html?id=1')">录入</a>
-                    </td>
-                </tr>
+
+                    @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <th colspan="13">已付款合计</th>
-                    <th>123,523￥</th>
+                    <th>{{$projectTeam->pay_price}}￥</th>
                 </tr>
                 <tr>
                     <th colspan="13">剩余应付账款</th>
-                    <th>123,523￥</th>
+                    <th>{{$projectTeam->need_price}}￥</th>
                 </tr>
                 </tfoot>
             </table>
         </div>
 
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('build/pay')}}../build/pay_apply.html')" style="margin-right:50px;">
+            <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('build/pay/finish')}}?project_id={{$projectTeam->id}}')" style="margin-right:50px;">
                 <i class="icon plus"></i>
                 <span>新增付款申请</span>
             </a>
