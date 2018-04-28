@@ -6,6 +6,7 @@ use App\Models\BankAccount;
 use App\Models\BuildPayFinish;
 use App\Models\ConstructionContract;
 use App\Models\FinishPayApply;
+use App\Models\Invoice;
 use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use App\Models\Task;
@@ -18,8 +19,14 @@ class BuildController extends Controller
     //
     public function listBuildPage()
     {
-        $list = RequestPayment::paginate();
-        return view('build.list',['lists'=>$list]);
+        $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+        $lists = ProjectTeam::whereIn('id',$id)->get();
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->invoice_price = $list->invoices()->sum('with_tax');
+            }
+        }
+        return view('build.list',['lists'=>$lists]);
     }
     public function addDealPage()
     {
@@ -49,6 +56,11 @@ class BuildController extends Controller
     {
         $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
         $lists = ProjectTeam::whereIn('id',$id)->get();
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->invoice_price = $list->invoices()->sum('with_tax');
+            }
+        }
         return view('build.get_list',['lists'=>$lists]);
     }
     public function finishSinglePage()
@@ -231,4 +243,19 @@ class BuildController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    public function getSinglePage()
+    {
+        $id = Input::get('id');
+        $projectTeam = ProjectTeam::find($id);
+        $invoices = $projectTeam->invoices()->get();
+        return view('build.get_single',['projectTeam'=>$projectTeam,'invoices'=>$invoices]);
+    }
+    public function getAddPage()
+    {
+        $id = Input::get('id');
+        $projectTeam = ProjectTeam::find($id);
+        $invoices = Invoice::where('state','=',1)->get();
+        return view('build.get_add',['projectTeam'=>$projectTeam,'invoices'=>$invoices]);
+    }
+
 }

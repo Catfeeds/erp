@@ -170,6 +170,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('build/pay/select/passer','BuildController@selectPayApplyPasser');
     Route::get('build/pay/add','BuildController@payAddPage');
     Route::post('build/pay/add','BuildController@payAdd');
+    Route::get('build/get/single','BuildController@getSinglePage');
+    Route::get('build/get/add','BuildController@getAddPage');
 //    Route::get('build/get/single','BuildController');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');

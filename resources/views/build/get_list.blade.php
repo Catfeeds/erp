@@ -60,51 +60,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>xx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20923213</td>
-                    <td class="table-content">这是项目内容这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523￥</td>
-                    <td>12,523￥</td>
-                    <td>1,232￥</td>
-                    <td>10,523￥</td>
-                    <td>10,523￥</td>
+                    <td>{{$list->team}}</td>
+                    <td>{{$list->manager}}</td>
+                    <td>{{$list->project_number}}</td>
+                    <td class="table-content">{{$list->project_content}}</td>
+                    <td>{{$list->project_number}}</td>
+                    <td>{{$list->price}}￥</td>
+                    <td>{{$list->pay_price}}￥</td>
+                    <td>{{$list->need_price}}￥</td>
+                    <td>{{$list->invoice_price}}￥</td>
+                    <td>{{$list->price-$list->invoice_price}}￥</td>
                     <td style="white-space:nowrap">
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/get_single.html?id=1')">查看</a>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/get/single')}}?id={{$list->id}}')">查看</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>xx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20923213</td>
-                    <td class="table-content">这是项目内容这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523￥</td>
-                    <td>12,523￥</td>
-                    <td>1,232￥</td>
-                    <td>10,523￥</td>
-                    <td>10,523￥</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/get_single.html?id=1')">查看</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>xx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20923213</td>
-                    <td class="table-content">这是项目内容这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523￥</td>
-                    <td>12,523￥</td>
-                    <td>1,232￥</td>
-                    <td>10,523￥</td>
-                    <td>10,523￥</td>
-                    <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../build/get_single.html?id=1')">查看</a>
-                    </td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

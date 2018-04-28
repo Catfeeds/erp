@@ -74,45 +74,21 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20170921</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>100,231 ￥</td>
-                    <td>100,231 ￥</td>
-                    <td>未结清</td>
+                    <td>{{$list->team}}</td>
+                    <td>{{$list->manager}}</td>
+                    <td>{{$list->project_number}}</td>
+                    <td>{{$list->project_content}}</td>
+                    <td>{{$list->team}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->pay_price}} ￥</td>
+                    <td>{{$list->need_price}} ￥</td>
+                    <td>{{$list->invoice_price}} ￥</td>
+                    <td>{{$list->pay_price-$list->invoice_price}} ￥</td>
+                    <td>{{$list->need_price==0?'未结清':'已结清'}}</td>
                 </tr>
-                <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20170921</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>100,231 ￥</td>
-                    <td>100,231 ￥</td>
-                    <td>已结清</td>
-                </tr>
-                <tr>
-                    <td>xxx施工队</td>
-                    <td>陈经理</td>
-                    <td>XM20170921</td>
-                    <td>这是项目内容</td>
-                    <td>刘经理</td>
-                    <td>123,523 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>100,231 ￥</td>
-                    <td>20,123 ￥</td>
-                    <td>已结清</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
