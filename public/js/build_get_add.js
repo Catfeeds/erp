@@ -33,7 +33,7 @@
 
           //提交
           submitForm() {
-            _http.TeamManager.createGetAdd(this.addForm)
+            _http.TeamManager.createGetAdd(this.invoiceCreate)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

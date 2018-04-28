@@ -65,7 +65,7 @@
                     <div class="two wide column form-thead">操作</div>
                 </div>
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
-                    <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in invoiceCreate.list" :key="item.id">
+                    <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in invoiceCreate.lists" :key="item.id">
                         <div class="one wide column">
                             <div class="fake-input">@{{ index + 1 }}</div>
                         </div>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="two wide column">
                             <div class="fake-input">
-                                <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('list', item, index)"></i>
+                                <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('lists', item, index)"></i>
                             </div>
                         </div>
                     </div>
