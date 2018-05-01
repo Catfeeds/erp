@@ -11,6 +11,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseList;
 use App\Models\Stock;
 use App\Models\StockRecord;
+use App\Models\StockRecordList;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
@@ -66,9 +67,15 @@ class StockController extends Controller
         $date = $post->get('date');
         $warehouse_id = $post->get('warehouse_id');
         $lists = $post->get('lists');
+        $number = array_column($lists,'number');
+        if (in_array(0,$number)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'收货数量不能为0！'
+            ]);
+        }
+//        dd($number);
         $worker = $post->get('worker');
-
-
         $record = new StockRecord();
         $record->type = 1;
         $count = StockRecord::whereDate('created_at', date('Y-m-d',time()))->where('type','=',1)->count();
@@ -78,19 +85,31 @@ class StockController extends Controller
         $record->worker_id = Auth::id();
         $record->warehouse_id = $warehouse_id;
         $record->warehouse = Warehouse::find($warehouse_id)->name;
-        $record->purchase_id = $purchase->purchase_id;
-        $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
-        $record->supplier_id = $info->supplier_id;
-        $record->supplier = Supplier::find($info->supplier_id)->name;
+        $record->save();
+        $price = 0;
         foreach ($lists as $list){
+//            dd($list);
             $purchase = PurchaseList::find($list['id']);
+            $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
+            $record->purchase_id = $purchase->purchase_id;
             $info = Purchase::find($purchase->purchase_id);
-            $record->material_id = $purchase->material_id;
+            $record->supplier_id = $info->supplier_id;
+            $record->supplier = Supplier::find($info->supplier_id)->name;
+            $Rlist = new StockRecordList();
+            $Rlist->record_id = $record->id;
+            $Rlist->material_id = $purchase->material_id;
+            $Rlist->sum =  $list['number'];
+            $Rlist->cost = $purchase->price*$list['number'];
+            $Rlist->price = $purchase->price;
 
-            $record->price = $purchase->price;
+            $price+=$Rlist->cost;
+//            $table->float('stock_cost',18,2);
+//            $table->float('stock_price',18,2);
+//            $table->integer('stock_number');
+//            $record->material_id = $purchase->material_id;
+//            $record->price = $purchase->price;
             $record->cost = $purchase->price*$list['number'];
-            $record->sum = $list['number'];
-
+//            $record->sum = $list['number'];
             $purchase->received+=$list['number'];
             $purchase->need = $purchase->number-$purchase->received;
             $purchase->save();
@@ -98,20 +117,30 @@ class StockController extends Controller
                 ->where('material_id','=',$purchase->material_id)->first();
             if (empty($stock)){
                 $stock = new Stock();
-                $stock->number = $list['number'];
+                $stock->warehouse_id = $warehouse_id;
+                $stock->material_id = $purchase->material_id;
+                $stock->number += $list['number'];
+//                dd($list);
                 $stock->cost = $list['number']*$purchase->price;
+//                dd($stock);
             }else{
                 $stock->warehouse_id = $warehouse_id;
+                $stock->material_id = $purchase->material_id;
                 $stock->number += $list['number'];
                 $stock->cost += $list['number']*$purchase->price;
             }
+//            dd($stock);
             $stock->save();
-            $record->stock_number = $stock->number;
-            $record->stock_cost = $stock->cost;
-            $record->stock_price = $stock->cost/$stock->number;
+//            dd($stock);
+            $Rlist->stock_number = $stock->number;
+            $Rlist->stock_cost = $stock->cost;
+            $Rlist->stock_price = $stock->cost/$stock->number;
+            $Rlist->save();
             $record->save();
 
         }
+        $record->cost = $price;
+        $record->save();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'

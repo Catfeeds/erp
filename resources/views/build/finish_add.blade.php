@@ -120,7 +120,7 @@
                     <div class="two wide column form-thead">操作</div>
                 </div>
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
-                    <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in buildFinishAdd.list" :key="item.id">
+                    <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in buildFinishAdd.lists" :key="item.id">
                         <div class="two wide column">
                             <input type="text" placeholder="设备名称" v-model="item.name">
                         </div>

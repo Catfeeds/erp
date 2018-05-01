@@ -827,5 +827,17 @@ class ProjectController extends Controller
         $lists = array_column($roles, 'role_value');
         return view('project.auth_check',['project'=>$project,'user'=>$user,'lists'=>$lists,'type'=>$type]);
     }
+    public function printBudget()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        $budgets = $project->budget()->get();
+        foreach ($budgets as $budget){
+            if ($budget->material_id!=0){
+                $budget->material = Material::find($budget->material_id);
+            }
+        }
+        return view('budget.print',['project'=>$project,'budgets'=>$budgets]);
+    }
 
 }

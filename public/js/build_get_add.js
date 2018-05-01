@@ -11,7 +11,7 @@
         mounted() {
           const invoiceType = $('#invoiceType').text().trim()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
-
+          this.invoiceCreate.pay_id = $('#payId').val() || ''
           this.invoiceCreate.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           $('#buildGetAdd').removeClass('invisible')
         },

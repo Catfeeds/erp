@@ -153,15 +153,15 @@
                     @for($i=0;$i<count($situations);$i++)
                         <tr>
                             @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations)}}">主合同</td>
+                                <td rowspan="{{count($situations)+1}}">主合同</td>
                             @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
-                                <td rowspan="{{count($situations)}}">主合同后期追加或减少</td>
+                                <td rowspan="{{count($situations)+1}}">主合同后期追加或减少</td>
                             @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations)}}">分包合同</td>
+                                <td rowspan="{{count($situations)+1}}">分包合同</td>
                             @else
-                                <td rowspan="{{count($situations)}}">分包合同后期追加或减少</td>
+                                <td rowspan="{{count($situations)+1}}">分包合同后期追加或减少</td>
                             @endif
-                            <td rowspan="{{count($situations)}}">{{$situations[$i]->price}} ￥</td>
+                            <td rowspan="{{count($situations)+1}}">{{$situations[$i]->price}} ￥</td>
                         </tr>
                         @foreach($situations[$i]->lists as $list)
                             <tr>
@@ -197,7 +197,7 @@
                         <td>物料采购金额</td>
                         <td>{{$project->budget()->where('type','=',1)->sum('cost')}} ￥</td>
                         <td rowspan="3">
-                            <a href="javascript:_helper.fullWindow('../budget/print.html');">查看预算清单</a>
+                            <a href="javascript:_helper.fullWindow('{{url('budget/print')}}?id={{$project->id}}');">查看预算清单</a>
                         </td>
                     </tr>
                     <tr>

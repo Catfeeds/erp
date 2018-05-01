@@ -21,7 +21,7 @@
                             <i class="icon plus"></i>
                             <span>新增供应商</span>
                         </a>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/supplier')}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>

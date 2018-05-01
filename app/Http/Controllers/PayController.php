@@ -35,14 +35,17 @@ class PayController extends Controller
     {
         $count = PayApply::whereDate('created_at', date('Y-m-d',time()))->count();
         $apply = new PayApply();
-        $project = Project::find($post->get('project_id'));
         $apply->apply_date = $post->get('date');
         $apply->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
         $apply->price = $post->get('amount');
         $apply->use = $post->get('usage');
-        $apply->project_number = $project->number;
-        $apply->project_content = $project->name;
-        $apply->project_id = $project->id;
+        $project_id = $post->get('project_id');
+        if ($project_id){
+            $project = Project::find($post->get('project_id'));
+            $apply->project_number = $project->number;
+            $apply->project_content = $project->name;
+            $apply->project_id = $project->id;
+        }
         $apply->proposer = $post->get('people');
         $apply->proposer_id = Auth::id();
         if ($apply->save()){
@@ -420,7 +423,14 @@ class PayController extends Controller
     }
     public function listLoanPayPage()
     {
-        return view('loan.pay_list');
+        $lists = LoanPay::paginate(10);
+        foreach ($lists as $list){
+            $idArr = LoanPayList::where('pay_id','=',$list->id)->pluck('loan_id')->toArray();
+            $list->BXNumber = LoanSubmit::whereIn('id',$idArr)->pluck('number')->toArray();
+            $list->BXNumber = implode(',',$list->BXNumber);
+        }
+//        dd($lists);
+        return view('loan.pay_list',['lists'=>$lists]);
     }
     public function loanSubmitSingle()
     {
@@ -444,7 +454,9 @@ class PayController extends Controller
         $pay->deduction = $post->get('daduction');
         $pay->cash = $post->get('cash');
         $pay->transfer = $post->get('transfer');
-        $pay->bank = $post->get('bank');
+        $pay->price = $pay->cash+$pay->deduction+$pay->transfer;
+        $bank = BankAccount::find($post->get('bank'));
+        $pay->bank = $bank->name ;
         $pay->account = $post->get('account');
         $pay->worker = Auth::id();
         $lists = $post->get('lists');
@@ -454,10 +466,13 @@ class PayController extends Controller
                 $list->loan_id = $item;
                 $list->pay_id = $pay->id;
                 $submit = LoanSubmit::find($item);
+                $pay->applier = $submit->loan_user;
                 $submit->state=4;
+                $submit->FKNumber = $pay->number;
                 $submit->save();
                 $list->save();
             }
+            $pay->save();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -575,7 +590,7 @@ class PayController extends Controller
             $projectTeam->need_price += $post->get('price');
             $projectTeam->save();
         }
-        $lists = $post->get('list');
+        $lists = $post->get('lists');
         $payment = new RequestPayment();
         $payment->project_team = $projectTeam->id;
         $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
@@ -607,7 +622,10 @@ class PayController extends Controller
         }
         return response()->json([
             'code'=>'200',
-            'msg'=>'SUCCESS'
+            'msg'=>'SUCCESS',
+            'data'=>[
+                'id'=>$payment->id
+            ]
         ]);
     }
     public function createFinishPayApply(Request $post)

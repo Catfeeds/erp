@@ -15,6 +15,7 @@
         </div>
         <h1 class="ui red header blue center aligned">收票信息录入</h1>
 
+        <input type="hidden" id="payId" value="{{$projectTeam->id}}">
         <div id="invoiceType" style="display:none">{{json_encode($invoices)}}</div>
 
         <div class="invisible" id="buildGetAdd">

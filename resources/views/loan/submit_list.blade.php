@@ -56,7 +56,7 @@
                             <i class="icon plus"></i>
                             <span>项目成本报销</span>
                         </a>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/loan/submit')}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>

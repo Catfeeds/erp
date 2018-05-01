@@ -68,16 +68,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                @if(!empty($project->purchases))
                 @foreach($project->purchases as $purchase)
-                <tr>
-                    <td colspan="{{count($purchase->lists)}}">{{$purchase->id}}</td>
-                    <td colspan="{{count($purchase->lists)}}">{{$purchase->date}}</td>
-                    <td colspan="{{count($purchase->lists)}}">{{$purchase->number}}</td>
-                    <td >内</td>
-
-                    <td colspan="{{count($purchase->lists)}}">{{$purchase->supplier}}</td>
                     @if(!empty($purchase->lists))
                         @foreach($purchase->lists as $list)
+                <tr>
+                    <td >{{$purchase->id}}</td>
+                    <td >{{$purchase->date}}</td>
+                    <td >{{$purchase->number}}</td>
+                    <td >内</td>
+
+                    <td >{{$purchase->supplier}}</td>
+
                     <td>{{\App\Models\Material::find($list->material_id)->name}}</td>
                     <td>{{\App\Models\Material::find($list->material_id)->param}}</td>
                     <td>{{\App\Models\Material::find($list->material_id)->model}}</td>
@@ -100,7 +102,7 @@
                         <td></td>
                     @endif
                 </tr>
-                @endforeach
+
                 </tbody>
                 <tfoot>
                 <tr>
@@ -109,6 +111,12 @@
                     <th></th>
                 </tr>
                 </tfoot>
+
+                @endforeach
+
+            @else
+
+                @endif
             </table>
                 @endforeach
                 @else

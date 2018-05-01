@@ -196,6 +196,7 @@
 
   const invoiceCreate = {
     date: '', //收票日期
+    pay_id: '',
     lists: [{ // date, type, number, amount_without_tax, tax, amount
       id: 1
     }]

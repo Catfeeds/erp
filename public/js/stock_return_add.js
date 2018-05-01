@@ -16,7 +16,8 @@
           throttle: {
             stock_timer: null,
             project_timer: null,
-            material_timer: null
+            material_timer: null,
+            project_content_timer: null
           }
         },
         mounted() {
@@ -50,7 +51,7 @@
             }
             this.throttle.project_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                id: queryString
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -76,8 +77,39 @@
 
           handleSelect(item) {
             this.stockReturnAdd.project_id = item.id
+            this.stockReturnAdd.project_number = item.number
             this.stockReturnAdd.project_content = item.name
-            this.stockReturnAdd.project_manger = item.manager
+            this.stockReturnAdd.project_manger = item.pm
+          },
+
+          querySearchContent(queryString, cb) {
+            if (this.throttle.project_content_timer) {
+              clearTimeout(this.throttle.project_content_timer)
+            }
+            this.throttle.project_content_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.ProjectManager.searchProject(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
           },
 
           //仓库搜索       
@@ -126,7 +158,7 @@
               const searchKey = {
                 name: queryString
               }
-              _http.MaterialManager.searchProjectMaterial(searchKey)
+              _http.MaterialManager.searchMaterial(searchKey)
                 .then(res => {
                   if (res.data.code === '200') {
                     cb(res.data.data)
@@ -179,10 +211,31 @@
             this.stockReturnAdd[name].splice(index, 1)
           },
 
+          dataFormat() {
+            const data = this.stockReturnAdd
+            const list = data.lists
+            let result = {
+              project_id: data.project_id,
+              warehouse_id: data.warehouse_id,
+              worker: data.worker,
+              returnee: data.returnee,
+              lists: []
+            }
+            list.forEach(it => {
+              lists.push({
+                id: it.material_id,
+                number: it.number,
+                price: it.price
+              })
+            })
+            return result
+          },
+
           //提交
           submit() {
-            console.log(this.stockReturnAdd)
-            _http.StockManager.createReturnAdd(data)
+            const postData = this.dataFormat()
+            console.log(postData)
+            _http.StockManager.createReturnAdd(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({
@@ -219,62 +272,29 @@
             }
             this.currentMaterialListLoader = true
             this.currentMaterialListDialog = true
-            setTimeout(() => {
-              this.currentMaterialListLoader = false
-              this.currentMaterialList = [{
-                  id: 1,
-                  get_id: 'LL23213123',
-                  stock: 'xxx仓库',
-                  material_name: '线缆',
-                  material_parameter: '这是参数技术',
-                  material_model: '1k23',
-                  material_manufacturer: 'xxx工厂',
-                  material_unit: '个',
-                  material_price: 123,
-                  count: 2221,
-                  amount: 12523,
-                  project_id: 'XM2312321',
-                  project_content: '这是内容xxx',
-                  project_manager: '陈一发',
-                  people: '刘义克'
-                },
-                {
-                  id: 2,
-                  get_id: 'LL23213123',
-                  stock: 'xxx仓库',
-                  material_name: '线缆',
-                  material_parameter: '这是参数技术',
-                  material_model: '1k23',
-                  material_manufacturer: 'xxx工厂',
-                  material_unit: '个',
-                  material_price: 123,
-                  count: 11,
-                  amount: 5232,
-                  project_id: 'XM2312321',
-                  project_content: '这是内容xxx',
-                  project_manager: '陈一发',
-                  people: '刘义克'
-                },
-                {
-                  id: 3,
-                  get_id: 'LL23213123',
-                  stock: 'xxx仓库',
-                  material_name: '线缆',
-                  material_parameter: '这是参数技术',
-                  material_model: '1k23',
-                  material_manufacturer: 'xxx工厂',
-                  material_unit: '个',
-                  material_price: 111,
-                  count: 254,
-                  amount: 5253,
-                  project_id: 'XM2312321',
-                  project_content: '这是内容xxx',
-                  project_manager: '陈一发',
-                  people: '刘义克'
-                }
 
-              ]
-            }, 1000)
+            _http.StockManager.searchStockMaterial({
+                material_id: this.currentMaterial.id
+              })
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.currentMaterialList = res.data.data
+                  this.currentMaterialListLoader = false
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           }
         }
       })

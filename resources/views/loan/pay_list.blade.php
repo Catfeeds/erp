@@ -17,7 +17,7 @@
                     <i class="icon plus"></i>
                     <span>新增报销付款</span>
                 </a>
-                <a href="#" class="ui positive button">
+                <a href="{{url('export/loan/pay/list')}}" class="ui positive button">
                     <i class="icon print"></i>
                     <span>导出</span>
                 </a>
@@ -57,45 +57,21 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../loan/pay_single.html?id=1')">BXFK20171103001</a>
+                        <a href="javascript:_helper.fullWindow('../loan/pay_single.html?id=1')">{{$list->number}}</a>
                     </td>
-                    <td>刘一飞</td>
-                    <td>123,523￥</td>
-                    <td>10,234￥</td>
-                    <td>1,232￥</td>
-                    <td>1,232￥</td>
-                    <td>中国银行 63431223523266112345</td>
-                    <td>BX201711001,BX201711002,BX201711003</td>
-                    <td>贺强东</td>
+                    <td>{{$list->applier}}</td>
+                    <td>{{$list->price}}￥</td>
+                    <td>{{$list->deduction}}￥</td>
+                    <td>{{$list->cash}}￥</td>
+                    <td>{{$list->transfer}}￥</td>
+                    <td>{{$list->bank}} {{$list->account}}</td>
+                    <td>{{$list->BXNumber}}</td>
+                    <td>{{\App\User::find($list->worker)->username}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../loan/pay_single.html?id=1')">BXFK20171103001</a>
-                    </td>
-                    <td>刘一飞</td>
-                    <td>123,523￥</td>
-                    <td>10,234￥</td>
-                    <td>1,232￥</td>
-                    <td>1,232￥</td>
-                    <td>中国银行 63431223523266112345</td>
-                    <td>BX201711001,BX201711002,BX201711003</td>
-                    <td>贺强东</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../loan/pay_single.html?id=1')">BXFK20171103001</a>
-                    </td>
-                    <td>刘一飞</td>
-                    <td>123,523￥</td>
-                    <td>10,234￥</td>
-                    <td>1,232￥</td>
-                    <td>1,232￥</td>
-                    <td>中国银行 63431223523266112345</td>
-                    <td>BX201711001,BX201711002,BX201711003</td>
-                    <td>贺强东</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

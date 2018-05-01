@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\BuildInvoice;
 use App\Models\BuildPayFinish;
 use App\Models\ConstructionContract;
 use App\Models\FinishPayApply;
@@ -256,6 +257,43 @@ class BuildController extends Controller
         $projectTeam = ProjectTeam::find($id);
         $invoices = Invoice::where('state','=',1)->get();
         return view('build.get_add',['projectTeam'=>$projectTeam,'invoices'=>$invoices]);
+    }
+    public function getAdd(Request $post)
+    {
+        $lists = $post->get('lists');
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $type = Invoice::find($list['type']);
+                $invoice = new BuildInvoice();
+                $invoice->project_team = $post->get('pay_id');
+                $invoice->date = $post->get('date');
+                $invoice->worker = Auth::user()->name;
+                $invoice->worker_id = Auth::id();
+                $invoice->invoice_date = $list['date'];
+                $invoice->number = $list['number'];
+                $invoice->type = $type->name;
+                $invoice->without_tax = $list['without_tax'];
+                $invoice->with_tax = $list['with_tax'];
+                $invoice->tax = $list['tax'];
+                $invoice->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+
+
+//        $table->unsignedInteger('project_team');
+//        $table->string('date');
+//        $table->string('worker');
+//        $table->unsignedInteger('worker_id')->default(0);
+//        $table->string('invoice_date');
+//        $table->string('number');
+//        $table->string('type');
+//        $table->float('without_tax',18,2)->default(0);
+//        $table->float('tax',18,2)->default(0);
+//        $table->float('with_tax',18,2)->default(0);
     }
 
 }

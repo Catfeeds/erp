@@ -10,7 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('test',function (){
+    $a=[1,3,5,7];
+    $b = [1,7];
+    $c=[];
+    $count =0;
+    for ($i=0;$i<count($a);$i++){
+        if($a[$i]==$b[$i-$count]){
+            $c[$i]=$b[$i-$count];
+        }else{
+            $count+=1;
+            $c[$i]=0;
+        }
+    }
+    dd($c);
+});
 Route::get('/','UserController@index');
 Route::post('login','UserController@login');
 Route::any('upload','SystemController@upload');
@@ -105,6 +119,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
     Route::post('create/budget','ProjectController@addBudget');
     Route::get('create/budget','ProjectController@addBudgetPage');
+    Route::get('budget/print','ProjectController@printBudget');
    //采购管理
     Route::get('purchases/list','ProjectController@listPurchasesPage');
     Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
@@ -216,4 +231,14 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/confirm','PayController@confirmApply');
     Route::post('pay/select','PayController@selectApprover');
     Route::get('pay/print','PayController@printPay');
+    //export
+    Route::get('export/user','ExcelController@exportUser');
+    Route::get('export/supplier','ExcelController@exportSupplier');
+    Route::get('export/material','ExcelController@exportMaterial');
+    Route::get('export/warehouse','ExcelController@exportWarehouse');
+    Route::get('export/bank','ExcelController@exportBank');
+    Route::get('export/team','ExcelController@exportTeam');
+    Route::get('export/pay/apply','ExcelController@exportPayApplies');
+    Route::get('export/loan/pay/list','ExcelController@exportLoanPayList');
+    Route::get('export/loan/submit','ExcelController@exportLoanSubmit');
 });

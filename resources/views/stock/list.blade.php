@@ -45,7 +45,7 @@
                     <th>物料名称</th>
                     <th>品牌型号</th>
                     <th>单位</th>
-                    <th>单价</th>
+                    {{--<th>单价</th>--}}
                     <th>库存数量</th>
                     <th>库存金额</th>
                     <th>评价单价</th>
@@ -61,10 +61,9 @@
                     </td>
                     <td>{{$stock->material()->name}}</td>
                     <td>{{$stock->material()->unit}}</td>
-                    <td>{{$stock->material()->price}} ￥</td>
-                    <td>{{$stock->number}}</td>
-                    <td>{{$stock->material()->price*$stock->number}} ￥</td>
-                    <td>21,523 ￥</td>
+                    <td>{{$stock->number}} </td>
+                    <td>{{$stock->cost}}￥</td>
+                    <td>{{$stock->cost/$stock->number}} ￥</td>
                     <td>{{$stock->warehouse()->name}}</td>
                 </tr>
                 @endforeach
