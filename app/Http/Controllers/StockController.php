@@ -75,81 +75,118 @@ class StockController extends Controller
             ]);
         }
 //        dd($number);
-        $worker = $post->get('worker');
-        $record = new StockRecord();
-        $record->type = 1;
-        $count = StockRecord::whereDate('created_at', date('Y-m-d',time()))->where('type','=',1)->count();
-        $record->number = 'SHRK'.date('Ymd',time()).sprintf("%03d", $count+1);
-        $record->date = $post->get('date');
-        $record->worker = $worker;
-        $record->worker_id = Auth::id();
-        $record->warehouse_id = $warehouse_id;
-        $record->warehouse = Warehouse::find($warehouse_id)->name;
-        $record->save();
-        $price = 0;
-        foreach ($lists as $list){
-//            dd($list);
-            $purchase = PurchaseList::find($list['id']);
-            $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
-            $record->purchase_id = $purchase->purchase_id;
-            $info = Purchase::find($purchase->purchase_id);
-            $record->supplier_id = $info->supplier_id;
-            $record->supplier = Supplier::find($info->supplier_id)->name;
-            $Rlist = new StockRecordList();
-            $Rlist->record_id = $record->id;
-            $Rlist->material_id = $purchase->material_id;
-            $Rlist->sum =  $list['number'];
-            $Rlist->cost = $purchase->price*$list['number'];
-            $Rlist->price = $purchase->price;
-
-            $price+=$Rlist->cost;
-//            $table->float('stock_cost',18,2);
-//            $table->float('stock_price',18,2);
-//            $table->integer('stock_number');
-//            $record->material_id = $purchase->material_id;
-//            $record->price = $purchase->price;
-            $record->cost = $purchase->price*$list['number'];
-//            $record->sum = $list['number'];
-            $purchase->received+=$list['number'];
-            $purchase->need = $purchase->number-$purchase->received;
-            $purchase->save();
-            $stock = Stock::where('warehouse_id','=',$warehouse_id)
-                ->where('material_id','=',$purchase->material_id)->first();
-            if (empty($stock)){
-                $stock = new Stock();
-                $stock->warehouse_id = $warehouse_id;
-                $stock->material_id = $purchase->material_id;
-                $stock->number += $list['number'];
-//                dd($list);
-                $stock->cost = $list['number']*$purchase->price;
-//                dd($stock);
-            }else{
-                $stock->warehouse_id = $warehouse_id;
-                $stock->material_id = $purchase->material_id;
-                $stock->number += $list['number'];
-                $stock->cost += $list['number']*$purchase->price;
-            }
-//            dd($stock);
-            $stock->save();
-//            dd($stock);
-            $Rlist->stock_number = $stock->number;
-            $Rlist->stock_cost = $stock->cost;
-            $Rlist->stock_price = $stock->cost/$stock->number;
-            $Rlist->save();
+        DB::beginTransaction();
+        try {
+            $worker = $post->get('worker');
+            $record = new StockRecord();
+            $record->type = 1;
+            $count = StockRecord::whereDate('created_at', date('Y-m-d', time()))->where('type', '=', 1)->count();
+            $record->number = 'SHRK' . date('Ymd', time()) . sprintf("%03d", $count + 1);
+            $record->date = $post->get('date');
+            $record->worker = $worker;
+            $record->worker_id = Auth::id();
+            $record->warehouse_id = $warehouse_id;
+            $record->warehouse = Warehouse::find($warehouse_id)->name;
             $record->save();
+            $price = 0;
+            foreach ($lists as $list) {
+                //            dd($list);
+                $purchase = PurchaseList::find($list['id']);
+                $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
+                $record->purchase_id = $purchase->purchase_id;
+                $info = Purchase::find($purchase->purchase_id);
+                $record->supplier_id = $info->supplier_id;
+                $record->supplier = Supplier::find($info->supplier_id)->name;
+                $Rlist = new StockRecordList();
+                $Rlist->record_id = $record->id;
+                $Rlist->material_id = $purchase->material_id;
+                $Rlist->sum = $list['number'];
+                $Rlist->cost = $purchase->price * $list['number'];
+                $Rlist->price = $purchase->price;
+                $price += $Rlist->cost;
+                //            $table->float('stock_cost',18,2);
+                //            $table->float('stock_price',18,2);
+                //            $table->integer('stock_number');
+                //            $record->material_id = $purchase->material_id;
+                //            $record->price = $purchase->price;
+                $record->cost = $purchase->price * $list['number'];
+                //            $record->sum = $list['number'];
+                $purchase->received += $list['number'];
+                $purchase->need = $purchase->number - $purchase->received;
+                $purchase->save();
+                $stock = Stock::where('warehouse_id', '=', $warehouse_id)
+                    ->where('material_id', '=', $purchase->material_id)->first();
+                if (empty($stock)) {
+                    $stock = new Stock();
+                    $stock->warehouse_id = $warehouse_id;
+                    $stock->material_id = $purchase->material_id;
+                    $stock->number += $list['number'];
+                    //                dd($list);
+                    $stock->cost = $list['number'] * $purchase->price;
+                    //                dd($stock);
+                } else {
+                    $stock->warehouse_id = $warehouse_id;
+                    $stock->material_id = $purchase->material_id;
+                    $stock->number += $list['number'];
+                    $stock->cost += $list['number'] * $purchase->price;
+                }
+                //            dd($stock);
+                $stock->save();
+                //            dd($stock);
+                $Rlist->stock_number = $stock->number;
+                $Rlist->stock_cost = $stock->cost;
+                $Rlist->stock_price = $stock->cost / $stock->number;
+                $Rlist->need_sum = $purchase->need;
+                $Rlist->need_cost = $purchase->price * $purchase->need;
+                $Rlist->save();
+                $record->save();
 
+            }
+            $record->cost = $price;
+            $record->save();
+            DB::commit();
+            return response()->json([
+                'code' => '200',
+                'msg' => 'SUCCESS'
+            ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+            dd($exception);
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'ERROR'
+            ]);
         }
-        $record->cost = $price;
-        $record->save();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
 
     }
-    public function addReturn()
+    public function addReturn(Request $post)
     {
-
+//        dd($post->all());
+        $lists = $post->get('lists');
+        $number = array_column($lists,'number');
+        if (in_array(0,$number)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'收货数量不能为0！'
+            ]);
+        }
+        DB::beginTransaction();
+        try{
+            $record = new StockRecord();
+            $count = StockRecord::whereDate('created_at', date('Y-m-d', time()))->where('type', '=', 2)->count();
+            $record->number = 'TL' . date('Ymd', time()) . sprintf("%03d", $count + 1);
+            $record->warehouse_id = $post->warehouse_id;
+            $record->warehouse = Warehouse::find($post->warehouse_id)->name;
+            $project = Project::find($post->project_id);
+            $record->project_id = $project->id;
+            $record->project_number = $project->number;
+            $record->project_content = $project->name;
+            $record->worker = $post->worker;
+            $record->worker_id = Auth::id();
+            DB::commit();
+        }catch (\Exception $exception) {
+            DB::rollback();
+        }
     }
     public function addGet()
     {
@@ -180,13 +217,40 @@ class StockController extends Controller
     {
         $id = \Illuminate\Support\Facades\Input::get('id');
         $purchase = Purchase::find($id);
-        $lists = PurchaseList::where('purchase_id','=',$id)->get();
+        $lists = PurchaseList::where('purchase_id','=',$id)->orderBy('material_id','ASC')->get();
         foreach ($lists as $list){
             $list->material = Material::find($list->material_id);
         }
+//        dd($lists);
+        $list2 = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->get();
+        $c=[];
+        foreach ($list2 as $item){
+            $itemlist = $item->lists()->orderBy('material_id','ASC')->get()->toArray();
+            $count =0;
+//            dd($itemlist);
+            for ($i=0;$i<count($lists);$i++){
+                if (empty($itemlist[$i-$count])){
+                    $count+=1;
+                    $c[$i]=[];
+                }else{
+                    if($lists[$i]->material_id==$itemlist[$i-$count]['material_id']){
+//                    dd($itemlist[$i-$count]);
+                        $c[$i]=$itemlist[$i-$count];
+                    }else{
+                        $count+=1;
+                        $c[$i]=[];
+                    }
+                }
+
+            }
+            $item->list = $c;
+//            dd($c);
+        }
+//        dd($list2);
         return view('stock.buy_check',[
             'purchase'=>$purchase,
-            'lists'=>$lists
+            'lists'=>$lists,
+            'list2'=>$list2
         ]);
     }
     public function addBuyPage()

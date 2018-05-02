@@ -57,9 +57,9 @@
                 <tr>
                     <td>{{$stock->id}}</td>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">物料一</a>
+                        <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">{{$stock->material()->name}}</a>
                     </td>
-                    <td>{{$stock->material()->name}}</td>
+                    <td>{{$stock->material()->model}}</td>
                     <td>{{$stock->material()->unit}}</td>
                     <td>{{$stock->number}} </td>
                     <td>{{$stock->cost}}￥</td>

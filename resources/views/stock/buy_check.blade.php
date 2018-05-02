@@ -84,23 +84,24 @@
 
             <div class="flex-row" style="overflow:auto; flex: 1;">
                 <!-- 重复渲染部分 -->
+                @for($i=0;$i<count($list2);$i++)
                 <div class="scorll-table table-head-nowrap">
                     <table class="ui celled structured table center aligned unstackable">
                         <thead>
                         <tr>
-                            <td colspan="4">1</td>
+                            <td colspan="4">{{$i+1}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4">SHRK2-1703001</td>
+                            <td colspan="4">{{$list2[$i]->number}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4">2017-03-01</td>
+                            <td colspan="4">{{$list2[$i]->date}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4">瑞先生</td>
+                            <td colspan="4">{{$list2[$i]->worker}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4">仓库一</td>
+                            <td colspan="4">{{$list2[$i]->warehouse}}</td>
                         </tr>
                         <tr>
                             <th>收货数量</th>
@@ -110,31 +111,26 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @for($j=0;$j<count($list2[$i]->list);$j++)@if(empty($list2[$i]->list[$j]))
                         <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
+                            <td colspan="4">暂无数据</td>
                         </tr>
+                        @else
                         <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
+                            <td>{{$list2[$i]->list[$j]['sum']}}</td>
+                            <td>{{$list2[$i]->list[$j]['cost']}} ￥</td>
+                            <td>{{$list2[$i]->list[$j]['need_sum']}}</td>
+                            <td>{{$list2[$i]->list[$j]['need_cost']}} ￥</td>
                         </tr>
-                        <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
-                        </tr>
+                        @endif
+                            @endfor
                         </tbody>
                         <tfoot>
                         <tr>
                             <th></th>
-                            <th>4,000 ￥</th>
+                            <th>{{$list2[$i]->lists()->sum('cost')}} ￥</th>
                             <th></th>
-                            <th>6,000 ￥</th>
+                            <th>{{$list2[$i]->lists()->sum('need_cost')}} ￥</th>
                         </tr>
                         <tr>
                             <td colspan="4">
@@ -144,68 +140,9 @@
                         </tfoot>
                     </table>
                 </div>
+                @endfor
                 <!-- / 重复渲染部分 -->
 
-                <div class="scorll-table table-head-nowrap">
-                    <table class="ui celled structured table center aligned unstackable">
-                        <thead>
-                        <tr>
-                            <td colspan="4">1</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">SHRK2-1703001</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">2017-03-01</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">瑞先生</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">仓库一</td>
-                        </tr>
-                        <tr>
-                            <th>收货数量</th>
-                            <th>收货金额</th>
-                            <th>剩余数量</th>
-                            <th>剩余金额</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                            <td>4,000 ￥</td>
-                            <td>300</td>
-                            <td>6000 ￥</td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>4,000 ￥</th>
-                            <th></th>
-                            <th>6,000 ￥</th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <a class="ui mini button primary" href="javascript:_helper.fullWindow('../stock/buy_print.html?id=2');">收货凭证</a>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
             </div>
         </div>
         <div class="inline-center margin-top-20">

@@ -222,7 +222,7 @@
               lists: []
             }
             list.forEach(it => {
-              lists.push({
+              result.lists.push({
                 id: it.material_id,
                 number: it.number,
                 price: it.price
