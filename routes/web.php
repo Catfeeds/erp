@@ -44,6 +44,16 @@ Route::get('search/purchase','PurchaseController@searchPurchase');
 Route::get('search/warehouse','StockController@searchWarehouse');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
+//export
+Route::get('export/user','ExcelController@exportUser');
+Route::get('export/supplier','ExcelController@exportSupplier');
+Route::get('export/material','ExcelController@exportMaterial');
+Route::get('export/warehouse','ExcelController@exportWarehouse');
+Route::get('export/bank','ExcelController@exportBank');
+Route::get('export/team','ExcelController@exportTeam');
+Route::get('export/pay/apply','ExcelController@exportPayApplies');
+Route::get('export/loan/pay/list','ExcelController@exportLoanPayList');
+Route::get('export/loan/submit','ExcelController@exportLoanSubmit');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');
@@ -231,14 +241,5 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/confirm','PayController@confirmApply');
     Route::post('pay/select','PayController@selectApprover');
     Route::get('pay/print','PayController@printPay');
-    //export
-    Route::get('export/user','ExcelController@exportUser');
-    Route::get('export/supplier','ExcelController@exportSupplier');
-    Route::get('export/material','ExcelController@exportMaterial');
-    Route::get('export/warehouse','ExcelController@exportWarehouse');
-    Route::get('export/bank','ExcelController@exportBank');
-    Route::get('export/team','ExcelController@exportTeam');
-    Route::get('export/pay/apply','ExcelController@exportPayApplies');
-    Route::get('export/loan/pay/list','ExcelController@exportLoanPayList');
-    Route::get('export/loan/submit','ExcelController@exportLoanSubmit');
+
 });

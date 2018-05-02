@@ -29,7 +29,6 @@ class ExcelController extends Controller
         $data = User::select(['username','department','phone'])->where('state','=',1)->get()->toArray();
         $tr = [['姓名','部门','电话']];
         $data = array_merge($tr,$data);
-//        dd($data);
         $this->excel->create('user',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
