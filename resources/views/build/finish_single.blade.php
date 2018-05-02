@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">请款查询 - {{$apply->number}}</div>
         </div>
-
+        <input id="getId" type="hidden" value="{{$apply->id}}" />
         <h2 class="ui header aligned center">请款编号 - {{$apply->number}}</h2>
         <h4 class="ui dividing header blue">基本信息</h4>
         <div id="buildFinishSingle">
@@ -120,11 +120,11 @@
                     <i class="icon edit"></i>
                     <span>修改</span>
                 </a>
-                <button class="ui icon button primary" @click="recheckFnc" style="margin:0 10px;">
+                <button class="ui icon button primary" @click="recheckFnc"  style="margin:0 10px;">
                     <i class="icon legal"></i>
                     <span>复核</span>
                 </button>
-                <a class="ui icon button primary" href="javascript:_helper.fullWindow('../buy/extrabudgetary_print.html')" style="margin:0 10px;">
+                <a class="ui icon button primary"  @click="passFnc" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>审批</span>
                 </a>

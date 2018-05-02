@@ -40,6 +40,22 @@ class BuildController extends Controller
     }
     public function createFinishPage()
     {
+        $id = Input::get('id');
+        if ($id){
+            $payment = RequestPayment::find($id);
+            $payment->date = $payment->request_date;
+            unset($payment->request_date);
+            $payment->build_name = $payment->team;
+            $payment->build_manager = $payment->manager;
+            $payment->team = $payment->team_id;
+            unset($payment->team_id);
+            unset($payment->manager);
+            $payment->project_id = $payment->project_number;
+            $payment->lists = $payment->lists()->get();
+            return response()->json(
+                $payment
+            );
+        }
         return view('build.finish_add');
     }
     public function listFinishPage()

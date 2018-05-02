@@ -183,9 +183,50 @@ class StockController extends Controller
             $record->project_content = $project->name;
             $record->worker = $post->worker;
             $record->worker_id = Auth::id();
+            $record->returnee = $post->returnee;
+            $record->save();
+            foreach ($lists as $item){
+                $stock = Stock::where('warehouse_id', '=', $post->warehouse_id)
+                    ->where('material_id', '=', $item['id'])->first();
+                if (empty($stock)) {
+                    $stock = new Stock();
+                    $stock->warehouse_id = $record->warehouse_id;
+                    $stock->material_id = $item['id'];
+                    $stock->number = $item['number'];
+                    //                dd($list);
+                    $stock->cost = $item['number'] * $item['price'];
+                    //                dd($stock);
+                } else {
+                    $stock->warehouse_id = $record->warehouse_id;
+                    $stock->material_id = $item['id'];
+                    $stock->number += $item['number'];
+                    $stock->cost += $item['number'] * $item['price'];
+                }
+                //            dd($stock);
+                $stock->save();
+                $list = new StockRecordList();
+                $list->record_id = $record->id;
+                $list->material_id = $item['id'];
+                $list->sum = $item['number'];
+                $list->price = $item['price'];
+                $list->cost = $list->sum*$list->price;
+                $list->stock_cost = $stock->cost;
+                $list->stock_number = $stock->number;
+                $list->stock_price = $stock->cost/$stock->number;
+                $list->save();
+            }
             DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
         }catch (\Exception $exception) {
             DB::rollback();
+            dd($exception);
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'ERROR'
+            ]);
         }
     }
     public function addGet()
@@ -277,5 +318,9 @@ class StockController extends Controller
     public function addReturnPage()
     {
         return view('stock.return_add');
+    }
+    public function addGetPage()
+    {
+        return view('stock.get_add');
     }
 }

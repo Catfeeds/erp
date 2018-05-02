@@ -503,10 +503,14 @@ class PayController extends Controller
         $payment->state=2;
         $payment->checker_id = Auth::id();
         $payment->checker = Auth::user()->username;
+        $payment->save();
         Task::where('type','=','build_finish_check')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
-            'msg'=>'SUCCESS'
+            'msg'=>'SUCCESS',
+            'data'=>[
+                'id'=>$id
+            ]
         ]);
     }
     public function passRequestPayment()
@@ -519,9 +523,10 @@ class PayController extends Controller
                 'msg'=>'当前状态不允许审批！'
             ]);
         }
-        $payment->state=2;
+        $payment->state=3;
         $payment->passer_id = Auth::id();
         $payment->passer = Auth::user()->username;
+        $payment->save();
         Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',

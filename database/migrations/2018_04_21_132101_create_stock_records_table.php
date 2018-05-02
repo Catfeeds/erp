@@ -24,6 +24,7 @@ class CreateStockRecordsTable extends Migration
             $table->string('supplier')->nullable();
             $table->string('purchase_number')->nullable();
             $table->string('worker');
+            $table->string('returnee')->nullable();
             $table->unsignedInteger('worker_id');
             $table->string('project_number')->nullable();
             $table->string('project_content')->nullable();

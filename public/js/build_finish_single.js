@@ -13,11 +13,14 @@
           isHide2: true
         },
         mounted() {
+          this.get_id = $('#getId').val() || ''
           $('#navbar').removeClass('invisible')
         },
         methods: {
           recheckFnc() {
-            _http.TeamManager.checkFinish()
+            _http.TeamManager.checkFinish({
+                id: this.get_id
+              })
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({
@@ -94,8 +97,10 @@
           },
 
           //审批
-          passFnc(){
-            _http.TeamManager.passFinish(postData)
+          passFnc() {
+            _http.TeamManager.passFinish({
+                id: this.get_id
+              })
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({
