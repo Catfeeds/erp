@@ -48,7 +48,7 @@
                     </td>
                     <td>{{$tip->project()->name}}</td>
                     <td>{{$tip->project()->pm}}</td>
-                    <td>{{$tip->price}}万/20万</td>
+                    <td>{{$tip->type==1?'履约保证金':'请款'}}</td>
                     <td>{{$tip->pay_date}}</td>
                     <td>{{$tip->price}}万</td>
                     <td>{{$tip->unit}}</td>

@@ -36,7 +36,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
 //        dd($data);
     }
     public function exportSupplier()
@@ -52,7 +52,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportMaterial()
     {
@@ -67,7 +67,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportWarehouse()
     {
@@ -75,14 +75,15 @@ class ExcelController extends Controller
         //
         $tr = [['仓库名称','仓库地址','仓管员']];
         $data = array_merge($tr,$data);
-        $this->excel->create('warehouse',function ($excel) use ($tr,$data){
+        $name = 'warehouse';
+        $this->excel->create($name,function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
                 for ($j=0;$j<$count;$j++){
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportBank()
     {
@@ -97,7 +98,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportTeam()
     {
@@ -112,7 +113,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportBudgets()
     {
@@ -146,7 +147,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportLoanPay()
     {
@@ -188,7 +189,7 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
     public function exportLoanPayList()
     {
@@ -223,6 +224,6 @@ class ExcelController extends Controller
                     $sheet->row($j+1,$data[$j]);
                 }
             });
-        })->export('xlsx');
+        })->export('xls');
     }
 }
