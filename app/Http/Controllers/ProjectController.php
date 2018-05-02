@@ -261,7 +261,7 @@ class ProjectController extends Controller
                             $lis->situation_id = $situ->id;
 //                        }
                         $lis->name = $list['name'];
-                        $lis->tax = $list['tax'];
+                        $lis->tax = $list['name'];
                         $lis->price = $list['price'];
                         $lis->remark = $list['remark'];
                         $lis->save();
@@ -301,7 +301,7 @@ class ProjectController extends Controller
                     $receipt = new Receipt();
                     $receipt->project_id = $project->id;
 //                }
-                $receipt->ratio = $item['radio'];
+                $receipt->ratio = $item['ratio'];
                 $receipt->price = $item['price'];
                 $receipt->condition = $item['condition'];
                 $receipt->save();
@@ -332,6 +332,7 @@ class ProjectController extends Controller
         ]);
         }catch (\Exception $exception){
             DB::rollback();
+//            dd($exception);
             return response()->json([
                 'code'=>'400',
                 'msg'=>'ERROR'
