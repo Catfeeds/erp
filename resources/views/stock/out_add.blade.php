@@ -69,52 +69,34 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a class="stockOutItem" data-id="1">CG1231532311</a>
+                        <a class="stockOutItem" data-id="{{$list->id}}">{{$list->number}}</a>
                     </td>
-                    <td>xx供货商</td>
-                    <td>123,521 ￥</td>
-                    <td>XM1352123124</td>
-                    <td class="table-content">这是项目内容xzxx</td>
-                    <td>陈经理</td>
-                    <td>123,521 ￥</td>
-                    <td>52,212 ￥</td>
-                    <td>已结清</td>
+                    <td>{{$list->supplier}}</td>
+                    <td>{{$list->lists()->sum('cost')}} ￥</td>
+                    @if($list->project_id!=0)
+                    <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
+                    <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
+                    @else
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    @endif
+                    <td>{{$list->receivedPrice}} </td>
+                    <td>{{$list->needPrice}} </td>
+                    <td>{{$list->lists()->sum('need')==$list->lists()->sum('received')?'已结清':'未结清'}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a class="stockOutItem" data-id="2">CG1231532311</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,521 ￥</td>
-                    <td>XM1352123124</td>
-                    <td class="table-content">这是项目内容xzxx</td>
-                    <td>陈经理</td>
-                    <td>123,521 ￥</td>
-                    <td>52,212 ￥</td>
-                    <td>已结清</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="stockOutItem" data-id="3">CG1231532311</a>
-                    </td>
-                    <td>xx供货商</td>
-                    <td>123,521 ￥</td>
-                    <td>XM1352123124</td>
-                    <td class="table-content">这是项目内容xzxx</td>
-                    <td>陈经理</td>
-                    <td>123,521 ￥</td>
-                    <td>52,212 ￥</td>
-                    <td>已结清</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
 
 
-        <el-dialog title="采购收货查询 - CG1231532311" :visible.sync="stockCheckDialog" width="90%" center id="stockOutAdd" class="invisible">
-
+        <el-dialog :title="'采购收货查询 - '+ (singleData.purchase.number || '无')" :visible.sync="stockCheckDialog" width="90%" center id="stockOutAdd"
+                   style="white-space:nowrap;">
             <template v-if="loader">
                 <div class="ui segment">
                     <div class="ui active inverted dimmer">
@@ -127,165 +109,154 @@
             <template v-else>
                 <div class="flex-row flex-between table-head-nowrap" id="stockBuyCheck">
 
-                    <table class="ui celled structured table center aligned unstackable" style="width:65%;">
-                        <thead>
-                        <tr>
-                            <th>采购编号</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.buy_id }}</th>
-                            <th>采购日期</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.buy_date }}</th>
-                            <th>收货入库记录</th>
-                        </tr>
-                        <tr>
-                            <th>项目编号</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.project_id }}</th>
-                            <th>项目内容</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.project_content }}</th>
-                            <th>收货入库编号</th>
-                        </tr>
-                        <tr>
-                            <th>采购商</th>
-                            <th class="fake-td" colspan="7">@{{ singleData.buy_shop }}</th>
-                            <th>入库日期</th>
-                        </tr>
-                        <tr>
-                            <th>项目经理</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.project_manager }}</th>
-                            <th>采购金额</th>
-                            <th class="fake-td" colspan="3">@{{ singleData.buy_amount }}</th>
-                            <th>收货人</th>
-                        </tr>
-                        <tr>
-                            <th colspan="8">采购物料清单</th>
-                            <th>仓库</th>
-                        </tr>
-                        <tr>
-                            <th>序号</th>
-                            <th>物料名称</th>
-                            <th>性能及技术参数</th>
-                            <th>品牌型号</th>
-                            <th>生产厂家</th>
-                            <th>单位</th>
-                            <th>单价</th>
-                            <th>采购数量</th>
-                            <th>采购金额</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <template v-if="singleData.list && singleData.list.length">
-                            <tr v-for="(item, index) in singleData.list" :key="item.id">
-                                <td>@{{ index + 1 }}</td>
-                                <td>@{{ item.name }}</td>
-                                <td>@{{ item.parameter }}</td>
-                                <td>@{{ item.model }}</td>
-                                <td>@{{ item.manufacturer }}</td>
-                                <td>@{{ item.unit }}</td>
-                                <td>@{{ item.price.toLocaleString('en-US') }} ￥</td>
-                                <td>@{{ item.count.toLocaleString('en-US') }}</td>
-                                <td>@{{ item.amount.toLocaleString('en-US') }} ￥</td>
-                            </tr>
-                        </template>
-                        <template v-else>
+                    <template v-if="singleData.purchase && singleData.purchase.project">
+                        <table class="ui celled structured table center aligned unstackable" style="width:65%;">
+                            <thead>
                             <tr>
-                                <td colspan="9">暂无数据</td>
+                                <th>采购编号</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.number }}</th>
+                                <th>采购日期</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.date }}</th>
+                                <th>收货入库记录</th>
                             </tr>
-                        </template>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th colspan="8">合计</th>
-                            <th>@{{ singleData.total_amount.toLocaleString('en-US') || 0 }}￥</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                            <tr>
+                                <th>项目编号</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.project.number }}</th>
+                                <th>项目内容</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.project.name }}</th>
+                                <th>收货入库编号</th>
+                            </tr>
+                            <tr>
+                                <th>采购商</th>
+                                <th class="fake-td" colspan="7">@{{ singleData.purchase.supplier }}</th>
+                                <th>入库日期</th>
+                            </tr>
+                            <tr>
+                                <th>项目经理</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.project.pm }}</th>
+                                <th>采购金额</th>
+                                <th class="fake-td" colspan="3">@{{ singleData.purchase.price }}</th>
+                                <th>收货人</th>
+                            </tr>
+                            <tr>
+                                <th colspan="8">采购物料清单</th>
+                                <th>仓库</th>
+                            </tr>
+                            <tr>
+                                <th>序号</th>
+                                <th>物料名称</th>
+                                <th>性能及技术参数</th>
+                                <th>品牌型号</th>
+                                <th>生产厂家</th>
+                                <th>单位</th>
+                                <th>单价</th>
+                                <th>采购数量</th>
+                                <th>采购金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template v-if="singleData.purchaseList && singleData.purchaseList.length">
+                                <tr v-for="(item, index) in singleData.purchaseList" :key="item.id">
+                                    <td>@{{ index + 1 }}</td>
+                                    <td>@{{ item.material.name }}</td>
+                                    <td>@{{ item.material.param }}</td>
+                                    <td>@{{ item.material.model }}</td>
+                                    <td>@{{ item.material.factory }}</td>
+                                    <td>@{{ item.material.unit }}</td>
+                                    <td>@{{ item.price.toLocaleString('en-US') }} ￥</td>
+                                    <td>@{{ item.number.toLocaleString('en-US') }}</td>
+                                    <td>@{{ item.cost.toLocaleString('en-US') }} ￥</td>
+                                </tr>
+                            </template>
+                            <template v-else>
+                                <tr>
+                                    <td colspan="9">暂无数据</td>
+                                </tr>
+                            </template>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="8">合计</th>
+                                <th>@{{ singleData.purchase.price.toLocaleString('en-US') || 0 }}￥ </th>
+                            </tr>
+                            </tfoot>
+                        </table>
 
-                    <div class="flex-row" style="overflow:auto; flex: 1;">
+                        <div class="flex-row" style="overflow:auto; flex: 1;">
 
-                        <template v-if="singleData.list && singleData.list.length">
-                            <div class="scorll-table table-head-nowrap" v-for="(item, index) in singleData.list" :key="item.id">
-                                <table class="ui celled structured table center aligned unstackable">
-                                    <thead>
-                                    <tr>
-                                        <td colspan="4">@{{ index + 1 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">@{{ item.stock_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">@{{ item.stock_date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">@{{ item.stock_manager }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">@{{ item.stock_name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>收货数量</th>
-                                        <th>收货金额</th>
-                                        <th>剩余数量</th>
-                                        <th>剩余金额</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>4,000 ￥</td>
-                                        <td>300</td>
-                                        <td>6000 ￥</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>4,000 ￥</td>
-                                        <td>300</td>
-                                        <td>6000 ￥</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>4,000 ￥</td>
-                                        <td>300</td>
-                                        <td>6000 ￥</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>4,000 ￥</td>
-                                        <td>300</td>
-                                        <td>6000 ￥</td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>4,000 ￥</th>
-                                        <th></th>
-                                        <th>6,000 ￥</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('../stock/buy_print.html?id=1');">收货凭证</a>
-                                        </td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </template>
+                            <template v-if="singleData.record && singleData.record.length > 0">
+                                <div class="scorll-table table-head-nowrap" v-for="(item, index) in singleData.record" :key="item.id">
+                                    <table class="ui celled structured table center aligned unstackable">
+                                        <thead>
+                                        <tr>
+                                            <td colspan="4">@{{ index + 1 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">@{{ item.number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">@{{ item.date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">@{{ item.worker }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">@{{ item.warehouse }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>收货数量</th>
+                                            <th>收货金额</th>
+                                            <th>剩余数量</th>
+                                            <th>剩余金额</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template v-if="item.list && item.list.length" v-for="(subItem, subIndex) in item.list" :key="subItem.id">
+                                            <tr v-if="subItem.id">
+                                                <td>@{{ subItem.sum.toLocaleString('en-US') || 0 }}</td>
+                                                <td>@{{ subItem.cost.toLocaleString('en-US') || 0 }} ￥</td>
+                                                <td>@{{ subItem.need_sum.toLocaleString('en-US') || 0 }}</td>
+                                                <td>@{{ subItem.need_cost.toLocaleString('en-US') || 0 }} ￥</td>
+                                            </tr>
+                                            <tr v-else>
+                                                <td colspan="4">暂无记录</td>
+                                            </tr>
+                                        </template>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>@{{ item.get_cost.toLocaleString('en-US') || 0 }}￥</th>
+                                            <th></th>
+                                            <th>@{{ item.need_cost.toLocaleString('en-US') || 0 }} ￥</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <a class="ui mini button primary" :href="'javascript:_helper.fullWindow(\'../stock/buy_print?id='+ item.id + '\');'">收货凭证</a>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </template>
 
-                        <template v-else>
-                            <div class="scorll-table table-head-nowrap">
-                                <table class="ui celled structured table center aligned unstackable">
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="4" rowspan="5">暂无数据</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </template>
+                            <template v-else>
+                                <div class="scorll-table table-head-nowrap">
+                                    <table class="ui celled structured table center aligned unstackable">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="4" rowspan="5">暂无数据</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </template>
 
-                    </div>
+                        </div>
+                    </template>
                 </div>
                 <div class="inline-center margin-top-20">
-                    <a href="javascript:_helper.fullWindow('../stock/out_add_add.html?id=1')" class="ui button primary large">
+                    <a :href="href" class="ui button primary large">
                         <i class="icon hand pointer"></i>
                         <span>退货出库</span>
                     </a>
@@ -293,6 +264,7 @@
             </template>
 
         </el-dialog>
+
 
     </div>
     <!-- /主体内容 === 不可复用 -->

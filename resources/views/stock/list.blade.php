@@ -43,12 +43,14 @@
                 <tr>
                     <th>序号</th>
                     <th>物料名称</th>
+                    <th>性能与技术参数</th>
                     <th>品牌型号</th>
+                    <th>生产厂家</th>
                     <th>单位</th>
                     {{--<th>单价</th>--}}
                     <th>库存数量</th>
                     <th>库存金额</th>
-                    <th>评价单价</th>
+                    <th>平均单价</th>
                     <th>仓库</th>
                 </tr>
                 </thead>
@@ -59,7 +61,9 @@
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('stock/check')}}?id={{$stock->id}}')">{{$stock->material()->name}}</a>
                     </td>
+                    <td>{{$stock->material()->param}}</td>
                     <td>{{$stock->material()->model}}</td>
+                    <td>{{$stock->material()->factory}}</td>
                     <td>{{$stock->material()->unit}}</td>
                     <td>{{$stock->number}} </td>
                     <td>{{$stock->cost}}￥</td>

@@ -437,7 +437,19 @@ class StockController extends Controller
     }
     public function addOutPage()
     {
-        return view('stock.out_add');
+        $lists = Purchase::paginate(10);
+        foreach ($lists as $list){
+            $list->lists = $list->lists()->get();
+            $receivedPrice = 0;
+            $needPrice = 0;
+            foreach ($list->lists as $item){
+                $needPrice+=$item->price*$item->need;
+                $receivedPrice+=$item->price*$item->received;
+            }
+            $list->needPrice = $needPrice;
+            $list->receivedPrice = $receivedPrice;
+        }
+        return view('stock.out_add',['lists'=>$lists]);
     }
     public function getPurchaseData()
     {
@@ -453,6 +465,8 @@ class StockController extends Controller
         $list2 = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->get();
         $c=[];
         foreach ($list2 as $item){
+            $item->get_cost = $item->lists()->sum('cost');
+            $item->need_cost = $item->lists()->sum('need_cost');
             $itemlist = $item->lists()->orderBy('material_id','ASC')->get()->toArray();
             $count =0;
 //            dd($itemlist);
@@ -516,5 +530,9 @@ class StockController extends Controller
         }
 //        dd($lists);
         return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end]);
+    }
+    public function addOutAddPage()
+    {
+        return view('stock.out_add_add');
     }
 }
