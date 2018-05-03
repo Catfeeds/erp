@@ -211,7 +211,7 @@
             const data = this.stockGetAdd
             const list = data.lists
             let result = {
-              type: currentType,
+              type: this.currentType,
               project_id: data.project_id,
               warehouse_id: data.warehouse_id,
               worker: data.worker,

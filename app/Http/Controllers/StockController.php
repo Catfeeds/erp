@@ -59,7 +59,13 @@ class StockController extends Controller
     }
     public function listGetList()
     {
-        return view('stock.get_list');
+        $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
+        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        foreach ($lists as $list){
+            $list->material = $list->material()->first();
+            $list->record = $list->record()->first();
+        }
+        return view('stock.get_list',['lists'=>$lists]);
     }
     public function listOutList()
     {
@@ -174,7 +180,7 @@ class StockController extends Controller
         if (in_array(0,$number)){
             return response()->json([
                 'code'=>'400',
-                'msg'=>'收货数量不能为0！'
+                'msg'=>'退料数量不能为0！'
             ]);
         }
         DB::beginTransaction();
@@ -191,6 +197,7 @@ class StockController extends Controller
             $record->project_manager = $project->pm;
             $record->worker = $post->worker;
             $record->worker_id = Auth::id();
+            $record->date = date('Y-m-d');
             $record->returnee = $post->returnee;
             $record->type = 2;
             $record->save();
@@ -242,9 +249,77 @@ class StockController extends Controller
             ]);
         }
     }
-    public function addGet()
+    public function addGet(Request $post)
     {
-
+        $lists = $post->get('lists');
+        if (empty($lists)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'出库数据不能为空！'
+            ]);
+        }
+        $warehouse_id = $post->warehouse_id;
+        $project_id = $post->project_id;
+        $number = array_column($lists,'number');
+        if (in_array(0,$number)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'出库数量不能为0！'
+            ]);
+        }
+        DB::beginTransaction();
+        try{
+            $record = new StockRecord();
+            $count = StockRecord::whereDate('created_at', date('Y-m-d', time()))->where('type', '=',3)->count();
+            $record->number = 'LL' . date('Ymd', time()) . sprintf("%03d", $count + 1);
+            $record->warehouse_id = $warehouse_id;
+            if ($project_id){
+                $project = Project::find($post->project_id);
+                $record->project_number = $project->number;
+                $record->project_manager = $project->pm;
+                $record->project_content = $project->name;
+                $record->project_id = $project->id;
+            }
+            $record->warehouse = Warehouse::find($warehouse_id)->name;
+            $record->worker = $post->worker;
+            $record->worker_id = Auth::id();
+            $record->date = date('Y-m-d');
+            $record->type = 3;
+            $record->save();
+            foreach ($lists as $list){
+                $swap = Stock::find($list['id']);
+//                $materail_id = $swap->material_id;
+                $price = $swap->cost/$swap->number;
+                if ($list['number']>$swap->number){
+                    throw new \Exception('数量不足！');
+                }
+                $swap->number -= $list['number'];
+                $swap->cost -= $price*$list['number'];
+                $swap->save();
+                $Rlist = new StockRecordList();
+                $Rlist->record_id = $record->id;
+                $Rlist->material_id = $swap->material_id;
+                $Rlist->sum = $list['number'];
+                $Rlist->price = $price;
+                $Rlist->cost = $Rlist->sum*$Rlist->price;
+                $Rlist->stock_cost = $swap->cost;
+                $Rlist->stock_number = $swap->number;
+                $Rlist->stock_price = $swap->cost/$swap->number;
+//                $price += $list->cost;
+                $Rlist->save();
+            }
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
+        }
     }
     public function addOut()
     {
@@ -335,5 +410,25 @@ class StockController extends Controller
     public function addGetPage()
     {
         return view('stock.get_add');
+    }
+    public function printGet()
+    {
+        $id = Input::get('id');
+        $record = StockRecord::find($id);
+        $lists = $record->lists()->get();
+        foreach ($lists as $list){
+            $list->material = $list->material()->first();
+        }
+        return view('stock.get_print',['record'=>$record,'lists'=>$lists]);
+    }
+    public function printReturn()
+    {
+        $id = Input::get('id');
+        $record = StockRecord::find($id);
+        $lists = $record->lists()->get();
+        foreach ($lists as $list){
+            $list->material = $list->material()->first();
+        }
+        return view('stock.return_print',['record'=>$record,'lists'=>$lists]);
     }
 }

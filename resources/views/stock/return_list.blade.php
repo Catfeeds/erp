@@ -69,7 +69,7 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/return_print.html?id=1')">{{$list->record->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/return/print')}}?id={{$list->record->id}}')">{{$list->record->number}}</a>
                     </td>
                     <td>{{$list->material->name}}</td>
                     <td>{{$list->material->model}}</td>

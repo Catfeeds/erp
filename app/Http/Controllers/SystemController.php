@@ -682,8 +682,11 @@ class SystemController extends Controller
         $id_arr = $db->pluck('id')->toArray();
         if ($id){
             $stockId = Stock::where('warehouse_id','=',$id)->whereIn('material_id',$id_arr)->get();
-        }else{
-            $stockId = Stock::whereIn('material_id',$id_arr)->get();
+        }else {
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'请先选择仓库！'
+            ]);
         }
 //        dd($stockId);
         foreach ($stockId as $item){

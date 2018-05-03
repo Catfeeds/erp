@@ -64,54 +64,24 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/get_print.html?id=1')">LL20123542</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/get/print')}}?id={{$list->record->id}}')">{{$list->record->number}}</a>
                     </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>xxxxx</td>
-                    <td>条</td>
-                    <td>21 ￥</td>
-                    <td>521,231</td>
-                    <td>11,111,111 ￥</td>
-                    <td>XM2012222</td>
-                    <td class="table-content">项目内容xxxxx</td>
-                    <td>陈经理</td>
-                    <td>刘相松</td>
+                    <td>{{$list->record->warehouse}}</td>
+                    <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
+                    <td>{{$list->material->unit}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->sum}}</td>
+                    <td>{{$list->cost}} ￥</td>
+                    <td>{{$list->record->project_number}}</td>
+                    <td class="table-content">{{$list->record->project_content}}</td>
+                    <td>{{$list->record->project_manager}}</td>
+                    <td>{{$list->record->worker}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/get_print.html?id=1')">LL20123542</a>
-                    </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>xxxxx</td>
-                    <td>条</td>
-                    <td>21 ￥</td>
-                    <td>521,231</td>
-                    <td>11,111,111 ￥</td>
-                    <td>XM2012222</td>
-                    <td class="table-content">项目内容xxxxx</td>
-                    <td>陈经理</td>
-                    <td>刘相松</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/get_print.html?id=1')">LL20123542</a>
-                    </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>xxxxx</td>
-                    <td>条</td>
-                    <td>21 ￥</td>
-                    <td>521,231</td>
-                    <td>11,111,111 ￥</td>
-                    <td>XM2012222</td>
-                    <td class="table-content">项目内容xxxxx</td>
-                    <td>陈经理</td>
-                    <td>刘相松</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

@@ -173,6 +173,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('stock/return/add','StockController@addReturn');
     Route::get('stock/get/add','StockController@addGetPage');
     Route::post('stock/get/add','StockController@addGet');
+    Route::get('stock/get/print','StockController@printGet');
+    Route::get('stock/return/print','StockController@printReturn');
 
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');
