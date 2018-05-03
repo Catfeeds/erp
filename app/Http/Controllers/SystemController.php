@@ -17,6 +17,7 @@ use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\ProjectPicture;
 use App\Models\ProjectType;
+use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\TaxRate;
 use App\Models\Team;
@@ -667,6 +668,32 @@ class SystemController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS',
             'data'=>$data
+        ]);
+    }
+    public function searchStockMaterial()
+    {
+        $id = Input::get('id');
+        $name = Input::get('name');
+        $db = Material::where('state','=',1);
+
+        if ($name){
+            $db->where('name','like','%'.$name.'%');
+        }
+        $id_arr = $db->pluck('id')->toArray();
+        if ($id){
+            $stockId = Stock::where('warehouse_id','=',$id)->whereIn('material_id',$id_arr)->get();
+        }else{
+            $stockId = Stock::whereIn('material_id',$id_arr)->get();
+        }
+//        dd($stockId);
+        foreach ($stockId as $item){
+            $item->material = $item->material();
+            $item->price = $item->cost/$item->number;
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$stockId
         ]);
     }
 

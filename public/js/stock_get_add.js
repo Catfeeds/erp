@@ -8,8 +8,9 @@
           stockGetAdd: _schemas.stockGetAdd,
           currentType: 1,
 
-
-          currentMaterial: '',
+          currentMaterial: {
+            material: {}
+          },
           currentMaterialName: '',
 
           throttle: {
@@ -33,7 +34,7 @@
             list.forEach((it, index) => {
               const number = it.number
               if (number) {
-                sum += number * it.material.avg_price
+                sum += number * parseFloat(it.price)
               }
             })
             return sum
@@ -104,7 +105,8 @@
           },
 
           handleSelect(item) {
-            this.stockGetAdd.project_id = item.number
+            this.stockGetAdd.project_id = item.id
+            this.stockGetAdd.project_number = item.number
             this.stockGetAdd.project_content = item.name
             this.stockGetAdd.project_manger = item.pm
           },
@@ -116,7 +118,7 @@
             }
             this.throttle.stock_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                name: queryString
               }
               _http.StockManager.searchStock(searchKey)
                 .then(res => {
@@ -153,9 +155,9 @@
             this.throttle.material_timer = setTimeout(() => {
               const searchKey = {
                 name: queryString,
-                project_id: this.stockGetAdd.project_id || ''
+                id: this.stockGetAdd.warehouse_id || ''
               }
-              _http.MaterialManager.searchProjectMaterial(searchKey)
+              _http.StockManager.searchStockMaterialSpecial(searchKey)
                 .then(res => {
                   if (res.data.code === '200') {
                     cb(res.data.data)
@@ -178,7 +180,7 @@
           },
           handleSelectMaterial(item) {
             this.currentMaterial = item
-            this.currentMaterialName = item.name
+            this.currentMaterialName = item.material.name
           },
 
           //新增项
@@ -193,7 +195,8 @@
             const list = this.stockGetAdd.lists
             let data = {
               id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
-              material: this.currentMaterial,
+              material: this.currentMaterial.material,
+              price: this.currentMaterial.price,
               material_id: this.currentMaterial.id,
               number: 0
             }
@@ -204,12 +207,32 @@
             this.stockGetAdd[name].splice(index, 1)
           },
 
+          dataFormat() {
+            const data = this.stockGetAdd
+            const list = data.lists
+            let result = {
+              type: currentType,
+              project_id: data.project_id,
+              warehouse_id: data.warehouse_id,
+              worker: data.worker,
+              lists: []
+            }
+
+            list.forEach(it => {
+              result.lists.push({
+                id: it.material_id,
+                number: it.number
+              })
+            })
+
+            return result
+          },
+
           //提交
           submit() {
-            console.log(this.stockGetAdd)
-            let data = this.stockGetAdd
-            data.type = this.currentType
-            _http.StockManager.createGetAdd(data)
+            const postData = this.dataFormat()
+            console.log(postData)
+            _http.StockManager.createGetAdd(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

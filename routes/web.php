@@ -39,6 +39,7 @@ Route::get('search/category','SystemController@searchCategory');
 Route::get('project/material','ProjectController@searchProjectMaterial');
 Route::get('search/budget','ProjectController@searchBudget');
 Route::get('search/material','SystemController@searchMaterial');
+Route::get('search/stock/material','SystemController@searchStockMaterial');
 Route::get('search/loan/user','LoanController@searchLoanUser');
 Route::get('search/purchase','PurchaseController@searchPurchase');
 Route::get('search/warehouse','StockController@searchWarehouse');
@@ -170,6 +171,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('store/buy_check','StockController@buyCheckPage');
     Route::get('stock/return/add','StockController@addReturnPage');
     Route::post('stock/return/add','StockController@addReturn');
+    Route::get('stock/get/add','StockController@addGetPage');
+    Route::post('stock/get/add','StockController@addGet');
 
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');

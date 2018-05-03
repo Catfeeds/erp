@@ -54,7 +54,7 @@ class StockController extends Controller
             $list->material = $list->material()->first();
             $list->record = $list->record()->first();
         }
-//        dd($lists);
+        dd($lists);
         return view('stock.return_list',['lists'=>$lists]);
     }
     public function listGetList()

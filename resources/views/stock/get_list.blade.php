@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap">
             <div>
-                <a href="javascript:_helper.fullWindow('../stock/get_add.html')" class="ui primary button">
+                <a href="javascript:_helper.fullWindow('{{url('stock/get/add')}}')" class="ui primary button">
                     <i class="icon plus"></i>
                     <span>新增领料出库</span>
                 </a>

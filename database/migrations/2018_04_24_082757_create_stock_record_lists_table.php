@@ -23,6 +23,8 @@ class CreateStockRecordListsTable extends Migration
             $table->integer('stock_number');
             $table->float('price',18,2);
             $table->float('cost',18,2);
+            $table->integer('need_sum')->default(0);
+            $table->float('need_cost',18,2)->default(0);
             $table->timestamps();
         });
     }
