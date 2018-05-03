@@ -48,7 +48,14 @@ class StockController extends Controller
     }
     public function listReturnList()
     {
-        return view('stock.return_list');
+        $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+        $lists = StockRecordList::whereIn('id',$id_arr)->paginate(10);
+        foreach ($lists as $list){
+            $list->material = $list->material()->first();
+            $list->record = $list->record()->first();
+        }
+//        dd($lists);
+        return view('stock.return_list',['lists'=>$lists]);
     }
     public function listGetList()
     {
@@ -181,10 +188,13 @@ class StockController extends Controller
             $record->project_id = $project->id;
             $record->project_number = $project->number;
             $record->project_content = $project->name;
+            $record->project_manager = $project->pm;
             $record->worker = $post->worker;
             $record->worker_id = Auth::id();
             $record->returnee = $post->returnee;
+            $record->type = 2;
             $record->save();
+            $price = 0;
             foreach ($lists as $item){
                 $stock = Stock::where('warehouse_id', '=', $post->warehouse_id)
                     ->where('material_id', '=', $item['id'])->first();
@@ -213,8 +223,11 @@ class StockController extends Controller
                 $list->stock_cost = $stock->cost;
                 $list->stock_number = $stock->number;
                 $list->stock_price = $stock->cost/$stock->number;
+                $price += $list->cost;
                 $list->save();
             }
+            $record->cost = $price;
+            $record->save();
             DB::commit();
             return response()->json([
                 'code'=>'200',

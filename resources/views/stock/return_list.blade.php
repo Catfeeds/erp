@@ -66,60 +66,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/return_print.html?id=1')">TL2102321</a>
+                        <a href="javascript:_helper.fullWindow('../stock/return_print.html?id=1')">{{$list->record->number}}</a>
                     </td>
-                    <td>线缆</td>
-                    <td>xxxxxx</td>
-                    <td>xxx厂家</td>
-                    <td>条</td>
-                    <td>123,523</td>
-                    <td>20 ￥</td>
-                    <td>523,123 ￥</td>
-                    <td>XM2023123</td>
-                    <td>xxxx内容</td>
-                    <td>陈经理</td>
-                    <td>黄生</td>
-                    <td>xxxx仓库</td>
-                    <td>李姐</td>
+                    <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->model}}</td>
+                    <td>{{$list->material->factory}}</td>
+                    <td>{{$list->material->unit}}</td>
+                    <td>{{$list->sum}}</td>
+                    <td>{{$list->price}} ￥</td>
+                    <td>{{$list->cost}} ￥</td>
+                    <td>{{$list->record->project_number}}</td>
+                    <td>{{$list->record->project_content}}</td>
+                    <td>{{$list->record->project_manager}}</td>
+                    <td>{{$list->record->worker}}</td>
+                    <td>{{$list->record->warehouse}}</td>
+                    <td>{{$list->record->returnee}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/return_print.html?id=1')">TL2102321</a>
-                    </td>
-                    <td>线缆</td>
-                    <td>xxxxxx</td>
-                    <td>xxx厂家</td>
-                    <td>条</td>
-                    <td>123,523</td>
-                    <td>20 ￥</td>
-                    <td>523,123 ￥</td>
-                    <td>XM2023123</td>
-                    <td>xxxx内容</td>
-                    <td>陈经理</td>
-                    <td>黄生</td>
-                    <td>xxxx仓库</td>
-                    <td>李姐</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/return_print.html?id=1')">TL2102321</a>
-                    </td>
-                    <td>线缆</td>
-                    <td>xxxxxx</td>
-                    <td>xxx厂家</td>
-                    <td>条</td>
-                    <td>123,523</td>
-                    <td>20 ￥</td>
-                    <td>523,123 ￥</td>
-                    <td>XM2023123</td>
-                    <td>xxxx内容</td>
-                    <td>陈经理</td>
-                    <td>黄生</td>
-                    <td>xxxx仓库</td>
-                    <td>李姐</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
