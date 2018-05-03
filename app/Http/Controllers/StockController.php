@@ -49,12 +49,12 @@ class StockController extends Controller
     public function listReturnList()
     {
         $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-        $lists = StockRecordList::whereIn('id',$id_arr)->paginate(10);
+        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
         foreach ($lists as $list){
             $list->material = $list->material()->first();
             $list->record = $list->record()->first();
         }
-        dd($lists);
+//        dd($lists);
         return view('stock.return_list',['lists'=>$lists]);
     }
     public function listGetList()
