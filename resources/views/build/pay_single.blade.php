@@ -169,7 +169,7 @@
                 <i class="icon plus"></i>
                 <span>新增付款申请</span>
             </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../build/pay_print.html?id=1')">
+            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('build/pay/print')}}?id={{$projectTeam->id}}')">
                 <i class="icon print"></i>
                 <span>凭证</span>
             </a>

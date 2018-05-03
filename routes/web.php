@@ -175,6 +175,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('stock/get/add','StockController@addGet');
     Route::get('stock/get/print','StockController@printGet');
     Route::get('stock/return/print','StockController@printReturn');
+    Route::get('stock/out/add','StockController@addOutPage');
+    Route::get('stock/purchase','StockController@getPurchaseData');
+    Route::get('stock/check','StockController@checkStock');
 
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');
@@ -204,7 +207,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/get/single','BuildController@getSinglePage');
     Route::get('build/get/add','BuildController@getAddPage');
     Route::post('build/get/add','BuildController@getAdd');
-//    Route::get('build/get/single','BuildController');
+    Route::get('build/pay/print','BuildController@printBuildPay');
+    Route::get('build/get/print','BuildController@printBuildGet');
+    Route::get('build/get/edit','BuildController@editBuildGetPage');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
     Route::get('loan/detail/list','PayController@listDetailPage');

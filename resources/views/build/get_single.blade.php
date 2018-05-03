@@ -63,7 +63,7 @@
                     <td>{{$invoices[$i]->tax}} ￥</td>
                     <td>{{$invoices[$i]->with_tax}} ￥</td>
                     <td style="white-space: nowrap;">
-                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('../build/get_edit.html?id=1')" title="修改">修改</a>
+                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('build/get/edit')}}?id={{$invoices[$i]->id}}')" title="修改">修改</a>
                     </td>
                 </tr>
                 @endfor
@@ -89,7 +89,7 @@
                 <i class="icon yen"></i>
                 <span>收票</span>
             </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../build/get_print.html')" style="margin:0 10px;">
+            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('build/get/print')}}?id={{$projectTeam->id}}')" style="margin:0 10px;">
                 <i class="icon print"></i>
                 <span>凭证</span>
             </a>

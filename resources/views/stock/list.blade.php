@@ -57,7 +57,7 @@
                 <tr>
                     <td>{{$stock->id}}</td>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/check.html?id=1')">{{$stock->material()->name}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/check')}}?id={{$stock->id}}')">{{$stock->material()->name}}</a>
                     </td>
                     <td>{{$stock->material()->model}}</td>
                     <td>{{$stock->material()->unit}}</td>

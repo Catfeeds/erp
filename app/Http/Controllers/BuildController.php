@@ -311,5 +311,20 @@ class BuildController extends Controller
 //        $table->float('tax',18,2)->default(0);
 //        $table->float('with_tax',18,2)->default(0);
     }
+    public function printBuildPay()
+    {
+        return view('build.pay_print');
+    }
+    public function printBuildGet()
+    {
+        $id = Input::get('id');
+        $projectTeam = ProjectTeam::find($id);
+        $invoices = $projectTeam->invoices()->get();
+        return view('build.get_print',['projectTeam'=>$projectTeam,'invoices'=>$invoices]);
+    }
+    public function editBuildGetPage()
+    {
+
+    }
 
 }

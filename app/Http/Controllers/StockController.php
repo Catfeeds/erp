@@ -110,6 +110,10 @@ class StockController extends Controller
                 $info = Purchase::find($purchase->purchase_id);
                 $record->supplier_id = $info->supplier_id;
                 $record->supplier = Supplier::find($info->supplier_id)->name;
+                $project = Project::find($info->project_id);
+                $record->project_number = $project->number;
+                $record->project_content = $project->name;
+                $record->project_manager = $project->pm;
                 $Rlist = new StockRecordList();
                 $Rlist->record_id = $record->id;
                 $Rlist->material_id = $purchase->material_id;
@@ -430,5 +434,87 @@ class StockController extends Controller
             $list->material = $list->material()->first();
         }
         return view('stock.return_print',['record'=>$record,'lists'=>$lists]);
+    }
+    public function addOutPage()
+    {
+        return view('stock.out_add');
+    }
+    public function getPurchaseData()
+    {
+        $id = \Illuminate\Support\Facades\Input::get('id');
+        $purchase = Purchase::find($id);
+        $purchase->project = Project::find($purchase->project_id);
+        $purchase->price = $purchase->lists()->sum('cost');
+        $lists = PurchaseList::where('purchase_id','=',$id)->orderBy('material_id','ASC')->get();
+        foreach ($lists as $list){
+            $list->material = Material::find($list->material_id);
+        }
+//        dd($lists);
+        $list2 = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->get();
+        $c=[];
+        foreach ($list2 as $item){
+            $itemlist = $item->lists()->orderBy('material_id','ASC')->get()->toArray();
+            $count =0;
+//            dd($itemlist);
+            for ($i=0;$i<count($lists);$i++){
+                if (empty($itemlist[$i-$count])){
+                    $count+=1;
+                    $c[$i]=[];
+                }else{
+                    if($lists[$i]->material_id==$itemlist[$i-$count]['material_id']){
+//                    dd($itemlist[$i-$count]);
+                        $c[$i]=$itemlist[$i-$count];
+                    }else{
+                        $count+=1;
+                        $c[$i]=[];
+                    }
+                }
+
+            }
+            $item->list = $c;
+//            dd($c);
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>[
+                'purchase'=>$purchase,
+                'purchaseList'=>$lists,
+                'record'=>$list2
+            ]
+        ]);
+    }
+    public function checkStock()
+    {
+        $id = Input::get('id');
+        $stock = Stock::find($id);
+        $stock->material = $stock->material();
+        $stock->warehouse = $stock->warehouse();
+        $start = '';
+        $end = '';
+        $s = Input::get('s');
+        $e = Input::get('e');
+        if($s){
+            $start = $s;
+            $end = $e;
+            $idArr = StockRecord::whereBetween('date',[$s,$e])
+                ->where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('id',$idArr)->where('material_id','=',$stock->material_id)->get();
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $list->record = $list->record()->first();
+                }
+            }
+        }else{
+            $idArr = StockRecord::where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('id',$idArr)->where('material_id','=',$stock->material_id)->get();
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $list->record = $list->record()->first();
+                }
+            }
+        }
+//        dd($lists);
+        return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end]);
     }
 }
