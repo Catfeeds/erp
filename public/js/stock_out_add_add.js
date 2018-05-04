@@ -106,8 +106,8 @@
             }, 500)
           },
           handleSelectMaterial(item) {
-            this.current.material.name = item.name
-            this.current.material.material = item
+            this.current.material.name = item.material.name
+            this.current.material.material = item.material
           },
 
           //新增项
@@ -120,12 +120,16 @@
               return false
             }
             const list = this.stockOutAdd.lists
-            const material = this.current.material.material
+            const currentValue = this.current.material
+            const material = currentValue.material
             let data = {
               id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
               material: material,
               material_id: material.id,
-              number: 0
+              number: 0,
+              price: currentValue.price || 0,
+              sum: currentValue.sum || 0,
+              cost: currentValue.cost || 0
             }
             this.stockOutAdd.lists.push(data)
           },
@@ -135,10 +139,30 @@
             this.stockOutAdd[name].splice(index, 1)
           },
 
+          formateData(data) {
+            let result = {
+              date: data.date,
+              reason: data.reason,
+              lists: [],
+              warehouse_id: data.warehouse_id,
+              purchase_id: data.purchase_id,
+            }
+
+            const list = data.lists
+            list.forEach(item => {
+              result.lists.push({
+                id: item.material_id,
+                number: item.number
+              })
+            })
+
+            return result
+          },
+
           //提交
           submit() {
-            console.log(this.stockOutAdd)
-            _http.StockManager.createOutAdd(this.stockOutAdd)
+            const postData = this.formateData(this.stockOutAdd)
+            _http.StockManager.createOutAdd(postData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

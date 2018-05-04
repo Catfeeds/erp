@@ -69,7 +69,13 @@ class StockController extends Controller
     }
     public function listOutList()
     {
-        return view('stock.out_list');
+        $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
+        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        foreach ($lists as $list){
+            $list->material = $list->material()->first();
+            $list->record = $list->record()->first();
+        }
+        return view('stock.out_list',['lists'=>$lists]);
     }
     public function checkBuy()
     {

@@ -66,60 +66,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/out_single.html?id=1')">THCK20171103001</a>
+                        <a href="javascript:_helper.fullWindow('../stock/out_single.html?id=1')">{{$list->record->number}}</a>
                     </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>这是性能和参数</td>
-                    <td>ak232</td>
-                    <td>xxxx厂家</td>
-                    <td>个</td>
-                    <td>12￥</td>
-                    <td>123,523</td>
-                    <td>555,231￥</td>
-                    <td>XM2020321</td>
-                    <td>这是内容xxx</td>
-                    <td>陈一发</td>
-                    <td>和其正</td>
+                    <td>{{$list->record->warehouse}}</td>
+                    <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
+                    <td>{{$list->material->model}}</td>
+                    <td>{{$list->material->factory}}</td>
+                    <td>{{$list->material->unit}}</td>
+                    <td>{{$list->record->price}}￥</td>
+                    <td>{{$list->record->sum}}</td>
+                    <td>{{$list->record->cost}}￥</td>
+                    <td>{{$list->record->project_number}}</td>
+                    <td>{{$list->record->project_content}}</td>
+                    <td>{{$list->record->project_manager}}</td>
+                    <td>{{$list->record->returnee}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/out_single.html?id=1')">THCK20171103001</a>
-                    </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>这是性能和参数</td>
-                    <td>ak232</td>
-                    <td>xxxx厂家</td>
-                    <td>个</td>
-                    <td>12￥</td>
-                    <td>123,523</td>
-                    <td>555,231￥</td>
-                    <td>XM2020321</td>
-                    <td>这是内容xxx</td>
-                    <td>陈一发</td>
-                    <td>和其正</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="javascript:_helper.fullWindow('../stock/out_single.html?id=1')">THCK20171103001</a>
-                    </td>
-                    <td>xxx仓库</td>
-                    <td>线缆</td>
-                    <td>这是性能和参数</td>
-                    <td>ak232</td>
-                    <td>xxxx厂家</td>
-                    <td>个</td>
-                    <td>12￥</td>
-                    <td>123,523</td>
-                    <td>555,231￥</td>
-                    <td>XM2020321</td>
-                    <td>这是内容xxx</td>
-                    <td>陈一发</td>
-                    <td>和其正</td>
-                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
