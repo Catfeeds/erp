@@ -69,7 +69,7 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../stock/out_single.html?id=1')">{{$list->record->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/out/single')}}?id={{$list->record->id}}')">{{$list->record->number}}</a>
                     </td>
                     <td>{{$list->record->warehouse}}</td>
                     <td>{{$list->material->name}}</td>
@@ -77,13 +77,13 @@
                     <td>{{$list->material->model}}</td>
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
-                    <td>{{$list->record->price}}￥</td>
+                    <td>{{$list->price}}￥</td>
                     <td>{{$list->sum}}</td>
                     <td>{{$list->cost}}￥</td>
                     <td>{{$list->record->project_number}}</td>
                     <td>{{$list->record->project_content}}</td>
                     <td>{{$list->record->project_manager}}</td>
-                    <td>{{$list->record->returnee}}</td>
+                    <td>{{$list->record->worker}}</td>
                 </tr>
                 @endforeach
                 </tbody>

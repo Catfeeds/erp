@@ -371,6 +371,9 @@ class StockController extends Controller
             $record->date = $post->date;
             $record->warehouse = Warehouse::find($post->warehouse_id)->name;
             $record->warehouse_id = $post->warehouse_id;
+            $record->worker = Auth::user()->username;
+            $record->worker_id = Auth::id();
+            $record->purchase_number = Purchase::find($purchase->number);
             $record->type = 4;
             $record->save();
             $recordPrice = 0;
@@ -624,5 +627,13 @@ class StockController extends Controller
         $id = Input::get('id');
         $purchase = Purchase::find($id);
         return view('stock.out_add_add',['purchase'=>$purchase]);
+    }
+    public function singleOutPage()
+    {
+        $id = Input::get('id');
+        $record = StockRecord::find($id);
+        $list = $record->lists()->get();
+        $purchase = Purchase::find($record->purchase_id);
+        return view('stock.out_single',['record'=>$record,'lists'=>$list,'purchase'=>$purchase]);
     }
 }
