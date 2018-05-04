@@ -5,6 +5,7 @@
 
   // const url = 'http://119.23.202.220:8080'
   const url = 'http://localhost/erp/public'
+
   class ProjectManager {
     constructor() {
       this._http = axios.create({
@@ -701,6 +702,13 @@
     //仓库查询
     searchStock(search = {}) {
       return this._http.get(`/search/warehouse`, {
+        params: search
+      })
+    }
+
+    //新仓库搜索
+    searchOutStock(search = {}) {
+      return this._http.get(`/search/purchase/warehouse`, {
         params: search
       })
     }

@@ -533,6 +533,8 @@ class StockController extends Controller
     }
     public function addOutAddPage()
     {
-        return view('stock.out_add_add');
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        return view('stock.out_add_add',['purchase'=>$purchase]);
     }
 }

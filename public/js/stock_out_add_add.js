@@ -42,9 +42,10 @@
             }
             this.throttle.stock_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                name: queryString,
+                purchase_id: this.stockOutAdd.purchase_id
               }
-              _http.StockManager.searchStock(searchKey)
+              _http.StockManager.searchOutStock(searchKey)
                 .then(res => {
                   if (res.data.code === '200') {
                     cb(res.data.data)
@@ -80,7 +81,8 @@
             this.throttle.material_timer = setTimeout(() => {
               const searchKey = {
                 name: queryString,
-                purchase_id: this.stockOutAdd.purchase_id || ''
+                purchase_id: this.stockOutAdd.purchase_id || '',
+                warehouse_id: this.stockOutAdd.warehouse_id
               }
               _http.MaterialManager.searchBuyMaterial(searchKey)
                 .then(res => {

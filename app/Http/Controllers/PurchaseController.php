@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Material;
 use App\Models\PruchaseCheck;
 use App\Models\PruchasePass;
 use App\Models\Purchase;
@@ -10,6 +11,10 @@ use App\Models\PurchaseInvoice;
 use App\Models\PurchaseList;
 use App\Models\PurchasePayment;
 use App\Models\PurchasePaymentCheck;
+use App\Models\Stock;
+use App\Models\StockRecord;
+use App\Models\StockRecordList;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -254,6 +259,43 @@ class PurchaseController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS',
             'data'=>$lists
+        ]);
+    }
+    public function searchPurchaseWarehouse()
+    {
+        $name = Input::get('name');
+        $id = Input::get('purchase_id');
+        $idArr = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->pluck('warehouse_id')->toArray();
+        $db = Warehouse::whereIn('id',$idArr);
+        if ($name){
+            $db->where('name','like','%'.$name.'%');
+        }
+        $data = $db->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
+    }
+    public function searchPurchaseMaterial()
+    {
+        $name = Input::get('name');
+        $purchase_id = Input::get('purchase_id');
+        $warehouse_id = Input::get('warehouse_id');
+        $list = StockRecord::where('purchase_id','=',$purchase_id)->where('warehouse_id','=',$warehouse_id)->pluck('id')->toArray();
+        $db = StockRecordList::whereIn('record_id',$list);
+        if ($name){
+            $idArr = Material::where('name','like','%'.$name.'%')->where('state','=',1)->pluck('id')->toArray();
+            $db = $db->whereIn('material_id',$idArr);
+        }
+        $data = $db->get();
+        foreach ($data as $datum){
+            $datum->material = $datum->material()->first();
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
         ]);
     }
 

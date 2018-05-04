@@ -43,6 +43,8 @@ Route::get('search/stock/material','SystemController@searchStockMaterial');
 Route::get('search/loan/user','LoanController@searchLoanUser');
 Route::get('search/purchase','PurchaseController@searchPurchase');
 Route::get('search/warehouse','StockController@searchWarehouse');
+Route::get('search/purchase/warehouse','PurchaseController@searchPurchaseWarehouse');
+Route::get('search/purchase/material','PurchaseController@searchPurchaseMaterial');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
 //export

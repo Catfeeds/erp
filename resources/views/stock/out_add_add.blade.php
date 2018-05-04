@@ -11,7 +11,7 @@
         <div class="active section">退货出库</div>
     </div>
 
-    <input type="hidden" id="purchaseId" value="">
+    <input type="hidden" id="purchaseId" value="{{$purchase->id}}">
 
     <h1 class="ui red header blue center aligned">退货出库</h1>
     <div class="invisible" id="outAddAdd">
@@ -22,7 +22,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">采购编号</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">CG210231322</div>
+                            <div class="fake-input">{{$purchase->number}}</div>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">采购日期</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">2018-02-12</div>
+                            <div class="fake-input">{{$purchase->date}}</div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">采购商名称</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">xxx采购商</div>
+                            <div class="fake-input">{{$purchase->supplier}}</div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目编号</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">XM232132132</div>
+                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->number}}</div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目内容</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">这是项目内容</div>
+                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->name}}</div>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目经理</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">陈经理</div>
+                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->pm}}</div>
                         </div>
                     </div>
                 </div>
