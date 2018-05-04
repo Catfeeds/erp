@@ -296,6 +296,7 @@ class StockController extends Controller
             $record->date = date('Y-m-d');
             $record->type = 3;
             $record->save();
+            $recordPrice = 0;
             foreach ($lists as $list){
                 $swap = Stock::find($list['id']);
 //                $materail_id = $swap->material_id;
@@ -317,7 +318,10 @@ class StockController extends Controller
                 $Rlist->stock_price = $swap->cost/$swap->number;
 //                $price += $list->cost;
                 $Rlist->save();
+                $recordPrice += $Rlist->cost;
             }
+            $record->cost = $recordPrice;
+            $record->save();
             DB::commit();
             return response()->json([
                 'code'=>'200',
@@ -331,9 +335,87 @@ class StockController extends Controller
             ]);
         }
     }
-    public function addOut()
+    public function addOut(Request $post)
     {
-
+        $lists = $post->get('lists');
+        if (empty($lists)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'退货数据不能为空！'
+            ]);
+        }
+        $warehouse_id = $post->warehouse_id;
+//        $project_id = $post->project_id;
+        $number = array_column($lists,'number');
+        if (in_array(0,$number)){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'退货数量不能为0！'
+            ]);
+        }
+        DB::beginTransaction();
+        try{
+            $record = new StockRecord();
+            $count = StockRecord::whereDate('created_at', date('Y-m-d', time()))->where('type', '=',4)->count();
+            $record->number = 'THCK' . date('Ymd', time()) . sprintf("%03d", $count + 1);
+            $record->purchase_id = $post->purchase_id;
+            $purchase = Purchase::find($post->purchase_id);
+            $project = Project::find($purchase->project_id);
+            $record->project_number = $project->number;
+            $record->project_manager = $project->pm;
+            $record->project_content = $project->name;
+            $record->project_id = $project->id;
+            $record->supplier = $purchase->supplier;
+            $record->supplier_id = $purchase->supplier_id;
+            $record->reason = $post->reason;
+            $record->date = $post->date;
+            $record->warehouse = Warehouse::find($post->warehouse_id)->name;
+            $record->warehouse_id = $post->warehouse_id;
+            $record->type = 4;
+            $record->save();
+            $recordPrice = 0;
+            foreach ($lists as $list){
+                $swap = StockRecordList::find($list['id']);
+//                dd($swap);
+                if ($swap->sum<$list['number']){
+                    throw new \Exception('超出收货数量！');
+                }
+                $stock = Stock::where('warehouse_id', '=', $post->warehouse_id)
+                    ->where('material_id', '=', $swap->material_id)->first();
+                $price = $swap->price;
+                if ($list['number']>$stock->number){
+                    throw new \Exception('数量不足！');
+                }
+                $stock->number -= $list['number'];
+                $stock->cost -= $price*$list['number'];
+                $stock->save();
+                $Rlist = new StockRecordList();
+                $Rlist->record_id = $record->id;
+                $Rlist->material_id = $swap->material_id;
+                $Rlist->sum = $list['number'];
+                $Rlist->price = $price;
+                $Rlist->cost = $Rlist->sum*$Rlist->price;
+                $Rlist->stock_cost = $stock->cost;
+                $Rlist->stock_number = $stock->number;
+                $Rlist->stock_price = $stock->cost/$stock->number;
+//                $price += $list->cost;
+                $Rlist->save();
+                $recordPrice += $Rlist->cost;
+            }
+            $record->cost = $recordPrice;
+            $record->save();
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
+        }
     }
     public function buyBudgetary(Request $post)
     {

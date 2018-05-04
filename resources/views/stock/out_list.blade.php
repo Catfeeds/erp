@@ -78,8 +78,8 @@
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
                     <td>{{$list->record->price}}￥</td>
-                    <td>{{$list->record->sum}}</td>
-                    <td>{{$list->record->cost}}￥</td>
+                    <td>{{$list->sum}}</td>
+                    <td>{{$list->cost}}￥</td>
                     <td>{{$list->record->project_number}}</td>
                     <td>{{$list->record->project_content}}</td>
                     <td>{{$list->record->project_manager}}</td>

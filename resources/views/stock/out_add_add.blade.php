@@ -184,8 +184,8 @@
                 <div class="two wide column form-thead">品牌型号</div>
                 <div class="two wide column form-thead">单位</div>
                 <div class="two wide column form-thead">单价</div>
-                <div class="two wide column form-thead">采购数量</div>
-                <div class="two wide column form-thead">采购金额</div>
+                <div class="two wide column form-thead">收货数量</div>
+                <div class="two wide column form-thead">收货金额</div>
                 <div class="two wide column form-thead">出库数量</div>
                 <div class="two wide column form-thead">操作</div>
             </div>

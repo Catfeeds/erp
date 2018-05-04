@@ -71,6 +71,10 @@
             this.stockOutAdd.warehouse_id = item.id
             this.current.stock.name = item.name
             this.current.stock.stock = item
+              this.current.material.name = ''
+              this.current.material.material = ''
+              this.current.material.data = ''
+              this.stockOutAdd.lists =[]
           },
 
           //物料
@@ -108,6 +112,7 @@
           handleSelectMaterial(item) {
             this.current.material.name = item.material.name
             this.current.material.material = item.material
+              this.current.material.data = item
           },
 
           //新增项
@@ -125,12 +130,13 @@
             let data = {
               id: list.length > 0 ? list[list.length - 1].id ? list[list.length - 1].id + 1 : 1 : 1,
               material: material,
-              material_id: material.id,
+              material_id: this.current.material.data.id,
               number: 0,
-              price: currentValue.price || 0,
-              sum: currentValue.sum || 0,
-              cost: currentValue.cost || 0
+              price: this.current.material.data.price || 0,
+              sum: this.current.material.data.sum || 0,
+              cost:this.current.material.data.cost || 0
             }
+            console.log(data)
             this.stockOutAdd.lists.push(data)
           },
 

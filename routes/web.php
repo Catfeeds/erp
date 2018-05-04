@@ -178,6 +178,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('stock/get/print','StockController@printGet');
     Route::get('stock/return/print','StockController@printReturn');
     Route::get('stock/out/add','StockController@addOutPage');
+    Route::post('stock/out/add','StockController@addOut');
     Route::get('stock/stock/out_add_add','StockController@addOutAddPage');
     Route::get('stock/purchase','StockController@getPurchaseData');
     Route::get('stock/check','StockController@checkStock');
