@@ -17,6 +17,30 @@
           $('#navbar').removeClass('invisible')
         },
         methods: {
+          removeFnc() {
+
+            this.$confirm('此操作将删除该请款, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              _http.TeamManager.deleteFinish({
+                  id: this.get_id || ''
+                })
+                .then(res => {
+                  $('#btnGroup').html(`<h3 class="ui header aligned center" style="color: rgba(0,0,0,.6);">已删除</h3>`)
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+                })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });
+            });
+          },
           recheckFnc() {
             _http.TeamManager.checkFinish({
                 id: this.get_id

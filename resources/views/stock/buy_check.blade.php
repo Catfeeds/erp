@@ -59,19 +59,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lists as $list)
+                @for($i=0;$i<count($lists);$i++)
                 <tr>
-                    <td>{{$list->id}}</td>
-                    <td>{{$list->material->name}}</td>
-                    <td>{{$list->material->param}}</td>
-                    <td>{{$list->material->model}}</td>
-                    <td>{{$list->material->factory}}</td>
-                    <td>{{$list->material->unit}}</td>
-                    <td>{{$list->price}} ￥</td>
-                    <td>{{$list->number}}</td>
-                    <td>{{$list->cost}} ￥</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$lists[$i]->material->name}}</td>
+                    <td>{{$lists[$i]->material->param}}</td>
+                    <td>{{$lists[$i]->material->model}}</td>
+                    <td>{{$lists[$i]->material->factory}}</td>
+                    <td>{{$lists[$i]->material->unit}}</td>
+                    <td>{{$lists[$i]->price}} ￥</td>
+                    <td>{{$lists[$i]->number}}</td>
+                    <td>{{$lists[$i]->cost}} ￥</td>
                 </tr>
-                @endforeach
+                @endfor
 
                 </tbody>
                 <tfoot>

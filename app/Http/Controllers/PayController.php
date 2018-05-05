@@ -527,6 +527,9 @@ class PayController extends Controller
         $payment->passer_id = Auth::id();
         $payment->passer = Auth::user()->username;
         $payment->save();
+        $team = ProjectTeam::find($payment->project_team);
+        $team->price = $payment->price;
+        $team->save();
         Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
@@ -587,12 +590,8 @@ class PayController extends Controller
             $projectTeam->team_id = $team->id;
             $projectTeam->team = $team->name;
             $projectTeam->manager = $team->manager;
-            $projectTeam->price = $post->get('price');
-            $projectTeam->need_price = $post->get('price');
-            $projectTeam->save();
-        }else{
-            $projectTeam->price += $post->get('price');
-            $projectTeam->need_price += $post->get('price');
+//            $projectTeam->price = $post->get('price');
+//            $projectTeam->need_price = $post->get('price');
             $projectTeam->save();
         }
         $lists = $post->get('lists');
@@ -616,12 +615,17 @@ class PayController extends Controller
                 $list = new RequestPaymentList();
                 $list->payment_id = $payment->id;
                 $list->name = $item['name'];
-                $list->param = $item['para'];
+                if (isset($item['para'])){
+                    $list->param = $item['para'];
+                }
+                if (isset($item['remark'])){
+                    $list->remark = $item['remark'];
+                }
                 $list->number = $item['number'];
                 $list->unit = $item['unit'];
                 $list->price = $item['price'];
                 $list->total = $item['total'];
-                $list->remark = $item['remark'];
+
                 $list->save();
             }
         }
@@ -672,6 +676,24 @@ class PayController extends Controller
         $id = Input::get('id');
         $apply = PayApply::find($id);
         return view('pay.print',['apply'=>$apply]);
+    }
+    public function deleteRequestPayment()
+    {
+        $id = Input::get('id');
+        $payment = RequestPayment::find($id);
+        if ($payment->state!=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许删除!'
+            ]);
+        }
+        $payment->lists()->delete();
+        $payment->delete();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+
     }
 
 }

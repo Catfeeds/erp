@@ -199,6 +199,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/pay/single','BuildController@paySinglePage');
     Route::get('build/finish/check','PayController@checkRequestPayment');
     Route::get('build/finish/pass','PayController@passRequestPayment');
+    Route::get('build/finish/delete','PayController@deleteRequestPayment');
     Route::post('build/finish/select/checker','PayController@selectChecker');
     Route::post('build/finish/select/passer','PayController@selectPasser');
     Route::get('build/pay/finish','BuildController@finishBuildPayPage');
@@ -215,6 +216,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/pay/print','BuildController@printBuildPay');
     Route::get('build/get/print','BuildController@printBuildGet');
     Route::get('build/get/edit','BuildController@editBuildGetPage');
+    Route::get('build/deal/detail','BuildController@detailDealPage');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
     Route::get('loan/detail/list','PayController@listDetailPage');

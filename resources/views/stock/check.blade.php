@@ -29,6 +29,22 @@
                         </div>
                         <div class="column">
                             <div class="inline fields">
+                                <label class="six wide field flex-center">性能与技术参数</label>
+                                <div class="ten wide field">
+                                    <div class="fake-input">{{$stock->material->param}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="inline fields">
+                                <label class="six wide field flex-center">生产厂家</label>
+                                <div class="ten wide field">
+                                    <div class="fake-input">{{$stock->material->factory}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="inline fields">
                                 <label class="six wide field flex-center">品牌型号</label>
                                 <div class="ten wide field">
                                     <div class="fake-input">{{$stock->material->model}}</div>
@@ -88,9 +104,25 @@
                 </div>
                 <div class="column">
                     <div class="inline fields">
+                        <label class="four wide field flex-center">性能与技术参数</label>
+                        <div class="twelve wide field">
+                            <div class="fake-input">{{$stock->material->param}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="inline fields">
                         <label class="four wide field flex-center">品牌型号</label>
                         <div class="twelve wide field">
                             <div class="fake-input">{{$stock->material->model}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="inline fields">
+                        <label class="four wide field flex-center">生产厂家</label>
+                        <div class="twelve wide field">
+                            <div class="fake-input">{{$stock->material->factory}}</div>
                         </div>
                     </div>
                 </div>
@@ -167,9 +199,9 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$startData['stock_number']}}</td>
+                    <td>{{$startData['stock_cost']}}</td>
+                    <td>{{$startData['stock_price']}}</td>
                 </tr>
                 @foreach($lists as $list)
                 <tr>

@@ -132,6 +132,7 @@
               material: material,
               material_id: this.current.material.data.id,
               number: 0,
+                stock_number :this.current.material.data.number || 0,
               price: this.current.material.data.price || 0,
               sum: this.current.material.data.sum || 0,
               cost:this.current.material.data.cost || 0

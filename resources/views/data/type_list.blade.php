@@ -31,17 +31,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($types as $type)
+                @for($i=0;$i<count($types);$i++)
                 <tr>
-                    <td>{{$type->id}}</td>
-                    <td>{{$type->name}}</td>
-                    <td>{{$type->rate}}%</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$types[$i]->name}}</td>
+                    <td>{{$types[$i]->rate}}%</td>
                     <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('project/type/create')}}?id={{$type->id}}')">修改</a>
-                        <button class="ui mini button negative dataTypeDelete" data-id="{{$type->id}}">删除</button>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('project/type/create')}}?id={{$types[$i]->id}}')">修改</a>
+                        <button class="ui mini button negative dataTypeDelete" data-id="{{$types[$i]->id}}">删除</button>
                     </td>
                 </tr>
-                @endforeach
+                @endfor
                 </tbody>
             </table>
         </div>

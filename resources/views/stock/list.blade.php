@@ -66,8 +66,8 @@
                     <td>{{$stock->material()->factory}}</td>
                     <td>{{$stock->material()->unit}}</td>
                     <td>{{$stock->number}} </td>
-                    <td>{{$stock->cost}}￥</td>
-                    <td>{{$stock->cost/$stock->number}} ￥</td>
+                    <td>{{sprintf("%.2f", $stock->cost)}}￥</td>
+                    <td>{{sprintf("%.2f", $stock->cost/$stock->number)}} ￥</td>
                     <td>{{$stock->warehouse()->name}}</td>
                 </tr>
                 @endforeach

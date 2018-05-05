@@ -111,8 +111,8 @@
             }, 500)
           },
           handleSelectProjectId(item) {
-            this.payForm.project_id = item.number
-            this.payForm.project_content = item.name
+            this.buildFinishAdd.project_id = item.number
+            this.buildFinishAdd.project_content = item.name
             this.buildFinishAdd.project_manager = item.pm
           },
           querySearchProjectContent(queryString, cb) {

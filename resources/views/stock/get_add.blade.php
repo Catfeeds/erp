@@ -184,7 +184,8 @@
                     <div class="two wide column form-thead">物料名称</div>
                     <div class="two wide column form-thead">品牌型号</div>
                     <div class="two wide column form-thead">单位</div>
-                    <div class="two wide column form-thead">库存均价</div>
+                    <div class="one wide column form-thead">库存数量</div>
+                    <div class="one wide column form-thead">库存均价</div>
                     <div class="two wide column form-thead">领料数量</div>
                     <div class="two wide column form-thead">领料金额</div>
                     <div class="two wide column form-thead">操作</div>
@@ -203,7 +204,10 @@
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
+                            <div class="fake-input">@{{ item && item.stock_number  || '无'}}</div>
+                        </div>
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item && item.price.toLocaleString('en-US') + ' ￥' || '无'}}</div>
                         </div>
                         <div class="two wide column">

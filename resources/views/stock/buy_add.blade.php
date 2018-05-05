@@ -129,7 +129,7 @@
                             <label class="four wide field flex-center">筛选物料</label>
                             <div class="twelve wide field">
                                 <el-select v-model="currentMaterial" placeholder="请选择筛选物料">
-                                    <el-option v-for="(item, index) in materials" :key="item.id" :label="item.name" :value="index">
+                                    <el-option v-for="(item, index) in materials" :key="item.id" :label="item.material.name" :value="index">
                                     </el-option>
                                 </el-select>
                             </div>
@@ -144,14 +144,16 @@
             <div class="ui form form-item">
                 <div class="ui five column doubling stackable grid font-size-13">
                     <div class="two wide column form-thead">物料名称</div>
-                    <div class="one wide column form-thead">品牌型号</div>
+                    <div class="two wide column form-thead">性能与技术参数</div>
+                    <div class="two wide column form-thead">品牌型号</div>
+                    <div class="two wide column form-thead">生产厂家</div>
                     <div class="one wide column form-thead">单位</div>
                     <div class="one wide column form-thead">单价</div>
-                    <div class="two wide column form-thead">采购数量</div>
-                    <div class="two wide column form-thead">采购金额</div>
-                    <div class="two wide column form-thead">已收货数量</div>
-                    <div class="two wide column form-thead">剩余未收货数量</div>
-                    <div class="two wide column form-thead">本次入库数量</div>
+                    <div class="one wide column form-thead">采购数量</div>
+                    <div class="one wide column form-thead">采购金额</div>
+                    <div class="one wide column form-thead">已收货数量</div>
+                    <div class="one wide column form-thead">剩余未收货数量</div>
+                    <div class="one wide column form-thead">本次入库数量</div>
                     <div class="one wide column form-thead">操作</div>
                 </div>
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
@@ -159,8 +161,14 @@
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.material && item.material.material.name || '无'}}</div>
                         </div>
-                        <div class="one wide column">
+                        <div class="two wide column">
+                            <div class="fake-input">@{{ item.material && item.material.material.param || '无'}}</div>
+                        </div>
+                        <div class="two wide column">
                             <div class="fake-input">@{{ item.material && item.material.material.model || '无'}}</div>
+                        </div>
+                        <div class="two wide column">
+                            <div class="fake-input">@{{ item.material && item.material.material.factory || '无'}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.material.unit || '无'}}</div>
@@ -168,19 +176,19 @@
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.price.toLocaleString('en-US') + ' ￥' || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.number.toLocaleString('en-US') || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.cost.toLocaleString('en-US') + ' ￥' || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.received.toLocaleString('en-US') || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.need.toLocaleString('en-US') || '无'}}</div>
                         </div>
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <input v-model.number="item.number" :min="0" :max="item.material.need" type="number" placeholder="本次入库数量">
                         </div>
                         <div class="one wide column flex-row">

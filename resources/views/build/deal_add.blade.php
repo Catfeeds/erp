@@ -54,7 +54,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目编号</label>
                             <div class="eleven wide field">
-                                <el-autocomplete popper-class="my-autocomplete" v-model="buildDealAdd.project_id" :fetch-suggestions="querySearchProjectId"
+                                <el-autocomplete popper-class="my-autocomplete" v-model="buildDealAdd.project_number" :fetch-suggestions="querySearchProjectId"
                                                  placeholder="请输入项目编号" @select="handleSelectProjectId">
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>

@@ -67,33 +67,33 @@
             </tr>
             </thead>
             <tbody>
-            @for($i=0;$i<count($lists);$i++)
+            @for($i=0;$i<count($list);$i++)
             <tr>
-                <td>1</td>
-                <td>线缆</td>
-                <td>这是性能参数</td>
-                <td>ak232</td>
-                <td>xxx厂家</td>
-                <td>个</td>
-                <td>125￥</td>
-                <td>21,523</td>
-                <td>12,352￥</td>
-                <td>125</td>
-                <td>52,123￥</td>
-                <td>510</td>
-                <td>523,523￥</td>
+                <td>{{$i+1}}</td>
+                <td>{{$list[$i]->material->name}}</td>
+                <td>{{$list[$i]->material->param}}</td>
+                <td>{{$list[$i]->material->model}}</td>
+                <td>{{$list[$i]->material->factory}}</td>
+                <td>{{$list[$i]->material->unit}}</td>
+                <td>{{$list[$i]->price}}￥</td>
+                <td>{{$list[$i]->purchase_sum}}</td>
+                <td>{{$list[$i]->purchase_cost}}￥</td>
+                <td>{{$list[$i]->purchase_need}}</td>
+                <td>{{$list[$i]->purchase_need_cost}}￥</td>
+                <td>{{$list[$i]->sum}}</td>
+                <td>{{$list[$i]->cost}}￥</td>
             </tr>
             @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="7">合计</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
+                <th>{{$purchase->lists()->sum('number')}}</th>
+                <th>{{$purchase->lists()->sum('cost')}}￥</th>
+                <th>{{$purchase_need}}</th>
+                <th>{{$purchase_need_cost}}￥</th>
+                <th>{{$record->lists()->sum('sum')}}</th>
+                <th>{{$record->lists()->sum('cost')}}￥</th>
             </tr>
             </tfoot>
         </table>

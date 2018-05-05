@@ -291,6 +291,7 @@ class PurchaseController extends Controller
         $data = $db->get();
         foreach ($data as $datum){
             $datum->material = $datum->material()->first();
+            $datum->number = Stock::where('warehouse_id','=',$warehouse_id)->where('material_id','=',$datum->material_id)->pluck('number')->first();
         }
         return response()->json([
             'code'=>'200',

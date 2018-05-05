@@ -144,6 +144,13 @@
           handleSelectStock(item) {
             this.stockGetAdd.warehouse_id = item.id
             this.stockGetAdd.warehouse_name = item.name
+              // this.currentMaterial = ''
+              // this.currentMaterialName = ''
+              this.stockGetAdd.lists = []
+                  // this.currentMaterial = [material]
+
+
+              this.currentMaterialName= ''
           },
 
 
@@ -198,7 +205,8 @@
               material: this.currentMaterial.material,
               price: this.currentMaterial.price,
               material_id: this.currentMaterial.id,
-              number: 0
+              number: 0,
+                stock_number:  this.currentMaterial.number
             }
             this.stockGetAdd.lists.push(data)
           },

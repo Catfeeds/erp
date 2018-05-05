@@ -61,20 +61,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lists as $list)
+                @for($i=0;$i<count($lists);$i++)
                 <tr>
-                    <td>{{$list->id}}</td>
-                    <td>{{$list->date}}</td>
-                    <td>{{$list->team}}</td>
-                    <td>{{$list->manager}}</td>
-                    <td>{{$list->project_number}}</td>
-                    <td>{{$list->project_content}}</td>
-                    <td>{{$list->project_manager}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$lists[$i]->date}}</td>
+                    <td>{{$lists[$i]->team}}</td>
+                    <td>{{$lists[$i]->manager}}</td>
+                    <td>{{$lists[$i]->project_number}}</td>
+                    <td>{{$lists[$i]->project_content}}</td>
+                    <td>{{$lists[$i]->project_manager}}</td>
                     <td>
-                        <a class="ui mini button primary" href="#">查看合同</a>
+                        <a class="ui mini button primary" href="{{url('build/deal/detail')}}?id={{$lists[$i]->id}}" target="_blank">查看合同</a>
                     </td>
                 </tr>
-                @endforeach
+                @endfor
                 </tbody>
             </table>
         </div>

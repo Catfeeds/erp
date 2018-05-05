@@ -53,21 +53,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($users as $user)
+                @for($i=0;$i<count($users);$i++)
                 <tr>
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->name}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$users[$i]->name}}</td>
                     <td>
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('auth/check')}}?id={{$user->id}}')">查询权限</a>
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('user/create')}}?id={{$user->id}}')">修改</a>
-                        <button class="ui mini button negative authDelete" data-id="{{$user->id}}">删除</button>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('auth/check')}}?id={{$users[$i]->id}}')">查询权限</a>
+                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('user/create')}}?id={{$users[$i]->id}}')">修改</a>
+                        <button class="ui mini button negative authDelete" data-id="{{$users[$i]->id}}">删除</button>
                     </td>
                 </tr>
-                @endforeach
+                @endfor
                 </tbody>
             </table>
         </div>
-
+        {{$users->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

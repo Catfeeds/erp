@@ -85,7 +85,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">仓库</label>
                         <div class="twelve wide field">
-                            <el-autocomplete popper-class="my-autocomplete" v-model="current.stock.name" :fetch-suggestions="querySearchStock" placeholder="请输入物料名称"
+                            <el-autocomplete popper-class="my-autocomplete" v-model="current.stock.name" :fetch-suggestions="querySearchStock" placeholder="请输入仓库名称"
                                              @select="handleSelectStock">
                                 <i class="el-icon-edit el-input__icon" slot="suffix">
                                 </i>
@@ -183,7 +183,8 @@
                 <div class="two wide column form-thead">物料名称</div>
                 <div class="two wide column form-thead">品牌型号</div>
                 <div class="two wide column form-thead">单位</div>
-                <div class="two wide column form-thead">单价</div>
+                <div class="one wide column form-thead">单价</div>
+                <div class="one wide column form-thead">库存数量</div>
                 <div class="two wide column form-thead">收货数量</div>
                 <div class="two wide column form-thead">收货金额</div>
                 <div class="two wide column form-thead">出库数量</div>
@@ -200,8 +201,11 @@
                     <div class="two wide column">
                         <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                     </div>
-                    <div class="two wide column">
+                    <div class="one wide column">
                         <div class="fake-input">@{{ item.price && item.price.toLocaleString('en-US') || 0}} ￥</div>
+                    </div>
+                    <div class="one wide column">
+                        <div class="fake-input">@{{ item.stock_number && item.stock_number.toLocaleString('en-US') || 0}} </div>
                     </div>
                     <div class="two wide column">
                         <div class="fake-input">@{{ item.sum && item.sum.toLocaleString('en-US') || 0}}</div>

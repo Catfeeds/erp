@@ -51,7 +51,7 @@
                                     </i>
                                     <template slot-scope="props">
                                         <div class="name">@{{ props.item.number }}</div>
-                                        <span class="addr">@{{ props.item.pm }}</span>
+                                        <span class="addr">@{{ props.item.name }}</span>
                                     </template>
                                 </el-autocomplete>
                             </div>

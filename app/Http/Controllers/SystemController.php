@@ -675,7 +675,6 @@ class SystemController extends Controller
         $id = Input::get('id');
         $name = Input::get('name');
         $db = Material::where('state','=',1);
-
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
@@ -691,7 +690,7 @@ class SystemController extends Controller
 //        dd($stockId);
         foreach ($stockId as $item){
             $item->material = $item->material();
-            $item->price = $item->cost/$item->number;
+            $item->price = sprintf('%.2f',$item->cost/$item->number);
         }
         return response()->json([
             'code'=>'200',

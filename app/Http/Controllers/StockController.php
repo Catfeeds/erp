@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class StockController extends Controller
 {
@@ -111,6 +112,9 @@ class StockController extends Controller
             foreach ($lists as $list) {
                 //            dd($list);
                 $purchase = PurchaseList::find($list['id']);
+                if($purchase->need<$list['number']){
+                    throw new \Exception('收货数量不能超过剩余收货数量！');
+                }
                 $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
                 $record->purchase_id = $purchase->purchase_id;
                 $info = Purchase::find($purchase->purchase_id);
@@ -174,10 +178,10 @@ class StockController extends Controller
             ]);
         }catch (\Exception $exception){
             DB::rollback();
-            dd($exception);
+//            dd($exception);
             return response()->json([
                 'code'=>'400',
-                'msg'=>'ERROR'
+                'msg'=>$exception->getMessage()
             ]);
         }
 
@@ -373,7 +377,7 @@ class StockController extends Controller
             $record->warehouse_id = $post->warehouse_id;
             $record->worker = Auth::user()->username;
             $record->worker_id = Auth::id();
-            $record->purchase_number = Purchase::find($purchase->number);
+            $record->purchase_number =$purchase->number;
             $record->type = 4;
             $record->save();
             $recordPrice = 0;
@@ -602,9 +606,13 @@ class StockController extends Controller
         if($s){
             $start = $s;
             $end = $e;
+//            $start =
+            $startData = StockRecord::where('date','<',$start)->where('warehouse_id','=',$stock->warehouse_id)->orderBy('id','DESC')->first();
+            $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first()->toArray();
+//            dd($startData);
             $idArr = StockRecord::whereBetween('date',[$s,$e])
                 ->where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('id',$idArr)->where('material_id','=',$stock->material_id)->get();
+            $lists = StockRecordList::whereIn('record_id',$idArr)->where('material_id','=',$stock->material_id)->get();
             if (!empty($lists)){
                 foreach ($lists as $list){
                     $list->record = $list->record()->first();
@@ -612,7 +620,13 @@ class StockController extends Controller
             }
         }else{
             $idArr = StockRecord::where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('id',$idArr)->where('material_id','=',$stock->material_id)->get();
+//            dd($idArr);
+            $lists = StockRecordList::whereIn('record_id',$idArr)->where('material_id','=',$stock->material_id)->get();
+//            dd($lists);
+            $startData = [];
+            $startData['stock_number'] = 0;
+            $startData['stock_price'] = 0;
+            $startData['stock_cost'] = 0;
             if (!empty($lists)){
                 foreach ($lists as $list){
                     $list->record = $list->record()->first();
@@ -620,7 +634,7 @@ class StockController extends Controller
             }
         }
 //        dd($lists);
-        return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end]);
+        return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end,'startData'=>$startData]);
     }
     public function addOutAddPage()
     {
@@ -634,6 +648,21 @@ class StockController extends Controller
         $record = StockRecord::find($id);
         $list = $record->lists()->get();
         $purchase = Purchase::find($record->purchase_id);
-        return view('stock.out_single',['record'=>$record,'lists'=>$list,'purchase'=>$purchase]);
+//        dd($list);
+        $purchase_need = 0;
+        $purchase_need_cost=0;
+        if (!empty($list)){
+            foreach ($list as $item){
+                $item->material = $item->material()->first();
+                $item->purchase_price = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->pluck('price')->first();
+                $item->purchase_sum = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('number');
+                $item->purchase_cost = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('cost');
+                $item->purchase_need = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('received');
+                $item->purchase_need_cost = $item->purchase_price*$item->purchase_need;
+                $purchase_need+=$item->purchase_need;
+                $purchase_need_cost+=$item->purchase_need_cost;
+            }
+        }
+        return view('stock.out_single',['record'=>$record,'list'=>$list,'purchase'=>$purchase,'purchase_need'=>$purchase_need,'purchase_need_cost'=>$purchase_need_cost]);
     }
 }

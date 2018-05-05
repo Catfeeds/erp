@@ -326,5 +326,12 @@ class BuildController extends Controller
     {
 
     }
+    public function detailDealPage()
+    {
+        $id = Input::get('id');
+        $contract = ConstructionContract::find($id);
+        $pictures = $contract->lists()->get();
+        return view('build.detail_single',['pictures'=>$pictures]);
+    }
 
 }
