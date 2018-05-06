@@ -157,29 +157,45 @@
                     </thead>
                     <tbody>
                     @for($i=0;$i<count($situations);$i++)
-                    <tr>
-                        @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
-                        <td rowspan="{{count($situations)}}">主合同</td>
-                        @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
-                            <td rowspan="3" colspan="{{count($situations[$i]->lists)}}">主合同后期追加或减少</td>
-                        @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
-                            <td rowspan="{{count($situations)}}">分包合同</td>
+                        {{--{{dd($situations[1]->lists)}}--}}
+{{--                        {{$situations[1]->lists}}--}}
+                            @for($j=0;$j<count($situations[$i]->lists);$j++)
+
+                                @if($j==0)
+                            <tr>
+                            @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
+                                <td rowspan="{{count($situations[$i]->lists[$j])}}">主合同</td>
+                            @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
+                                <td rowspan="{{count($situations[$i]->lists[$j])}}">主合同后期追加或减少</td>
+                            @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
+                                <td rowspan="{{count($situations[$i]->lists[$j])}}">分包合同</td>
+                            @else
+                                <td rowspan="{{count($situations[$i]->lists[$j])}}">分包合同后期追加或减少</td>
+                            @endif
+                            <td rowspan="{{count($situations[$i]->lists[$j])}}">{{$situations[$i]->price}} ￥</td>
+
+                                    <td>{{$situations[$i]->lists[$j]->name}}</td>
+                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{$situations[$i]->lists[$j]->remark}}</td>
+                            </tr>
+
+
                         @else
-                            <td rowspan="{{count($situations)}}">分包合同后期追加或减少</td>
-                        @endif
-                        <td rowspan="{{count($situations)}}">{{$situations[$i]->price}} ￥</td>
-                    </tr>
-                    @foreach($situations[$i]->lists as $list)
-                    <tr>
-                        <td>{{$list->name}}</td>
-                        <td>{{$list->tax}}%</td>
-                        <td>{{$list->price}} ￥</td>
-                        <td>{{$list->remark}}</td>
-                    </tr>
-                    @endforeach
+
+                                <tr>
+                                    <td>{{$situations[$i]->lists[$j]->name}}</td>
+                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{$situations[$i]->lists[$j]->remark}}</td>
+                                </tr>
+
+                            @endif
+                                @endfor
                     {{--@endforeach--}}
                     @endfor
-                    </tfoot>
+                    </tbody>
+                {{--</table>--}}
                 </table>
             </div>
             <!-- /项目实际情况 -->
