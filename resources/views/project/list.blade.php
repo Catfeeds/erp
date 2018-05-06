@@ -32,7 +32,7 @@
                     <div class="item" data-value="3">甲方</div>
                 </div>
             </div>
-            <input name="value" type="text" placeholder="搜索内容" value="">
+            <input name="search" type="text" placeholder="搜索内容" value="">
             <button class="ui button">搜索</button>
         </div>
     </form>
@@ -77,7 +77,9 @@
         @endforeach
         </tbody>
     </table>
+
 </div>
+        {{$projects->links()}}
 @endsection
 @section('pageJs')
     <script src="{{url('js/project_list.js')}}"></script>

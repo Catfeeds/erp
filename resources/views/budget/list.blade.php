@@ -223,6 +223,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{$projects->links()}}
         </div>
         <!-- / 表格循环 -->
 

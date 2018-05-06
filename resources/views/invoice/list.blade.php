@@ -32,6 +32,7 @@
                 <thead>
                 <tr>
                     <th>发票类型</th>
+                    <th>税率</th>
                     <th>备注</th>
                     <th>操作</th>
                 </tr>
@@ -40,6 +41,7 @@
                 @foreach($invoices as $invoice)
                 <tr>
                     <td>{{$invoice->name}}</td>
+                    <td>{{$invoice->rate}}%</td>
                     <td>{{$invoice->remark}}</td>
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('invoice/create')}}?id={{$invoice->id}}')">修改</a>

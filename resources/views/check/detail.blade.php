@@ -317,29 +317,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in marginPay.data" :key="item.id">
-                            <td>@{{ item.guarantee.company }}</td>
-                            <td>@{{ item.guarantee.amount.toLocaleString('en-US') }} ￥</td>
-                            <td>@{{ item.guarantee.date }}</td>
-                            <td>@{{ item.guarantee.cost.toLocaleString('en-US') }} ￥</td>
-                            <td>@{{ item.guarantee.others }}</td>
-                            <td>@{{ item.payment.date }}</td>
-                            <td>@{{ item.payment.amount.toLocaleString('en-US') }} ￥</td>
-                            <td>@{{ item.payment.payee }}</td>
-                            <td>@{{ item.payment.bank }}</td>
-                            <td>@{{ item.payment.account }}</td>
-                            <td>@{{ item.payment.recyle }}</td>
+                        @foreach($bails as $bail)
+                        <tr >
+                            <td>{{$bail->unit}}</td>
+                            <td>{{$bail->price}} ￥</td>
+                            <td>{{$bail->term}}</td>
+                            <td>{{$bail->cost}} ￥</td>
+                            <td>{{$bail->other}}</td>
+                            <td>{{$bail->pay_date}}</td>
+                            <td> {{$bail->pay_price}}￥</td>
+                            <td>{{$bail->payee}}</td>
+                            <td>{{$bail->bank}}</td>
+                            <td>{{$bail->bank_account}}</td>
+                            <td>{{$bail->condition}}</td>
                         </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th>111,232,522 ￥</th>
+                            <th>{{$project->bail()->sum('price')}} ￥</th>
                             <th>/</th>
-                            <th>111,232,522 ￥</th>
+                            <th>{{$project->bail()->sum('cost')}} ￥</th>
                             <th>/</th>
                             <th>/</th>
-                            <th>111,232,522 ￥</th>
+                            <th>{{$project->bail()->sum('pay_price')}} ￥</th>
                             <th>/</th>
                             <th>/</th>
                             <th>/</th>
@@ -471,46 +473,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in requirement.data" :key="item.id">
-                            <template v-if="index === current.requirement">
-                                <td>
-                                    <el-date-picker v-model="editForm.requirement.date" value-format="yyyy-MM-dd" type="date" placeholder="请款日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.requirement.amount" type="number" placeholder="请款金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.requirement.company" type="text" placeholder="付款单位">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.requirement.remark" type="text" placeholder="备注">
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="ui mini button green" @click="requirementSave(item, index)">保存</button>
-                                </td>
-                            </template>
-                            <template v-else>
-                                <td>@{{ item.date }}</td>
-                                <td>@{{ item.amount.toLocaleString('en-US') }}</td>
-                                <td>@{{ item.company }}</td>
-                                <td>@{{ item.remark }}</td>
+                        @foreach($tips as $tip)
+                        <tr >
+                            <template >
+                                <td>{{ $tip->pay_date }}</td>
+                                <td>{{ $tip->price }}</td>
+                                <td>{{ $tip->pay_unit }}</td>
+                                <td>{{ $tip->remark }}</td>
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'requirement')">修改</button>
                                 </td>
                             </template>
                         </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="4">@{{ requirementCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="4">{{$project->tips()->where('type','=',2)->sum('price')}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -536,50 +516,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(item, index) in invoice.data" :key="item.id">
-                                <template v-if="index === current.invoice">
-                                    <td>
-                                        <el-date-picker v-model="editForm.invoice.date" value-format="yyyy-MM-dd" type="date" placeholder="开票日期">
-                                        </el-date-picker>
-                                    </td>
-                                    <td>
-                                        <div class="ui input">
-                                            <input v-model.number="editForm.invoice.amount" type="number" placeholder="请款金额">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <el-select v-model="editForm.invoice.company" placeholder="付款单位">
-                                            <el-option v-for="item in invoiceCompany" :key="item.id" :label="item.value" :value="item">
-                                            </el-option>
-                                        </el-select>
-                                    </td>
-                                    <td>
-                                        <el-select v-model="editForm.invoice.tax" placeholder="税率">
-                                            <el-option v-for="item in invoiceTax" :key="item.id" :label="item.value + '%'" :value="item">
-                                            </el-option>
-                                        </el-select>
-                                    </td>
-                                    <td>
-                                        <button class="ui mini button green" @click="invoiceSave(item, index)">保存</button>
-                                        <button @click="window._helper.fullWindow('../check/invoice_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
-                                    </td>
-                                </template>
-                                <template v-else>
-                                    <td>@{{ item.date }}</td>
-                                    <td>@{{ item.amount.toLocaleString('en-US') }}￥</td>
-                                    <td>@{{ item.company.value }}</td>
-                                    <td>@{{ item.tax.value }}%</td>
+                                @foreach($invoiceList as $item)
+                            <tr >
+                                <template >
+                                    <td>{{$item->date}}</td>
+                                    <td>{{$item->price}}￥</td>
+                                    <td>{{$item->unit}}</td>
+                                    <td>{{$item->rate}}%</td>
                                     <td>
                                         <button class="ui mini button primary" @click="EditFnc(item, index, 'invoice')">修改</button>
                                         <button @click="window._helper.fullWindow('../check/invoice_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
                                     </td>
                                 </template>
                             </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th>合计</th>
-                                <th colspan="4">@{{ invoiceCount.toLocaleString('en-US') }} ￥</th>
+                                <th colspan="4">{{ $project->invoices()->sum('price')}} ￥</th>
                             </tr>
                             </tfoot>
                         </table>

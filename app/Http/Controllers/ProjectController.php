@@ -25,6 +25,7 @@ use App\Models\Receipt;
 use App\Models\Role;
 use App\Models\SituationList;
 use App\Models\Supplier;
+use App\Models\Task;
 use App\Models\TaxRate;
 use App\Models\Tip;
 use App\User;
@@ -150,16 +151,12 @@ class ProjectController extends Controller
     }
     public function listProject()
     {
-        $number = Input::get('number');
-        $name = Input::get('name');
+        $name = Input::get('search');
         $projectDb = DB::table('projects');
-        if ($number){
-            $projectDb->where('number','=',$number);
-        }
         if ($name){
-            $projectDb->where('name','like','%'.$name.'%');
+            $projectDb->where('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
         }
-        $projects = $projectDb->paginate(10);
+        $projects = $projectDb->orderBy('id','DESC')->paginate(10);
         foreach ($projects as $project){
             $project->unit = OutContract::where('project_id','=',$project->id)->pluck('unit')->toArray();
         }
@@ -326,10 +323,13 @@ class ProjectController extends Controller
             }
         }
         DB::commit();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
+            return response()->json([
+                'code'=>'200',
+                'msg'=>"SUCCESS",
+                'data'=>[
+                    'id'=>$project->id
+                ]
+            ]);
         }catch (\Exception $exception){
             DB::rollback();
 //            dd($exception);
@@ -341,12 +341,23 @@ class ProjectController extends Controller
     }
     public function listProjectsDetail()
     {
-        $project = Project::paginate(10);
+        $search = Input::get('search');
+        if ($search){
+            $project = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        }else{
+            $project = Project::orderBy('id','DESC')->paginate(10);
+        }
+
         return view('project.detail',['projects'=>$project]);
     }
     public function listBudgetsPage()
     {
-        $projects = Project::all();
+        $search = Input::get('search');
+        $db = Project::where('state','>=',3);
+        if ($search){
+            $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+        }
+        $projects = $db->orderBy('id','DESC')->paginate(10);
         return view('budget.list',['projects'=>$projects]);
     }
     public function showBudgetPage()
@@ -368,6 +379,7 @@ class ProjectController extends Controller
         $bails =  $project->bail()->get();
         $receipts = $project->receipt()->get();
         $picture = $project->picture()->get();
+//        $invoice = $project->
         return view('project.check',[
             'project'=>$project,
             'mainContracts'=>$mainContracts,
@@ -486,6 +498,10 @@ class ProjectController extends Controller
 //        $projects = Project::all();
         $masterContract = $project->collects()->where('type','=',2)->get();
         $subContract = $project->collects()->where('type','=',3)->get();
+        $invoice = $project->invoices()->get();
+        $tips = $project->tips()->where('type','=',2)->get();
+//        dd($tips);
+//        dd($lists);
         return view('check.detail',[
             'project'=>$project,
             'mainContracts'=>$mainContracts,
@@ -497,7 +513,9 @@ class ProjectController extends Controller
             'bails'=>$bails,
             'invoiceTax'=>$invoiceTax,
             'masterContract'=>$masterContract,
-            'subContract'=>$subContract
+            'subContract'=>$subContract,
+            'invoiceList'=>$invoice,
+            'tips'=>$tips
         ]);
 
     }
@@ -546,6 +564,16 @@ class ProjectController extends Controller
         $type = $post->get('type');
         $project_id = $post->get('project_id');
         $collect = new ProjectCollect();
+        if ($type==1){
+            $count = Tip::where('project_id','=',$project_id)->where('type','=',1)->count();
+            $count2 = ProjectCollect::where('project_id','=',$project_id)->where('type','=',1)->count();
+            if ($count<=$count2){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>"超出预计收回履约金限制！"
+                ]);
+            }
+        }
         $collect->project_id = $project_id;
         $collect->payee = $post->get('payee');
         $collect->date = $post->get('pay_date');
@@ -570,7 +598,7 @@ class ProjectController extends Controller
         $project_id = $post->get('project_id');
         $project = Project::find($project_id);
         if ($post->get('to_warranty')==1){
-            $project->state = 2;
+            $project->state = 4;
         }
         $project->acceptance_date = $post->get('acceptance_date');
         $project->remark = $post->get('remark');
@@ -839,6 +867,87 @@ class ProjectController extends Controller
             }
         }
         return view('budget.print',['project'=>$project,'budgets'=>$budgets]);
+    }
+    public function checkProject()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        if ($project->state != 1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'该项目已经复核！'
+            ]);
+        }
+        $project->state = 2;
+        $project->save();
+        Task::where('type','=','project_check')->where('content','=',$id)->update(['state'=>0]);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>"SUCCESS",
+            'data'=>[
+                'id'=>$id
+            ]
+        ]);
+    }
+    public function selectChecker()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        if (!empty($users)){
+            foreach ($users as $user){
+                $task = new Task();
+                $task->type = 'project_check';
+                $task->title = '项目复核';
+                $task->number = Project::find($id)->number;
+                $task->url = 'project/check?id='.$id;
+                $task->content = $id;
+                $task->user_id = $user;
+                $task->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
+    public function passProject()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        if ($project->state != 2){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'该项目已经审批！'
+            ]);
+        }
+        $project->state = 3;
+        $project->save();
+        Task::where('type','=','project_pass')->where('content','=',$id)->update(['state'=>0]);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>"SUCCESS"
+        ]);
+    }
+    public function selectPasser()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        if (!empty($users)){
+            foreach ($users as $user){
+                $task = new Task();
+                $task->type = 'project_pass';
+                $task->title = '项目审批';
+                $task->number = Project::find($id)->number;
+                $task->url = 'project/check?id='.$id;
+                $task->content = $id;
+                $task->user_id = $user;
+                $task->save();
+            }
+        }
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
     }
 
 }

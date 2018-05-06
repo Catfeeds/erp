@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main_no_nav')
 @section('title','已立项清单')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">15823910212</div>
         </div>
-
+        <input type="hidden" value="{{$project->id}}" id="projectId">
         <h1 class="inline-center">项目编号 - {{$project->number}}</h1>
         <div class="margin-top-20" id="projectCheck">
             <!-- 基本信息 -->
@@ -159,15 +159,15 @@
                     @for($i=0;$i<count($situations);$i++)
                     <tr>
                         @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
-                        <td rowspan="{{count($situations)}}">主合同</td>
+                        <td rowspan="{{count($situations)+1}}">主合同</td>
                         @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
-                            <td rowspan="{{count($situations)}}">主合同后期追加或减少</td>
+                            <td rowspan="{{count($situations)+1}}">主合同后期追加或减少</td>
                         @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
-                            <td rowspan="{{count($situations)}}">分包合同</td>
+                            <td rowspan="{{count($situations)+1}}">分包合同</td>
                         @else
-                            <td rowspan="{{count($situations)}}">分包合同后期追加或减少</td>
+                            <td rowspan="{{count($situations)+1}}">分包合同后期追加或减少</td>
                         @endif
-                        <td rowspan="{{count($situations)}}">{{$situations[$i]->price}} ￥</td>
+                        <td rowspan="{{count($situations)+1}}">{{$situations[$i]->price}} ￥</td>
                     </tr>
                     @foreach($situations[$i]->lists as $list)
                     <tr>
@@ -266,7 +266,7 @@
                     <tfoot>
                     <tr>
                         <th>合计</th>
-                        <th>123,523,220 ￥</th>
+                        <th>{{$project->receipt()->sum('price')}} ￥</th>
                         <th></th>
                     </tr>
                     </tfoot>
@@ -293,6 +293,31 @@
                     <i class="icon edit"></i>
                     <span>修改</span>
                 </a>
+                <button class="ui icon button primary" id="projectCheckBtn" style="margin:0 20px;">
+                    <i class="icon legal"></i>
+                    <span>复核</span>
+                </button>
+                <button class="ui icon button primary" id="projectPass" style="margin:0 20px;">
+                    <i class="icon edit"></i>
+                    <span>审批</span>
+                </button>
+            </div>
+            <div class="ui page dimmer" id="projectCheckDialog">
+                <div class="simple dimmer content">
+                    <div class="center">
+                        <div class="buy_dialog">
+                            <div class="dialog_header">选择审批人</div>
+                            <div class="dialog_content">
+                                <el-checkbox-group v-model="checkedMen" @change="handleCheckManChange">
+                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">@{{man.name}}</el-checkbox>
+                                </el-checkbox-group>
+                            </div>
+                            <div class="diolag_footer">
+                                <button class="ui button primary" @click="confirmRecheck">确 定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -300,5 +325,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    {{--<script src="{{url('js/project_check.js')}}"></script>--}}
+    <script src="{{url('js/project_check.js')}}"></script>
 @endsection

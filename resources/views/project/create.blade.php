@@ -657,6 +657,23 @@
                     <span>提交</span>
                 </button>
             </div>
+            <div class="ui page dimmer">
+                <div class="simple dimmer content">
+                    <div class="center">
+                        <div class="buy_dialog">
+                            <div class="dialog_header">选择复核人</div>
+                            <div class="dialog_content">
+                                <el-checkbox-group v-model="checkedMen" @change="handleCheckManChange">
+                                    <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">@{{man.name}}</el-checkbox>
+                                </el-checkbox-group>
+                            </div>
+                            <div class="diolag_footer">
+                                <button class="ui button primary" @click="confirmRecheck">确 定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /主体内容 === 不可复用 -->

@@ -8,15 +8,17 @@
           paymentForm: {
             id: '',
             list: [],
-            realList: []
+            kinds: []
           },
           inputValue: '',
           inputVisible: false
         },
         mounted() {
-          $('#dataPaymentEdit').removeClass('invisible')
           this.paymentForm.id = $('#paymentType').val()
-          this.paymentForm.list = JSON.parse($('#paymentList').text())
+          this.paymentForm.title = $('#paymentName').val()
+          const list = $('#paymentList').text().trim()
+          this.paymentForm.list = list === '' ? [] : JSON.parse(list)
+          $('#dataPaymentEdit').removeClass('invisible')
         },
         methods: {
 
@@ -43,14 +45,34 @@
           //提交
           submit() {
             for (let it of this.paymentForm.list) {
-              this.paymentForm.realList.push(it.name)
+              this.paymentForm.kinds.push(it.name)
             }
             console.log(this.paymentForm)
-            this.$notify({
-              title: '成功',
-              message: '提交成功',
-              type: 'success'
-            })
+            _http.PaymentManager.createPayment(this.paymentForm)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.paymentForm.title = ''
+                  this.paymentForm.kinds = []
+                  this.$notify({
+                    title: '成功',
+                    message: '修改成功',
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           },
         }
       })

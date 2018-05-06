@@ -619,6 +619,13 @@ class SystemController extends Controller
     {
         return view('data.payment_add');
     }
+    public function editCategoryPage()
+    {
+        $id = Input::get('id');
+        $category = Category::find($id);
+        $details = Detail::where('category_id','=',$category->id)->select(['id','title as name'])->get();
+        return view('data.payment_edit',['category'=>$category,'details'=>$details]);
+    }
     public function addKinds(Request $post)
     {
         $kinds = $post->get('kinds');

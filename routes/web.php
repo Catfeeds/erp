@@ -11,9 +11,11 @@
 |
 */
 Route::get('test',function (){
-    $a=[1,3,5,7];
-    $b = [1,7];
-    $c=[];
+    $a=[['date'=>'2018-3-2','price'=>2],['date'=>'2018-3-5','price'=>2]];
+    $c=[['date'=>'2018-3-4','count'=>2],['date'=>'2018-3-2','count'=>2]];
+    $d = array_merge($a,$c);
+    array_multisort(array_column($d,'date'),SORT_ASC,$d);
+    dd($d);
     $count =0;
     for ($i=0;$i<count($a);$i++){
         if($a[$i]==$b[$i-$count]){
@@ -92,6 +94,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/types/list','SystemController@listProjectTypesPage');
    Route::post('category/create','SystemController@addCategory');
    Route::get('category/create','SystemController@addCategoryPage');
+   Route::get('category/edit','SystemController@editCategoryPage');
    Route::get('category/list','SystemController@listCategoryPage');
    Route::get('del/material','SystemController@delMaterial');
    Route::get('del/user ','UserController@delUser');
@@ -127,6 +130,10 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/invoice','ProjectController@checkInvoicePage');
    Route::get('check/collect','ProjectController@checkCollectPage');
    Route::post('create/tips','ProjectController@createTips');
+   Route::get('check/project','ProjectController@checkProject');
+   Route::get('pass/project','ProjectController@passProject');
+   Route::post('select/project/checker','ProjectController@selectChecker');
+   Route::post('select/project/passer','ProjectController@selectPasser');
 //   Route::get('check/tips','ProjectController@checkTipsPage');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');

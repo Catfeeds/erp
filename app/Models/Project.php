@@ -49,4 +49,12 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\ProjectCollect','project_id','id');
     }
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\ProjectInvoice','project_id','id');
+    }
+    public function tips()
+    {
+        return $this->hasMany('App\Models\Tip','project_id','id');
+    }
 }

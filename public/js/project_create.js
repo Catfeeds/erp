@@ -29,7 +29,12 @@
           project: _schemas.projects,
           contractContent,
           TaxIDMap,
-          ContentIDMap
+          ContentIDMap,
+          checkedMen: [],
+          menList: [],
+          selectData: {
+            id: ''
+          }
         },
         mounted() {
           if (projectData) {
@@ -253,6 +258,22 @@
                     message: `提交成功`,
                     type: 'success'
                   })
+                  this.selectData.id = res.data.data.id
+                  _http.UserManager.searchAuthUsers({
+                      role: 'project_check'
+                    })
+                    .then(resp => {
+                      if (resp.data.code === '200') {
+                        this.menList = resp.data.data
+                        $('.ui.dimmer').addClass('active')
+                      } else {
+                        this.$notify({
+                          title: '错误',
+                          message: res.data.msg,
+                          type: 'error'
+                        })
+                      }
+                    })
                 } else {
                   this.$notify({
                     title: '错误',
@@ -261,6 +282,42 @@
                   })
                 }
               })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          },
+
+          
+          //选择复核人
+          handleCheckManChange(value) {
+            console.log(this.checkedMen)
+          },
+
+          //提交复核人
+          confirmRecheck() {
+            let postData = this.selectData
+            postData.users = this.checkedMen
+            _http.ProjectManager.selectProjectCheck(postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify({
+                    title: '成功',
+                    message: '已选择了复核人',
+                    type: 'success'
+                  })
+                  $('.ui.dimmer').removeClass('active')
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              }) 
               .catch(err => {
                 this.$notify({
                   title: '错误',

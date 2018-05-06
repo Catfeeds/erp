@@ -296,7 +296,8 @@ class PayController extends Controller
         }
 //        dd($list2);
         $swap = array_merge(array_column($list,'name'),array_column($list2,'name'));
-//        dd($swap2);
+        $swap = array_unique($swap);
+//        dd($swap);
         $result = [];
         for ($i=0;$i<count($swap);$i++){
             $count = 0;

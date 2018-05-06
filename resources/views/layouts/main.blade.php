@@ -30,15 +30,7 @@
             <i class="user icon"></i>
             <span>{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
         </a>
-        <a class="item">
-            <i class="help circle icon"></i>
-            <span>帮助</span>
-        </a>
-        <a class="item">
-            <i class="sound icon"></i>
-            <span>客服</span>
-        </a>
-        <a class="item">
+        <a class="item" href="{{url('logout')}}">
             <i class="power icon"></i>
             <span>退出</span>
         </a>
@@ -48,17 +40,10 @@
         <div class="menu">
             <a class="item" href="#">
                 <i class="user icon"></i>
-                <span>管理员</span>
+                <span>{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
             </a>
-            <a class="item">
-                <i class="help circle icon"></i>
-                <span>帮助</span>
-            </a>
-            <a class="item">
-                <i class="sound icon"></i>
-                <span>客服</span>
-            </a>
-            <a class="item">
+
+            <a class="item" href="{{url('logout')}}">
                 <i class="power icon"></i>
                 <span>退出</span>
             </a>
