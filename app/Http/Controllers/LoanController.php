@@ -179,8 +179,10 @@ class LoanController extends Controller
         $lists = LoanSubmit::whereIn('id',$idArr)->get();
         $price = LoanSubmit::whereIn('id',$idArr)->sum('price');
 //        $loan_price = Loan
-        $submitPrice = LoanSubmit::where('loan_user','=',$loan->applier)->sum('price');
+        $loanPrice = LoanList::where('borrower','=',$loan->applier)->sum('price');
+        $loanPrice -=$price;
+        $submitPrice = LoanSubmit::where('loan_user','=',$loan->applier)->where('state','!=',4)->sum('price');
 //        $loanBalance =
-        return view('loan.loan_single',['loan'=>$loan,'lists'=>$lists,'price'=>$price]);
+        return view('loan.loan_single',['loan'=>$loan,'lists'=>$lists,'price'=>$price,'loanPrice'=>$loanPrice,'submitPrice'=>$submitPrice]);
     }
 }

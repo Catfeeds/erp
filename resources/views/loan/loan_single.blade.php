@@ -65,16 +65,16 @@
                 <th class="fake-td">{{$loan->deduction}}￥</th>
                 <th class="fake-td">{{$loan->cash}}￥</th>
                 <th class="fake-td">{{$loan->transfer}}￥</th>
-                <th class="fake-td">{{$price-($loan->deduction+$loan->cash+$loan->transfer)}}￥</th>
-                <th class="fake-td">{{$loan->$price}}￥</th>
+                <th class="fake-td">{{$submitPrice}}￥</th>
+                <th class="fake-td">{{$loanPrice}}￥</th>
             </tr>
             <tr>
                 <th>本次支付</th>
-                <th class="fake-td">20,000￥</th>
-                <th class="fake-td">20,000￥</th>
-                <th class="fake-td">20,000￥</th>
-                <th class="fake-td">20,000￥</th>
-                <th class="fake-td">20,000￥</th>
+                <th class="fake-td">{{$loan->deduction}}￥</th>
+                <th class="fake-td">{{$loan->cash}}￥</th>
+                <th class="fake-td">{{$loan->transfer}}￥</th>
+                <th class="fake-td">{{$submitPrice}}￥</th>
+                <th class="fake-td">{{$loanPrice}}￥</th>
             </tr>
             <tr>
                 <th>付款银行及账号</th>
