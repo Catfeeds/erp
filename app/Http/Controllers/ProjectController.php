@@ -264,7 +264,7 @@ class ProjectController extends Controller
 //                        }
                         $type = ProjectType::find($list['name']);
                         $lis->name = $type->name;
-                        $lis->tax = $type->tax;
+                        $lis->tax = $type->rate;
                         $lis->price = $list['price'];
                         if (isset($list['remark'])){
                             $lis->remark = $list['remark'];

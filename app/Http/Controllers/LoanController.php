@@ -13,6 +13,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 
 class LoanController extends Controller
 {
@@ -187,6 +188,20 @@ class LoanController extends Controller
     }
     public function listDetailPage()
     {
+        $name = Input::get('name');
+        $s = Input::get('s');
+        $e = Input::get('e');
+        if (!$name||!$s){
+            $lists = [];
+        }else{
+            $list1 = LoanList::where('borrower','=',$name)->whereBetween('apply_date',[$s,$e])->select(['name','price','apply_date as date','loanBalance','submitBalance'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance'])->get()->toArray();
+            $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction'])->get()->toArray();
+            $swap = array_merge($list1,$list2);
+            $lists = array_merge($swap,$list3);
+            array_multisort(array_column($lists,'date'),SORT_ASC,$lists);
+        }
+        dd($lists);
         return view('loan.detail_list');
     }
 }
