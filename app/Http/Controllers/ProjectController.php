@@ -366,6 +366,7 @@ class ProjectController extends Controller
             return response()->json([
                 'code'=>'400',
                 'message'=>$exception->getMessage(),
+                'line'=>$exception->getLine(),
                 'msg'=>'数据格式错误！'
             ]);
         }
