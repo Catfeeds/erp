@@ -209,7 +209,9 @@ class ProjectController extends Controller
 //                }
                 $contract->unit = $mainContract['unit'];
                 $contract->price = $mainContract['price'];
-                $contract->remark = $mainContract['remark'];
+                if (isset($mainContract['remark'])){
+                    $contract->remark = $mainContract['remark'];
+                }
                 $contract->save();
             }
         }
@@ -229,6 +231,9 @@ class ProjectController extends Controller
                 $out_contract->unit = $outContract['unit'];
                 $out_contract->price = $outContract['price'];
                 $out_contract->remark = $outContract['remark'];
+                if (isset($outContract['remark'])){
+                    $out_contract->remark = $outContract['remark'];
+                }
                 $out_contract->save();
             }
         }
@@ -260,7 +265,10 @@ class ProjectController extends Controller
                         $lis->name = $list['name'];
                         $lis->tax = $list['name'];
                         $lis->price = $list['price'];
-                        $lis->remark = $list['remark'];
+                        if (isset($list['remark'])){
+                            $lis->remark = $list['remark'];
+                        }
+
                         $lis->save();
                     }
                 }
@@ -275,17 +283,36 @@ class ProjectController extends Controller
                     $bail = new Bail();
                     $bail->project_id = $project->id;
 //                }
-                $bail->unit = $item['unit'];
-                $bail->price = $item['price'];
-                $bail->term = $item['term'];
-                $bail->cost = $item['cost'];
-                $bail->other = $item['other'];
-                $bail->pay_date = $item['pay_date'];
-                $bail->pay_price = $item['pay_price'];
-                $bail->payee = $item['payee'];
-                $bail->bank = $item['bank'];
-                $bail->bank_account = $item['bank_account'];
-                $bail->condition = $item['condition'];
+                if (isset($item['unit'])){
+                    $bail->unit = $item['unit'];
+                }
+                if (isset($item['price'])){
+                    $bail->unit = $item['price'];
+                }
+                if (isset($item['term'])){
+                    $bail->unit = $item['term'];
+                }
+                if (isset($item['cost'])){
+                    $bail->unit = $item['cost'];
+                }
+                if (isset($item['other'])){
+                    $bail->unit = $item['other'];
+                }
+                if (isset($item['pay_date'])){
+                    $bail->unit = $item['pay_date'];
+                }
+                if (isset($item['payee'])){
+                    $bail->unit = $item['payee'];
+                }
+                if (isset($item['bank'])){
+                    $bail->unit = $item['bank'];
+                }
+                if (isset($item['bank_account'])){
+                    $bail->unit = $item['bank_account'];
+                }
+                if (isset($item['condition'])){
+                    $bail->condition = $item['condition'];
+                }
                 $bail->save();
             }
         }
@@ -300,7 +327,9 @@ class ProjectController extends Controller
 //                }
                 $receipt->ratio = $item['ratio'];
                 $receipt->price = $item['price'];
-                $receipt->condition = $item['condition'];
+                if (isset($item['condition'])){
+                    $receipt->condition = $item['condition'];
+                }
                 $receipt->save();
             }
         }
