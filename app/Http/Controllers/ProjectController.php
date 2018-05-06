@@ -262,8 +262,9 @@ class ProjectController extends Controller
                             $lis = new SituationList();
                             $lis->situation_id = $situ->id;
 //                        }
-                        $lis->name = $list['name'];
-                        $lis->tax = $list['name'];
+                        $type = ProjectType::find($list['name']);
+                        $lis->name = $type->name;
+                        $lis->tax = $type->tax;
                         $lis->price = $list['price'];
                         if (isset($list['remark'])){
                             $lis->remark = $list['remark'];
