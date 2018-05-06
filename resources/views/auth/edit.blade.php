@@ -63,8 +63,8 @@
 
                     <!-- 第二栏 -->
                     <tr>
-                        <td rowspan="5">2</td>
-                        <td rowspan="5">项目立项</td>
+                        <td rowspan="9">2</td>
+                        <td rowspan="9">项目立项</td>
                         <td rowspan="3">已立项项目清单</td>
                         <td colspan="3" rowspan="3"></td>
                         <td>
@@ -105,6 +105,42 @@
                         <td>
                             <div class="ui radio checkbox">
                                 <input type="radio" value="off" name="project_edit">
+                                <label>无此权限</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">项目复核</td>
+                        <td colspan="3" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="project_check">
+                                <label>有此权限</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="project_check">
+                                <label>无此权限</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">项目审批</td>
+                        <td colspan="3" rowspan="2"></td>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="all" name="project_pass">
+                                <label>有此权限</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="off" name="project_pass">
                                 <label>无此权限</label>
                             </div>
                         </td>

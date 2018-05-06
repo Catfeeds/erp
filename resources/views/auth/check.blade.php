@@ -68,8 +68,8 @@
 
                 <!-- 第二栏 -->
                 <tr>
-                    <td rowspan="5">2</td>
-                    <td rowspan="5">项目立项</td>
+                    <td rowspan="9">2</td>
+                    <td rowspan="9">项目立项</td>
                     <td rowspan="3">已立项项目清单</td>
                     <td colspan="3" rowspan="3"></td>
                     <td>可全部查看</td>
@@ -115,6 +115,46 @@
                     <td>无此权限</td>
                     <td>
                         @if(isset($lists['project_edit'])&&$lists['project_edit']=='off')
+                            <i class='large green checkmark icon'></i>
+                        @else
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">项目复核</td>
+                    <td colspan="3" rowspan="2"></td>
+                    <td>有此权限</td>
+                    <td>
+                        @if(isset($lists['project_check'])&&$lists['project_check']=='all')
+                            <i class='large green checkmark icon'></i>
+                        @else
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>无此权限</td>
+                    <td>
+                        @if(isset($lists['project_check'])&&$lists['project_check']=='off')
+                            <i class='large green checkmark icon'></i>
+                        @else
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">项目审批</td>
+                    <td colspan="3" rowspan="2"></td>
+                    <td>有此权限</td>
+                    <td>
+                        @if(isset($lists['project_pass'])&&$lists['project_pass']=='all')
+                            <i class='large green checkmark icon'></i>
+                        @else
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>无此权限</td>
+                    <td>
+                        @if(isset($lists['project_pass'])&&$lists['project_pass']=='off')
                             <i class='large green checkmark icon'></i>
                         @else
                         @endif
