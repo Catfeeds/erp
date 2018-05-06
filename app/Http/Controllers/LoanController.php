@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
 use App\Models\LoanList;
+use App\Models\LoanPay;
+use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
 use App\Models\LoanSubmitCheck;
 use App\Models\LoanSubmitPass;
@@ -168,5 +170,15 @@ class LoanController extends Controller
         $submit = LoanSubmit::find($id);
         $lists = $submit->lists()->get();
         return view('loan.submit_print',['submit'=>$submit,'lists'=>$lists]);
+    }
+    public function singlePayPage()
+    {
+        $id = Input::get('id');
+        $loan = LoanPay::find($id);
+        $idArr = LoanPayList::where('pay_id','=',$id)->pluck('loan_id')->toArray();
+        $lists = LoanSubmit::whereIn('id',$idArr)->get();
+        $price = LoanSubmit::whereIn('id',$idArr)->sum('price');
+//        $loan_price = Loan
+        return view('loan.loan_single',['loan'=>$loan,'lists'=>$lists,'price'=>$price]);
     }
 }

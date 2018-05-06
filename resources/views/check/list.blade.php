@@ -11,7 +11,7 @@
         </div>
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between" style="padding-left: 20%;">
-            <form action="/views/check/list.html" class="ui form flex-fluid">
+            <form method="get" class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">
@@ -56,7 +56,7 @@
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$project->id}}');">{{$project->number}}</a>
                     </td>
-                    <td>{{$project->number}}</td>
+                    <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
                     <td>20万</td>
                     <td>30万</td>
@@ -73,7 +73,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$projects->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

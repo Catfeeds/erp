@@ -12,7 +12,7 @@
 
         <!-- 操作 -->
         <div class="content-operation flex-row flex-end" id="datePicker">
-            <form action="/views/check/tips.html">
+            <form >
                 <el-date-picker v-model="date" name="search-date" type="datetimerange" :picker-options="dateOption" range-separator="至" start-placeholder="开始日期"
                                 end-placeholder="结束日期" align="right" format="yyyy-MM-dd">
                 </el-date-picker>
@@ -58,7 +58,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$tips->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

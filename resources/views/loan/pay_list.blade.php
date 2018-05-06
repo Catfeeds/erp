@@ -60,7 +60,7 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../loan/pay_single.html?id=1')">{{$list->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('loan/pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->applier}}</td>
                     <td>{{$list->price}}￥</td>

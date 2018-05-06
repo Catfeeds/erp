@@ -335,7 +335,8 @@ class ProjectController extends Controller
 //            dd($exception);
             return response()->json([
                 'code'=>'400',
-                'msg'=>'ERROR'
+                'message'=>$exception->getMessage(),
+                'msg'=>'数据格式错误！'
             ]);
         }
     }
@@ -480,7 +481,13 @@ class ProjectController extends Controller
     }
     public function checkListsPage()
     {
-        $projects = Project::paginate(10);
+        $search = Input::get('search');
+        if ($search){
+            $projects = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        }else{
+            $projects = Project::orderBy('id','DESC')->paginate(10);
+        }
+
         return view('check.list',['projects'=>$projects]);
     }
     public function checkDetailPage()
@@ -704,7 +711,14 @@ class ProjectController extends Controller
     }
     public function checkTipsPage()
     {
-        $tips = Tip::paginate(10);
+        $s = Input::get('s');
+        $e = Input::get('e');
+        if ($s){
+            $tips = Tip::whereBetween('pay_date',[$s,$e])->orderBy('id','DESC')->paginate(10);
+        }else{
+            $tips = Tip::orderBy('id','DESC')->paginate(10);
+        }
+
         return view('check.tips',['tips'=>$tips]);
     }
     public function listPurchasesPage()
