@@ -164,15 +164,15 @@
                                 @if($j==0)
                             <tr>
                             @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations[$i]->lists[$j])}}">主合同</td>
+                                <td rowspan="{{count($situations[$i]->lists)}}">主合同</td>
                             @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
-                                <td rowspan="{{count($situations[$i]->lists[$j])}}">主合同后期追加或减少</td>
+                                <td rowspan="{{count($situations[$i]->lists)}}">主合同后期追加或减少</td>
                             @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations[$i]->lists[$j])}}">分包合同</td>
+                                <td rowspan="{{count($situations[$i]->lists)}}">分包合同</td>
                             @else
-                                <td rowspan="{{count($situations[$i]->lists[$j])}}">分包合同后期追加或减少</td>
+                                <td rowspan="{{count($situations[$i]->lists)}}">分包合同后期追加或减少</td>
                             @endif
-                            <td rowspan="{{count($situations[$i]->lists[$j])}}">{{$situations[$i]->price}} ￥</td>
+                            <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} ￥</td>
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
