@@ -165,9 +165,9 @@
             <el-menu-item index="loanList">
                 <a href="{{url('loan/list')}}">报销与借款清单</a>
             </el-menu-item>
-            {{--<el-menu-item index="loanDetailList">--}}
-                {{--<a href="{{url('loan/detail/list')}}">查询明细</a>--}}
-            {{--</el-menu-item>--}}
+            <el-menu-item index="loanDetailList">
+                <a href="{{url('loan/detail/list')}}">查询明细</a>
+            </el-menu-item>
             <el-menu-item index="loanLoanList">
                 <a href="{{url('loan/loan/list')}}">借款清单</a>
             </el-menu-item>

@@ -187,6 +187,6 @@ class LoanController extends Controller
     }
     public function listDetailPage()
     {
-//        retur
+        return view('loan.detail_list');
     }
 }
