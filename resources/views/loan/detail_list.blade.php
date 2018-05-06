@@ -20,7 +20,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">人员名称</label>
                                 <div class="ten wide field">
-                                    <input type="text" name="name" placeholder="请输入人员名称">
+                                    <input type="text" name="name" value="{{$name}}" placeholder="请输入人员名称">
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <el-date-picker v-model="date" name="search-date" type="datetimerange" :picker-options="dateOption" range-separator="至" start-placeholder="开始日期"
-                                        end-placeholder="结束日期" align="right" format="yyyy-MM-dd">
+                                        end-placeholder="结束日期" align="right"  format="yyyy-MM-dd">
                         </el-date-picker>
                         <button class="ui icon button primary" type="submit">
                             <i class="icon search"></i>
@@ -74,62 +74,55 @@
                 </thead>
 
                 <tbody>
+                @foreach($lists as $list)
+                    @if(strstr($list['number'],'BXFK'))
                 <tr>
-                    <td>2018-02-01</td>
-                    <td>JK20321232</td>
-                    <td>10,000.00 ￥</td>
-                    <td>BX20123212</td>
-                    <td>3,521 ￥</td>
-                    <td>BXFK20323123</td>
-                    <td>15,000￥</td>
-                    <td>15,000￥</td>
-                    <td>0</td>
-                    <td>1,000￥</td>
-                    <td>15,000￥</td>
-                    <td>10,000￥</td>
+                    <td>{{$list['date']}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{$list['number']}}</td>
+                    <td>{{$list['price']}}￥</td>
+                    <td>{{$list['deduction']}}￥</td>
+                    <td>{{$list['cash']}}</td>
+                    <td>{{$list['transfer']}}￥</td>
+                    <td>{{$list['submitBalance']}}￥</td>
+                    <td>{{$list['loanBalance']}}￥</td>
                 </tr>
-                <tr>
-                    <td>2018-02-01</td>
-                    <td>JK20321232</td>
-                    <td>10,000.00 ￥</td>
-                    <td>BX20123212</td>
-                    <td>3,521 ￥</td>
-                    <td>BXFK20323123</td>
-                    <td>15,000￥</td>
-                    <td>15,000￥</td>
-                    <td>33,210￥</td>
-                    <td>420,123￥</td>
-                    <td>15,000￥</td>
-                    <td>10,000￥</td>
-                </tr>
-                <tr>
-                    <td>2018-02-01</td>
-                    <td>JK20321232</td>
-                    <td>10,000.00 ￥</td>
-                    <td>BX20123212</td>
-                    <td>3,521 ￥</td>
-                    <td>BXFK20323123</td>
-                    <td>15,000￥</td>
-                    <td>15,000￥</td>
-                    <td>33,210￥</td>
-                    <td>420,123￥</td>
-                    <td>15,000￥</td>
-                    <td>10,000￥</td>
-                </tr>
-                <tr>
-                    <td>2018-02-01</td>
-                    <td>JK20321232</td>
-                    <td>10,000.00 ￥</td>
-                    <td>BX20123212</td>
-                    <td>3,521 ￥</td>
-                    <td>BXFK20323123</td>
-                    <td>15,000￥</td>
-                    <td>15,000￥</td>
-                    <td>33,210￥</td>
-                    <td>420,123￥</td>
-                    <td>15,000￥</td>
-                    <td>10,000￥</td>
-                </tr>
+                @elseif(strstr($list['number'],'JK'))
+                        <tr>
+                            <td>{{$list['date']}}</td>
+                            <td>{{$list['number']}}</td>
+                            <td>{{$list['price']}}￥</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$list['submitBalance']}}￥</td>
+                            <td>{{$list['loanBalance']}}￥</td>
+                        </tr>
+                        @else
+                        <tr>
+                            <td>{{$list['date']}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$list['number']}}</td>
+                            <td>{{$list['price']}} ￥</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$list['submitBalance']}}￥</td>
+                            <td>{{$list['loanBalance']}}￥</td>
+                        </tr>
+                        @endif
+
+                @endforeach
                 </tbody>
 
                 <!-- 无数据时候，使用这个 -->

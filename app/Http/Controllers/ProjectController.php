@@ -288,28 +288,28 @@ class ProjectController extends Controller
                     $bail->unit = $item['unit'];
                 }
                 if (isset($item['price'])){
-                    $bail->unit = $item['price'];
+                    $bail->price = $item['price'];
                 }
                 if (isset($item['term'])){
-                    $bail->unit = $item['term'];
+                    $bail->term = $item['term'];
                 }
                 if (isset($item['cost'])){
-                    $bail->unit = $item['cost'];
+                    $bail->cost = $item['cost'];
                 }
                 if (isset($item['other'])){
-                    $bail->unit = $item['other'];
+                    $bail->other = $item['other'];
                 }
                 if (isset($item['pay_date'])){
-                    $bail->unit = $item['pay_date'];
+                    $bail->pay_date = $item['pay_date'];
                 }
                 if (isset($item['payee'])){
-                    $bail->unit = $item['payee'];
+                    $bail->payee = $item['payee'];
                 }
                 if (isset($item['bank'])){
-                    $bail->unit = $item['bank'];
+                    $bail->bank = $item['bank'];
                 }
                 if (isset($item['bank_account'])){
-                    $bail->unit = $item['bank_account'];
+                    $bail->bank_account = $item['bank_account'];
                 }
                 if (isset($item['condition'])){
                     $bail->condition = $item['condition'];
