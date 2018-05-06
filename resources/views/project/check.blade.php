@@ -88,22 +88,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($mainContracts as $mainContract)
+                    @for($i=0;$i<count($mainContracts);$i++)
                         <div class="ui three column doubling stackable grid center aligned">
                             <div class="two wide column">
-                                <div class="fake-input">{{$mainContract->id}}</div>
+                                <div class="fake-input">{{$i+1}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContract->unit}}</div>
+                                <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContract->price}}￥</div>
+                                <div class="fake-input">{{$mainContracts[$i]->price}}￥</div>
                             </div>
                             <div class="six wide column">
-                                <div class="fake-input">{{$mainContract->remark}}</div>
+                                <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
                             </div>
                         </div>
-                    @endforeach
+                    @endfor
                 </div>
             </div>
             <!-- /主合同中标情况 -->
@@ -118,22 +118,23 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($outContracts as $outContract)
+                    @for($i=0;$i<count($outContracts);$i++)
+                    {{--@foreach($outContracts as $outContract)--}}
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">{{$outContract->id}}</div>
+                            <div class="fake-input">{{$i+1}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$outContract->unit}}</div>
+                            <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$outContract->price}}￥</div>
+                            <div class="fake-input">{{$outContracts[$i]->price}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">{{$outContract->remark}}</div>
+                            <div class="fake-input">{{$outContracts[$i]->remark}}</div>
                         </div>
                     </div>
-                    @endforeach
+                    @endfor
                 </div>
             </div>
             <!-- /合同分包情况 -->
@@ -224,21 +225,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($bails as $bail)
+                    @for($i=0;$i<count($bails);$i++)
                     <tr>
-                        <td>{{$bail->id}}</td>
-                        <td>{{$bail->unit}}</td>
-                        <td>{{$bail->price}}￥</td>
-                        <td>{{$bail->term}}</td>
-                        <td>{{$bail->cost}}</td>
-                        <td>{{$bail->other}}</td>
-                        <td>{{$bail->pay_date}}</td>
-                        <td>{{$bail->pay_price}}￥</td>
-                        <td>{{$bail->payee}}</td>
-                        <td>{{$bail->bank}} {{$bail->account}}</td>
-                        <td>{{$bail->condition}}</td>
+                        <td>{{$i+1}}</td>
+                        <td>{{$bails[$i]->unit}}</td>
+                        <td>{{$bails[$i]->price}}￥</td>
+                        <td>{{$bails[$i]->term}}</td>
+                        <td>{{$bails[$i]->cost}}</td>
+                        <td>{{$bails[$i]->other}}</td>
+                        <td>{{$bails[$i]->pay_date}}</td>
+                        <td>{{$bails[$i]->pay_price}}￥</td>
+                        <td>{{$bails[$i]->payee}}</td>
+                        <td>{{$bails[$i]->bank}} {{$bails[$i]->account}}</td>
+                        <td>{{$bails[$i]->condition}}</td>
                     </tr>
-                    @endforeach
+                    @endfor
 
                     {{--<tfoot>--}}
                     {{--<tr>--}}
