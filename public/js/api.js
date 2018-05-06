@@ -3,7 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  const url = 'http://193.112.181.116:8081'
+  const url = 'http://193.112.181.116:8080'
   // const url = 'http://localhost/erp/public'
 
   class ProjectManager {

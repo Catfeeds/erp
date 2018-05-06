@@ -185,4 +185,8 @@ class LoanController extends Controller
 //        $loanBalance =
         return view('loan.loan_single',['loan'=>$loan,'lists'=>$lists,'price'=>$price,'loanPrice'=>$loanPrice,'submitPrice'=>$submitPrice]);
     }
+    public function listDetailPage()
+    {
+//        retur
+    }
 }
