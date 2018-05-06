@@ -230,7 +230,7 @@ class ProjectController extends Controller
 //                }
                 $out_contract->unit = $outContract['unit'];
                 $out_contract->price = $outContract['price'];
-                $out_contract->remark = $outContract['remark'];
+//                $out_contract->remark = $outContract['remark'];
                 if (isset($outContract['remark'])){
                     $out_contract->remark = $outContract['remark'];
                 }
