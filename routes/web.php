@@ -134,7 +134,9 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('pass/project','ProjectController@passProject');
    Route::post('select/project/checker','ProjectController@selectChecker');
    Route::post('select/project/passer','ProjectController@selectPasser');
-//   Route::get('check/tips','ProjectController@checkTipsPage');
+   Route::get('check/invoice/print','ProjectController@checkPrintInvoice');
+   Route::get('check/master/print','ProjectController@checkMasterInvoice');
+   Route::get('check/sub/print','ProjectController@checkSubInvoice');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
     Route::post('create/budget','ProjectController@addBudget');

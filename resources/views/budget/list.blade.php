@@ -198,8 +198,8 @@
                     <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
                     <td>{{$project->mainContract()->sum('price')+$project->outContract()->sum('price')}}￥</td>
-                    <td class="function-one">{{$project->mainContract()->sum('price')}}￥</td>
-                    <td class="function-one">{{$project->outContract()->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->situation()->where('type','=',1)->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->situation()->where('type','=',2)->sum('price')}}￥</td>
                     <td>{{$project->budget()->sum('price')}}￥</td>
                     <td class="function-two">{{$project->budget()->where('type','=',1)->sum('price')}}￥</td>
                     <td class="function-two">{{$project->budget()->where('type','=',2)->sum('price')}}￥</td>

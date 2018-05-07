@@ -49,7 +49,7 @@
     },
 
     //项目表单重命名
-    projectCreatFormat(data) {
+    projectCreatFormat(data, ContentIDMap, TaxIDMap) {
       let result = {
         project: {},
         mainContracts: [],
@@ -120,8 +120,8 @@
           const details = it.details
           details.forEach((subIt, subIndex) => {
             let subTmp = {
-              name: subIt.name,
-              tax: subIt.tax,
+              name: ContentIDMap[subIt.name],
+              tax: TaxIDMap[subIt.name],
               price: subIt.amount,
               remark: subIt.remark,
             }
@@ -142,8 +142,8 @@
           const details = it.details
           details.forEach((subIt, subIndex) => {
             let subTmp = {
-              name: subIt.name,
-              tax: subIt.tax,
+              name: ContentIDMap[subIt.name],
+              tax: TaxIDMap[subIt.name],
               price: subIt.amount,
               remark: subIt.remark,
             }

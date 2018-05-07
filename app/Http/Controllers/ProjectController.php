@@ -262,9 +262,9 @@ class ProjectController extends Controller
                             $lis = new SituationList();
                             $lis->situation_id = $situ->id;
 //                        }
-                        $type = ProjectType::find($list['name']);
-                        $lis->name = $type->name;
-                        $lis->tax = $type->rate;
+//                        $type = ProjectType::find($list['name']);
+                        $lis->name = $list['name'];
+                        $lis->tax = $list['tax'];
                         $lis->price = $list['price'];
                         if (isset($list['remark'])){
                             $lis->remark = $list['remark'];
@@ -538,6 +538,9 @@ class ProjectController extends Controller
         $subContract = $project->collects()->where('type','=',3)->get();
         $invoice = $project->invoices()->get();
         $tips = $project->tips()->where('type','=',2)->get();
+        $subCompany = $project->collects()->where('type','=',4)->get();
+        $bailReturn = $project->tips()->where('type','=',1)->get();
+        $bailGet = $project->collects()->where('type','=',1)->get();
 //        dd($tips);
 //        dd($lists);
         return view('check.detail',[
@@ -553,7 +556,10 @@ class ProjectController extends Controller
             'masterContract'=>$masterContract,
             'subContract'=>$subContract,
             'invoiceList'=>$invoice,
-            'tips'=>$tips
+            'tips'=>$tips,
+            'subCompanies'=>$subCompany,
+            'bailReturn'=>$bailReturn,
+            'bailGet'=>$bailGet
         ]);
 
     }
@@ -993,6 +999,27 @@ class ProjectController extends Controller
             'code'=>'200',
             'msg'=>'SUCCESS'
         ]);
+    }
+    public function checkPrintInvoice()
+    {
+        $id = Input::get('id');
+        $invoice = ProjectInvoice::find($id);
+        $lists = $invoice->lists()->get();
+        return view('check.invoice_print',['invoice'=>$invoice,'lists'=>$lists]);
+    }
+    public function checkMasterInvoice()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        return view('check.collect_master_print',['collect'=>$collect,'project'=>$project]);
+    }
+    public function checkSubInvoice()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        return view('check.collect_sub_print',['collect'=>$collect,'project'=>$project]);
     }
 
 }

@@ -184,26 +184,41 @@
                     </thead>
                     <tbody>
                     @for($i=0;$i<count($situations);$i++)
-                        <tr>
-                            @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations)+1}}">主合同</td>
-                            @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
-                                <td rowspan="{{count($situations)+1}}">主合同后期追加或减少</td>
-                            @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
-                                <td rowspan="{{count($situations)+1}}">分包合同</td>
+                        {{--{{dd($situations[1]->lists)}}--}}
+                        {{--                        {{$situations[1]->lists}}--}}
+                        @for($j=0;$j<count($situations[$i]->lists);$j++)
+
+                            @if($j==0)
+                                <tr>
+                                    @if($situations[$i]->type==1&&$situations[$i]->is_main==1)
+                                        <td rowspan="{{count($situations[$i]->lists)}}">主合同</td>
+                                    @elseif($situations[$i]->type==1&&$situations[$i]->is_main==0)
+                                        <td rowspan="{{count($situations[$i]->lists)}}">主合同后期追加或减少</td>
+                                    @elseif($situations[$i]->type==2&&$situations[$i]->is_main==1)
+                                        <td rowspan="{{count($situations[$i]->lists)}}">分包合同</td>
+                                    @else
+                                        <td rowspan="{{count($situations[$i]->lists)}}">分包合同后期追加或减少</td>
+                                    @endif
+                                    <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} ￥</td>
+
+                                    <td>{{$situations[$i]->lists[$j]->name}}</td>
+                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{$situations[$i]->lists[$j]->remark}}</td>
+                                </tr>
+
+
                             @else
-                                <td rowspan="{{count($situations)+1}}">分包合同后期追加或减少</td>
+
+                                <tr>
+                                    <td>{{$situations[$i]->lists[$j]->name}}</td>
+                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{$situations[$i]->lists[$j]->remark}}</td>
+                                </tr>
+
                             @endif
-                            <td rowspan="{{count($situations)+1}}">{{$situations[$i]->price}} ￥</td>
-                        </tr>
-                        @foreach($situations[$i]->lists as $list)
-                            <tr>
-                                <td>{{$list->name}}</td>
-                                <td>{{$list->tax}}%</td>
-                                <td>{{$list->price}} ￥</td>
-                                <td>{{$list->remark}}</td>
-                            </tr>
-                        @endforeach
+                        @endfor
                         {{--@endforeach--}}
                     @endfor
                     </tbody>
@@ -376,79 +391,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in marginRecyle.data" :key="item.id">
-                            <template v-if="current.marginRecyle === index">
-                                <td>
-                                    <el-date-picker v-model="editForm.marginRecyle.preDate" value-format="yyyy-MM-dd" type="date" placeholder="预计回收日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.marginRecyle.preAmount" type="number" placeholder="预计回收金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.marginRecyle.prePeople" type="text" placeholder="付款人">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.marginRecyle.preRemark" type="text" placeholder="备注">
-                                    </div>
-                                </td>
-                                <td>
-                                    <el-date-picker v-model="editForm.marginRecyle.realDate" value-format="yyyy-MM-dd" type="date" placeholder="实际回收日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.marginRecyle.realAmount" type="number" placeholder="实际回收金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.marginRecyle.realPeople" type="text" placeholder="付款人">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.marginRecyle.realBank" type="text" placeholder="付款银行">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.marginRecyle.realAccount" type="number" placeholder="付款账户">
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="ui mini button green" @click="marginRecyleSave(item, index)">保存</button>
-                                </td>
-                            </template>
-                            <template v-else>
-                                <td>@{{item.preDate}}</td>
-                                <td>@{{item.preAmount.toLocaleString('en-US')}}</td>
-                                <td>@{{item.prePeople}}</td>
-                                <td>@{{item.preRemark}}</td>
-                                <td>@{{item.realDate}}</td>
-                                <td>@{{item.realAmount.toLocaleString('en-US')}}</td>
-                                <td>@{{item.realPeople}}</td>
-                                <td>@{{item.realBank}}</td>
-                                <td>@{{item.realAccount}}</td>
+                        @for($i=0;$i<count($bailReturn);$i++)
+                        <tr >
+                            <template >
+                                <td>{{$bailReturn[$i]->pay_date}}</td>
+                                <td>{{$bailReturn[$i]->price}}</td>
+                                <td>{{$bailReturn[$i]->pay_unit}}</td>
+                                <td>{{$bailReturn[$i]->remark}}</td>
+                                @if(isset($bailGet[$i]))
+                                <td>{{$bailGet[$i]->date}}</td>
+                                <td>{{$bailGet[$i]->price}}</td>
+                                <td>{{$bailGet[$i]->payee}}</td>
+                                <td>{{$bailGet[$i]->bank}}</td>
+                                <td>{{$bailGet[$i]->account}}</td>
+                                @else
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                @endif
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'marginRecyle')">修改</button>
                                 </td>
                             </template>
                         </tr>
+                            @endfor
                         </tbody>
                         <tfoot>
                         <tr>
                             <th colspan="3">实际回收合计</th>
-                            <th colspan="7">@{{ marginCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="7"> {{$project->collects()->where('type','=',1)->sum('price')}}￥</th>
                         </tr>
                         <tr>
                             <th colspan="3">剩余未回收保证金</th>
-                            <th colspan="7">@{{ leftMarginCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="7"> {{$project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price')}}￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -525,7 +502,7 @@
                                     <td>{{$item->rate}}%</td>
                                     <td>
                                         <button class="ui mini button primary" @click="EditFnc(item, index, 'invoice')">修改</button>
-                                        <button @click="window._helper.fullWindow('../check/invoice_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
+                                        <button @click="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                     </td>
                                 </template>
                             </tr>
@@ -569,7 +546,7 @@
                 <!-- 发包公司收款情况 -->
                 <h4 class="ui dividing header blue">发包公司收款情况</h4>
                 <div class="check-item">
-                    <table class="ui celled structured table center aligned" v-if="subCompany.data && subCompany.data.length">
+                    <table class="ui celled structured table center aligned" >
                         <thead>
                         <tr>
                             <th colspan="4">发包公司收款情况</th>
@@ -577,45 +554,28 @@
                         <tr>
                             <th>收款日期</th>
                             <th>收款金额</th>
-                            <th>备注</th>
+                            {{--<th>备注</th>--}}
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in subCompany.data" :key=item.id>
-                            <template v-if="index === current.subCompany">
+                        @foreach($subCompanies as $company)
+                        <tr >
+                            <template >
+                                <td>{{ $company->date }}</td>
+                                <td>{{ $company->price }} ￥</td>
+                                {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
-                                    <el-date-picker v-model="editForm.subCompany.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.subCompany.amount" type="number" placeholder="收款金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.subCompany.remark" type="text" placeholder="备注">
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="ui mini button green" @click="subCompanySave(item, index)">保存</button>
-                                </td>
-                            </template>
-                            <template v-else>
-                                <td>@{{ item.date }}</td>
-                                <td>@{{ item.amount.toLocaleString('en-US') }} ￥</td>
-                                <td>@{{ item.remark }}</td>
-                                <td>
-                                    <button class="ui mini button primary" @click="EditFnc(item, index, 'subCompany')">修改</button>
+                                    <button class="ui mini button primary">修改</button>
                                 </td>
                             </template>
                         </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="3">@{{ subCompanyCount.toLocaleString('en-US') }} ￥</th>
+                            <th colspan="3">{{$project->collects()->where('type','=',4)->sum('price')}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -683,7 +643,7 @@
                                 {{--<td>{{ $item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'masterContract')">修改</button>
-                                    <button @click="window._helper.fullWindow('../check/collect_master_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
+                                    <button @click="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
                                     @endforeach
                             </template>
@@ -762,7 +722,7 @@
 
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'subContract')">修改</button>
-                                    <button @click="window._helper.fullWindow('../check/collect_sub_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
+                                    <button @click="window._helper.fullWindow('{{url('check/sub/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 
                             </template>

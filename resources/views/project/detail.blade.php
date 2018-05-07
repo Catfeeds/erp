@@ -172,9 +172,9 @@
                     <td>{{date('Y-m-d',$project->finishTime)}}</td>
                     <td>{{$project->acceptance_date}}</td>
                     <td>{{$project->deadline}}</td>
-                    <td>221,234￥</td>
-                    <td class="function-one">221,234￥</td>
-                    <td class="function-one">221,234￥</td>
+                    <td>{{$project->situation()->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->situation()->where('type','=',1)->sum('price')}}￥</td>
+                    <td class="function-one">{{$project->situation()->where('type','=',2)->sum('price')}}￥</td>
                     <td>221,234￥</td>
                     <td class="function-two">221,234￥</td>
                     <td class="function-two">221,234￥</td>

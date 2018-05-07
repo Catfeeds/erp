@@ -1871,7 +1871,7 @@
                     <tr>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" value="off" name="data_build_team">
+                                <input type="radio"  value="off" name="data_build_team">
                                 <label>无此权限</label>
                             </div>
                         </td>

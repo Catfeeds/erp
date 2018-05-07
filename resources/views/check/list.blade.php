@@ -58,13 +58,13 @@
                     </td>
                     <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
-                    <td>20万</td>
-                    <td>30万</td>
-                    <td>2017-12-01</td>
-                    <td>2017-12-01</td>
-                    <td>20万</td>
-                    <td>20万</td>
-                    <td>10万</td>
+                    <td>{{$project->price}}</td>
+                    <td>{{$project->situation()->sum('price')}}</td>
+                    <td>{{$project->acceptance_date}}</td>
+                    <td>{{$project->deadline}}</td>
+                    <td>{{$project->invoices()->sum('price')}}</td>
+                    <td>{{$project->collects()->where('type','=',2)->sum('price')}}</td>
+                    <td>{{$project->collects()->where('type','=',3)->sum('price')}}</td>
                     <td>20万</td>
                     <td>20万</td>
                     <td>10万</td>
