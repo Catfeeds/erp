@@ -229,7 +229,7 @@
 <!-- 主体内容 === 不可复用 -->
 @yield('content')
 <!-- /主体内容 === 不可复用 -->
-
+@include('layouts.error')
 <!-- 全局依赖 js === 通用 -->
 
 <script src="{{url('plugins/vue/vue.min.js')}}"></script>

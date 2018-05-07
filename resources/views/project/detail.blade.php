@@ -175,14 +175,14 @@
                     <td>{{$project->situation()->sum('price')}}￥</td>
                     <td class="function-one">{{$project->situation()->where('type','=',1)->sum('price')}}￥</td>
                     <td class="function-one">{{$project->situation()->where('type','=',2)->sum('price')}}￥</td>
-                    <td>221,234￥</td>
+                    <td>{{$project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price')}}￥</td>
                     <td class="function-two">221,234￥</td>
                     <td class="function-two">221,234￥</td>
-                    <td>221,234￥</td>
+                    <td>{{$project->invoices()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price')}}￥</td>
                     <td class="function-three">221,234￥</td>
                     <td class="function-three">221,234￥</td>
                     <td class="function-three">221,234￥</td>
-                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')+$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
+                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
                     <td class="function-four">{{$project->stockRecords()->where('type','=',3)->sum('cost')}}￥</td>
                     <td class="function-four">{{$project->requestPayments()->where('state','=',3)->sum('price')}}￥</td>
                     <td class="function-four">{{$project->loanSubmits()->where('state','>',3)->sum('price')}}￥</td>

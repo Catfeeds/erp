@@ -55,7 +55,7 @@
 <!-- /通用布局 -->
 
 @yield('content')
-
+@include('layouts.error')
 <!-- 全局依赖 js === 通用 -->
 
 <script src="{{url('plugins/vue/vue.min.js')}}"></script>

@@ -334,4 +334,16 @@ class ExcelController extends Controller
             });
         })->export('xls');
     }
+    public function exportProjectList()
+    {
+        $project = Project::all();
+    }
+    public function exportProjectDetail()
+    {
+
+    }
+    public function exportBudgetList()
+    {
+
+    }
 }

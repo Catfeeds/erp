@@ -204,18 +204,18 @@
                     <td class="function-two">{{$project->budget()->where('type','=',1)->sum('price')}}￥</td>
                     <td class="function-two">{{$project->budget()->where('type','=',2)->sum('price')}}￥</td>
                     <td class="function-two">{{$project->budget()->where('type','=',3)->sum('price')}}￥</td>
-                    <td>12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td class="function-three">12,232￥</td>
-                    <td>12,232￥</td>
-                    <td>12,232￥</td>
-                    <td>12,232￥</td>
-                    <td>12,232￥</td>
+                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
+                    <td class="function-three">{{$project->stockRecords()->where('type','=',3)->sum('cost')}}￥</td>
+                    <td class="function-three">{{$project->requestPayments()->where('state','=',3)->sum('price')}}￥</td>
+                    <td class="function-three">{{$project->budget()->where('type','=',1)->sum('cost')}}￥</td>
+                    <td class="function-three">{{$project->budget()->where('type','=',2)->sum('cost')}}￥</td>
+                    <td class="function-three">{{$project->budget()->where('type','=',3)->sum('cost')}}￥</td>
+                    <td class="function-three">{{$project->payApplies()->sum('price')}}￥</td>
+                    <td class="function-three">{{$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
+                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost')}}/{{$project->budget()->sum('price')}}￥</td>
+                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->budget()->where('type','=',2)->sum('cost')-$project->stockRecords()->where('type','=',2)->sum('cost')}}/{{$project->budget()->where('type','=',1)->sum('price')}}￥</td>
+                    <td>{{$project->requestPayments()->where('state','=',3)->sum('price')+$project->budget()->where('type','=',2)->sum('cost')}}/{{$project->budget()->where('type','=',2)->sum('price')}}￥</td>
+                    <td>{{$project->budget()->where('type','=',3)->sum('cost')+$project->payApplies()->sum('price')}}/{{$project->budget()->where('type','=',3)->sum('price')}}￥</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>
