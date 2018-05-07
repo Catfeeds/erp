@@ -65,4 +65,12 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\RequestPayment','project_number','number');
     }
+    public function loanSubmits()
+    {
+        return $this->hasMany('App\Models\LoanSubmit','project_id','id');
+    }
+    public function payApplies()
+    {
+        return $this->hasMany('App\Models\PayApply','project_id','id');
+    }
 }
