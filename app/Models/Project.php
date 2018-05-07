@@ -57,4 +57,12 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\Tip','project_id','id');
     }
+    public function stockRecords()
+    {
+        return $this->hasMany('App\Models\StockRecord','project_id','id');
+    }
+    public function requestPayments()
+    {
+        return $this->hasMany('App\Models\RequestPayment','project_number','number');
+    }
 }

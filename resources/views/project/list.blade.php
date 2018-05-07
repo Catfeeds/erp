@@ -63,16 +63,16 @@
             <td>
                 <a href="{{url('project/check')}}?id={{$project->id}}">{{$project->number}}</a>
             </td>
-            <td>{{date('Y-m-d'),$project->createTime}}</td>
+            <td>{{date('Y-m-d',$project->createTime)}}</td>
             <td class="table-content">{{$project->name}}</td>
             <td>{{$project->pm}}</td>
             <td>{{$project->price}}</td>
-            <td>{{\App\Models\MainContract::where('project_id','=',$project->id)->sum('price')+\App\Models\OutContract::where('project_id','=',$project->id)->sum('price')}}</td>
+            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price')}}</td>
             <td>{{$project->PartyA}}</td>
-            <td>{{\App\Models\MainContract::where('project_id','=',$project->id)->sum('price')}}</td>
+            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',1)->sum('price')}}</td>
             <td>{{implode('|',$project->unit)}}</td>
-            <td>{{\App\Models\OutContract::where('project_id','=',$project->id)->sum('price')}}</td>
-            <td>{{date('Y-m-d'),$project->finishTime}}</td>
+            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price')}}</td>
+            <td>{{date('Y-m-d',$project->finishTime)}}</td>
         </tr>
         @endforeach
         </tbody>

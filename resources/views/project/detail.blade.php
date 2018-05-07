@@ -183,8 +183,8 @@
                     <td class="function-three">221,234￥</td>
                     <td class="function-three">221,234￥</td>
                     <td>221,234￥</td>
-                    <td class="function-four">221,234￥</td>
-                    <td class="function-four">221,234￥</td>
+                    <td class="function-four">{{$project->stockRecords()->where('type','=',3)->sum('cost')}}￥</td>
+                    <td class="function-four">{{$project->requestPayments()->where('state','=',3)->sum('price')}}￥</td>
                     <td class="function-four">221,234￥</td>
                     <td class="function-four">221,234￥</td>
                     <td class="function-four">221,234￥</td>

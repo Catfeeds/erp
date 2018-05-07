@@ -28,7 +28,7 @@
                 </div>
                 <div class="margin-top-20 flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/loan/detail').'?name='.$name.'&&s='.$s.'&&e='.$e}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>

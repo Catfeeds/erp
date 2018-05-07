@@ -16,7 +16,7 @@
                 <thead>
                 <tr>
                     <th>人员</th>
-                    <th>借款金额</th>
+                    <th>借款余额</th>
                     <th>未支付报销余额</th>
                 </tr>
                 </thead>

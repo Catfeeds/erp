@@ -255,6 +255,10 @@ class BuildController extends Controller
         $pay->pay_price = $pay->apply_price;
         $pay->state = 4;
         $pay->save();
+        $projectTeam = ProjectTeam::find($pay->project_team);
+        $projectTeam->pay_price +=$pay->pay_price;
+        $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
+        $projectTeam->save();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'

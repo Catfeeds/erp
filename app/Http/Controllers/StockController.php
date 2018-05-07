@@ -39,7 +39,20 @@ class StockController extends Controller
     }
     public function listStockList()
     {
-        $stocks = Stock::paginate(10);
+        $seartch_type = Input::get('seartch-type');
+        $search = Input::get('value');
+        if ($seartch_type){
+            if ($seartch_type==1){
+                $idArr = Material::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                $stocks = Stock::whereIn('material_id',$idArr)->get();
+            }else{
+                $idArr = Warehouse::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                $stocks = Stock::whereIn('warehouse_id',$idArr)->get();
+            }
+        }else{
+            $stocks = Stock::paginate(10);
+        }
+
         return view('stock.list',['stocks'=>$stocks]);
     }
     public function listBuyList()

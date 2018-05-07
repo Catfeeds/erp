@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\LoanList;
 use App\Models\LoanPay;
 use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
 use App\Models\Material;
 use App\Models\PayApply;
 use App\Models\Project;
+use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\Team;
 use App\Models\Warehouse;
@@ -218,6 +220,112 @@ class ExcelController extends Controller
         $tr = [['报销付款编号','报销人','付款金额','借款抵扣','现金付款','银行转账','付款银行及账号','经办人','报销编号']];
         $data = array_merge($tr,$lists);
         $this->excel->create('报销付款清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportLoanDetailList()
+    {
+        $name = Input::get('name');
+        $s = Input::get('s');
+        $e = Input::get('e');
+        if (!$name||!$s){
+            $lists = [];
+        }else{
+            $list1 = LoanList::where('borrower','=',$name)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance'])->get()->toArray();
+            $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction'])->get()->toArray();
+            $swap = array_merge($list1,$list2);
+            $lists = array_merge($swap,$list3);
+            array_multisort(array_column($lists,'date'),SORT_ASC,$lists);
+        }
+        $tr = [['日期','借款编号','借款金额','报销编号','报销金额	','付款编号','付款金额','其中：抵扣借款','其中：现金付款','其中：银行转账','未支付报销余额','借款余额']];
+        if (!empty($lists)){
+            for ($i=0;$i<count($lists);$i++){
+                if (strstr($lists[$i]['number'],'BXFK')){
+                    $swap = [];
+                    $swap['date'] = $lists[$i]['date'];
+                    $swap['JKNumber'] = '';
+                    $swap['JKPrice'] = '';
+                    $swap['BXNumber'] = '';
+                    $swap['BXPrice'] = '';
+                    $swap['FKNumber'] = $lists[$i]['number'];
+                    $swap['FKPrice'] = $lists[$i]['price'];
+                    $swap['deduction'] = $lists[$i]['deduction'];
+                    $swap['cash'] = $lists[$i]['cash'];
+                    $swap['transfer'] = $lists[$i]['transfer'];
+                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
+                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                }elseif (strstr($lists[$i]['number'],'JK')) {
+                    $swap = [];
+                    $swap['date'] = $lists[$i]['date'];
+                    $swap['JKNumber'] = $lists[$i]['number'];
+                    $swap['JKPrice'] = $lists[$i]['price'];
+                    $swap['BXNumber'] = '';
+                    $swap['BXPrice'] = '';
+                    $swap['FKNumber'] = '';
+                    $swap['FKPrice'] = '';
+                    $swap['deduction'] = '';
+                    $swap['cash'] = '';
+                    $swap['transfer'] = '';
+                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
+                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                }else{
+                    $swap = [];
+                    $swap['date'] = $lists[$i]['date'];
+                    $swap['JKNumber'] = '';
+                    $swap['JKPrice'] = '';
+                    $swap['BXNumber'] = $lists[$i]['number'];
+                    $swap['BXPrice'] = $lists[$i]['price'];
+                    $swap['FKNumber'] = '';
+                    $swap['FKPrice'] = '';
+                    $swap['deduction'] = '';
+                    $swap['cash'] = '';
+                    $swap['transfer'] = '';
+                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
+                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                }
+                $lists[$i] = $swap;
+            }
+        }
+        $data = array_merge($tr,$lists);
+        $this->excel->create('报销明细清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportStockList()
+    {
+        $stock = Stock::all();
+        $tr = [['物料名称','性能与技术参数','品牌型号','生产厂家','单位','库存数量','库存金额','平均单价','仓库']];
+        $data = [];
+        if (!empty($stock)){
+            for ($i=0;$i<count($stock);$i++){
+                $swap = [];
+                $material = $stock[$i]->material();
+                $warehouse = $stock[$i]->warehouse();
+                $swap['name'] = $material->name;
+                $swap['param'] = $material->param;
+                $swap['model'] = $material->model;
+                $swap['factory'] = $material->factory;
+                $swap['unit'] = $material->unit;
+                $swap['number'] = $stock[$i]->number;
+                $swap['cost'] = $stock[$i]->cost;
+                $swap['price'] = sprintf('%.2f',$stock[$i]->cost/$stock[$i]->number);
+                $swap['warehouse'] = $warehouse->name;
+                $data[$i] = $swap;
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('库存清单',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
                 for ($j=0;$j<$count;$j++){

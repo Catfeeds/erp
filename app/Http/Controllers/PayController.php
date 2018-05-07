@@ -305,21 +305,9 @@ class PayController extends Controller
 //        dd($swap);
         $result = [];
         for ($i=0;$i<count($swap);$i++){
-            $count = 0;
-            $submit = 0;
-            for ($j=0;$j<count($list);$j++){
-                if ($list[$j]['name']==$swap[$i]){
-                    $count+=$list[$j]['price'];
-                }
-            }
-            for ($k=0;$k<count($list2);$k++){
-                if ($list2[$k]['name']==$swap[$i]){
-                    $submit+=$list2[$k]['price'];
-                }
-            }
             $result[$i]['name'] = $swap[$i];
-            $result[$i]['loan_price'] = $count;
-            $result[$i]['submit_price'] = $submit;
+            $result[$i]['loan_price'] = LoanList::where('borrower','=',$swap[$i])->sum('price')-LoanPay::where('applier','=',$swap[$i])->sum('deduction');
+            $result[$i]['submit_price'] = LoanSubmit::where('loan_user','=',$swap[$i])->where('state','!=',4)->sum('price');
         }
 //        dd($result);
 //        $result=[];
@@ -552,7 +540,7 @@ class PayController extends Controller
         $payment->passer = Auth::user()->username;
         $payment->save();
         $team = ProjectTeam::find($payment->project_team);
-        $team->price = $payment->price;
+        $team->price += $payment->price;
         $team->save();
         Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([

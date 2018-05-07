@@ -13,12 +13,12 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap" style="align-items: flex-end;">
             <div>
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/stock/list')}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>
             </div>
-            <form action="/views/buy/charge_list.html" class="ui form flex-fluid">
+            <form  class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">
