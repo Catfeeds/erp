@@ -154,6 +154,7 @@ class ProjectController extends Controller
         $name = Input::get('search');
         $projectDb = DB::table('projects');
         $role = getRole('project_list');
+//        dd($role);
         if ($role=='any'){
             $idArr = getRoleProject('project_list');
             $projectDb->whereIn('id',$idArr);
@@ -306,6 +307,9 @@ class ProjectController extends Controller
                 }
                 if (isset($item['pay_date'])){
                     $bail->pay_date = $item['pay_date'];
+                }
+                if (isset($item['pay_price'])){
+                    $bail->pay_price = $item['pay_price'];
                 }
                 if (isset($item['payee'])){
                     $bail->payee = $item['payee'];

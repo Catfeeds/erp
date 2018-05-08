@@ -340,10 +340,33 @@ class ExcelController extends Controller
     }
     public function exportProjectDetail()
     {
-
+        $search = Input::get('search');
+        $role = getRole('project_detail');
+        if ($role=='any'){
+            $idArr = getRoleProject('project_detail');
+            $db = Project::whereIn('id',$idArr);
+            if ($search){
+                $db->where('name','like','%'.$search.'%')->where('number','=','%'.$search.'%');
+            }
+            $data = $db->orderBy('id','DESC')->get();
+        }else{
+            if ($search){
+                $data = Project::where('name','like','%'.$search.'%')->where('number','=','%'.$search.'%')->orderBy('id','DESC')->get();
+            }else{
+                $data = Project::orderBy('id','DESC')->get();
+            }
+        }
     }
     public function exportBudgetList()
     {
 
     }
+    public function exportProjectBudget()
+    {
+        $project_id = Input::get('project_id');
+        $project = Project::find($project_id);
+        $budgets = $project->budget()->get()->toArray();
+        dd($budgets);
+    }
+
 }

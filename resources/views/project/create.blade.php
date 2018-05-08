@@ -123,7 +123,7 @@
                         </div>
                         <div class="four wide column">
                             <div class="block ui icon input">
-                                <input v-model="item.amount" type="number" placeholder="请输入发包金额">
+                                <input v-model="item.amount" type="number" placeholder="请输入中标金额">
                                 <i class="yen icon"></i>
                             </div>
                         </div>
