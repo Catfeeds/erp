@@ -94,7 +94,7 @@
                 <i class="icon yen"></i>
                 <span>收票</span>
             </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../buy/invoice_print.html')" style="margin:0 10px;">
+            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('buy/print/invoice')}}?id={{$purchase->id}}')" style="margin:0 10px;">
                 <i class="icon print"></i>
                 <span>凭证</span>
             </a>

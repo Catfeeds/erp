@@ -88,14 +88,20 @@
                     <span>修改</span>
                 </a>
                 @endif
+            @if(checkRole($check,$loan->id))
             <button class="ui icon button primary" id="submitSingleCheck" style="margin:0 20px;">
                 <i class="icon legal"></i>
                 <span>复核</span>
             </button>
+                @else
+                @endif
+                @if(checkRole($pass,$loan->id))
             <a class="ui icon button primary" id="submitSinglePass" style="margin:0 20px;">
                 <i class="icon edit"></i>
                 <span>审批</span>
             </a>
+                @else
+                @endif
             <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('loan/submit/print')}}?id={{$loan->id}}')" style="margin:0 20px;">
                 <i class="icon print"></i>
                 <span>凭证</span>

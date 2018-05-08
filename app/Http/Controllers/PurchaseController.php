@@ -104,6 +104,7 @@ class PurchaseController extends Controller
         $id = Input::get('id');
         $purchase = Purchase::find($id);
         $lists = $purchase->payments()->get();
+//        $price =
 //        dd($lists);
         return view('buy.payment_list',['purchase'=>$purchase,'lists'=>$lists]);
     }
@@ -298,6 +299,32 @@ class PurchaseController extends Controller
             'msg'=>'SUCCESS',
             'data'=>$data
         ]);
+    }
+    public function printBuyBudgetary()
+    {
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        $lists = $purchase->lists()->get();
+        foreach ($lists as $list){
+            $list->material = Material::find($list->material_id);
+        }
+//        $purchase->lists = $lists;
+        return view('buy.budgetary_print',['purchase'=>$purchase,'lists'=>$lists]);
+    }
+    public function printBuyPayment()
+    {
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        $lists = $purchase->payments()->get();
+//        dd($lists);
+        return view('buy.payment_print',['purchase'=>$purchase,'lists'=>$lists]);
+    }
+    public function printBuyInvoice()
+    {
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        $invoices = $purchase->invoices()->get();
+        return view('buy.invoice_print',['purchase'=>$purchase,'invoices'=>$invoices]);
     }
 
 

@@ -176,6 +176,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('buy/payment/create','PurchaseController@createBuyPayment');
     Route::get('stock/check/budgetary','StockController@budgetaryCheckPage');
     Route::get('buy/create/invoice','PurchaseController@createInvoicePage');
+    Route::get('buy/print/budgetary','PurchaseController@printBuyBudgetary');
+    Route::get('buy/print/payment','PurchaseController@printBuyPayment');
+    Route::get('buy/print/invoice','PurchaseController@printBuyInvoice');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
     Route::get('stock/buy/list','StockController@listBuyList');

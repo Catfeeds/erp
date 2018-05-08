@@ -443,7 +443,14 @@ class PayController extends Controller
         $id = Input::get('id');
         $loan = LoanSubmit::find($id);
         $loan->lists = $loan->lists()->get();
-        return view('loan.single',['loan'=>$loan]);
+        if ($loan->type==1){
+            $check = 'loan_submit_check';
+            $pass = 'loan_submit_pass';
+        }else{
+            $check = 'loan_project_submit_check';
+            $pass = 'loan_project_submit_pass';
+        }
+        return view('loan.single',['loan'=>$loan,'check'=>$check,'pass'=>$pass]);
     }
     public function createLoanPay(Request $post)
     {

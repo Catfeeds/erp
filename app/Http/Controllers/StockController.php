@@ -526,7 +526,14 @@ class StockController extends Controller
             $list->material = Material::find($list->material_id);
         }
         $purchase->lists = $lists;
-        return view('buy.budgetary_check',['purchase'=>$purchase]);
+        if ($purchase->type==1){
+            $checkRole = 'buy_bugetary_check';
+            $passRole = 'buy_bugetary_pass';
+        }else{
+            $checkRole = 'buy_extrabugetary_check';
+            $passRole = 'buy_extrabugetary_pass';
+        }
+        return view('buy.budgetary_check',['purchase'=>$purchase,'check'=>$checkRole,'pass'=>$passRole]);
     }
     public function addReturnPage()
     {

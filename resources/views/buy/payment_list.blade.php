@@ -40,13 +40,13 @@
                 </tr>
                 <tr>
                     <th class="bg-white">付款条件</th>
-                    <th class="font-normal bg-white" colspan="11">这是付款条件xxx</th>
+                    <th class="font-normal bg-white" colspan="11">{{$purchase->condition}}</th>
                 </tr>
                 <tr>
                     <th class="bg-white">采购金额</th>
-                    <th class="font-normal bg-white" colspan="3">1,000,000 ￥</th>
+                    <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('price'))}} ￥</th>
                     <th class="bg-white">应付账款余额</th>
-                    <th class="font-normal bg-white" colspan="7">50,231 ￥</th>
+                    <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('price')-$purchase->payments()->sum('pay_price'))}} ￥</th>
                 </tr>
                 <tr>
                     <th colspan="12">付款记录</th>
@@ -95,8 +95,9 @@
                         <a class="ui mini positive button" href="#" data-id="{{$list->id}}" title="复核">复核</a>
                         <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$list->id}}')" title="录入/修改实际付款">录入</a>
                     </td>
-                    @endforeach
+
                 </tr>
+                @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
@@ -120,7 +121,7 @@
                 <i class="icon yen"></i>
                 <span>付款申请</span>
             </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../buy/payment_print.html')" style="margin:0 10px;">
+            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('buy/print/payment')}}?id={{$purchase->id}}')" style="margin:0 10px;">
                 <i class="icon print"></i>
                 <span>凭证</span>
             </a>
