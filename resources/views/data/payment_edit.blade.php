@@ -22,7 +22,7 @@
                             <label class="six wide field flex-center">费用类型</label>
                             <div class="eleven wide field">
                                 <input type="hidden" id="paymentType" value="{{$category->id}}">
-                                <div class="fake-input">交通费</div>
+                                <div class="fake-input">{{$category->name}}</div>
                             </div>
                         </div>
                     </div>

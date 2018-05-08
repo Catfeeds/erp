@@ -21,6 +21,7 @@ class RoleCheck
         $uid = Auth::id();
         $role = Role::where('role_name','=',$premission)->where('user_id','=',$uid)->first();
         $admin = Role::where('user_id','=',$uid)->where('role_name','=','admin')->first();
+//        dd($admin);
         if (!$admin){
             if (!$role||$role->role_value=='off') {
                 return redirect()->back()->with('status','无权访问！');

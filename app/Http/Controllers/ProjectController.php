@@ -384,7 +384,7 @@ class ProjectController extends Controller
     }
     public function listProjectsDetail()
     {
-        $idArr = getRoleProject('project_detail');
+
         $search = Input::get('search');
         $role = getRole('project_detail');
         if ($role=='all'){
@@ -394,11 +394,14 @@ class ProjectController extends Controller
                 $project = Project::orderBy('id','DESC')->paginate(10);
             }
         }else{
+            $idArr = getRoleProject('project_detail');
+//            dd($idArr);
             $projectDB = Project::whereIn('id',$idArr);
             if ($search){
                 $projectDB->where('name','like',$search)->orWhere('number','=',$search);
             }
             $project = $projectDB->orderBy('id','DESC')->paginate(10);
+//            dd($project);
 
         }
         return view('project.detail',['projects'=>$project,'search'=>$search]);
@@ -712,7 +715,9 @@ class ProjectController extends Controller
             $tip->pay_date = $item['pay_date'];
             $tip->price = $item['price'];
             $tip->pay_unit = $item['payee'];
-            $tip->remark = $item['remark'];
+            if (isset($item['remark'])){
+                $tip->remark = $item['remark'];
+            }
             $tip->type = $item['type'];
             $tip->save();
         }
