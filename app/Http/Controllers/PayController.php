@@ -276,7 +276,7 @@ class PayController extends Controller
     {
         $loan = LoanList::find($post->get('id'));
         $loan->pay_date = $post->get('date');
-        $loan->pay_type = $post->get('type');
+        $loan->pay_type = $post->get('pay_type');
         $loan->manager = $post->get('people');
 //        $loan->manager_id = Auth::id();
         $loan->bank = $post->get('bank');

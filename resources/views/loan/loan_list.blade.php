@@ -52,7 +52,11 @@
                     @else
                         <td>{{$list->pay_date}}</td>
                         <td>{{$list->pay_type==1?'现金':'转账'}}</td>
+                    @if($list->pay_type==1)
+                            <td></td>
+                        @else
                         <td>{{$list->bank}} {{$list->account}}</td>
+                        @endif
                         <td>{{$list->manager}}</td>
                         @endif
                     <td style="white-space:nowrap;">
