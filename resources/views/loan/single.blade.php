@@ -37,11 +37,11 @@
 
             <tr>
                 <th>报销人</th>
-                <th class="fake-td">黄其中</th>
+                <th class="fake-td">{{$loan->applier}}</th>
                 <th>复核人</th>
-                <th class="fake-td">刘科奇</th>
+                <th class="fake-td">{{$loan->checker}}</th>
                 <th>审批人</th>
-                <th class="fake-td">陈子欣</th>
+                <th class="fake-td">{{$loan->passer}}</th>
             </tr>
             <tr>
                 <th>报销单据</th>
