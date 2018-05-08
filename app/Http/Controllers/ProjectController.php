@@ -776,6 +776,7 @@ class ProjectController extends Controller
                         }
                         $list->price = $item['price'];
                         $list->number = $item['number'];
+                        $list->need = $item['number'];
                         $list->cost = $item['cost'];
                         $list->warranty_date = $item['warranty_date'];
                         $list->warranty_time = $item['warranty_time'];
