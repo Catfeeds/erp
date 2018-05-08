@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap">
             <div class="margin-top-20">
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/project/detail')}}?search={{$search}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>

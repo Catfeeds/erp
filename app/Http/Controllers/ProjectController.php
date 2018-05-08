@@ -153,6 +153,11 @@ class ProjectController extends Controller
     {
         $name = Input::get('search');
         $projectDb = DB::table('projects');
+        $role = getRole('project_list');
+        if ($role=='any'){
+            $idArr = getRoleProject('project_list');
+            $projectDb->whereIn('id',$idArr);
+        }
         if ($name){
             $projectDb->where('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
         }
@@ -160,7 +165,7 @@ class ProjectController extends Controller
         foreach ($projects as $project){
             $project->unit = OutContract::where('project_id','=',$project->id)->pluck('unit')->toArray();
         }
-        return view('project.list',['projects'=>$projects]);
+        return view('project.list',['projects'=>$projects,'search'=>$name]);
     }
     public function createProject(Request $post)
     {
@@ -390,16 +395,25 @@ class ProjectController extends Controller
             $project = $projectDB->orderBy('id','DESC')->paginate(10);
 
         }
-        return view('project.detail',['projects'=>$project]);
+        return view('project.detail',['projects'=>$project,'search'=>$search]);
     }
     public function listBudgetsPage()
     {
         $search = Input::get('search');
-
-        if ($search){
-            $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        $role = getRole('budget_list');
+        if ($role=='all'){
+            if ($search){
+                $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $projects = Project::orderBy('id','DESC')->paginate(10);
+            }
         }else{
-            $projects = Project::orderBy('id','DESC')->paginate(10);
+            $idArr = getRoleProject('budget_list');
+            $db = Project::whereIn('id',$idArr);
+            if ($search){
+                $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+            }
+            $projects = $db->orderBy('id','DESC')->paginate(10);
         }
         return view('budget.list',['projects'=>$projects]);
     }
