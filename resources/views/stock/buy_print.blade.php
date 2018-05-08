@@ -82,13 +82,13 @@
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->unit}}</td>
                 <td>{{number_format($lists[$i]->price)}} ￥</td>
                 <td>{{\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')}}</td>
-                <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')*$purchase->price)}}￥</td>
-                <td>{{$purchase->received}}</td>
-                <td>{{number_format($purchase->received*$purchase->price)}}￥</td>
+                <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')*$purchase->lists()->pluck('price')->first())}}￥</td>
+                <td>{{$purchase->lists()->sum('received')}}</td>
+                <td>{{number_format($purchase->lists()->sum('received')*$purchase->lists()->pluck('price')->first())}}￥</td>
                 <td>{{$lists[$i]->sum}}</td>
                 <td>{{number_format($lists[$i]->cost)}}￥</td>
-                <td>{{$purchase->need}}</td>
-                <td>{{number_format($purchase->need*$purchase->price)}} ￥</td>
+                <td>{{$lists[$i]->need_sum}}</td>
+                <td>{{number_format($lists[$i]->need_cost)}} ￥</td>
             </tr>
             @endfor
 
