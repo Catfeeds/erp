@@ -88,11 +88,11 @@
         </table>
 
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('../loan/pay_add.html?id=1')" style="margin:0 20px;">
-                <i class="icon edit"></i>
-                <span>修改</span>
-            </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../loan/pay_print.html?id=1')" style="margin:0 20px;">
+            {{--<a class="ui icon button primary" href="javascript:_helper.fullWindow('../loan/pay_add.html?id=1')" style="margin:0 20px;">--}}
+                {{--<i class="icon edit"></i>--}}
+                {{--<span>修改</span>--}}
+            {{--</a>--}}
+            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('loan/pay/print')}}?id={{$loan->id}}')" style="margin:0 20px;">
                 <i class="icon print"></i>
                 <span>凭证</span>
             </a>

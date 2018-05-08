@@ -24,13 +24,12 @@
                 _http.BuyManager.createCheck({
                   id: $(this).data('id')
                 })
-                // console.log(2)
+                console.log(2)
                   .then(res => {
                     if (res.data.code === '200') {
                       const data = res.data.data
-                      const currentType = data.type == 1 ? 'buy_bugetary_pass' : 'buy_extrabugetary_pass'
+                      const currentType = data.type == 1 ? 'rolebuy_bugetary_pass' : 'buy_extrabugetary_pass'
                       vm.selectData.id = data.id
-                      console.log(currentType,vm.selectData)
                       vm.$message({
                         type: 'success',
                         message: '已复核!'
@@ -41,10 +40,10 @@
                         })
                         .then(resp => {
                           if (resp.data.code === '200') {
-                            this.menList = resp.data.data
+                            vm.menList = resp.data.data
                             $('.ui.dimmer').addClass('active')
                           } else {
-                            this.$notify({
+                            vm.$notify({
                               title: '错误',
                               message: res.data.msg,
                               type: 'error'

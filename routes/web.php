@@ -264,6 +264,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('loan/submit/print','LoanController@printLoanSubmit');
     Route::get('loan/pay/single','LoanController@singlePayPage');
     Route::get('loan/detail/list','LoanController@listDetailPage');
+    Route::get('loan/pay/print','LoanController@payPrint');
     //费用付款管理
     Route::get('pay/add','PayController@createPayApplyPage');
     Route::post('pay/add','PayController@createPayApply');

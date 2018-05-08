@@ -204,4 +204,18 @@ class LoanController extends Controller
 
         return view('loan.detail_list',['lists'=>$lists,'name'=>$name,'s'=>$s,'e'=>$e]);
     }
+    public function payPrint()
+    {
+        $id = Input::get('id');
+        $loan = LoanPay::find($id);
+        $idArr = LoanPayList::where('pay_id','=',$id)->pluck('loan_id')->toArray();
+        $lists = LoanSubmit::whereIn('id',$idArr)->get();
+        $price = LoanSubmit::whereIn('id',$idArr)->sum('price');
+//        $loan_price = Loan
+        $loanPrice = LoanList::where('borrower','=',$loan->applier)->sum('price');
+        $loanPrice -=$price;
+        $submitPrice = LoanSubmit::where('loan_user','=',$loan->applier)->where('state','!=',4)->sum('price');
+//        $loanBalance =
+        return view('loan.pay_print',['loan'=>$loan,'lists'=>$lists,'price'=>$price,'loanPrice'=>$loanPrice,'submitPrice'=>$submitPrice]);
+    }
 }
