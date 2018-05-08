@@ -30,6 +30,7 @@ use App\Models\TaxRate;
 use App\Models\Tip;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -541,13 +542,24 @@ class ProjectController extends Controller
     }
     public function checkListsPage()
     {
+        $role = getRole('check_list');
         $search = Input::get('search');
-        if ($search){
-            $projects = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        if ($role == 'all'){
+            if ($search){
+                $projects = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $projects = Project::orderBy('id','DESC')->paginate(10);
+            }
         }else{
-            $projects = Project::orderBy('id','DESC')->paginate(10);
+            $idArr = getRoleProject('check_list');
+            $db = Project::whereIn('id',$idArr);
+            if ($search){
+                $db->where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $db->orderBy('id','DESC')->paginate(10);
+            }
+            $projects = $db->paginate(10);
         }
-
         return view('check.list',['projects'=>$projects]);
     }
     public function checkDetailPage()
@@ -730,6 +742,8 @@ class ProjectController extends Controller
         $purchase->condition = $basic['condition'];
         $purchase->type = $basic['type'];
         $purchase->content = Invoice::find($basic['content'])->name;
+        $purchase->worker_id = Auth::id();
+        $purchase->worker = Auth::user()->username;
         if ($purchase->save()){
             foreach ($lists as $item){
                 if ($item['material_id']){
@@ -779,22 +793,44 @@ class ProjectController extends Controller
     {
         $s = Input::get('s');
         $e = Input::get('e');
-        if ($s){
-            $tips = Tip::whereBetween('pay_date',[$s,$e])->orderBy('id','DESC')->paginate(10);
+        $role = getRole('check_tip');
+        if ($role=='any'){
+            $idArr = getRoleProject('check_tip');
+            $db = Tip::whereIn('project_id',$idArr);
+            if ($s){
+                $db->whereBetween('pay_date',[$s,$e]);
+            }
+            $tips = $db->paginate(10);
         }else{
-            $tips = Tip::orderBy('id','DESC')->paginate(10);
+            if ($s){
+                $tips = Tip::whereBetween('pay_date',[$s,$e])->orderBy('id','DESC')->paginate(10);
+            }else{
+                $tips = Tip::orderBy('id','DESC')->paginate(10);
+            }
         }
-
         return view('check.tips',['tips'=>$tips]);
     }
     public function listPurchasesPage()
     {
-        $lists = Purchase::paginate(10);
+        $role = getRole('buy_list');
+        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $db->whereIn('project_id',$idArr);
+        }
+        $lists = $db->paginate(10);
         return view('buy.list',['lists'=>$lists]);
     }
     public function listProjectPurchasesPage()
     {
-        $lists = Purchase::paginate(10);
+        $role = getRole('buy_list');
+//        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $lists = Purchase::whereIn('project_id',$idArr)->paginate(10);
+        }else{
+            $lists = Purchase::paginate(10);
+        }
         return view('buy.project_list',['lists'=>$lists]);
     }
     public function listPurchasesPayPage()

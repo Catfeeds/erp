@@ -67,11 +67,11 @@
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content" title="这是一大段内容这是一大段内容这是一大段内容这是一大段内容这是一大段内容">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>专用票17%</td>
-                    <td>专用票11%</td>
-                    <td>张三</td>
-                    <td>李四</td>
-                    <td>内</td>
+                    <td>{{$list->condition}}</td>
+                    <td>{{$list->worker}}</td>
+                    <td>{{$list->check==0?'未复核':\App\User::find($list->check)->username}}</td>
+                    <td>{{$list->pass==0?'未审批':\App\User::find($list->pass)->username}}</td>
+                    <td>{{$list->type==1?'内':'外'}}</td>
                 </tr>
                 @endforeach
                 </tbody>
