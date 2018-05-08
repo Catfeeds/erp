@@ -88,6 +88,7 @@
         </div>
 
     </div>
+    {{$lists->links()}}
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')

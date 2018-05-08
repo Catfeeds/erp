@@ -24,12 +24,13 @@
                 _http.BuyManager.createCheck({
                   id: $(this).data('id')
                 })
-                console.log(2)
+                // console.log(2)
                   .then(res => {
                     if (res.data.code === '200') {
                       const data = res.data.data
                       const currentType = data.type == 1 ? 'rolebuy_bugetary_pass' : 'buy_extrabugetary_pass'
                       vm.selectData.id = data.id
+                      console.log(currentType,vm.selectData)
                       vm.$message({
                         type: 'success',
                         message: '已复核!'
