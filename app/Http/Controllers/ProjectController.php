@@ -857,7 +857,7 @@ class ProjectController extends Controller
 //        $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $lists = Purchase::whereIn('project_id',$idArr)orderBy('id','DESC')->paginate(10);
+            $lists = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }else{
             $lists = Purchase::orderBy('id','DESC')->paginate(10);
         }
