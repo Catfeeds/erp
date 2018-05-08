@@ -325,6 +325,7 @@ class StockController extends Controller
             foreach ($lists as $list){
                 $swap = Stock::find($list['id']);
 //                $materail_id = $swap->material_id;
+
                 $price = $swap->cost/$swap->number;
                 if ($list['number']>$swap->number){
                     throw new \Exception('数量不足！');
@@ -340,7 +341,9 @@ class StockController extends Controller
                 $Rlist->cost = $Rlist->sum*$Rlist->price;
                 $Rlist->stock_cost = $swap->cost;
                 $Rlist->stock_number = $swap->number;
-                $Rlist->stock_price = $swap->cost/$swap->number;
+                $count = $swap->number;
+                $count = $count==0?1:$count;
+                $Rlist->stock_price = $swap->cost/$count;
 //                $price += $list->cost;
                 $Rlist->save();
                 $recordPrice += $Rlist->cost;
@@ -425,7 +428,9 @@ class StockController extends Controller
                 $Rlist->cost = $Rlist->sum*$Rlist->price;
                 $Rlist->stock_cost = $stock->cost;
                 $Rlist->stock_number = $stock->number;
-                $Rlist->stock_price = $stock->cost/$stock->number;
+                $count = $swap->number;
+                $count = $count==0?1:$count;
+                $Rlist->stock_price = $swap->cost/$count;
 //                $price += $list->cost;
                 $Rlist->save();
                 $recordPrice += $Rlist->cost;
