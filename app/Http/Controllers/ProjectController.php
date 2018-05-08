@@ -82,6 +82,7 @@ class ProjectController extends Controller
     {
         $id = Input::get('project_id');
         $name = Input::get('payee');
+        $type = Input::get('type');
         if ($id){
             $obj = MainContract::where('project_id','=',$id);
             $obj2 = OutContract::where('project_id','=',$id);

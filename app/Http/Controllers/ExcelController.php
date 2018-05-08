@@ -8,14 +8,17 @@ use App\Models\LoanPay;
 use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
 use App\Models\Material;
+use App\Models\OutContract;
 use App\Models\PayApply;
 use App\Models\Project;
+use App\Models\ProjectSituations;
 use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\Team;
 use App\Models\Warehouse;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Excel;
 
@@ -336,7 +339,45 @@ class ExcelController extends Controller
     }
     public function exportProjectList()
     {
-        $project = Project::all();
+        $name = Input::get('search');
+        $projectDb = DB::table('projects');
+        $role = getRole('project_list');
+//        dd($role);
+        $tr = [['项目号','立项日期	','项目内容','项目经理','合同金额','实际金额','甲方','主合同金额','发包单位','分包合同金额','合同约定完工日期']];
+        if ($role=='any'){
+            $idArr = getRoleProject('project_list');
+            $projectDb->whereIn('id',$idArr);
+        }
+        if ($name){
+            $projectDb->where('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
+        }
+        $data = [];
+        $projects = $projectDb->orderBy('id','DESC')->paginate(10);
+        for ($i=0;$i<count($projects);$i++){
+            $swap = [];
+            $swap['number'] = $projects[$i]->number;
+            $swap['createTime'] = date('Y-m-d',$projects[$i]->createTime);
+            $swap['content'] = $projects[$i]->name;
+            $swap['manager'] = $projects[$i]->pm;
+            $swap['price'] = number_format($projects[$i]->price);
+            $swap['SJPrice'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->sum('price'));
+            $swap['partyA'] = $projects[$i]->PartyA;
+            $swap['main'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->where('type','=',1)->sum('price'));
+            $unit = OutContract::where('project_id','=',$projects[$i]->id)->pluck('unit')->toArray();
+            $swap['unit'] = implode('|',$unit);
+            $swap['unit'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->where('type','=',2)->sum('price'));
+            $swap['finishTime'] = date('Y-m-d',$projects[$i]->finishTime);
+            $data[$i] = $swap;
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('项目清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
     }
     public function exportProjectDetail()
     {

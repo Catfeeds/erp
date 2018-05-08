@@ -15,7 +15,7 @@
             <i class="icon plus"></i>
             <span>新建立项</span>
         </a>
-        <a class="ui green button" href="#">
+        <a class="ui green button" href="{{url('export/project/list')}}?search={{$search}}">
             <i class="icon download"></i>
             <span>Excel 导出</span>
         </a>
@@ -66,12 +66,12 @@
             <td>{{date('Y-m-d',$project->createTime)}}</td>
             <td class="table-content">{{$project->name}}</td>
             <td>{{$project->pm}}</td>
-            <td>{{$project->price}}</td>
-            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price')}}</td>
+            <td>{{number_format($project->price)}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price'))}}</td>
             <td>{{$project->PartyA}}</td>
-            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',1)->sum('price')}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',1)->sum('price'))}}</td>
             <td>{{implode('|',$project->unit)}}</td>
-            <td>{{\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price')}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price'))}}</td>
             <td>{{date('Y-m-d',$project->finishTime)}}</td>
         </tr>
         @endforeach
