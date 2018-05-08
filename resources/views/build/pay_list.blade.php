@@ -66,9 +66,10 @@
                     <th>项目内容</th>
                     <th>项目经理</th>
                     <th>已完工请款</th>
+                    <th>已申请付款</th>
                     <th>已付款</th>
                     <th>应付账款</th>
-                    <th>系统状态</th>
+                    {{--<th>系统状态</th>--}}
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -81,9 +82,10 @@
                     <td>{{$list->project_content}}</td>
                     <td>{{$list->project_manager}}</td>
                     <td>{{$list->price}} ￥</td>
+                    <td>{{$list->applies()->sum('apply_price')}} ￥</td>
                     <td>{{$list->pay_price}} ￥</td>
                     <td>{{$list->need_price}} ￥</td>
-                    <td>{{$list->need_price==0?'已处理':'待处理'}}</td>
+{{--                    <td>{{$list->need_price==0?'已处理':'待处理'}}</td>--}}
                     <td style="white-space:nowrap;">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/single')}}?id={{$list->id}}')">查看</a>
                     </td>

@@ -115,22 +115,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($mainContracts as $mainContract)
+                    @for($i=0;$i<count($mainContracts);$i++)
                         <div class="ui three column doubling stackable grid center aligned">
                             <div class="two wide column">
-                                <div class="fake-input">{{$mainContract->id}}</div>
+                                <div class="fake-input">{{$i+1}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContract->unit}}</div>
+                                <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContract->price}}￥</div>
+                                <div class="fake-input">{{$mainContracts[$i]->price}}￥</div>
                             </div>
                             <div class="six wide column">
-                                <div class="fake-input">{{$mainContract->remark}}</div>
+                                <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
                             </div>
                         </div>
-                    @endforeach
+                    @endfor
                 </div>
             </div>
             <!-- /主合同中标情况 -->
@@ -145,22 +145,22 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($outContracts as $outContract  )
+                    @for($i=0;$i<count($outContracts);$i++)
                         <div class="ui three column doubling stackable grid center aligned">
                             <div class="two wide column">
-                                <div class="fake-input">{{$outContract->id}}</div>
+                                <div class="fake-input">{{$i+1}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$outContract->unit}}</div>
+                                <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$outContract->price}}￥</div>
+                                <div class="fake-input">{{$outContracts[$i]->price}}￥</div>
                             </div>
                             <div class="six wide column">
-                                <div class="fake-input">{{$outContract->remark}}</div>
+                                <div class="fake-input">{{$outContracts[$i]->remark}}</div>
                             </div>
                         </div>
-                    @endforeach
+                    @endfor
                 </div>
             </div>
             <!-- /合同分包情况 -->
@@ -291,15 +291,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($pictures as $picture)
+                    @for($i=0;$i<count($pictures);$i++)
                     <tr>
-                        <td>{{$picture->id}}</td>
-                        <td>{{$picture->name}}</td>
+                        <td>{{$i+1}}</td>
+                        <td>{{$pictures[$i]->name}}</td>
                         <td>
-                            <a href="{{$picture->url}}" target="_blank">查看</a>
+                            <a href="{{$pictures[$i]->url}}" target="_blank">查看</a>
                         </td>
                     </tr>
-                    @endforeach
+                    @endfor
                     </tbody>
                 </table>
             </div>

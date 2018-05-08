@@ -53,20 +53,20 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($loan->lists as $list)
+            @for($i=0;$i<count($loan->lists);$i++)
             <tr>
-                <td>{{$list->id}}</td>
-                <td>{{\App\Models\Category::find($list->category_id)->title}}</td>
-                @if($list->kind_id!=0)
-                <td>{{\App\Models\Detail::find($list->kind_id)->title}}</td>
+                <td>{{$i+1}}</td>
+                <td>{{\App\Models\Category::find($loan->lists[$i]->category_id)->title}}</td>
+                @if($loan->lists[$i]->kind_id!=0)
+                <td>{{\App\Models\Detail::find($loan->lists[$i]->kind_id)->title}}</td>
                 @else
                     <td></td>
                     @endif
-                <td>{{$list->remark}}</td>
-                <td>{{$list->number}}</td>
-                <td>{{$list->price}}￥</td>
+                <td>{{$loan->lists[$i]->remark}}</td>
+                <td>{{$loan->lists[$i]->number}}</td>
+                <td>{{$loan->lists[$i]->price}}￥</td>
             </tr>
-            @endforeach
+            @endfor
             </tbody>
             <tfoot>
             <tr>
@@ -77,10 +77,17 @@
         </table>
 
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button" href="javascript:_helper.fullWindow('../loan/submit_add.html?id=1')" style="margin:0 20px;">
+            @if($loan->type==1)
+            <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('loan/submit/other')}}?id={{$loan->id}}')" style="margin:0 20px;">
                 <i class="icon edit"></i>
                 <span>修改</span>
             </a>
+            @else
+                <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('loan/submit/project')}}?id={{$loan->id}}')" style="margin:0 20px;">
+                    <i class="icon edit"></i>
+                    <span>修改</span>
+                </a>
+                @endif
             <button class="ui icon button primary" id="submitSingleCheck" style="margin:0 20px;">
                 <i class="icon legal"></i>
                 <span>复核</span>

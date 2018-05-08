@@ -334,7 +334,11 @@ class BuildController extends Controller
     }
     public function printBuildPay()
     {
-        return view('build.pay_print');
+        $id = Input::get('id');
+        $team = ProjectTeam::find($id);
+        $payments = $team->payments()->get();
+        $applies = $team->applies()->get();
+        return view('build.pay_print',['team'=>$team,'payments'=>$payments,'applies'=>$applies]);
     }
     public function printBuildGet()
     {

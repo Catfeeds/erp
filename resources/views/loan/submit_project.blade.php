@@ -11,14 +11,18 @@
             <div class="divider"> / </div>
             <div class="active section">新增项目成本报销</div>
         </div>
-
-        <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
-        <input type="hidden" id="date" value="">
-        <input type="hidden" id="topAmount" value="">
-        <input type="hidden" id="projectId" value="">
-        <input type="hidden" id="projectContent" value="">
-        <div style="display: none;" id="lists"></div>
-        <h1 class="ui header blue aligned center">新增期间费用报销</h1>
+        @if(!empty($submit))
+        <input type="hidden" id="loanUser" value="{{$submit->loan_user}}">
+        <input type="hidden" id="date" value="{{$submit->date}}">
+        <input type="hidden" id="topAmount" value="{{$submit->price}}">
+        <input type="hidden" id="projectId" value="{{$submit->project_id}}">
+        <input type="hidden" id="projectNumber" value="{{\App\Models\Project::find($submit->project_id)->number}}">
+        <input type="hidden" id="projectContent" value="{{\App\Models\Project::find($submit->project_id)->name}}">
+        <div style="display: none;" id="lists">{{json_encode($lists)}}</div>
+        @else
+            <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
+        @endif
+        <h1 class="ui header blue aligned center">新增项目成本报销</h1>
         <div id="loanSubmitOther">
             <h4 class="ui dividing header blue">信息录入</h4>
             <div class="ui form">
@@ -52,7 +56,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目编号</label>
                             <div class="eleven wide field">
-                                <el-autocomplete popper-class="my-autocomplete" v-model="submitProjectForm.project_id" :fetch-suggestions="querySearchProjectId"
+                                <el-autocomplete popper-class="my-autocomplete" v-model="submitProjectForm.project_number" :fetch-suggestions="querySearchProjectId"
                                                  placeholder="请输入项目编号" @select="handleSelectProjectId">
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>

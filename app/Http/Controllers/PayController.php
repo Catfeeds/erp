@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\Category;
+use App\Models\Detail;
 use App\Models\FinishPayApply;
 use App\Models\LoanList;
 use App\Models\LoanListAllow;
@@ -307,7 +309,7 @@ class PayController extends Controller
         for ($i=0;$i<count($swap);$i++){
             $result[$i]['name'] = $swap[$i];
             $result[$i]['loan_price'] = LoanList::where('borrower','=',$swap[$i])->sum('price')-LoanPay::where('applier','=',$swap[$i])->sum('deduction');
-            $result[$i]['submit_price'] = LoanSubmit::where('loan_user','=',$swap[$i])->where('state','!=',4)->sum('price');
+            $result[$i]['submit_price'] = LoanSubmit::where('loan_user','=',$swap[$i])->where('state','=',3)->sum('price');
         }
 //        dd($result);
 //        $result=[];
@@ -455,13 +457,15 @@ class PayController extends Controller
         }
 //        $pay->user_id = $post->get('user_id');
         $pay->date = $post->get('date');
-        $pay->deduction = $post->get('daduction');
-        $pay->cash = $post->get('cash');
-        $pay->transfer = $post->get('transfer');
+        $pay->deduction = empty($post->get('daduction'))?0:$post->get('daduction');
+        $pay->cash = empty($post->get('cash'))?0:$post->get('cash');
+        $pay->transfer = empty($post->get('transfer'))?0:$post->get('transfer');
         $pay->price = $pay->cash+$pay->deduction+$pay->transfer;
         $bank = BankAccount::find($post->get('bank'));
-        $pay->bank = $bank->name ;
-        $pay->account = $post->get('account');
+        if ($bank){
+            $pay->bank = $bank->name ;
+            $pay->account = $post->get('account');
+        }
         $pay->worker = Auth::id();
 
         $lists = $post->get('lists');
@@ -675,6 +679,16 @@ class PayController extends Controller
     }
     public function createSubmitProjectPage()
     {
+        $id = Input::get('id');
+        if ($id){
+            $submit = LoanSubmit::find($id);
+            $lists = $submit->lists()->get();
+            foreach ($lists as $list){
+                $list->type = Category::find($list->category_id)->title;
+                $list->detailType = Detail::find($list->kind_id)->title;
+            }
+            return view('loan.submit_project',['submit'=>$submit,'lists'=>$lists]);
+        }
         return view('loan.submit_project');
     }
     public function paySinglePage()

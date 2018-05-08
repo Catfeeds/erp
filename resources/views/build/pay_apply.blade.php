@@ -72,6 +72,14 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
+                            <label class="six wide field flex-center">已申请付款</label>
+                            <div class="eleven wide field">
+                                <div class="fake-input">{{$projectTeam->applies()->sum('apply_price')}} ￥</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
                             <label class="six wide field flex-center">已付款</label>
                             <div class="eleven wide field">
                                 <div class="fake-input">{{$projectTeam->pay_price}} ￥</div>

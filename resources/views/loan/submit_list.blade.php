@@ -136,8 +136,8 @@
                     @else
                         <td>待审核</td>
                     @endif
-                    <td>{{$list->state==0?'未付款':'已付款'}}</td>
-                    <td>BXFK20171103001</td>
+                    <td>{{$list->state!=4?'未付款':'已付款'}}</td>
+                    <td>{{$list->FKNumber}}</td>
                 </tr>
                 @endforeach
                 </tbody>
