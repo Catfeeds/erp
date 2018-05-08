@@ -1,24 +1,33 @@
-@extends('layouts.main')
+@extends('layouts.main_no_nav')
 @section('title','已立项清单')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
 
-        <div class="ui breadcrumb">
+        <div class="ui breadcrumb print-hide">
             <a class="section">报销与借款管理</a>
             <div class="divider"> / </div>
             <a class="section" href="../loan/pay_list.html">报销付款清单</a>
             <div class="divider"> / </div>
-            <div class="active section">报销付款查询 - {{$loan->number}}</div>
+            <a class="section" href="../loan/pay_single.html?id=BXFK20171103001">报销付款查询 - {{$loan->number}}</a>
+            <div class="divider"> / </div>
+            <div class="active section">凭证</div>
         </div>
 
-        <h3 class="ui header center aligned">报销付款查询 - {{$loan->number}}</h3>
-        <table class="ui celled center aligned table selectable">
+        <h1 class="ui header center aligned">报销付款记帐凭证</h1>
+        <p style="text-align:right;font-size: 13px;padding-right:20px;">
+            {{--<b>记账凭证号：</b>12321312312312</p>--}}
+        <p style="text-align:right;font-size: 13px;padding-right:20px;">
+            <b>附件：</b>
+            <span style="padding: 0 20px;"></span>
+            <b>张</b>
+        </p>
+        <table class="ui celled structured center aligned table">
             <thead>
             <tr>
                 <th>付款日期</th>
                 <th class="fake-td">{{$loan->date}}</th>
-                <th>付款报销编号</th>
+                <th>付款编号</th>
                 <th class="fake-td">{{$loan->number}}</th>
                 <th>报销人</th>
                 <th class="fake-td">{{$loan->applier}}</th>
@@ -34,14 +43,14 @@
             </thead>
             <tbody>
             @for($i=0;$i<count($lists);$i++)
-            <tr>
-                <td>{{$i+1}}</td>
-                <td>{{$lists[$i]->number}}</td>
-                <td>{{$lists[$i]->price}}￥</td>
-                <td>{{$lists[$i]->checker}}</td>
-                <td>{{$lists[$i]->passer}}</td>
-                <td></td>
-            </tr>
+                <tr>
+                    <td>{{$i+1}}</td>
+                    <td>{{$lists[$i]->number}}</td>
+                    <td>{{$lists[$i]->price}}￥</td>
+                    <td>{{$lists[$i]->checker}}</td>
+                    <td>{{$lists[$i]->passer}}</td>
+                    <td></td>
+                </tr>
             @endfor
             </tbody>
             <tfoot>
@@ -86,18 +95,14 @@
             </tr>
             </tfoot>
         </table>
-
-        <div class="flex-row flex-center margin-top-50">
-            {{--<a class="ui icon button primary" href="javascript:_helper.fullWindow('../loan/pay_add.html?id=1')" style="margin:0 20px;">--}}
-                {{--<i class="icon edit"></i>--}}
-                {{--<span>修改</span>--}}
-            {{--</a>--}}
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('loan/pay/print')}}?id={{$loan->id}}')" style="margin:0 20px;">
-                <i class="icon print"></i>
-                <span>凭证</span>
-            </a>
+        <div class="content-operation print-hide">
+            <div class="flex-row flex-end">
+                <a class="ui icon button primary" href="javascript:window.print();">
+                    <i class="icon print"></i>
+                    <span>打印</span>
+                </a>
+            </div>
         </div>
-
 
     </div>
     <!-- /主体内容 === 不可复用 -->
