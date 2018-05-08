@@ -143,15 +143,15 @@
                     @endif
                     <td style="white-space:nowrap;">
                         <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
-                        @if($apply->state!=1)
+                        @if($apply->state==1)
                         <button class="ui mini button primary paySingleBtn" data-id="{{$apply->id}}">复核</button>
                         @else
                         @endif
-                        @if($apply->state!=2)
+                        @if($apply->state==2)
                         <button class="ui mini button primary payPassBtn" data-id="{{$apply->id}}">审批</button>
                         @else
                         @endif
-                        @if($apply->state!=3)
+                        @if($apply->state==3)
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/add')}}?id={{$apply->id}}')">录入</a>
                         @else
                         @endif
