@@ -139,12 +139,12 @@ class ProjectController extends Controller
 //            $project->receipts = $project->receipt()->get();
 //            $project->pictures = $project->picture()->get();
 //            return response()->json($project);
-            $types =ProjectType::select(['id','name','rate'])->get()->toArray();
+            $types =ProjectType::select(['id','name','rate'])->where('state','=',1)->get()->toArray();
             $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
 //            return response()->json($situations);
             return view('project.create',['types'=>$types,'project'=>$project,'situations'=>$situations]);
         }else{
-            $types = ProjectType::select(['id','name','rate'])->get()->toArray();
+            $types = ProjectType::select(['id','name','rate'])->where('state','=',1)->get()->toArray();
             $rates = ProjectType::select(['id','rate as name'])->get()->toArray();
             return view('project.create',['types'=>$types,'rates'=>$rates]);
         }

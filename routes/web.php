@@ -94,10 +94,10 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('project/type/create','SystemController@createProjectType');
    Route::get('project/type/create','SystemController@createProjectTypePage');
    Route::get('project/types/list','SystemController@listProjectTypesPage');
-   Route::post('category/create','SystemController@addCategory');
-   Route::get('category/create','SystemController@addCategoryPage');
-   Route::get('category/edit','SystemController@editCategoryPage');
-   Route::get('category/list','SystemController@listCategoryPage');
+   Route::post('category/create','SystemController@addCategory')->middleware('role:data_payment');
+   Route::get('category/create','SystemController@addCategoryPage')->middleware('role:data_payment');
+   Route::get('category/edit','SystemController@editCategoryPage')->middleware('role:data_payment');
+   Route::get('category/list','SystemController@listCategoryPage')->middleware('role:data_payment');
    Route::get('del/material','SystemController@delMaterial');
    Route::get('del/user ','UserController@delUser');
    Route::get('del/project/type ','SystemController@delProjectType');
