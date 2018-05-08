@@ -28,7 +28,7 @@
                   .then(res => {
                     if (res.data.code === '200') {
                       const data = res.data.data
-                      const currentType = data.type == 1 ? 'rolebuy_bugetary_pass' : 'buy_extrabugetary_pass'
+                      const currentType = data.type == 1 ? 'buy_bugetary_pass' : 'buy_extrabugetary_pass'
                       vm.selectData.id = data.id
                       console.log(currentType,vm.selectData)
                       vm.$message({
