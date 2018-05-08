@@ -63,6 +63,7 @@ Route::get('export/loan/detail','ExcelController@exportLoanDetailList');
 Route::get('export/stock/list','ExcelController@exportStockList');
 Route::get('export/project/detail','ExcelController@exportProjectDetail');
 Route::get('export/project/list','ExcelController@exportProjectList');
+Route::get('export/purchase/collect','ExcelController@exportPurchaseCollect');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');
@@ -232,7 +233,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/deal/detail','BuildController@detailDealPage');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
-    Route::get('loan/detail/list','PayController@listDetailPage');
+//    Route::get('loan/detail/list','PayController@listDetailPage');
     Route::get('loan/loan/list','PayController@listLoanListPage');
     Route::get('loan/loan/add','PayController@addLoanPage');
     Route::post('loan/add','PayController@createLoanApply');

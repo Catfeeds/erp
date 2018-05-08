@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between">
             <div>
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/purchase/collect')}}?search={{$search}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>
@@ -71,25 +71,27 @@
                 @if(!empty($project->purchases))
                 @foreach($project->purchases as $purchase)
                     @if(!empty($purchase->lists))
-                        @foreach($purchase->lists as $list)
+                        {{--{{dd(count($purchase->lists))}}--}}
+                        @for($i=0;$i<count($purchase->lists);$i++)
+                        {{--@foreach($purchase->lists as $list)--}}
                 <tr>
-                    <td >{{$purchase->id}}</td>
+                    <td >{{$i+1}}</td>
                     <td >{{$purchase->date}}</td>
                     <td >{{$purchase->number}}</td>
                     <td >内</td>
 
                     <td >{{$purchase->supplier}}</td>
 
-                    <td>{{\App\Models\Material::find($list->material_id)->name}}</td>
-                    <td>{{\App\Models\Material::find($list->material_id)->param}}</td>
-                    <td>{{\App\Models\Material::find($list->material_id)->model}}</td>
-                    <td>{{\App\Models\Material::find($list->material_id)->factory}}</td>
-                    <td>{{\App\Models\Material::find($list->material_id)->unit}}</td>
-                    <td>{{$list->price}} ￥</td>
-                    <td>{{$list->number}}</td>
-                    <td>{{$list->cost}} ￥</td>
-                    <td>{{$list->warranty_date}}</td>
-                        @endforeach
+                    <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->name}}</td>
+                    <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->param}}</td>
+                    <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->model}}</td>
+                    <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->factory}}</td>
+                    <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->unit}}</td>
+                    <td>{{$purchase->lists[$i]->price}} ￥</td>
+                    <td>{{$purchase->lists[$i]->number}}</td>
+                    <td>{{$purchase->lists[$i]->cost}} ￥</td>
+                    <td>{{$purchase->lists[$i]->warranty_date}}</td>
+                        @endfor
                         @else
                         <td></td>
                         <td></td>

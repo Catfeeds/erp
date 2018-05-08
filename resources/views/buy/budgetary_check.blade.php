@@ -110,14 +110,14 @@
                 <i class="icon edit"></i>
                 <span>修改</span>
             </a>
-            <button class="ui icon button primary" id="budgetaryCheckRecheck" style="margin:0 10px;">
+            <button class="ui icon button primary" id="budgetaryCheckRecheck" style="margin:0 10px;" data-id="{{$purchase->id}}">
                 <i class="icon legal"></i>
                 <span>复核</span>
             </button>
-            <a class="ui icon button primary" href="#" style="margin:0 10px;">
+            <button class="ui icon button primary" id="budgetaryCheckPass" data-id="{{$purchase->id}}" style="margin:0 10px;">
                 <i class="icon write"></i>
                 <span>审批</span>
-            </a>
+            </button>
             <a class="ui icon button green" href="javascript:_helper.fullWindow('../buy/budgetary_print.html')" style="margin:0 10px;">
                 <i class="icon print"></i>
                 <span>凭证</span>

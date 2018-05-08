@@ -20,10 +20,7 @@
                             <i class="icon plus"></i>
                             <span>录入合同</span>
                         </a>
-                        <a class="ui green button" href="#">
-                            <i class="icon download"></i>
-                            <span>Excel 导出</span>
-                        </a>
+
                     </div>
                     <div class="ui left action right input fluid flex-fluid">
                         <div class="ui button white dropdown ">

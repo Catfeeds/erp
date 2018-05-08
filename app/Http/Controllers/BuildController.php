@@ -35,8 +35,25 @@ class BuildController extends Controller
     }
     public function listDealPage()
     {
-        $lists = ConstructionContract::paginate(10);
-        return view('build.deal_list',['lists'=>$lists]);
+        $role = getRole('build_contract_list');
+        $search = Input::get('search');
+        if ($role=='any'){
+            $idArr = getRoleProject('build_contract_list');
+            $db = ConstructionContract::where('project_id',$idArr);
+            if ($search){
+                $db->where('team','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')->orWhere('project_content','like','%'.$search.'%')->orWhere('project_manager','like','%'.$search.'%')
+                    ->orWhere('manager','like','%'.$search.'%');
+            }
+            $lists = $db->orderBy('id','DESC')->paginate(10);
+        }else{
+            if ($search){
+                $lists = ConstructionContract::where('team','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')->orWhere('project_content','like','%'.$search.'%')->orWhere('project_manager','like','%'.$search.'%')
+                    ->orWhere('manager','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $lists = ConstructionContract::orderBy('id','DESC')->paginate(10);
+            }
+        }
+        return view('build.deal_list',['lists'=>$lists,'search'=>$search]);
     }
     public function createFinishPage()
     {

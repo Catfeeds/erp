@@ -924,7 +924,7 @@ class ProjectController extends Controller
 //                $project->purchases = $purchases;
 //            }
 //        }
-        return view('buy.collect',['project'=>$project]);
+        return view('buy.collect',['project'=>$project,'search'=>$value]);
     }
     public function purchaseParityPage()
     {

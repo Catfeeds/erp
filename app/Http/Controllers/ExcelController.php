@@ -12,6 +12,8 @@ use App\Models\OutContract;
 use App\Models\PayApply;
 use App\Models\Project;
 use App\Models\ProjectSituations;
+use App\Models\Purchase;
+use App\Models\PurchaseList;
 use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\Team;
@@ -352,7 +354,7 @@ class ExcelController extends Controller
             $projectDb->where('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
         }
         $data = [];
-        $projects = $projectDb->orderBy('id','DESC')->paginate(10);
+        $projects = $projectDb->orderBy('id','DESC')->get();
         for ($i=0;$i<count($projects);$i++){
             $swap = [];
             $swap['number'] = $projects[$i]->number;
@@ -408,6 +410,48 @@ class ExcelController extends Controller
         $project = Project::find($project_id);
         $budgets = $project->budget()->get()->toArray();
         dd($budgets);
+    }
+    public function exportPurchaseCollect()
+    {
+        $value = Input::get('search');
+        $tr = [['采购日期	','采购编号','预算内/外','供货商','物料名称','性能及技术','品牌型号','生产厂家','单位','单价','数量','保修截止日期']];
+        if ($value){
+            $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
+            $idArr = $project->purchases()->pluck('id')->toArray();
+            $lists = PurchaseList::whereIn('purchase_id',$idArr)->get();
+        }else{
+            $lists = [];
+        }
+        $data = [];
+        if(!empty($lists)){
+            for ($i=0;$i<count($lists);$i++){
+                $swap = [];
+                $purchase = Purchase::find($lists[$i]->purchase_id);
+                $material = Material::find($lists[$i]->material_id);
+                $swap['date'] = $purchase->date;
+                $swap['number'] = $purchase->number;
+                $swap['type'] = $purchase->type==1?'内':'外';
+                $swap['supplier'] = $purchase->supplier;
+                $swap['material_name'] = $material->name;
+                $swap['material_param'] = $material->param;
+                $swap['material_model'] = $material->model;
+                $swap['material_factory'] = $material->factory;
+                $swap['material_unit'] = $material->unit;
+                $swap['price'] = $material->price;
+                $swap['sum'] = $lists[$i]->number;
+                $swap['warranty_date'] = $lists[$i]->warranty_date;
+                $data[$i] = $swap;
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('项目采购物料清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
     }
 
 }
