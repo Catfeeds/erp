@@ -96,7 +96,7 @@
             <tfoot>
             <tr>
                 <th colspan="8">合计</th>
-                <th>{{number_format($record->lists()->sum('cost'))}} ￥</th>
+                <th>{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
                 <th>0</th>
                 <th>0</th>
                 <th>0</th>
