@@ -134,7 +134,7 @@
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <a class="ui mini button primary" href="javascript:_helper.fullWindow('../stock/buy_print.html?id=1');">收货凭证</a>
+                                <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('stock/print/buy')}}?id={{$list2[$i]->id}}');">收货凭证</a>
                             </td>
                         </tr>
                         </tfoot>
