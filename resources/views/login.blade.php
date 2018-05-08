@@ -55,9 +55,9 @@
 
         </form>
     </div>
-    @include('layouts.error')
-</div>
 
+</div>
+@include('layouts.error')
 <!-- 全局依赖 js === 通用 -->
 
 <script src="{{url('plugins/vue/vue.min.js')}}"></script>
