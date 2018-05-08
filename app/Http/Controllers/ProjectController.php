@@ -865,35 +865,60 @@ class ProjectController extends Controller
     }
     public function listPurchasesChargePage()
     {
-        $purchases = Purchase::paginate(10);
+        $role = getRole('buy_list');
+//        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $purchases = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+        }else{
+            $purchases = Purchase::orderBy('id','DESC')->paginate(10);
+        }
+//        $purchases = Purchase::paginate(10);
         return view('buy.charge_list',['purchases'=>$purchases]);
     }
     public function purchaseCollectPage()
     {
-        $type = Input::get('seartch-type');
+//        $type = Input::get('seartch-type');
         $value = Input::get('value');
-//        dd($type);
-        if ($type==1){
-//            dd($value);
-            $projects = Project::where('number','like','%'.$value.'%')->paginate(10);
-        }elseif ($type==2){
-            $projects = Project::where('name','like','%'.$value.'%')->paginate(10);
+        if ($value){
+            $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
         }else{
-            $projects = Project::paginate(10);
+            $project = null;
         }
-//        $projects = Project::paginate(10);
-        if (!empty($projects)){
-            foreach ($projects as $project){
-                $purchases = $project->purchases()->get();
-                foreach ($purchases as $purchase){
-                    if (!empty($purchase)){
-                        $purchase->lists = $purchase->lists()->get();
-                    }
+        if (!empty($project)){
+            $purchases = $project->purchases()->get();
+            foreach ($purchases as $purchase){
+                if (!empty($purchase)){
+                    $purchase->lists = $purchase->lists()->get();
                 }
-                $project->purchases = $purchases;
             }
+            $project->purchases = $purchases;
         }
-        return view('buy.collect',['projects'=>$projects]);
+//        dd($project);
+
+//        $role = getRole('')
+////        dd($type);
+//        if ($type==1){
+////            dd($value);
+//            $projects = Project::where('number','like','%'.$value.'%')->paginate(10);
+//        }elseif ($type==2){
+//            $projects = Project::where('name','like','%'.$value.'%')->paginate(10);
+//        }else{
+//            $projects = Project::paginate(10);
+//        }
+//        $projects = Project::paginate(10);
+//        if (!empty($projects)){
+//            foreach ($projects as $project){
+//                $purchases = $project->purchases()->get();
+//                foreach ($purchases as $purchase){
+//                    if (!empty($purchase)){
+//                        $purchase->lists = $purchase->lists()->get();
+//                    }
+//                }
+//                $project->purchases = $purchases;
+//            }
+//        }
+        return view('buy.collect',['project'=>$project]);
     }
     public function purchaseParityPage()
     {

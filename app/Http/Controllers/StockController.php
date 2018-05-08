@@ -57,11 +57,19 @@ class StockController extends Controller
     }
     public function listBuyList()
     {
-        $lists = Purchase::paginate(10);
+        $role = getRole('stock_buy_list');
+//        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('stock_buy_list');
+            $lists = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+        }else{
+            $lists = Purchase::orderBy('id','DESC')->paginate(10);
+        }
         return view('stock.buy_list',['lists'=>$lists]);
     }
     public function listReturnList()
     {
+
         $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
         $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
         foreach ($lists as $list){
