@@ -24,7 +24,7 @@ if (!function_exists('getRole')){
     function getRoleProject($role)
     {
         $uid = \Illuminate\Support\Facades\Auth::id();
-        $idArr = \App\Models\Project::where('role_value','=',$role)->where('start','<',time())->where('end','>',time())->where('user_id','=',$uid)->pluck('project_id')->toArray();
+        $idArr = \App\Models\ProjectRole::where('role_value','=',$role)->where('start','<',time())->where('end','>',time())->where('user_id','=',$uid)->pluck('project_id')->toArray();
         return $idArr;
     }
 }

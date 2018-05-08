@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="four wide column">
                                     <el-select v-model="subItem.name" placeholder="请选择内容">
-                                        <el-option v-for="item in contractContent" :key="item.id" :label="item.name" :value="item.id">
+                                        <el-option v-for="item in contractContent" :key="item.id" :label="item.name+' '+item.rate+'%'" :value="item.id">
                                         </el-option>
                                     </el-select>
                                 </div>
@@ -309,7 +309,7 @@
                                 </div>
                                 <div class="four wide column">
                                     <el-select v-model="subItem.name" placeholder="请选择内容">
-                                        <el-option v-for="item in contractContent" :key="item.id" :label="item.name" :value="item.id">
+                                        <el-option v-for="item in contractContent" :key="item.id" :label="item.name+' '+item.rate+'%'" :value="item.id">
                                         </el-option>
                                     </el-select>
                                 </div>

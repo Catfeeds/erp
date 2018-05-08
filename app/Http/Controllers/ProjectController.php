@@ -373,23 +373,34 @@ class ProjectController extends Controller
     }
     public function listProjectsDetail()
     {
+        $idArr = getRoleProject('project_detail');
         $search = Input::get('search');
-        if ($search){
-            $project = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        $role = getRole('project_detail');
+        if ($role=='all'){
+            if ($search){
+                $project = Project::where('name','like',$search)->orWhere('number','=',$search)->orderBy('id','DESC')->paginate(10);
+            }else{
+                $project = Project::orderBy('id','DESC')->paginate(10);
+            }
         }else{
-            $project = Project::orderBy('id','DESC')->paginate(10);
-        }
+            $projectDB = Project::whereIn('id',$idArr);
+            if ($search){
+                $projectDB->where('name','like',$search)->orWhere('number','=',$search);
+            }
+            $project = $projectDB->orderBy('id','DESC')->paginate(10);
 
+        }
         return view('project.detail',['projects'=>$project]);
     }
     public function listBudgetsPage()
     {
         $search = Input::get('search');
-        $db = Project::where('state','>=',3);
+
         if ($search){
-            $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+            $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        }else{
+            $projects = Project::orderBy('id','DESC')->paginate(10);
         }
-        $projects = $db->orderBy('id','DESC')->paginate(10);
         return view('budget.list',['projects'=>$projects]);
     }
     public function showBudgetPage()
@@ -852,14 +863,32 @@ class ProjectController extends Controller
     public function createProjectAuthPage()
     {
         $id = Input::get('user_id');
-        $user = User::find($id);
+        $project_id = Input::get('project_id');
         $type = Input::get('type');
-        $project = Project::find(Input::get('project_id'));
-        return view('project.auth_edit',[
-            'type'=>$type,
-            'user'=>$user,
-            'project'=>$project
-        ]);
+//        $user = User::find($id);
+        ProjectRole::where('user_id','=',$id)->where('project_id','=',$project_id)->where('type','=',$type)->delete();
+        $role = Role::where('user_id','=',$id)->where('role_value','=','any')->get();
+        $project = Project::find($project_id);
+
+        foreach ($role as $item){
+            $role = new ProjectRole();
+            $role->user_id = $id;
+            $role->project_id = $project_id;
+            $role->type = $type;
+            $role->role_value = $item->role_name;
+            if ($type==1){
+                $role->start = $project->createTime;
+                $role->end = $project->finishTime;
+            }elseif($type==2){
+                $role->start = strtotime($project->acceptance_date);
+                $role->end = strtotime($project->deadline);
+            }else{
+                $role->start = strtotime($project->deadline);
+                $role->end = strtotime('2050-12-28');
+            }
+            $role->save();
+        }
+        return redirect()->back()->with('status','操作成功!');
     }
     public function createProjectAuth(Request $post)
     {
