@@ -651,9 +651,12 @@ class ProjectController extends Controller
         $project_id = $post->get('project_id');
         $collect = new ProjectCollect();
         if ($type==1){
-            $count = Tip::where('project_id','=',$project_id)->where('type','=',1)->count();
-            $count2 = ProjectCollect::where('project_id','=',$project_id)->where('type','=',1)->count();
-            if ($count<=$count2){
+            $project = Project::find($project_id);
+            $sum = $project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price');
+//            if ($sum<$post->get('price'))
+//            $count = Tip::where('project_id','=',$project_id)->where('type','=',1)->count();
+//            $count2 = ProjectCollect::where('project_id','=',$project_id)->where('type','=',1)->count();
+            if ($sum<$post->get('price')){
                 return response()->json([
                     'code'=>'400',
                     'msg'=>"超出预计收回履约金限制！"
@@ -842,15 +845,22 @@ class ProjectController extends Controller
 //        $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $lists = Purchase::whereIn('project_id',$idArr)->paginate(10);
+            $lists = Purchase::whereIn('project_id',$idArr)orderBy('id','DESC')->paginate(10);
         }else{
-            $lists = Purchase::paginate(10);
+            $lists = Purchase::orderBy('id','DESC')->paginate(10);
         }
         return view('buy.project_list',['lists'=>$lists]);
     }
     public function listPurchasesPayPage()
     {
-        $lists = Purchase::paginate(10);
+        $role = getRole('buy_list');
+//        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $lists = Purchase::whereIn('project_id',$idArr)orderBy('id','DESC')->paginate(10);
+        }else{
+            $lists = Purchase::orderBy('id','DESC')->paginate(10);
+        }
         return view('buy.pay_list',['lists'=>$lists]);
     }
     public function listPurchasesChargePage()
