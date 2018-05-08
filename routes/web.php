@@ -197,6 +197,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('stock/purchase','StockController@getPurchaseData');
     Route::get('stock/check','StockController@checkStock');
     Route::get('stock/out/single','StockController@singleOutPage');
+    Route::get('stock/print/buy','StockController@printBuy');
 
     //施工管理
     Route::get('build/list','BuildController@listBuildPage');

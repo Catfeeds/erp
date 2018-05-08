@@ -691,4 +691,12 @@ class StockController extends Controller
         }
         return view('stock.out_single',['record'=>$record,'list'=>$list,'purchase'=>$purchase,'purchase_need'=>$purchase_need,'purchase_need_cost'=>$purchase_need_cost]);
     }
+    public function printBuy()
+    {
+        $id = Input::get('id');
+        $record = StockRecord::find($id);
+        $lists = $record->lists()->get();
+        $purchase = Purchase::find($record->purchase_id);
+        return view('stock.buy_print',['record'=>$record,'lists'=>$lists,'purchase'=>$purchase]);
+    }
 }
