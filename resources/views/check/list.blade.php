@@ -67,7 +67,7 @@
                     <td>{{$project->collects()->where('type','=',3)->sum('price')}}</td>
                     <td>{{$project->invoices()->sum('price')-$project->collects()->where('type','=',3)->sum('price')-$project->collects()->where('type','=',2)->sum('price')}}</td>
                     <td>{{$project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price')}}</td>
-                    <td>{{$project->bail()->sum('price')-$project->collects()->where('type','=',1)->sum('price')}}</td>
+                    <td>{{$project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price')}}</td>
                 </tr>
                 @endforeach
                 </tbody>
