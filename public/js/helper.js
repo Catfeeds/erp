@@ -278,7 +278,8 @@
           const details = it.lists
           details.forEach((subIt, subIndex) => {
             let subTmp = {
-              name: subIt.id,
+              name: subIt.name,
+              edit: true,
               amount: subIt.price,
               remark: subIt.remark,
             }

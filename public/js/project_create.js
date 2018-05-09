@@ -21,8 +21,18 @@
         }
         return newObj
       }
+
+      function idSearch3(value) {
+        let newObj = {}
+        for (let it of value) {
+          newObj[it.name] = it.id
+        }
+        return newObj
+      }
+
       const ContentIDMap = idSearch(contractContent)
       const TaxIDMap = idSearch2(contractContent)
+      const ContentNameMap = idSearch3(contractContent)
 
       new Vue({
         el: '#projectCreate',
@@ -94,12 +104,22 @@
                   return false
                 }
                 details.forEach((item, index) => {
-                  const amount = item.amount ? parseFloat(item.amount) : 0
-                  sum += amount
-                  if (typeof item.name !== 'undefined') {
-                    // const key = item.name + '' + item.tax
-                    const key = item.name
-                    resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
+                  if (item.edit) {
+                    const amount = item.amount ? parseFloat(item.amount) : 0
+                    sum += amount
+                    if (typeof item.name !== 'undefined') {
+                      // const key = item.name + '' + item.tax
+                      const key = ContentNameMap[item.name]
+                      resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
+                    }
+                  } else {
+                    const amount = item.amount ? parseFloat(item.amount) : 0
+                    sum += amount
+                    if (typeof item.name !== 'undefined') {
+                      // const key = item.name + '' + item.tax
+                      const key = item.name
+                      resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
+                    }
                   }
                 })
               })
@@ -121,9 +141,9 @@
               })
             }
 
-            console.log('结果：',resultObj)
-            console.log('类型：',ContentIDMap)
-            console.log('税率：',TaxIDMap)
+            console.log('结果：', resultObj)
+            console.log('类型：', ContentIDMap)
+            console.log('税率：', TaxIDMap)
 
             return {
               sum: sum,
