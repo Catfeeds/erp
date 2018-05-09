@@ -55,6 +55,7 @@
             <th>发包单位</th>
             <th>分包合同金额</th>
             <th>合同约定完工日期</th>
+            <th>状态</th>
         </tr>
         </thead>
         <tbody>
@@ -73,6 +74,7 @@
             <td>{{implode('|',$project->unit)}}</td>
             <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price'))}}</td>
             <td>{{date('Y-m-d',$project->finishTime)}}</td>
+            <td>{{$project->state==1?'未确认':'已确认'}}</td>
         </tr>
         @endforeach
         </tbody>
