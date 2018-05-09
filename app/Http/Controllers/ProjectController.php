@@ -1195,5 +1195,55 @@ class ProjectController extends Controller
             'msg'=>"SUCCESS"
         ]);
     }
+    public function collect()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$collect
+        ]);
+    }
+    public function editCollect(Request $post)
+    {
+        $id = $post->id;
+        $collect = ProjectCollect::find($id);
+        $collect->date = $post->date?$post->date:$collect->date;
+        $collect->payee = $post->payee?$post->payee:$collect->payee;
+        $collect->price = $post->price?$post->price:$collect->price;
+        $collect->bank = $post->bank?$post->bank:$collect->bank;
+        $collect->account = $post->account?$post->account:$collect->account;
+        if ($collect->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function getTip()
+    {
+        $id = Input::get('id');
+        $tip = Tip::find($id);
+        return response()->json([
+            'code'=>'200',
+            'data'=>$tip
+        ]);
+    }
+    public function editTip(Request $post)
+    {
+        $id = $post->id;
+        $tip = Tip::find($id);
+        $tip->pay_date = $post->pay_date?$post->pay_date:$tip->pay_date;
+        $tip->price = $post->price?$post->price:$tip->price;
+        $tip->pay_unit = $post->pay_unit?$post->pay_unit:$tip->pay_unit;
+        $tip->remark = $post->remark?$post->remark:$tip->remark;
+        if ($tip->save()){
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
 
 }

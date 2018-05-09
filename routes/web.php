@@ -158,6 +158,10 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
     Route::post('purchase/create','ProjectController@createPurchase');
+    Route::get('tip','ProjectController@getTip');
+    Route::post('tip','ProjectController@editTip');
+    Route::get('collect','ProjectController@collect');
+    Route::post('collect','ProjectController@editCollect');
     Route::get('purchase/check','PurchaseController@checkPurchase');
     Route::get('purchase/pass','PurchaseController@passPurchase');
     Route::post('purchase/select/pass','PurchaseController@selectPass');
