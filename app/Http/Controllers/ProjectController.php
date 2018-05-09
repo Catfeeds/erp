@@ -1161,5 +1161,38 @@ class ProjectController extends Controller
         $project = Project::find($collect->project_id);
         return view('check.collect_sub_print',['collect'=>$collect,'project'=>$project]);
     }
+    public function confirmProject()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        if ($project->state!=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'已确认过的项目不需重新确认！'
+            ]);
+        }
+        $project->state = 2;
+        $project->save();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>"SUCCESS"
+        ]);
+    }
+    public function deleteProject()
+    {
+        $id = Input::get('id');
+        $project = Project::find($id);
+        if ($project->state!=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'确认过的项目不能删除！'
+            ]);
+        }
+        $project->delete();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>"SUCCESS"
+        ]);
+    }
 
 }

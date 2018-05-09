@@ -96,7 +96,7 @@ class PurchaseController extends Controller
                 $task->content = $id;
                 $task->title = '采购立项复核';
                 $task->number = $purchase->number;
-                $task->url = 'check/budgetary?id='.$id;
+                $task->url = 'stock/check/budgetary?id='.$id;
                 $task->save();
             }
         }
@@ -123,7 +123,7 @@ class PurchaseController extends Controller
                 $task->content = $id;
                 $task->title = '采购立项审批';
                 $task->number = $purchase->number;
-                $task->url = 'check/budgetary?id='.$id;
+                $task->url = 'stock/check/budgetary?id='.$id;
                 $task->save();
             }
         }

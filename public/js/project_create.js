@@ -262,22 +262,22 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                  this.selectData.id = res.data.data.id
-                  _http.UserManager.searchAuthUsers({
-                      role: 'project_check'
-                    })
-                    .then(resp => {
-                      if (resp.data.code === '200') {
-                        this.menList = resp.data.data
-                        $('.ui.dimmer').addClass('active')
-                      } else {
-                        this.$notify({
-                          title: '错误',
-                          message: res.data.msg,
-                          type: 'error'
-                        })
-                      }
-                    })
+                  // this.selectData.id = res.data.data.id
+                  // _http.UserManager.searchAuthUsers({
+                  //     role: 'project_check'
+                  //   })
+                  //   .then(resp => {
+                  //     if (resp.data.code === '200') {
+                  //       this.menList = resp.data.data
+                  //       $('.ui.dimmer').addClass('active')
+                  //     } else {
+                  //       this.$notify({
+                  //         title: '错误',
+                  //         message: res.data.msg,
+                  //         type: 'error'
+                  //       })
+                  //     }
+                  //   })
                 } else {
                   this.$notify({
                     title: '错误',

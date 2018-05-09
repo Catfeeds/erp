@@ -62,6 +62,7 @@
           this.submitProjectForm.loan_user = $('#loanUser').val()
           this.submitProjectForm.project_id = $('#projectId').val()
           this.submitProjectForm.project_number = $('#projectNumber').val()
+          this.submitProjectForm.id = $('#Id').val()
           this.submitProjectForm.project_content = $('#projectContent').val()
           const dataList = $('#lists').text().trim()
           this.submitProjectForm.lists = dataList === '' ? [] : JSON.parse(dataList)
@@ -203,6 +204,7 @@
           formatData(data) {
             let result = {
               loan_user: data.loan_user,
+              id: data.id,
               date: data.date,
               price: data.price,
               project_id: data.project_id,
