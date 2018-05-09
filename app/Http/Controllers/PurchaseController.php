@@ -185,12 +185,17 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $users = Input::get('users');
+        $purchase = Purchase::find($id);
         if (!empty($users)){
             foreach ($users as $user){
-                $check = new PurchasePaymentCheck();
-                $check->payment_id = $id;
-                $check->user_id = $user;
-                $check->save();
+                $task = new Task();
+                $task->user_id = $user;
+                $task->content = $id;
+                $task->type = 'buy_pay_pass';
+                $task->title = '采购付款复核';
+                $task->url = 'buy/payment/list?id='.$id;
+                $task->number = $purchase->number;
+                $task->save();
             }
         }
         return response()->json([
