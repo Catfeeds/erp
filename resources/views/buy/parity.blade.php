@@ -119,7 +119,7 @@
                     <td>{{$list->purchase->condition}}</td>
                     <td>{{$list->number}}</td>
                     <td>{{$list->price}} / {{\App\Models\Material::find($list->material_id)->unit}}</td>
-                    <td>{{$list->warranty_date}}</td>
+                    <td>{{$list->warranty_time}}</td>
                 </tr>
                     @endforeach
                 </tbody>

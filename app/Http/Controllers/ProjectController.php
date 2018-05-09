@@ -861,24 +861,24 @@ class ProjectController extends Controller
     public function listPurchasesPayPage()
     {
         $role = getRole('buy_list');
-//        $db = Purchase::where('state','=',3);
+        $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $lists = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }else{
-            $lists = Purchase::orderBy('id','DESC')->paginate(10);
+            $lists = $db->orderBy('id','DESC')->paginate(10);
         }
         return view('buy.pay_list',['lists'=>$lists]);
     }
     public function listPurchasesChargePage()
     {
         $role = getRole('buy_list');
-//        $db = Purchase::where('state','=',3);
+        $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $purchases = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $purchases = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }else{
-            $purchases = Purchase::orderBy('id','DESC')->paginate(10);
+            $purchases = $db->orderBy('id','DESC')->paginate(10);
         }
 //        $purchases = Purchase::paginate(10);
         return view('buy.charge_list',['purchases'=>$purchases]);

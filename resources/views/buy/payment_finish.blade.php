@@ -29,7 +29,7 @@
                         <div class="inline fields">
                             <label class="four wide field">实际付款金额</label>
                             <div class="twelve wide field">
-                                <div class="fake-input">123,542.00 ￥</div>
+                                <div class="fake-input">{{$payment->price}} ￥</div>
                             </div>
                         </div>
                     </div>

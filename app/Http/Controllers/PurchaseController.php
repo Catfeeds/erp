@@ -163,6 +163,15 @@ class PurchaseController extends Controller
             $payment = PurchasePayment::find($payment_id);
             $payment->date = Input::get('date');
             $payment->price = Input::get('price');
+            $purchase = Purchase::find($payment->purchase_id);
+            $count = $purchase->lists()->sum('price')-($purchase->payments()->where('id','!=',$payment_id)->sum('price')+$payment->price);
+//            dd($count);
+            if ($count<0){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'付款申请金额不能超过采购金额！'
+                ]);
+            }
         }else{
             $id = Input::get('purchase_id');
             $payment = new PurchasePayment();
@@ -170,8 +179,18 @@ class PurchaseController extends Controller
             $payment->date = Input::get('date');
             $payment->price = Input::get('price');
             $payment->apply_id = Auth::id();
+            $purchase = Purchase::find($payment->purchase_id);
+            $count = $purchase->lists()->sum('price')-($purchase->payments()->sum('price')+$payment->price);
+            if ($count<0){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'付款申请金额不能超过采购金额！'
+                ]);
+            }
         }
+
         if ($payment->save()){
+            Task::where('type','=','buy_pay_pass')->where('content','=',$payment->id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',

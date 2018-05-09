@@ -169,7 +169,12 @@
                     <td rowspan="3">预算管理清单</td>
                     <td rowspan="3" colspan="3"></td>
                     <td>可全部查看</td>
-                    <td></td>
+                    <td>
+                        @if(isset($lists['budget_list'])&&$lists['budget_list']=='all')
+                            <i class='large green checkmark icon'></i>
+                        @else
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -177,7 +182,7 @@
                         <span class="fake-a authCheck">指定项目查看</span>
                     </td>
                     <td>
-                        @if(isset($lists['budget_list'])&&$lists['budget_list']=='all')
+                        @if(isset($lists['budget_list'])&&$lists['budget_list']=='any')
                             <i class='large green checkmark icon'></i>
                         @else
                         @endif

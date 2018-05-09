@@ -73,34 +73,39 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lists as $list)
+                @for($i=0;$i<count($lists);$i++)
+                {{--@foreach($lists as $list)--}}
                 <tr>
-                    <td>{{$list->id}}</td>
-                    <td>{{$list->date}}</td>
-                    <td>{{$list->price}} ￥</td>
-                    <td>{{\App\User::find($list->apply_id)->username}}</td>
-                    <td>{{$list->check==0?'':\App\User::find($list->check)->name}}</td>
-                    @if($list->worker_id==0)
+                    <td>{{$i+1}}</td>
+                    <td>{{$lists[$i]->date}}</td>
+                    <td>{{$lists[$i]->price}} ￥</td>
+                    <td>{{\App\User::find($lists[$i]->apply_id)->username}}</td>
+                    <td>{{$lists[$i]->check==0?'':\App\User::find($lists[$i]->check)->name}}</td>
+                    @if($lists[$i]->worker_id==0)
                     <td colspan="6">暂无数据</td>
                     @else
-                        <td>{{$list->pay_date}}</td>
-                        <td>{{$list->pay_price}} ￥</td>
-                        <td>{{\App\Models\BankAccount::find($list->bank_id)->name}}</td>
-                        <td>{{\App\Models\BankAccount::find($list->bank_id)->account}}</td>
-                        <td class="table-content">{{$list->remark}}</td>
-                        <td>{{$list->worker}}</td>
+                        <td>{{$lists[$i]->pay_date}}</td>
+                        <td>{{$lists[$i]->pay_price}} ￥</td>
+                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->name}}</td>
+                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->account}}</td>
+                        <td class="table-content">{{$lists[$i]->remark}}</td>
+                        <td>{{$lists[$i]->worker}}</td>
                     @endif
                     <td style="white-space:nowrap;">
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/payment')}}?id={{$list->id}}')" title="修改付款申请">修改</a>
-                        @if(checkRole('buy_pay_pass',$list->id))
-                        <a class="ui mini positive button payment-check" data-id="{{$list->id}}" title="复核">复核</a>
+                        @if($lists[$i]->state==1)
+                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/payment')}}?id={{$lists[$i]->id}}')" title="修改付款申请">修改</a>
                         @else
                             @endif
-                            <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$list->id}}')" title="录入/修改实际付款">录入</a>
+                            @if(checkRole('buy_pay_pass',$lists[$i]->id))
+                        <a class="ui mini positive button payment-check" data-id="{{$lists[$i]->id}}" title="复核">复核</a>
+                        @else
+                            @endif
+                            <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$lists[$i]->id}}')" title="录入/修改实际付款">录入</a>
                     </td>
 
                 </tr>
-                @endforeach
+                @endfor
+                {{--@endforeach--}}
                 </tbody>
                 <tfoot>
                 <tr>

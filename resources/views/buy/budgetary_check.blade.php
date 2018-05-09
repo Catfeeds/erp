@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <th>采购金额</th>
-                <th colspan="3" class="font-normal bg-white">{{$purchase->lists()->sum('price')}} ￥</th>
+                <th colspan="3" class="font-normal bg-white">{{$purchase->lists()->sum('cost')}} ￥</th>
             </tr>
             <tr>
                 <th>项目编号</th>
