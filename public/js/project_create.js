@@ -40,6 +40,7 @@
         mounted() {
           if (projectData) {
             this.project = _helper.projectGetFormat(projectData)
+              console.log(this.project)
           }
           $('#projectCreate').removeClass('invisible')
         },

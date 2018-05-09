@@ -112,7 +112,7 @@
           // })
 
           $('#projectConfirm').on('click', function () {
-            self.$confirm('确认该项目后无法修改, 是否继续?', '提示', {
+            self.$confirm('确认该项目后无法删除, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -123,14 +123,13 @@
                   })
                   .then(res => {
                     if (res.data.code === '200') {
-                      $('#projectBtns').html(`
-                      <h3 class="ui header aligned center" style="color:rgba(0,0,0,.6);text-align: center;">已确认</h3>
-                      `)
                       self.$notify({
                         title: '成功',
                         message: '已确认',
                         type: 'success'
                       })
+                      $('#projectDelete').remove()
+                      $(this).remove()
                     } else {
                       self.$notify({
                         title: '错误',
