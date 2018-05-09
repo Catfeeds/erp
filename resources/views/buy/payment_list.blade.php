@@ -92,8 +92,11 @@
                     @endif
                     <td style="white-space:nowrap;">
                         <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/payment')}}?id={{$list->id}}')" title="修改付款申请">修改</a>
-                        <a class="ui mini positive button" href="#" data-id="{{$list->id}}" title="复核">复核</a>
-                        <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$list->id}}')" title="录入/修改实际付款">录入</a>
+                        @if(checkRole('buy_pay_pass',$list->id))
+                        <a class="ui mini positive button payment-check" data-id="{{$list->id}}" title="复核">复核</a>
+                        @else
+                            @endif
+                            <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$list->id}}')" title="录入/修改实际付款">录入</a>
                     </td>
 
                 </tr>
