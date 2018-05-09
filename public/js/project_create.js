@@ -49,7 +49,7 @@
         },
         mounted() {
           if (projectData) {
-            this.project = _helper.projectGetFormat(projectData)
+            this.project = _helper.projectGetFormat(projectData, ContentNameMap)
           }
           $('#projectCreate').removeClass('invisible')
         },
@@ -104,22 +104,12 @@
                   return false
                 }
                 details.forEach((item, index) => {
-                  if (item.edit) {
-                    const amount = item.amount ? parseFloat(item.amount) : 0
-                    sum += amount
-                    if (typeof item.name !== 'undefined') {
-                      // const key = item.name + '' + item.tax
-                      const key = ContentNameMap[item.name]
-                      resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
-                    }
-                  } else {
-                    const amount = item.amount ? parseFloat(item.amount) : 0
-                    sum += amount
-                    if (typeof item.name !== 'undefined') {
-                      // const key = item.name + '' + item.tax
-                      const key = item.name
-                      resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
-                    }
+                  const amount = item.amount ? parseFloat(item.amount) : 0
+                  sum += amount
+                  if (typeof item.name !== 'undefined') {
+                    // const key = item.name + '' + item.tax
+                    const key = item.name
+                    resultObj[key] = resultObj[key] ? resultObj[key] + amount : amount
                   }
                 })
               })
@@ -140,10 +130,6 @@
                 amount: resultObj[it]
               })
             }
-
-            console.log('结果：', resultObj)
-            console.log('类型：', ContentIDMap)
-            console.log('税率：', TaxIDMap)
 
             return {
               sum: sum,

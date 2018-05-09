@@ -208,7 +208,7 @@
     },
 
     //项目数据获取重命名
-    projectGetFormat(data) {
+    projectGetFormat(data, ContentNameMap) {
       let result = {
         project: {},
         masterCompany: [],
@@ -278,8 +278,7 @@
           const details = it.lists
           details.forEach((subIt, subIndex) => {
             let subTmp = {
-              name: subIt.name,
-              edit: true,
+              name: ContentNameMap[subIt.name],
               amount: subIt.price,
               remark: subIt.remark,
             }
