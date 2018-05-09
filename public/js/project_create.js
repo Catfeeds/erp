@@ -40,7 +40,6 @@
         mounted() {
           if (projectData) {
             this.project = _helper.projectGetFormat(projectData)
-              console.log(this.project)
           }
           $('#projectCreate').removeClass('invisible')
         },
@@ -121,6 +120,9 @@
                 amount: resultObj[it]
               })
             }
+
+            console.log('结果：',result)
+            console.log('类型：',contractContent)
 
             return {
               sum: sum,
