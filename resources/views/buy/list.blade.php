@@ -128,19 +128,19 @@
                         <a href="javascript:_helper.fullWindow('{{url('stock/check/budgetary')}}?id={{$list->id}}');">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>123,232,231 ￥</td>
+                    <td>{{$list->lists()->sum('price')}} ￥</td>
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{$list->type==1?'内':'外'}}</td>
-                    <td>200</td>
-                    <td>400</td>
-                    <td>5000 ￥</td>
-                    <td>5600 ￥</td>
-                    <td>条件一</td>
-                    <td>2000 ￥</td>
-                    <td>2400 ￥</td>
-                    <td>未结清</td>
+                    <td>{{$list->lists()->sum('received')}}</td>
+                    <td>{{$list->lists()->sum('need')}}</td>
+                    <td>{{number_format($list->payments()->sum('pay_price'))}} ￥</td>
+                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')}} ￥</td>
+                    <td>{{$list->content}}</td>
+                    <td>{{$list->invoices()->sum('with_tax')}} ￥</td>
+                    <td>{{number_format($list->payments()->sum('pay_price')-$list->invoices()->sum('with_tax'))}} ￥</td>
+                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach
                 </tbody>

@@ -306,7 +306,7 @@
             <!-- / 合同 -->
 
             <!-- Vue 渲染部分 -->
-            <div id="checkDetail" class="invisible">
+            <div id="checkDetail" >
 
                 <!-- 履约金保证情况 -->
                 <h4 class="ui dividing header blue margin-top-50">履约金保证情况</h4>
