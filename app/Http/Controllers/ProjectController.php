@@ -691,7 +691,7 @@ class ProjectController extends Controller
         $project_id = $post->get('project_id');
         $project = Project::find($project_id);
         if ($post->get('to_warranty')==1){
-            $project->state = 4;
+            $project->state = 3;
         }
         $project->acceptance_date = $post->get('acceptance_date');
         $project->remark = $post->get('remark');
