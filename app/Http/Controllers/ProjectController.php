@@ -631,7 +631,7 @@ class ProjectController extends Controller
         $invoice->project_id = $project_id;
         $invoice->unit = $post->get('payee');
         $invoice->date = $post->get('date');
-        $invoice->rate = $swap->invoice;
+        $invoice->rate = $swap->rate;
         $invoice->price = $post->get('price');
         if ($invoice->save()){
             foreach ($lists as $item){
