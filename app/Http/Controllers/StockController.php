@@ -44,13 +44,13 @@ class StockController extends Controller
         if ($seartch_type){
             if ($seartch_type==1){
                 $idArr = Material::where('name','like','%'.$search.'%')->pluck('id')->toArray();
-                $stocks = Stock::whereIn('material_id',$idArr)->get();
+                $stocks = Stock::whereIn('material_id',$idArr)->orderBy('id','DESC')->get();
             }else{
                 $idArr = Warehouse::where('name','like','%'.$search.'%')->pluck('id')->toArray();
-                $stocks = Stock::whereIn('warehouse_id',$idArr)->get();
+                $stocks = Stock::whereIn('warehouse_id',$idArr)->orderBy('id','DESC')->get();
             }
         }else{
-            $stocks = Stock::paginate(10);
+            $stocks = Stock::orderBy('id','DESC')->paginate(10);
         }
 
         return view('stock.list',['stocks'=>$stocks]);
@@ -565,7 +565,7 @@ class StockController extends Controller
     }
     public function addOutPage()
     {
-        $lists = Purchase::paginate(10);
+        $lists = Purchase::orderBy('id','DESC')->paginate(10);
         foreach ($lists as $list){
             $list->lists = $list->lists()->get();
             $receivedPrice = 0;

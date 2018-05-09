@@ -232,6 +232,12 @@ class PurchaseController extends Controller
     {
         $id = $post->get('id');
         $payment = PurchasePayment::find($id);
+        if ($payment->state!=2){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'未经审核！'
+            ]);
+        }
         $payment->pay_price = $payment->price;
         $payment->pay_date = $post->get('pay_date');
         $payment->bank_id = $post->get('bank_id');
