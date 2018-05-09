@@ -44,10 +44,10 @@
                 @foreach($tips as $tip)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$tip->project_id}}');">{{$tip->project()->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$tip->project_id}}');">{{$tip->project()?'':$tip->project()->number}}</a>
                     </td>
-                    <td>{{$tip->project()->name}}</td>
-                    <td>{{$tip->project()->pm}}</td>
+                    <td>{{$tip->project()?'':$tip->project()->name}}</td>
+                    <td>{{$tip->project()?'':$tip->project()->pm}}</td>
                     <td>{{$tip->type==1?'履约保证金':'请款'}}</td>
                     <td>{{$tip->pay_date}}</td>
                     <td>{{$tip->price}}</td>
