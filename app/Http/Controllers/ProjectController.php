@@ -934,8 +934,8 @@ class ProjectController extends Controller
         $start = Input::get('s');
         $end = Input::get('e');
         if (!empty($start)){
-            $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>',$start)
-                ->whereDate('created_at','<',$end)->get();
+            $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>=',$start)
+                ->whereDate('created_at','<=',$end)->get();
         }else{
             $lists = [];
         }
