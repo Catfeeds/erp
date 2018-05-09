@@ -146,6 +146,7 @@
 
     </div>
     <!-- /主体内容 === 不可复用 -->
+    {{$lists->links()}}
 @endsection
 @section('pageJs')
     <script src="{{url('js/loan_submit_list.js')}}"></script>

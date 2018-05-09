@@ -14,6 +14,7 @@ use App\Models\PurchasePaymentCheck;
 use App\Models\Stock;
 use App\Models\StockRecord;
 use App\Models\StockRecordList;
+use App\Models\Task;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,11 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
+        if ($purchase->type==1){
+            $check = 'buy_bugetary_check';
+        }else{
+            $check = 'buy_extrabugetary_check';
+        }
         if ($purchase->state!=1){
             return response()->json([
                 'code'=>'400',
@@ -36,6 +42,7 @@ class PurchaseController extends Controller
             $purchase->state = 2;
             $purchase->check = Auth::id();
             $purchase->save();
+            Task::where('type','=',$check)->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
@@ -50,6 +57,11 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
+        if ($purchase->type==1){
+            $pass = 'buy_bugetary_pass';
+        }else{
+            $pass = 'buy_extrabugetary_pass';
+        }
         if ($purchase->state!=2){
             return response()->json([
                 'code'=>'400',
@@ -59,6 +71,7 @@ class PurchaseController extends Controller
             $purchase->state = 3;
             $purchase->pass = Auth::id();
             $purchase->save();
+            Task::where('type','=',$pass)->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -69,12 +82,22 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $users = Input::get('users');
+        $purchase = Purchase::find($id);
+        if ($purchase->type==1){
+            $check = 'buy_bugetary_check';
+        }else{
+            $check = 'buy_extrabugetary_check';
+        }
         if (!empty($users)){
             foreach ($users as $user){
-                $check = new PruchaseCheck();
-                $check->purchase_id = $id;
-                $check->user_id = $user;
-                $check->save();
+                $task = new Task();
+                $task->user_id = $user;
+                $task->type = $check;
+                $task->content = $id;
+                $task->title = '采购立项复核';
+                $task->number = $purchase->number;
+                $task->url = 'check/budgetary?id='.$id;
+                $task->save();
             }
         }
         return response()->json([
@@ -86,12 +109,22 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $users = Input::get('users');
+        $purchase = Purchase::find($id);
+        if ($purchase->type==1){
+            $pass = 'buy_bugetary_pass';
+        }else{
+            $pass = 'buy_extrabugetary_pass';
+        }
         if (!empty($users)){
             foreach ($users as $user){
-                $pass = new PruchasePass();
-                $pass->purchase_id = $id;
-                $pass->user_id = $user;
-                $pass->save();
+                $task = new Task();
+                $task->user_id = $user;
+                $task->type = $pass;
+                $task->content = $id;
+                $task->title = '采购立项审批';
+                $task->number = $purchase->number;
+                $task->url = 'check/budgetary?id='.$id;
+                $task->save();
             }
         }
         return response()->json([

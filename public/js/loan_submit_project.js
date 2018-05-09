@@ -61,7 +61,10 @@
           this.submitProjectForm.date = $('#date').val() || _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           this.submitProjectForm.loan_user = $('#loanUser').val()
           this.submitProjectForm.project_id = $('#projectId').val()
+          this.submitProjectForm.project_number = $('#projectNumber').val()
           this.submitProjectForm.project_content = $('#projectContent').val()
+          const dataList = $('#lists').text().trim()
+          this.submitProjectForm.lists = dataList === '' ? [] : JSON.parse(dataList)
           $('#loanSubmitOther').removeClass('invisible')
         },
         computed: {

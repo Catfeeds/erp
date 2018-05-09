@@ -16,6 +16,7 @@
         <input type="hidden" id="date" value="{{$submit->date}}">
         <input type="hidden" id="topAmount" value="{{$submit->price}}">
         <input type="hidden" id="projectId" value="{{$submit->project_id}}">
+        <input type="hidden" id="Id" value="{{$submit->id}}">
         <input type="hidden" id="projectNumber" value="{{\App\Models\Project::find($submit->project_id)->number}}">
         <input type="hidden" id="projectContent" value="{{\App\Models\Project::find($submit->project_id)->name}}">
         <div style="display: none;" id="lists">{{json_encode($lists)}}</div>

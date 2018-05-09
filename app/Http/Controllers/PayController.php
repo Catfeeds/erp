@@ -335,7 +335,7 @@ class PayController extends Controller
     }
     public function listSubmitListPage()
     {
-        $lists = LoanSubmit::paginate(10);
+        $lists = LoanSubmit::orderBy('id','DESC')->paginate(10);
         return view('loan.submit_list',['lists'=>$lists]);
     }
     public function createSubmitList(Request $post)
@@ -389,6 +389,7 @@ class PayController extends Controller
         $lists = $post->get('lists');
         if ($id){
             $loan = LoanSubmit::find($id);
+            $loan->lists()->delete();
         }else{
             $loan = new LoanSubmit();
             $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
