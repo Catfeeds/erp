@@ -121,8 +121,9 @@
               })
             }
 
-            console.log('结果：',result)
-            console.log('类型：',contractContent)
+            console.log('结果：',resultObj)
+            console.log('类型：',ContentIDMap)
+            console.log('税率：',TaxIDMap)
 
             return {
               sum: sum,
