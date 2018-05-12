@@ -119,7 +119,7 @@
                             <div class="fake-input">@{{index + 1}}</div>
                         </div>
                         <div class="four wide column">
-                            <input v-model="item.name" type="text" placeholder="请输入发包单位">
+                            <input v-model="item.name" type="text" placeholder="请输入中标单位">
                         </div>
                         <div class="four wide column">
                             <div class="block ui icon input">

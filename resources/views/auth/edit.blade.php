@@ -1325,7 +1325,7 @@
                         <td colspan="2" rowspan="2"></td>
                         <td>
                             <div class="ui radio checkbox">
-                                <input type="radio" value="off" name="build_invoice_edit">
+                                <input type="radio" value="all" name="build_invoice_edit">
                                 <label>有此权限</label>
                             </div>
                         </td>
