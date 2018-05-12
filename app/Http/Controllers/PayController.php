@@ -284,6 +284,7 @@ class PayController extends Controller
         $loan->bank = $post->get('bank');
         $loan->account = $post->get('account');
         $loan->manager_id = Auth::id();
+        $loan->state = 3;
         if ($loan->save()){
             return response()->json([
                 'code'=>'200',
