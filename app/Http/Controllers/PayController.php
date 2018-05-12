@@ -296,10 +296,10 @@ class PayController extends Controller
     {
         $role = getRole('loan_list');
         if ($role=='all'){
-            $list = LoanList::select(['borrower as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
+            $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->groupBy('name')->get()->toArray();
             $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
         }else{
-            $list = LoanList::select(['borrower as name','price'])->where('borrower','=',Auth::user()->username)->where('state','=',3)->groupBy('name')->get()->toArray();
+            $list = LoanList::select(['borrower as name','price'])->where('borrower','=',Auth::user()->username)->where('state','=',2)->groupBy('name')->get()->toArray();
             $list2 = LoanSubmit::select(['loan_user as name','price'])->where('loan_user','=',Auth::user()->username)->where('state','=',3)->groupBy('name')->get()->toArray();
         }
 //        dd($list2);
@@ -309,7 +309,7 @@ class PayController extends Controller
         $result = [];
         for ($i=0;$i<count($swap);$i++){
             $result[$i]['name'] = $swap[$i];
-            $result[$i]['loan_price'] = LoanList::where('borrower','=',$swap[$i])->sum('price')-LoanPay::where('applier','=',$swap[$i])->sum('deduction');
+            $result[$i]['loan_price'] = LoanList::where('borrower','=',$swap[$i])->where('state','=',3)->sum('price')-LoanPay::where('applier','=',$swap[$i])->sum('deduction');
             $result[$i]['submit_price'] = LoanSubmit::where('loan_user','=',$swap[$i])->where('state','=',3)->sum('price');
         }
 //        dd($result);
