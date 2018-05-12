@@ -100,7 +100,10 @@
                         <a class="ui mini positive button payment-check" data-id="{{$lists[$i]->id}}" title="复核">复核</a>
                         @else
                             @endif
+                            @if($lists[$i]->state==2)
                             <a class="ui mini primary button" href="javascript:_helper.fullWindow('{{url('purchase/payment/finish')}}?id={{$lists[$i]->id}}')" title="录入/修改实际付款">录入</a>
+                            @else
+                        @endif
                     </td>
 
                 </tr>
