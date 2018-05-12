@@ -295,10 +295,10 @@ class PayController extends Controller
     {
         $role = getRole('loan_list');
         if ($role=='all'){
-            $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->groupBy('name')->get()->toArray();
+            $list = LoanList::select(['borrower as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
             $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
         }else{
-            $list = LoanList::select(['borrower as name','price'])->where('borrower','=',Auth::user()->username)->where('state','=',2)->groupBy('name')->get()->toArray();
+            $list = LoanList::select(['borrower as name','price'])->where('borrower','=',Auth::user()->username)->where('state','=',3)->groupBy('name')->get()->toArray();
             $list2 = LoanSubmit::select(['loan_user as name','price'])->where('loan_user','=',Auth::user()->username)->where('state','=',3)->groupBy('name')->get()->toArray();
         }
 //        dd($list2);
