@@ -12,7 +12,6 @@
             <div class="active section">付款申请</div>
         </div>
 
-
         <h1 class="ui header blue aligned center">付款申请</h1>
         <div id="payAdd">
             <h4 class="ui dividing header blue">信息录入</h4>
@@ -80,7 +79,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">申请人</label>
                             <div class="eleven wide field">
-                                <input type="text" v-model="payForm.people" value="{{\Illuminate\Support\Facades\Auth::user()->username}}" placeholder="请输入申请人">
+                                <input type="text" v-model="payForm.people"  placeholder="请输入申请人">
                             </div>
                         </div>
                     </div>

@@ -98,6 +98,7 @@ class PayController extends Controller
         if ($apply->state ==1){
 //            $apply->state =0;
             $apply->delete();
+            Task::where('type','=','pay_pass')->where('content','=',$id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
