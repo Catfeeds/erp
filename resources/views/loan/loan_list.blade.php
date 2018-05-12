@@ -62,7 +62,10 @@
                     <td style="white-space:nowrap;">
                         @if($list->state==1)
                         <button class="ui mini button negative loanLoanListCancel">撤销</button>
+                        @if(checkRole('loan_loan_pass',$list->id))
                         <button class="ui mini button positive loanLoanListCheck">审批</button>
+                            @else
+                            @endif
                             @elseif($list->state==2)
                             <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('loan/pay')}}?id={{$list->id}}')">录入/修改</a>
                             <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$list->id}}')">凭证</a>
