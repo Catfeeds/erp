@@ -418,7 +418,9 @@ class PayController extends Controller
                 $list->category_id = $item['category_id'];
                 $list->number = $item['number'];
                 $list->price = $item['price'];
-                $list->remark = $item['remark'];
+                if(isset($item['remark'])){
+                    $list->remark = $item['remark'];
+                }
                 $list->save();
             }
         }

@@ -87,7 +87,7 @@
                 <i class="icon delete"></i>
                 <span>撤销</span>
             </button>
-            @if(checkRole('pay_pass',$apply->id))
+            @if(checkRole('pay_pass',$apply->id)&&$apply->state==2)
             <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
                 <i class="icon edit"></i>
                 <span>审批</span>
