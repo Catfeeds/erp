@@ -127,13 +127,13 @@
                 </button>
                 @else
                     @endif
-                @if(checkRole('build_pay_pass',$apply->id))
+                {{--@if(checkRole('build_pay_pass',$apply->id))--}}
                 <a class="ui icon button primary"  @click="passFnc" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>审批</span>
                 </a>
-                @else
-                    @endif
+                {{--@else--}}
+                    {{--@endif--}}
                 <button class="ui icon button negative" @click="removeFnc" style="margin:0 10px;">
                     <i class="icon delete"></i>
                     <span>删除</span>
