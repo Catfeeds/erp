@@ -4,9 +4,8 @@
 }(window, function () {
 
   // const url = 'http://119.23.202.220:8080'
-  const url = 'http://193.112.181.116:8080'
-  // const url = 'http://localhost/erp/public'
-  //
+  const url = 'http://localhost/erp/public'
+
   class ProjectManager {
     constructor() {
       this._http = axios.create({
@@ -837,7 +836,7 @@
     checkSubmit(data = {}) {
       return this._http.get(`/check/submit`, {
         params: data
-      }) 
+      })
     }
 
     //选择报销复核人
@@ -882,6 +881,12 @@
     //报销
     createPayAddPost(data = {}) {
       return this._http.post(`/loan/pay/add`, data, this.dataMethodDefaults)
+    }
+
+    searchLoanedUser(data = {}) {
+      return this._http.get(`/search/loaned/user`, {
+        params: data
+      })
     }
 
   }

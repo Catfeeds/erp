@@ -735,5 +735,33 @@ class PayController extends Controller
         ]);
 
     }
+    public function searchLoanUser()
+    {
+//        dd(Input::all());
+        $role = getRole('loan_list');
+//        dd($role);
+        $name = Input::get('name');
+        if ($role=='all'){
+            if ($name){
+                $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->where('borrower','=',$name)->groupBy('name')->get()->toArray();
+                $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->where('loan_user','=',$name)->groupBy('name')->get()->toArray();
+            }else{
+                $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->groupBy('name')->get()->toArray();
+                $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
+            }
+            $swap = array_merge(array_column($list,'name'),array_column($list2,'name'));
+            $swap = array_unique($swap);
+        }else{
+            $swap = [Auth::user()->username];
+//            dd($swap);
+        }
+//        dd($list2);
+
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$swap
+        ]);
+    }
 
 }
