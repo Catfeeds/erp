@@ -27,7 +27,7 @@
         },
         mounted() {
           this.payForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
-          this.payForm.apply_user = $('#applyUser')
+          this.payForm.apply_user = $('#applyUser').val();
           $('#payAdd').removeClass('invisible')
         },
         methods: {

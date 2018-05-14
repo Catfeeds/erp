@@ -79,7 +79,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">申请人</label>
                             <div class="eleven wide field">
-                                <input type="text" v-model="payForm.people"  placeholder="请输入申请人">
+                                <input type="text" v-model="payForm.apply_user" placeholder="请输入申请人">
                             </div>
                         </div>
                     </div>

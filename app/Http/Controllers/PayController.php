@@ -48,7 +48,7 @@ class PayController extends Controller
             $apply->project_content = $project->name;
             $apply->project_id = $project->id;
         }
-        $apply->proposer = $post->get('people');
+        $apply->proposer = $post->get('apply_user');
         $apply->proposer_id = Auth::id();
         if ($apply->save()){
             return response()->json([
@@ -372,7 +372,9 @@ class PayController extends Controller
                 $list->category_id = $item['category_id'];
                 $list->number = $item['number'];
                 $list->price = $item['price'];
-                $list->remark = $item['remark'];
+                if (isset($item['remark'])){
+                    $list->remark = $item['remark'];
+                }
                 $list->save();
             }
         }
