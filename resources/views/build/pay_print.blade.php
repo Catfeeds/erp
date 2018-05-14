@@ -9,14 +9,14 @@
             <div class="divider"> / </div>
             <a class="section" href="../build/pay_list.html">施工付款款清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../build/pay_single.html?id=SGFK20171103001">付款查询 - SGFK20171103001</a>
+            <a class="section" href="../build/pay_single.html?id=SGFK20171103001">付款查询 </a>
             <div class="divider"> / </div>
             <div class="active section">查看凭证</div>
         </div>
 
         <h1 class="ui header center aligned">施工付款记帐凭证</h1>
         <p style="text-align:right;font-size: 13px;padding-right:20px;">
-            <b>记账凭证号：</b>123423212323</p>
+            <b>记账凭证号：</b></p>
         <table class="ui celled center aligned table selectable" style="margin-bottom:0;">
             <thead>
             <tr>
@@ -38,6 +38,7 @@
                 <th>审批人</th>
                 <th>请款金额</th>
             </tr>
+            @if(!empty($payments))
             @for($i=0;$i<count($payments);$i++)
             <tr>
                 <th class="fake-td"></th>
@@ -65,6 +66,8 @@
                 <th colspan="6">合计</th>
                 <th>{{number_format($team->payments()->sum('price'))}} ￥</th>
             </tr>
+            @else
+                @endif
             <tr>
                 <th colspan="8">申请付款</th>
                 <th colspan="5">实际付款</th>
@@ -86,21 +89,22 @@
             </tr>
             </thead>
             <tbody>
+            @if(count($applies)!=0)
             @for($i=0;$i<count($applies);$i++)
             <tr>
                 <td>{{$applies[$i]->number}}</td>
                 <td>{{$applies[$i]->apply_date}}</td>
-                <td>{{$applise[$i]->apply_price}}￥</td>
-                <td>{{$applise[$i]->payee}}</td>
-                <td>{{$applise[$i]->bank}} {{$applise[$i]->account}}</td>
-                <td>{{$applise[$i]->worker}}</td>
-                <td>{{$applise[$i]->checker}}</td>
-                <td>{{$applise[$i]->passer}}</td>
-                <td>{{$applise[$i]->pay_date}}</td>
-                <td>{{number_format($applise[$i]->pay_price)}}￥</td>
-                <td>{{$applise[$i]->pay_bank}} {{$applise[$i]->pay_account}}</td>
-                <td style="max-width:150px;">{{$applise[$i]->remark}}</td>
-                <td>{{$applise[$i]->pay_worker}}</td>
+                <td>{{$applies[$i]->apply_price}}￥</td>
+                <td>{{$applies[$i]->payee}}</td>
+                <td>{{$applies[$i]->bank}} {{$applies[$i]->account}}</td>
+                <td>{{$applies[$i]->worker}}</td>
+                <td>{{$applies[$i]->checker}}</td>
+                <td>{{$applies[$i]->passer}}</td>
+                <td>{{$applies[$i]->pay_date}}</td>
+                <td>{{number_format($applies[$i]->pay_price)}}￥</td>
+                <td>{{$applies[$i]->pay_bank}} {{$applies[$i]->pay_account}}</td>
+                <td style="max-width:150px;">{{$applies[$i]->remark}}</td>
+                <td>{{$applies[$i]->pay_worker}}</td>
             </tr>
             @endfor
             </tbody>
@@ -114,6 +118,8 @@
                 <th>{{number_format($team->payments()->sum('price')-$team->applies()->sum('pay_price'))}}￥</th>
             </tr>
             </tfoot>
+            @else
+                @endif
         </table>
 
         <div class="content-operation print-hide">
