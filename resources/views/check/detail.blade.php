@@ -12,17 +12,6 @@
             <div class="active section">项目明细 - 项目编号 {{$project->number}}</div>
         </div>
 
-        <div style="display:none" id="marginPay">{"count1":123123,"count2":123123,"count3":213421252,"data":[{"id":1,"guarantee":{"company":"单位一","amount":12315412,"date":"2018-02-11","cost":5232,"others":"其他信息"},"payment":{"date":"2018-02-04","amount":52321,"payee":"张先生","bank":"广发银行","account":6009876787523154000,"recyle":"回收条件条件"}},{"id":2,"guarantee":{"company":"单位二","amount":223542,"date":"2018-02-15","cost":6234,"others":"其他信息"},"payment":{"date":"2018-02-04","amount":52321,"payee":"张先生","bank":"广发银行","account":6009876787523154000,"recyle":"回收条件条件"}}]}</div>
-        <div style="display:none" id="marginRecyle">{"count":1111111,"leftCount":2321,"data":[{"id":1,"preDate":"2018-01-02","preAmount":12342213,"prePeople":"张先生","preRemark":"这是备注","realDate":"2018-02-01","realBank":"中国银行","realAmount":231523,"realPeople":"张先生","realAccount":60002321523215230000},{"id":2,"preDate":"2018-03-02","preAmount":5232124,"prePeople":"成先生","preRemark":"这是备注","realDate":"2018-04-01","realBank":"广发银行","realAmount":2342,"realPeople":"成先生","realAccount":60002321523215230000}]}</div>
-        <div style="display:none" id="requirement">{"count":123123,"data":[{"id":1,"date":"2018-10-22","amount":123142,"company":"xxx单位","remark":"这是备注~"},{"id":2,"date":"2017-12-22","amount":123,"company":"xxx单位","remark":"这是备注这是备注~"}]}</div>
-        <div style="display:none" id="invoice">{"count":2312312,"data":[{"id":1,"date":"2018-01-02","amount":2132,"company":{"id":1,"value":"单位一"},"tax":{"id":1,"value":5}},{"id":2,"date":"2018-01-02","amount":2132,"company":{"id":1,"value":"单位一"},"tax":{"id":1,"value":5}},{"id":3,"date":"2018-01-02","amount":2132,"company":{"id":2,"value":"单位二"},"tax":{"id":2,"value":9}},{"id":4,"date":"2018-01-02","amount":2132,"company":{"id":3,"value":"单位三"},"tax":{"id":3,"value":15}},{"id":5,"date":"2018-01-02","amount":2132,"company":{"id":3,"value":"单位三"},"tax":{"id":1,"value":5}}]}</div>
-        <div style="display:none" id="invoiceCompany">[{"id":1,"value":"单位一"},{"id":2,"value":"单位二"},{"id":3,"value":"单位三"}]</div>
-        <div style="display:none" id="invoiceTax">{{json_encode($invoiceTax)}}</div>
-        <div style="display:none" id="subCompany">{"count":323123,"data":[{"id":1,"date":"2018-01-02","amount":213123,"remark":"这是备注啊~"},{"id":2,"date":"2018-01-02","amount":3212,"remark":"这是备注啊~"},{"id":3,"date":"2018-01-02","amount":4274,"remark":"这是备注啊~"}]}</div>
-        <div style="display:none" id="masterContract">{"count":123123,"data":[{"id":1,"date":"2018-09-21","amount":213123,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"},{"id":2,"date":"2018-09-21","amount":6423,"bank":"中国银行","account":603423212123473200,"remark":"这是备注~"},{"id":3,"date":"2018-09-21","amount":6321,"bank":"广发银行","account":6034232123242673000,"remark":"这是备注~"},{"id":4,"date":"2018-09-21","amount":32421,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"}]}</div>
-        <div style="display:none" id="subContract">{"count":123123,"data":[{"id":1,"date":"2018-09-21","amount":213123,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"},{"id":2,"date":"2018-09-21","amount":6423,"bank":"中国银行","account":603423212123473200,"remark":"这是备注~"},{"id":3,"date":"2018-09-21","amount":6321,"bank":"广发银行","account":6034232123242673000,"remark":"这是备注~"},{"id":4,"date":"2018-09-21","amount":32421,"bank":"中国银行","account":6034232123523673000,"remark":"这是备注~"}]}</div>
-
-
         <h1 class="inline-center">项目编号 - {{$project->number}}</h1>
         <div id="projectCheck">
             <!-- 基本信息 -->
@@ -367,7 +356,7 @@
                 </div>
 
                 <div class="check-item margin-top-50" style="overflow:auto;">
-                    <table class="ui celled structured table center aligned special" v-if="marginRecyle.data && marginRecyle.data.length">
+                    <table class="ui celled structured table center aligned special" >
                         <thead>
                         <tr>
                             <th colspan="10">履约保证金回收情况</th>
@@ -437,7 +426,7 @@
                 <!-- 预计请款计划 -->
                 <h4 class="ui dividing header blue margin-top-50">预计请款计划</h4>
                 <div class="check-item">
-                    <table class="ui celled structured table center aligned special" v-if="requirement.data && requirement.data.length">
+                    <table class="ui celled structured table center aligned special" >
                         <thead>
                         <tr>
                             <th colspan="5">预计请款计划</th>
@@ -472,13 +461,13 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <h4 v-else class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                    <h4  class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
                 </div>
                 <!-- / 预计请款计划 -->
 
                 <!-- 开票 -->
                 <h4 class="ui dividing header blue margin-top-50">开票</h4>
-                <template v-if="invoice.data && invoice.data.length">
+                <template >
                     <div class="check-item">
                         <table class="ui celled structured table center aligned">
                             <thead>
@@ -517,29 +506,29 @@
                             </tfoot>
                         </table>
                     </div>
-                    <div class="check-item margin-top-50">
-                        <table class="ui celled structured table center aligned">
-                            <thead>
-                            <tr>
-                                <th :colspan="invoiceTax.length + 2">开票计算结果</th>
-                            </tr>
-                            <tr>
-                                <th>付款单位</th>
-                                <th v-for="(item, index) in invoiceTax">@{{ item.value }} %</th>
-                                <th>合计</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(item, index) in invoiceTaxCount" :key="item.company.id">
-                                <td>@{{ item.company.name }}</td>
-                                <td v-for="(value, key) in invoiceCompanyCopy" :key="key">@{{ item.result[key] || '/' }}</td>
-                                <td>@{{ item.count.toLocaleString('en-US') }} ￥</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    {{--<div class="check-item margin-top-50">--}}
+                        {{--<table class="ui celled structured table center aligned">--}}
+                            {{--<thead>--}}
+                            {{--<tr>--}}
+                                {{--<th :colspan="invoiceTax.length + 2">开票计算结果</th>--}}
+                            {{--</tr>--}}
+                            {{--<tr>--}}
+                                {{--<th>付款单位</th>--}}
+                                {{--<th v-for="(item, index) in invoiceTax">@{{ item.value }} %</th>--}}
+                                {{--<th>合计</th>--}}
+                            {{--</tr>--}}
+                            {{--</thead>--}}
+                            {{--<tbody>--}}
+                            {{--<tr v-for="(item, index) in invoiceTaxCount" :key="item.company.id">--}}
+                                {{--<td>@{{ item.company.name }}</td>--}}
+                                {{--<td v-for="(value, key) in invoiceCompanyCopy" :key="key">@{{ item.result[key] || '/' }}</td>--}}
+                                {{--<td>@{{ item.count.toLocaleString('en-US') }} ￥</td>--}}
+                            {{--</tr>--}}
+                            {{--</tbody>--}}
+                        {{--</table>--}}
+                    {{--</div>--}}
                 </template>
-                <template v-else>
+                <template >
                     <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
                 </template>
                 <!-- / 开票 -->
@@ -591,7 +580,7 @@
                 <!-- 主合同收款 -->
                 <h4 class="ui dividing header blue">主合同收款</h4>
                 <div class="check-item">
-                    <table class="ui celled structured table center aligned" v-if="masterContract.data && masterContract.data.length">
+                    <table class="ui celled structured table center aligned" >
                         <thead>
                         <tr>
                             <th colspan="6">主合同收款</th>
@@ -670,7 +659,7 @@
                 <!-- 分包合同收款 -->
                 <h4 class="ui dividing header blue">分包合同收款</h4>
                 <div class="check-item">
-                    <table class="ui celled structured table center aligned" v-if="subContract.data && subContract.data.length">
+                    <table class="ui celled structured table center aligned" >
                         <thead>
                         <tr>
                             <th colspan="6">分包合同收款</th>
