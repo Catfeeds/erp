@@ -26,8 +26,9 @@
           }
         },
         mounted() {
-          $('#payAdd').removeClass('invisible')
           this.payForm.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.payForm.apply_user = $('#applyUser')
+          $('#payAdd').removeClass('invisible')
         },
         methods: {
 
@@ -108,8 +109,8 @@
                   })
                   this.selectData.id = res.data.data.id
                   _http.UserManager.searchAuthUsers({
-                    role: 'pay_pass'
-                  })
+                      role: 'pay_pass'
+                    })
                     .then(resp => {
                       if (resp.data.code === '200') {
                         this.menList = resp.data.data

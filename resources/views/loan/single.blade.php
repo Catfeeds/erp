@@ -102,6 +102,13 @@
             </a>
                 @else
                 @endif
+                @if($loan->state == 1)
+                <button class="ui icon button negative" id="submitSingleDelete" style="margin:0 20px;">
+                    <i class="icon delete"></i>
+                    <span>删除</span>
+                </button>
+                @else
+                    @endif
             <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('loan/submit/print')}}?id={{$loan->id}}')" style="margin:0 20px;">
                 <i class="icon print"></i>
                 <span>凭证</span>

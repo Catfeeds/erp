@@ -3,9 +3,9 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
+  // const url = 'http://119.23.202.220:8080'
   const url = 'http://193.112.181.116:8080'
-  // const url = 'http://localhost/erp/public'
-
+  //
   class ProjectManager {
     constructor() {
       this._http = axios.create({
@@ -574,6 +574,30 @@
     createProjectCollect(data = {}) {
       return this._http.post(`/project/collect`, data, this.dataMethodDefaults)
     }
+
+    //collect 修改
+    editCollect(data = {}) {
+      return this._http.post(`/collect`, data, this.dataMethodDefaults)
+    }
+
+    //collect get
+    getCollect(data = {}) {
+      return this._http.get(`/collect`, {
+        params: data
+      })
+    }
+
+    //tip 修改
+    editTip(data = {}) {
+      return this._http.post(`/tip`, data, this.dataMethodDefaults)
+    }
+
+    //tip get
+    getTip(data = {}) {
+      return this._http.get(`/tip`, {
+        params: data
+      })
+    }
   }
 
   // 采购
@@ -812,7 +836,7 @@
     checkSubmit(data = {}) {
       return this._http.get(`/check/submit`, {
         params: data
-      })
+      }) 
     }
 
     //选择报销复核人
@@ -828,6 +852,14 @@
     //报销审批
     passSubmit(data = {}) {
       return this._http.get(`/pass/submit`, {
+        params: data
+      })
+    }
+
+
+    //删除
+    deleteSubmit(data = {}) {
+      return this._http.get(`/delete/submit`, {
         params: data
       })
     }

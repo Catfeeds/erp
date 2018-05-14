@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">付款申请</div>
         </div>
-
+        <input type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->username}}" id="applyUser">
         <h1 class="ui header blue aligned center">付款申请</h1>
         <div id="payAdd">
             <h4 class="ui dividing header blue">信息录入</h4>

@@ -84,6 +84,24 @@ class LoanController extends Controller
             'msg'=>'SUCCESS'
         ]);
     }
+    public function deleteSubmit()
+    {
+        $id = Input::get('id');
+        $loan = LoanSubmit::find($id);
+        if($loan->state !=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不能删除！'
+            ]);
+        }
+        $loan->delete();
+        Task::where('type','=','loan_project_submit_check')->where('content','=',$id)->update(['state'=>0]);
+        Task::where('type','=','loan_submit_check')->where('content','=',$id)->update(['state'=>0]);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+    }
     public function checkSubmit()
     {
         $id = Input::get('id');
@@ -98,8 +116,10 @@ class LoanController extends Controller
             $loan->checker_id = Auth::id();
             $loan->checker = Auth::user()->name;
             $loan->save();
-            Task::where('type','=','loan_project_submit_check')->where('content','=',$id)->update(['state'=>0]);
-            Task::where('type','=','loan_submit_check')->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','loan_project_submit_check')->where('content','=',$id)->delete();
+            Task::where('type','=','loan_submit_check')->where('content','=',$id)->delete();
+            Task::where('type','=','loan_project_submit_pass')->where('content','=',$id)->delete();
+            Task::where('type','=','loan_submit_pass')->where('content','=',$id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',

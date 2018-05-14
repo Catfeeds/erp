@@ -391,6 +391,7 @@
                         </tr>
                         </thead>
                         <tbody>
+{{--                        @if(!empty($bailReturn))--}}
                         @for($i=0;$i<count($bailReturn);$i++)
                         <tr >
                             <template >
@@ -429,7 +430,7 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <div v-else>暂无数据</div>
+                    {{--<div >暂无数据</div>--}}
                 </div>
                 <!-- / 履约金保证情况 -->
 
@@ -559,6 +560,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if(!empty($subCompanies))
                         @foreach($subCompanies as $company)
                         <tr >
                             <template >
@@ -573,13 +575,16 @@
                             @endforeach
                         </tbody>
                         <tfoot>
+{{--                        @if(!empty($subCompanies))--}}
                         <tr>
                             <th>合计</th>
                             <th colspan="3">{{$project->collects()->where('type','=',4)->sum('price')}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
-                    <h4 v-else class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                    @else
+                    <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                        @endif
                 </div>
                 <!-- / 发包公司收款情况 -->
 
@@ -603,36 +608,37 @@
                         <tbody>
                         <tr>
                             @if(empty($masterContract))
-                            <template>
-                                <td>
-                                    <el-date-picker v-model="editForm.masterContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.masterContract.amount" type="number" placeholder="收款金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.masterContract.bank" type="text" placeholder="收款银行">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.masterContract.account" type="number" placeholder="收款账号账号">
-                                    </div>
-                                </td>
+                                <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                            {{--<template>--}}
+                                {{--<td>--}}
+                                    {{--<el-date-picker v-model="editForm.masterContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">--}}
+                                    {{--</el-date-picker>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model.number="editForm.masterContract.amount" type="number" placeholder="收款金额">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model="editForm.masterContract.bank" type="text" placeholder="收款银行">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model.number="editForm.masterContract.account" type="number" placeholder="收款账号账号">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
                                 {{--<td>--}}
                                     {{--<div class="ui input">--}}
                                         {{--<input v-model="editForm.masterContract.remark" type="text" placeholder="备注D">--}}
                                     {{--</div>--}}
                                 {{--</td>--}}
-                                <td>
-                                    <button class="ui mini button green" @click="masterContractSave(item, index)">保存</button>
-                                    <button @click="window._helper.fullWindow('../check/collect_master_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
-                                </td>
-                            </template>
+                                {{--<td>--}}
+                                    {{--<button class="ui mini button green" @click="masterContractSave(item, index)">保存</button>--}}
+                                    {{--<button @click="window._helper.fullWindow('../check/collect_master_print.html?id='+item.id)" class="ui mini button primary">凭证</button>--}}
+                                {{--</td>--}}
+                            {{--</template>--}}
                             @else
                             <template>
                                 @foreach($masterContract as $item)
@@ -657,7 +663,7 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <h4 v-else class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                    {{--<h4 v-else class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>--}}
                 </div>
                 <!-- / 主合同收款 -->
 
@@ -682,36 +688,37 @@
 
                         <tr >
                             @if(empty($subContract))
-                            <template >
-                                <td>
-                                    <el-date-picker v-model="editForm.subContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">
-                                    </el-date-picker>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.subContract.amount" type="number" placeholder="收款金额">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model="editForm.subContract.bank" type="text" placeholder="收款银行">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ui input">
-                                        <input v-model.number="editForm.subContract.account" type="number" placeholder="收款账号账号">
-                                    </div>
-                                </td>
+                                <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                            {{--<template >--}}
+                                {{--<td>--}}
+                                    {{--<el-date-picker v-model="editForm.subContract.date" value-format="yyyy-MM-dd" type="date" placeholder="收款日期">--}}
+                                    {{--</el-date-picker>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model.number="editForm.subContract.amount" type="number" placeholder="收款金额">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model="editForm.subContract.bank" type="text" placeholder="收款银行">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<div class="ui input">--}}
+                                        {{--<input v-model.number="editForm.subContract.account" type="number" placeholder="收款账号账号">--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
                                 {{--<td>--}}
                                     {{--<div class="ui input">--}}
                                         {{--<input v-model="editForm.subContract.remark" type="text" placeholder="备注D">--}}
                                     {{--</div>--}}
                                 {{--</td>--}}
-                                <td>
-                                    <button class="ui mini button green" @click="subContractSave(item, index)">保存</button>
-                                    <button @click="window._helper.fullWindow('../check/collect_sub_print.html?id='+item.id)" class="ui mini button primary">凭证</button>
-                                </td>
-                            </template>
+                                {{--<td>--}}
+                                    {{--<button class="ui mini button green" @click="subContractSave(item, index)">保存</button>--}}
+                                    {{--<button @click="window._helper.fullWindow('../check/collect_sub_print.html?id='+item.id)" class="ui mini button primary">凭证</button>--}}
+                                {{--</td>--}}
+                            {{--</template>--}}
                             @else
                                 @foreach($subContract as $item)
                             <template >
@@ -737,7 +744,7 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <h4 v-else class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+
                 </div>
                 <!-- / 分包合同收款 -->
             </div>

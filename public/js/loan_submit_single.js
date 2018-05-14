@@ -15,10 +15,54 @@
         },
         mounted() {
           const self = this
+          $('#submitSingleDelete').on('click', function () {
+            self.$confirm('确认删除该内容, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+              .then(() => {
+                _http.LoanManager.deleteSubmit({
+                    id: loanId
+                  })
+                  .then(res => {
+                    if (res.data.code === '200') {
+                      $(this).parents('div').html(`
+                      <h3 class="ui header aligned center" style="text-align:center;color:rgba(,.8);">已删除</h3>
+                      `)
+                      self.$notify({
+                        title: '成功',
+                        message: '已删除',
+                        type: 'success'
+                      })
+                    } else {
+                      self.$notify({
+                        title: '错误',
+                        message: res.data.msg,
+                        type: 'error'
+                      })
+                    }
+                  })
+                  .catch(err => {
+                    self.$notify({
+                      title: '错误',
+                      message: '服务器出错',
+                      type: 'error'
+                    })
+                  })
+              })
+              .catch(() => {
+                self.$message({
+                  type: 'info',
+                  message: '已取消'
+                });
+              });
+          })
+
           $('#submitSingleCheck').on('click', function () {
             _http.LoanManager.checkSubmit({
-              id: loanId
-            })
+                id: loanId
+              })
               .then(res => {
                 if (res.data.code === '200') {
                   self.$notify({
@@ -61,15 +105,15 @@
               })
           })
 
-          $("#submitSinglePass").on('click', function(){
+          $("#submitSinglePass").on('click', function () {
             self.$confirm('确认审批, 是否继续?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
               _http.LoanManager.passSubmit({
-                id: loanId
-              })
+                  id: loanId
+                })
                 .then(res => {
                   if (res.data.code === '200') {
                     self.$notify({
@@ -96,7 +140,7 @@
               self.$message({
                 type: 'info',
                 message: '已取消'
-              });          
+              });
             });
           })
         },
