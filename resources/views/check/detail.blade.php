@@ -485,7 +485,7 @@
                             <tbody>
                                 @foreach($invoiceList as $item)
                             <tr >
-                                <template >
+                                {{--<template >--}}
                                     <td>{{$item->date}}</td>
                                     <td>{{$item->price}}￥</td>
                                     <td>{{$item->unit}}</td>
@@ -494,7 +494,7 @@
                                         <button class="ui mini button primary" @click="EditFnc(item, index, 'invoice')">修改</button>
                                         <button @click="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                     </td>
-                                </template>
+                                {{--</template>--}}
                             </tr>
                                 @endforeach
                             </tbody>
@@ -552,14 +552,14 @@
                         @if(!empty($subCompanies))
                         @foreach($subCompanies as $company)
                         <tr >
-                            <template >
+                            {{--<template >--}}
                                 <td>{{ $company->date }}</td>
                                 <td>{{ $company->price }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary">修改</button>
                                 </td>
-                            </template>
+                            {{--</template>--}}
                         </tr>
                             @endforeach
                         </tbody>
@@ -632,7 +632,7 @@
 
                                 @foreach($masterContract as $item)
                                     <tr>
-                            <template>
+                            {{--<template>--}}
 
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->price }} ￥</td>
@@ -644,7 +644,7 @@
                                     <button @click="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 
-                            </template>
+                            {{--</template>--}}
                         </tr>
                                 @endforeach
                                 @endif
