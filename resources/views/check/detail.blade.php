@@ -595,7 +595,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+
                             @if(empty($masterContract))
                                 <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
                             {{--<template>--}}
@@ -631,6 +631,7 @@
                             @else
 
                                 @foreach($masterContract as $item)
+                                    <tr>
                             <template>
 
                                 <td>{{ $item->date }}</td>
@@ -644,9 +645,10 @@
                                 </td>
 
                             </template>
+                        </tr>
                                 @endforeach
                                 @endif
-                        </tr>
+
                         </tbody>
                         <tfoot>
                         <tr>
@@ -678,7 +680,7 @@
                         </thead>
                         <tbody>
 
-                        <tr >
+
                             @if(empty($subContract))
                                 <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
                             {{--<template >--}}
@@ -713,6 +715,7 @@
                             {{--</template>--}}
                             @else
                                 @foreach($subContract as $item)
+                                    <tr >
                             <template >
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->price}} ￥</td>
@@ -725,9 +728,10 @@
                                 </td>
 
                             </template>
+                                    </tr>
                                 @endforeach
                                 @endif
-                        </tr>
+
                         </tbody>
                         <tfoot>
                         <tr>
