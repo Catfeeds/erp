@@ -131,7 +131,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::post('project/acceptance','ProjectController@acceptanceProject');
    Route::get('project/acceptance','ProjectController@acceptancePage');
    Route::get('check/detail','ProjectController@checkDetailPage');
-   Route::get('check/tips','ProjectController@checkTipsPage');
+   Route::get('check/tips','ProjectController@checkTipsPage')->middleware('role:check_tip');
    Route::get('create/tips','ProjectController@createTipsPage');
    Route::post('project/invoice','ProjectController@createInvoice');
    Route::post('project/collect','ProjectController@createCollect');
@@ -157,7 +157,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage');
     Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage');
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
-    Route::get('purchase/parity/list','ProjectController@purchaseParityPage');
+    Route::get('purchase/parity/list','ProjectController@purchaseParityPage')->middleware('role:buy_parity');
     Route::post('purchase/create','ProjectController@createPurchase');
     Route::get('tip','ProjectController@getTip');
     Route::post('tip','ProjectController@editTip');

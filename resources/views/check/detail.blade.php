@@ -629,8 +629,10 @@
                                 {{--</td>--}}
                             {{--</template>--}}
                             @else
-                            <template>
+
                                 @foreach($masterContract as $item)
+                            <template>
+
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->price }} ￥</td>
                                 <td>{{ $item->bank }}</td>
@@ -640,8 +642,9 @@
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'masterContract')">修改</button>
                                     <button @click="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
-                                    @endforeach
+
                             </template>
+                                @endforeach
                                 @endif
                         </tr>
                         </tbody>
