@@ -155,6 +155,13 @@ class BuildController extends Controller
                 'msg'=>'不能超过剩余应付帐款！'
             ]);
         }
+        $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',3)->sum('apply_price');
+        if ($price<$post->get('price')){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'不能超过请款金额！'
+            ]);
+        }
         $pay->apply_price = $post->get('price');
         $pay->payee = $post->get('payee');
         $pay->bank = $post->get('bank');
@@ -181,7 +188,7 @@ class BuildController extends Controller
                 $task = new Task();
                 $task->user_id = $user;
                 $task->type = 'build_pay_check';
-                $task->title = '付款申请复核';
+                $task->title = '施工付款申请复核';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
                 $task->content = $id;
@@ -203,7 +210,7 @@ class BuildController extends Controller
                 $task = new Task();
                 $task->user_id = $user;
                 $task->type = 'build_pay_pass';
-                $task->title = '付款申请审批';
+                $task->title = '施工付款申请审批';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
                 $task->content = $id;

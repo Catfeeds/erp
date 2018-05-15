@@ -98,7 +98,8 @@
                         <div class="inline fields">
                             <label class="four wide field">金额</label>
                             <div class="twelve wide field">
-                                <input v-model.number="newMaterial.cost" type="number" placeholder="金额">
+                                {{--<input v-model.number="newMaterial.cost" type="number" placeholder="金额">--}}
+                                <div class="fake-input">@{{ (newMaterial.price * newMaterial.number || 0).toLocaleString('en-US') }}</div>
                             </div>
                         </div>
                     </div>
@@ -163,7 +164,8 @@
                             <input v-model.number="newBudget.number" type="number" placeholder="数量">
                         </div>
                         <div class="two wide column">
-                            <input v-model.number="newBudget.cost" type="number" placeholder="金额">
+                            <div class="fake-input">@{{ (newBudget.price * newBudget.number || 0).toLocaleString('en-US') }}</div>
+                            {{--<input v-model.number="newBudget.cost" type="number" placeholder="金额">--}}
                         </div>
                         <div class="one wide column">
                             <el-select v-model="newBudget.type" placeholder="类型">
@@ -221,7 +223,8 @@
                             <div class="fake-input">@{{ item.number.toLocaleString('en-US')}}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{item.cost.toLocaleString('en-US')}} ￥</div>
+                            {{--<div class="fake-input">@{{item.cost.toLocaleString('en-US')}} ￥</div>--}}
+                            <div class="fake-input">@{{(item.price * item.number).toLocaleString('en-US')}} ￥</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{budgetType[item.type * 1 - 1].name}}</div>

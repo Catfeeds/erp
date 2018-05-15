@@ -81,12 +81,12 @@
                     <td>{{$list->project_number}}</td>
                     <td>{{$list->project_content}}</td>
                     <td>{{$list->team}}</td>
-                    <td>{{$list->price}} ￥</td>
-                    <td>{{$list->pay_price}} ￥</td>
-                    <td>{{$list->need_price}} ￥</td>
-                    <td>{{$list->invoice_price}} ￥</td>
-                    <td>{{$list->pay_price-$list->invoice_price}} ￥</td>
-                    <td>{{$list->need_price==0?'未结清':'已结清'}}</td>
+                    <td>{{$list->payments()->where('state','=',3)->sum('price')}} ￥</td>
+                    <td>{{$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
+                    <td>{{$list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
+                    <td>{{$list->invoices()->sum('with_tax')}} ￥</td>
+                    <td>{{$list->applies()->where('state','=',4)->sum('apply_price')-$list->invoices()->sum('with_tax')}} ￥</td>
+                    <td>{{$list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price')!=0?'未结清':'已结清'}}</td>
                 </tr>
                 @endforeach
                 </tbody>

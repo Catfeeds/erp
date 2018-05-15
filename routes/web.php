@@ -47,6 +47,7 @@ Route::get('search/purchase','PurchaseController@searchPurchase');
 Route::get('search/warehouse','StockController@searchWarehouse');
 Route::get('search/purchase/warehouse','PurchaseController@searchPurchaseWarehouse');
 Route::get('search/purchase/material','PurchaseController@searchPurchaseMaterial');
+Route::get('search/purchase/project','ProjectController@searchPurchaseProject');
 Route::get('search/loaned/user','PayController@searchLoanUser');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');

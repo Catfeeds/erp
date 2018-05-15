@@ -479,7 +479,7 @@ class ProjectController extends Controller
                     $budget->material_id = $item['material_id'];
                     $budget->price = $item['price'];
                     $budget->number = $item['number'];
-                    $budget->cost = $item['cost'];
+                    $budget->cost = $item['price']*$item['number'];
                     $budget->type = $item['type'];
                     $budget->need_buy = $item['number'];
                     $budget->save();
@@ -496,7 +496,7 @@ class ProjectController extends Controller
                     $budget->material_id = $materail->id;
                     $budget->price = $item['price'];
                     $budget->number = $item['number'];
-                    $budget->cost = $item['cost'];
+                    $budget->cost = $item['price']*$item['number'];
                     $budget->type = $item['type'];
                     $budget->need_buy = $item['number'];
                     $budget->save();
@@ -927,6 +927,22 @@ class ProjectController extends Controller
 //            }
 //        }
         return view('buy.collect',['project'=>$project,'search'=>$value]);
+    }
+    public function searchPurchaseProject()
+    {
+        $name = Input::get('search');
+        $idArr = Purchase::where('state','=',3)->pluck('id')->toArray();
+        $db = Project::whereIn('id',$idArr);
+        if ($name){
+            $db->where('name','like','%'.$name.'%')
+                ->orWhere('number','like','%'.$name.'%');
+        }
+        $data = $db->orderBy('id','DESC')->select(['name','number'])->get()->toArray();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
     }
     public function purchaseParityPage()
     {
