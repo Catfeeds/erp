@@ -19,4 +19,5 @@ class ProjectTeam extends Model
     {
         return $this->hasMany('App\Models\BuildInvoice','project_team','id');
     }
+
 }

@@ -729,6 +729,8 @@ class PayController extends Controller
         }
         $payment->lists()->delete();
         $payment->delete();
+        Task::where('type','=','build_finish_check')->where('content','=',$id)->delete();
+        Task::where('type','=','build_finish_pass')->where('content','=',$id)->delete();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'

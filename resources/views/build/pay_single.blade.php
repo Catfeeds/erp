@@ -142,12 +142,16 @@
                         <td colspan="5">暂未付款</td>
                     @endif
                     <td style="white-space:nowrap;">
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
+
                         @if($apply->state==1)
-                        <button class="ui mini button primary paySingleBtn" data-id="{{$apply->id}}">复核</button>
+                            <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
+                        @if(checkRole('build_pay_check',$apply->id))
+                            <button class="ui mini button primary paySingleBtn" data-id="{{$apply->id}}">复核</button>
                         @else
+                            @endif
+                            @else
                         @endif
-                        @if($apply->state==2)
+                        @if($apply->state==2&&checkRole('build_pay_pass',$apply->id))
                         <button class="ui mini button primary payPassBtn" data-id="{{$apply->id}}">审批</button>
                         @else
                         @endif
@@ -163,11 +167,11 @@
                 <tfoot>
                 <tr>
                     <th colspan="13">已付款合计</th>
-                    <th>{{$projectTeam->pay_price}}￥</th>
+                    <th>{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')}}￥</th>
                 </tr>
                 <tr>
                     <th colspan="13">剩余应付账款</th>
-                    <th>{{$projectTeam->need_price}}￥</th>
+                    <th>{{$projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')}}￥</th>
                 </tr>
                 </tfoot>
             </table>

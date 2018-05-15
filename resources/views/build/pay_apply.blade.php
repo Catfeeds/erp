@@ -74,7 +74,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">已申请付款</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$projectTeam->applies()->sum('apply_price')}} ￥</div>
+                                <div class="fake-input">{{$projectTeam->payments()->where('state','=',3)->sum('price')}} ￥</div>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">已付款</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$projectTeam->pay_price}} ￥</div>
+                                <div class="fake-input">{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')}} ￥</div>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">剩余应付账款</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$projectTeam->need_price}} ￥</div>
+                                <div class="fake-input">{{$projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')}} ￥</div>
                             </div>
                         </div>
                     </div>
