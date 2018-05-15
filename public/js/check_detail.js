@@ -384,73 +384,224 @@
       // })
 
       new Vue({
-        el: '#projectCheck',
+        el: '#projectCheckDialog',
         data: {
+          currentType: 'masterContract',
+          centerDialogVisible: false,
 
+          map: {
+            marginLeft: '预计回收',
+            marginRight: '实际回收',
+            finish: '预计请款',
+            company: '发包公司',
+            subContract: '分包合同',
+            masterContract: '主合同'
+          },
+
+          unitMap: {
+            marginLeft: 'pay_unit',
+            marginRight: 'payee',
+            finish: 'pay_unit',
+            company: '',
+            subContract: 'payee',
+            masterContract: 'payee'
+          },
+
+          marginLeft: {
+            pay_date: '',
+            price: '',
+            pay_unit: '',
+            remark: ''
+          },
+
+          marginRight: {
+            pay_date: '',
+            price: '',
+            payee: '',
+            bank: '',
+            account: ''
+          },
+
+          finish: {
+            pay_date: '',
+            price: '',
+            pay_unit: '',
+            remark: ''
+          },
+
+          company: {
+            pay_date: '',
+            remark: ''
+          },
+
+          subContract: {
+            payee: '',
+            pay_date: '',
+            price: '',
+            bank: '',
+            account: ''
+          },
+
+
+          masterContract: {
+            payee: '',
+            pay_date: '',
+            price: '',
+            bank: '',
+            account: ''
+          },
+
+          throttle: {
+            unit_timer: null,
+            bank_timer: null
+          },
+
+          currentId: '',
+          project_id: ''
         },
         mounted() {
-          this.init()
-          this.invoiceCompanyCopy = this.copyData(this.invoiceCompany)
-          console.log(this)
-
-          $('#checkDetail').removeClass('invisible')
-
-          function getTdData($td) {
-            const length = $td.length
-            let result = []
-            $td.forEach((item, index) => {
-              if (index >= length - 1) {
-
-              } else {
-                result.push($(item).text())
-              }
-            })
-            return result
-          }
-
-          function getTdInputData($td){
-            const length = $td.length
-            let result = []
-            $td.forEach((item, index) => {
-              const inputVal = $(item).find('input').value()
-              const inputVal = $(item).find('input').value()
-            })
-          }
-
-          function setTdData($td, data) {
-            const length = $td.length
-            $td.forEach((item, index) => {
-              if (index >= length - 1) {
-
-              } else {
-                $(item).text() = data[index]
-              }
-            })
-          }
-
-          //保证金修改
-          let old_margins = []
-          let new_margin = []
-          let marginEditTr
-          let marginSaveTr
-          $('.margin-edit').on('click', function () {
-            marginEditTr = $(this).parents('tr')
-            marginEditTr.hide()
-            old_margins = getTdData(marginEditTr.find('td'))
-          })
-          $('.margin-save').on('click', function () {
-            marginSaveTr = $(this).parents('tr')
-            this.$notify.success({
-              title: '成功',
-              message: '已修改'
-            })
-            marginSaveTr.hide()
-            new_margin = getTdData(marginSaveTr.find('td'))
+          this.project_id = $('#projectId') || ""
+          //点击修改按钮
+          const self = this
+          $('.edit-btn').on('click', function () {
+            const $this = $(this)
+            const type = $this.data('type')
+            const id = $this.data('id')
+            self.currentId = id
+            self.currentType = type
+            const apiUse = (type === 'marginLeft' || type === 'finish') ? 'getTip' : 'getCollect'
+            //左侧和预计请款用 tips
+            _http.CheckManager[apiUse]({
+                id: id
+              })
+              .then(res => {
+                if (res.data.code === '200') {
+                  self[type] = res.data.data
+                  self.centerDialogVisible = true
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
           })
         },
 
         methods: {
 
+          //单位搜索
+          querySearchCompany(queryString, cb) {
+
+            if (this.throttle.unit_timer) {
+              clearTimeout(this.throttle.unit_timer)
+            }
+            this.throttle.unit_timer = setTimeout(() => {
+              const searchKey = {
+                payee: queryString,
+                project_id: this.project_id || ''
+              }
+              _http.ProjectManager.searchProjectUnit(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
+          },
+          handleSelectCompany(item) {
+            const currentType = this.currentType
+            this[currentType][this.unitMap[currentType]] = item
+          },
+
+          //银行搜索
+          querySearchBank(queryString, cb) {
+
+            if (this.throttle.bank_timer) {
+              clearTimeout(this.throttle.bank_timer)
+            }
+            this.throttle.bank_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.BankManager.searchBank(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
+          },
+          handleSelectBank(item) {
+            const currentType = this.currentType
+            this[currentType].bank = item.name
+            this[currentType].account = item.account
+          },
+
+
+          submit() {
+            const apiUse = (this.currentType === 'marginLeft' || this.currentType === 'finish') ? 'editTip' : 'editCollect'
+            const postData = Object.assign({}, {
+              id: this.currentId
+            }, this[this.currentType])
+            _http.CheckManager[apiUse](postData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  this.$notify.success({
+                    title: '成功',
+                    message: '已修改'
+                  })
+                  this.centerDialogVisible = false
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg || '未知错误',
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          }
         }
       })
     })

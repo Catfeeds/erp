@@ -69,9 +69,16 @@ class StockController extends Controller
     }
     public function listReturnList()
     {
+        $role = getRole('stock_return_list');
+        if ($role=='all'){
+            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_return_list');
+            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->paginate(10);
+        }
 
-        $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
         foreach ($lists as $list){
             $list->material = $list->material()->first();
             $list->record = $list->record()->first();

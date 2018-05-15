@@ -716,7 +716,7 @@
                             @else
                                 @foreach($subContract as $item)
                                     <tr >
-                            <template >
+                            {{--<template >--}}
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->price}} ￥</td>
                                 <td>{{ $item->bank }}</td>
@@ -727,7 +727,7 @@
                                     <button @click="window._helper.fullWindow('{{url('check/sub/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 
-                            </template>
+                            {{--</template>--}}
                                     </tr>
                                 @endforeach
                                 @endif
