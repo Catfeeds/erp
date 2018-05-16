@@ -66,6 +66,9 @@ Route::get('export/stock/list','ExcelController@exportStockList');
 Route::get('export/project/detail','ExcelController@exportProjectDetail');
 Route::get('export/project/list','ExcelController@exportProjectList');
 Route::get('export/purchase/collect','ExcelController@exportPurchaseCollect');
+Route::get('export/build/list','ExcelController@exportBuildList');
+Route::get('export/build/finish/list','ExcelController@exportBuildFinishList');
+Route::get('export/build/pay/list','ExcelController@exportBuildPayList');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject');
    Route::get('index','UserController@index');

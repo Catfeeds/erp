@@ -8,6 +8,7 @@ use App\Models\BuildPayFinish;
 use App\Models\ConstructionContract;
 use App\Models\FinishPayApply;
 use App\Models\Invoice;
+use App\Models\Project;
 use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use App\Models\Task;
@@ -20,8 +21,16 @@ class BuildController extends Controller
     //
     public function listBuildPage()
     {
-        $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-        $lists = ProjectTeam::whereIn('id',$id)->get();
+        $role = getRole('build_list');
+        if ($role=='all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }else{
+            $idArr = getRoleProject('build_list');
+            $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
+            $id = RequestPayment::where('state','=',3)->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->invoice_price = $list->invoices()->sum('with_tax');
@@ -77,13 +86,28 @@ class BuildController extends Controller
     }
     public function listFinishPage()
     {
-        $applies = RequestPayment::paginate(10);
+        $role = getRole('build_finish_list');
+        if ($role=='all') {
+            $applies = RequestPayment::orderBy('id','DESC')->paginate(10);
+        }else{
+            $idArr = getRoleProject('build_finish_list');
+            $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
+            $applies = RequestPayment::whereIn('project_number',$numberArr)->orderBy('id','DESC')->paginate(10);
+        }
         return view('build.finish_list',['applies'=>$applies]);
     }
     public function listPayPage()
     {
-        $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-        $lists = ProjectTeam::whereIn('id',$id)->get();
+        $role = getRole('build_pay_list');
+        if ($role=='all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->get();
+        }else{
+            $idArr = getRoleProject('build_pay_list');
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
+        }
+
         return view('build.pay_list',['lists'=>$lists]);
     }
     public function listGetPage()

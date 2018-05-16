@@ -12,8 +12,10 @@ use App\Models\OutContract;
 use App\Models\PayApply;
 use App\Models\Project;
 use App\Models\ProjectSituations;
+use App\Models\ProjectTeam;
 use App\Models\Purchase;
 use App\Models\PurchaseList;
+use App\Models\RequestPayment;
 use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\Team;
@@ -453,5 +455,125 @@ class ExcelController extends Controller
             });
         })->export('xls');
     }
+    public function exportBuildList()
+    {
+        $role = getRole('build_list');
+        if ($role=='all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }else{
+            $idArr = getRoleProject('build_list');
+            $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
+            $id = RequestPayment::where('state','=',3)->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }
+        $data = [];
+        if (!empty($lists)){
+            for ($i=0;$i<count($lists);$i++){
+                $swap = [];
+                $swap['team'] = $lists[$i]->team;
+                $swap['manager'] = $lists[$i]->manager;
+                $swap['project_number'] = $lists[$i]->project_number;
+                $swap['project_content'] = $lists[$i]->project_content;
+                $swap['project_manager'] = $lists[$i]->project_manager;
+                $swap['payments'] = $lists[$i]->payments()->where('state','=',3)->sum('price');
+                $swap['pay_payments'] = $lists[$i]->applies()->where('state','=',4)->sum('apply_price');
+                $swap['need_pay'] = $lists[$i]->payments()->where('state','=',3)->sum('price')-$lists[$i]->applies()->where('state','=',4)->sum('apply_price');
+                $swap['invoices'] = $lists[$i]->invoices()->sum('with_tax');
+                $swap['need_invoice'] = $lists[$i]->applies()->where('state','=',4)->sum('apply_price')-$lists[$i]->invoices()->sum('with_tax');
+                $swap['state'] = $lists[$i]->payments()->where('state','=',3)->sum('price')-$lists[$i]->applies()->where('state','=',4)->sum('apply_price')!=0?'未结清':'已结清';
+                $data[$i] = $swap;
+            }
+        }
+//        dd($lists);
+        $tr = [['施工队','施工经理','项目编号','项目内容','项目经理','已完工请款','已付款','应付账款','已收票','未收票','系统状态']];
+        $data = array_merge($tr,$data);
+        $this->excel->create('施工费清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportBuildFinishList()
+    {
+        $role = getRole('build_finish_list');
+        if ($role == 'all') {
+            $applies = RequestPayment::orderBy('id', 'DESC')->get();
+        } else {
+            $idArr = getRoleProject('build_finish_list');
+            $numberArr = Project::whereIn('id', $idArr)->pluck('number')->toArray();
+            $applies = RequestPayment::whereIn('project_number', $numberArr)->orderBy('id', 'DESC')->get();
+        }
 
+        $data = [];
+        if (!empty($applies)) {
+            for ($i = 0; $i < count($applies); $i++) {
+                $swap = [];
+                $swap['number'] = $applies[$i]->number;
+                $swap['team'] = $applies[$i]->team;
+                $swap['manager'] = $applies[$i]->manager;
+                $swap['project_number'] = $applies[$i]->project_number;
+                $swap['project_content'] = $applies[$i]->project_content;
+                $swap['project_manager'] = $applies[$i]->project_manager;
+                $swap['price'] = $applies[$i]->price;
+                $swap['applier'] = $applies[$i]->applier;
+                $swap['checker'] = empty($applies[$i]->checker) ? '未复核' : $applies[$i]->checker;
+                $swap['passer'] = empty($applies[$i]->passer) ? '未审批' : $applies[$i]->passer;
+                $data[$i] = $swap;
+            }
+        }
+        $tr = [['请款编号', '施工队', '施工经理', '	项目编号', '项目内容', '	项目经理', '请款金额', '	经办人', '复核人', '审核人']];
+        $data = array_merge($tr,$data);
+        $this->excel->create('完工请款清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportBuildPayList()
+    {
+        $role = getRole('build_pay_list');
+        if ($role=='all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->get();
+        }else{
+            $idArr = getRoleProject('build_pay_list');
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
+        }
+        $data = [];
+        if (!empty($lists)){
+            for ($i=0;$i<count($lists);$i++){
+                $swap = [];
+                $swap['team'] = $lists[$i]->team;
+                $swap['manager'] = $lists[$i]->manager;
+                $swap['project_number'] = $lists[$i]->project_number;
+                $swap['project_content'] = $lists[$i]->project_content;
+                $swap['project_manager'] = $lists[$i]->project_manager;
+                $swap['payments'] = $lists[$i]->price;
+                $swap['apply'] = $lists[$i]->applies()->where('state','>=',3)->sum('apply_price');
+                $swap['pay'] = $lists[$i]->applies()->where('state','=',4)->sum('apply_price');
+                $swap['need'] = $lists[$i]->applies()->where('state','>=',3)->sum('apply_price')-$lists[$i]->applies()->where('state','=',4)->sum('apply_price');
+                $data[$i] = $swap;
+            }
+        }
+//        dd($lists);
+
+        $tr =[['施工队','施工经理','项目编号','	项目内容','项目经理','	已完工请款','	已申请付款','	已付款','应付账款']];
+        $data = array_merge($tr,$data);
+        $this->excel->create('施工付款清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
 }

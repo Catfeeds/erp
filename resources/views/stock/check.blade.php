@@ -199,9 +199,9 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{$startData['stock_number']}}</td>
-                    <td>{{$startData['stock_cost']}}</td>
-                    <td>{{$startData['stock_price']}}</td>
+                    <td>{{empty($startData['stock_number'])?0:$startData['stock_number']}}</td>
+                    <td>{{empty($startData['stock_cost'])?0:$startData['stock_cost']}}</td>
+                    <td>{{empty($startData['stock_price'])?0:$startData['stock_price']}}</td>
                 </tr>
                 @foreach($lists as $list)
                 <tr>

@@ -88,11 +88,20 @@ class StockController extends Controller
     }
     public function listGetList()
     {
-        $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
-        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
-        foreach ($lists as $list){
-            $list->material = $list->material()->first();
-            $list->record = $list->record()->first();
+        $role = getRole('stock_get_list');
+        if ($role =='all'){
+            $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_get_list');
+            $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+            }
         }
         return view('stock.get_list',['lists'=>$lists]);
     }
@@ -648,7 +657,12 @@ class StockController extends Controller
             $end = $e;
 //            $start =
             $startData = StockRecord::where('date','<',$start)->where('warehouse_id','=',$stock->warehouse_id)->orderBy('id','DESC')->first();
-            $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first()->toArray();
+            if (!empty($startData)){
+                $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first()->toArray();
+            }else{
+                $startData = new StockRecordList();
+            }
+
 //            dd($startData);
             $idArr = StockRecord::whereBetween('date',[$s,$e])
                 ->where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();

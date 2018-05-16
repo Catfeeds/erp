@@ -31,7 +31,7 @@
                 </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/build/list')}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>
@@ -80,7 +80,7 @@
                     <td>{{$list->manager}}</td>
                     <td>{{$list->project_number}}</td>
                     <td>{{$list->project_content}}</td>
-                    <td>{{$list->team}}</td>
+                    <td>{{$list->project_manager}}</td>
                     <td>{{$list->payments()->where('state','=',3)->sum('price')}} ￥</td>
                     <td>{{$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
                     <td>{{$list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
