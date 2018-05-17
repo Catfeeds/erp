@@ -608,57 +608,74 @@ class PayController extends Controller
     }
     public function addRequestPayment(Request $post)
     {
-        $project = Project::where('number','=',$post->get('project_id'))->first();
-        $team = Team::find($post->get('team'));
-        $projectTeam = ProjectTeam::where('team_id','=',$post->get('team'))->where('project_id','=',$project->id)->first();
-        if (empty($projectTeam)){
-            $projectTeam = new ProjectTeam();
-            $projectTeam->project_id = $project->id;
-            $projectTeam->project_number = $project->number;
-            $projectTeam->project_content = $project->name;
-            $projectTeam->project_manager = $project->pm;
-            $projectTeam->team_id = $team->id;
-            $projectTeam->team = $team->name;
-            $projectTeam->manager = $team->manager;
+        $id = $post->id;
+        if (!$id){
+            $project = Project::where('number','=',$post->get('project_id'))->first();
+            $team = Team::find($post->get('team'));
+            $projectTeam = ProjectTeam::where('team_id','=',$post->get('team'))->where('project_id','=',$project->id)->first();
+//        dd($projectTeam);
+            if (empty($projectTeam)){
+                $projectTeam = new ProjectTeam();
+                $projectTeam->project_id = $project->id;
+                $projectTeam->project_number = $project->number;
+                $projectTeam->project_content = $project->name;
+                $projectTeam->project_manager = $project->pm;
+                $projectTeam->team_id = $team->id;
+                $projectTeam->team = $team->name;
+                $projectTeam->manager = $team->manager;
 //            $projectTeam->price = $post->get('price');
 //            $projectTeam->need_price = $post->get('price');
-            $projectTeam->save();
-        }
-        $lists = $post->get('lists');
-        $payment = new RequestPayment();
-        $payment->project_team = $projectTeam->id;
-        $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
-        $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
-        $payment->team = $team->name;
-        $payment->manager = $team->manager;
-//        $project = Project::where('number','=',$post->get('project_id'))->first();
-        $payment->project_number = $post->get('project_id');
-        $payment->project_content = $post->get('project_content');
-        $payment->project_manager = $post->get('project_manager');
-        $payment->request_date = $post->get('date');
-        $payment->price = $post->get('price');
-        $payment->applier = Auth::user()->name;
-        $payment->applier_id = Auth::id();
-        $payment->save();
-        if (!empty($lists)){
-            foreach ($lists as $item){
-                $list = new RequestPaymentList();
-                $list->payment_id = $payment->id;
-                $list->name = $item['name'];
-                if (isset($item['para'])){
-                    $list->param = $item['para'];
-                }
-                if (isset($item['remark'])){
-                    $list->remark = $item['remark'];
-                }
-                $list->number = $item['number'];
-                $list->unit = $item['unit'];
-                $list->price = $item['price'];
-                $list->total = $item['total'];
-
-                $list->save();
+                $projectTeam->save();
             }
+            $lists = $post->get('lists');
+            $payment = new RequestPayment();
+            $payment->project_team = $projectTeam->id;
+            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
+            $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
+            $payment->team = $team->name;
+            $payment->manager = $team->manager;
+//        $project = Project::where('number','=',$post->get('project_id'))->first();
+            $payment->project_number = $post->get('project_id');
+            $payment->project_content = $post->get('project_content');
+            $payment->project_manager = $post->get('project_manager');
+            $payment->request_date = $post->get('date');
+            $payment->price = $post->get('price');
+            $payment->applier = Auth::user()->name;
+            $payment->applier_id = Auth::id();
+            $payment->save();
+            if (!empty($lists)){
+                foreach ($lists as $item){
+                    $list = new RequestPaymentList();
+                    $list->payment_id = $payment->id;
+                    $list->name = $item['name'];
+                    if (isset($item['para'])){
+                        $list->param = $item['para'];
+                    }
+                    if (isset($item['remark'])){
+                        $list->remark = $item['remark'];
+                    }
+                    $list->number = $item['number'];
+                    $list->unit = $item['unit'];
+                    $list->price = $item['price'];
+                    $list->total = $item['total'];
+
+                    $list->save();
+                }
+            }
+        }else{
+//            $project_id = $post->project_id;
+            $payment = RequestPayment::find($id);
+            if (is_numeric($post->project_id)){
+                echo 'STRING';
+            }
+            if (is_numeric($post->team)){
+                $team = Team::find($post->team);
+                $payment->team = $team->name;
+                $payment->manager = $team->manager;
+            }
+//            $projectTeam = ProjectTeam::find($post->project_team);
         }
+
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

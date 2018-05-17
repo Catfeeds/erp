@@ -27,6 +27,7 @@
           }
         },
         mounted() {
+          this.search.name = $('#originName').val()
           $('#loanDetailList').removeClass('invisible')
         },
         methods: {

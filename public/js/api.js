@@ -5,7 +5,6 @@
 
   // const url = 'http://119.23.202.220:8080'
   const url = 'http://localhost/erp/public'
-  // const url = 'http://193.112.181.116:8080'
 
   class ProjectManager {
     constructor() {
@@ -193,6 +192,12 @@
     deleteMaterial(data = {}) {
       return this._http.get(`/del/material`, {
         params: data
+      })
+    }
+
+    searchPurchaseProject(search = {}){
+      return this._http.get(`/search/purchase/project`, {
+        params: search
       })
     }
   }

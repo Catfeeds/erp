@@ -887,9 +887,9 @@ class ProjectController extends Controller
     public function purchaseCollectPage()
     {
 //        $type = Input::get('seartch-type');
-        $value = Input::get('value');
+        $value = Input::get('number');
         if ($value){
-            $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
+            $project = Project::where('number','=',$value)->first();
         }else{
             $project = null;
         }

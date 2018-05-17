@@ -233,7 +233,7 @@
                     <i class="icon plus"></i>
                     <span>录入 / 修改预算清单</span>
                 </a>
-                <a class="ui icon button green" href="#" style="margin: 0 20px;">
+                <a class="ui icon button green" href="{{url('excel/excel1.xlsx')}}" style="margin: 0 20px;">
                     <i class="icon download"></i>
                     <span>导出预算清单格式</span>
                 </a>

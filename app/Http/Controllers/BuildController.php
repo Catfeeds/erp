@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use App\Models\Task;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -387,7 +388,31 @@ class BuildController extends Controller
     }
     public function editBuildGetPage()
     {
-
+        $id = Input::get('id');
+        $invoice = BuildInvoice::find($id);
+        $invoices = Invoice::where('state','=',1)->select(['id','name'])->get()->toArray();
+//        $invoices = array_column($invoices,'name');
+//        dd($invoices);
+        return view('build.get_edit',['invoice'=>$invoice,'invoices'=>$invoices]);
+    }
+    public function editBuildGet(Request $post)
+    {
+//        DB::begin?
+        $id = $post->id;
+        if (!$id){
+            return redirect()->back()->with('status','参数错误！');
+        }
+        $invoice = BuildInvoice::find($id);
+        $invoice->date = $post->get_date?$post->get_date:$invoice->date;
+        $invoice->worker = $post->worker?$post->worker:$invoice->worker;
+        $invoice->invoice_date = $post->invoice_date?$post->invoice_date:$invoice->invoice_date;
+        $invoice->type = $post->type?$post->type:$invoice->type;
+        $invoice->without_tax = $post->amount_without_tax?$post->amount_without_tax:$invoice->without_tax;
+        $invoice->tax = $post->tax?$post->tax:$invoice->tax;
+        $invoice->with_tax = $post->amount?$post->amount:$invoice->with_tax;
+        if ($invoice->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
     }
     public function detailDealPage()
     {
@@ -395,6 +420,20 @@ class BuildController extends Controller
         $contract = ConstructionContract::find($id);
         $pictures = $contract->lists()->get();
         return view('build.detail_single',['pictures'=>$pictures]);
+    }
+    public function editFinishPage()
+    {
+        $id = Input::get('id');
+        $apply = RequestPayment::find($id);
+        $apply->lists  = $apply->lists()->get();
+//        dd($apply);
+        $apply->build_name = $apply->team;
+        $apply->build_manager = $apply->manager;
+        $apply->date = $apply->request_date;
+        $apply->project_id = Project::where('number','=',$apply->project_number)->pluck('id')->first();
+//        dd($apply);
+//        $lists = $apply->lists()->get();
+        return view('build.finish_edit',['apply'=>$apply]);
     }
 
 }

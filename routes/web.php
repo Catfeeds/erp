@@ -245,7 +245,9 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/pay/print','BuildController@printBuildPay');
     Route::get('build/get/print','BuildController@printBuildGet');
     Route::get('build/get/edit','BuildController@editBuildGetPage');
+    Route::post('build/get/edit','BuildController@editBuildGet');
     Route::get('build/deal/detail','BuildController@detailDealPage');
+    Route::get('build/finish/edit','BuildController@editFinishPage');
     //报销与借款管理
     Route::get('loan/list','PayController@listLoanPage');
 //    Route::get('loan/detail/list','PayController@listDetailPage');

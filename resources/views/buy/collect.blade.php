@@ -19,18 +19,40 @@
                 </a>
             </div>
             <form action="" class="ui form flex-fluid">
-                <div class="ui left action right input fluid">
-                    <div class="ui button white dropdown ">
-                        <input name="seartch-type" type="hidden">
-                        <div class="text">请选中搜索内容</div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item" data-value="1">项目编号</div>
-                            <div class="item" data-value="2">项目内容</div>
-                        </div>
-                    </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
-                    <button class="ui button">搜索</button>
+                {{--<div class="ui left action right input fluid">--}}
+                    {{--<div class="ui button white dropdown ">--}}
+                        {{--<input name="seartch-type" type="hidden">--}}
+                        {{--<div class="text">请选中搜索内容</div>--}}
+                        {{--<i class="dropdown icon"></i>--}}
+                        {{--<div class="menu">--}}
+                            {{--<div class="item" data-value="1">项目编号</div>--}}
+                            {{--<div class="item" data-value="2">项目内容</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<input name="value" type="text" placeholder="搜索内容" value="">--}}
+                    {{--<button class="ui button">搜索</button>--}}
+                {{--</div>--}}
+                <div class="ui left action right input fluid" id="ele-part">
+                    <!-- <div class="ui button white dropdown ">
+                      <div class="text">请选中搜索内容</div>
+                      <i class="dropdown icon"></i>
+                      <div class="menu">
+                        <div class="item" data-value="1">项目编号</div>
+                        <div class="item" data-value="2">项目内容</div>
+                      </div>
+                    </div> -->
+                    <el-autocomplete style="width: 70%;" popper-class="my-autocomplete" v-model="search.project_name" :fetch-suggestions="querySearchProjectContent" placeholder="请输入项目内容"
+                                     @select="handleSelectProjectContent">
+                        <i class="el-icon-edit el-input__icon" slot="suffix">
+                        </i>
+                        <template slot-scope="props">
+                            <div class="name">@{{ props.item.name }}</div>
+                            <span class="addr">@{{ props.item.number }}</span>
+                        </template>
+                    </el-autocomplete>
+                    <input name="name" type="hidden" id="nameInput" value="">
+                    <input name="number" type="hidden" id="numberInput" value="">
+                    <button type="submit" class="ui button">搜索</button>
                 </div>
             </form>
         </div>
@@ -104,7 +126,6 @@
                         <td></td>
                     @endif
                 </tr>
-
                 </tbody>
                 <tfoot>
                 <tr>
@@ -113,17 +134,17 @@
                     <th></th>
                 </tr>
                 </tfoot>
-
                 @endforeach
 
             @else
 
                 @endif
-            </table>
+
                 {{--@endforeach--}}
-                @else
+            </table>
+            @else
                 <h1 class="ui header center aligned">暂无数据</h1>
-                @endif
+            @endif
         </div>
 
     </div>

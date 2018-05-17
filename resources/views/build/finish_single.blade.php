@@ -116,10 +116,17 @@
             </table>
 
             <div class="flex-row flex-center margin-top-50" id="btnGroup">
-                <a class="ui icon button" href="#" style="margin:0 10px;">
+                @if($apply->state==1)
+                <a class="ui icon button" href="{{url('build/finish/edit')}}?id={{$apply->id}}" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>修改</span>
                 </a>
+                    <button class="ui icon button negative" @click="removeFnc" style="margin:0 10px;">
+                        <i class="icon delete"></i>
+                        <span>删除</span>
+                    </button>
+                @else
+                    @endif
                 @if(checkRole('build_finish_check',$apply->id))
                 <button class="ui icon button primary" @click="recheckFnc"  style="margin:0 10px;">
                     <i class="icon legal"></i>
@@ -134,10 +141,7 @@
                 </a>
                 @else
                     @endif
-                <button class="ui icon button negative" @click="removeFnc" style="margin:0 10px;">
-                    <i class="icon delete"></i>
-                    <span>删除</span>
-                </button>
+
                 <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('build/finish/print')}}?id={{$apply->id}}')" style="margin:0 10px;">
                     <i class="icon print"></i>
                     <span>凭证</span>
