@@ -727,4 +727,31 @@ class StockController extends Controller
         $purchase = Purchase::find($record->purchase_id);
         return view('stock.buy_print',['record'=>$record,'lists'=>$lists,'purchase'=>$purchase]);
     }
+    public function searchStockGet()
+    {
+        $id = Input::get('material_id');
+        $idArr = StockRecord::where('type','=',3)->pluck('id')->toArray();
+        $list = StockRecordList::where('material_id','=',$id)->whereIn('record_id',$idArr)->orderBy('id','DESC')->get();
+//        $list = StockRecord::whereIn('id',$idArr)->where('type','=',3)->get();
+        if (!empty($list)){
+            for ($i=0;$i<count($list);$i++){
+                $swap = StockRecord::find($list[$i]->record_id);
+                $list[$i]->number_id = (string)$swap->number;
+                $list[$i]->warehouse = $swap->warehouse;
+                $list[$i]->number = $list[$i]->sum;
+                $list[$i]->material = Material::find($id);
+                $list[$i]->worker = $swap->worker;
+                $list[$i]->project_number = $swap->project_number;
+                $list[$i]->project_content = $swap->project_content;
+                $list[$i]->project_manager = $swap->project_manager;
+//                dd($list[$i]);
+            }
+        }
+//        dd($list);
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>&$list
+        ]);
+    }
 }

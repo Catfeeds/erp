@@ -4,12 +4,8 @@
 }(window, function () {
 
   // const url = 'http://119.23.202.220:8080'
-<<<<<<< HEAD
-  const url = 'http://localhost/erp/public'
-=======
   // const url = 'http://localhost/erp/public'
   const url = 'http://193.112.181.116:8080'
->>>>>>> 671ab8d836a9f31528c17de591d666c9bff54e8b
 
   class ProjectManager {
     constructor() {

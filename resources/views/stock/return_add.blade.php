@@ -242,13 +242,13 @@
                         </thead>
                         <tbody>
                         <template v-if="currentMaterialList.length">
-                            <tr v-for="(item, index) in currentMaterialList" :key="item.id">
-                                <td>@{{ index + 1 }}</td>
-                                <td>@{{ item.id }}</td>
+                            <tr v-for="(item, index) in currentMaterialList" :key="item.index">
+                                <td>@{{ index+1 }}</td>
+                                <td>@{{ item.number_id }}</td>
                                 <td>@{{ item.warehouse }}</td>
                                 <td>@{{ item.material.name }}</td>
                                 <td>@{{ item.material.param }}</td>
-                                <td>@{{ item.material_model }}</td>
+                                <td>@{{ item.material.model }}</td>
                                 <td>@{{ item.material.factory }}</td>
                                 <td>@{{ item.material.unit }}</td>
                                 <td>@{{ item.price.toLocaleString('en-US') }}</td>

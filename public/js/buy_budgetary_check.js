@@ -20,15 +20,13 @@
                 type: 'warning'
               })
               .then(() => {
-                console.log(1)
                 _http.BuyManager.createCheck({
                   id: $(this).data('id')
                 })
-                // console.log(2)
                   .then(res => {
                     if (res.data.code === '200') {
                       const data = res.data.data
-                      const currentType = data.type == 1 ? 'buy_bugetary_pass' : 'buy_extrabugetary_check'
+                      const currentType = data.type == 1 ? 'rolebuy_bugetary_pass' : 'buy_extrabugetary_pass'
                       vm.selectData.id = data.id
                       vm.$message({
                         type: 'success',
@@ -91,7 +89,6 @@
                         type: 'success',
                         message: '已审批!'
                       })
-                      $('.ui.dimmer').addClass('active')
                     } else {
                       vm.$notify({
                         title: '错误',
@@ -133,7 +130,6 @@
                     message: '已选择了审批人',
                     type: 'success'
                   })
-                  $('.ui.dimmer').removeClass('active')
                 } else {
                   vm.$notify({
                     title: '错误',

@@ -613,7 +613,7 @@ class ProjectController extends Controller
     {
         $id = Input::get('id');
         $project = Project::find($id);
-        $invoice = Invoice::select('id','rate as value')->get();
+        $invoice = Invoice::select('id','rate as value')->where('state','=',1)->get();
         return view('check.invoice',['project'=>$project,'invoice'=>$invoice]);
     }
     public function checkCollectPage()

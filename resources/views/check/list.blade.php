@@ -40,6 +40,8 @@
                     <th>项目经理</th>
                     <th>合同金额</th>
                     <th>实际金额</th>
+                    <th>主合同金额</th>
+                    <th>分包合同金额</th>
                     <th>验收日期</th>
                     <th>保修截至日期</th>
                     <th>已开票请款</th>
@@ -60,6 +62,8 @@
                     <td>{{$project->pm}}</td>
                     <td>{{$project->price}}</td>
                     <td>{{$project->situation()->sum('price')}}</td>
+                    <td>{{$project->situation()->where('type','=',1)->sum('price')}}</td>
+                    <td>{{$project->situation()->where('type','=',2)->sum('price')}}</td>
                     <td>{{$project->acceptance_date}}</td>
                     <td>{{$project->deadline}}</td>
                     <td>{{$project->invoices()->sum('price')}}</td>

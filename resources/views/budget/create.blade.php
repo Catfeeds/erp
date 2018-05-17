@@ -105,7 +105,7 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
-                            <label class="four wide field">金额</label>
+                            <label class="four wide field">类型</label>
                             <div class="twelve wide field">
                                 <el-select v-model="newMaterial.type" placeholder="类型">
                                     <el-option v-for="item in budgetType" :key="item.id" :label="item.name" :value="item.id">

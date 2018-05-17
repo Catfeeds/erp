@@ -51,7 +51,7 @@
                     <td>{{$tip->type==1?'履约保证金':'请款'}}</td>
                     <td>{{$tip->pay_date}}</td>
                     <td>{{$tip->price}}</td>
-                    <td>{{$tip->unit}}</td>
+                    <td>{{$tip->pay_unit}}</td>
                     <td>{{$tip->remark}}</td>
                 </tr>
                     @endforeach
