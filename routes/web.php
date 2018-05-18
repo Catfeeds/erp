@@ -215,13 +215,13 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('stock/print/buy','StockController@printBuy');
 
     //施工管理
-    Route::get('build/list','BuildController@listBuildPage');
-    Route::get('build/deal/list','BuildController@listDealPage');
-    Route::get('build/deal/create','BuildController@addDealPage');
+    Route::get('build/list','BuildController@listBuildPage')->middleware('role:build_list');
+    Route::get('build/deal/list','BuildController@listDealPage')->middleware('role:build_contract_list');
+    Route::get('build/deal/create','BuildController@addDealPage')->middleware('role:build_contract_edit');
     Route::post('create/contract','ConstructionController@addContract');
     Route::post('finish/add','PayController@addRequestPayment');
-    Route::get('build/finish/list','BuildController@listFinishPage');
-    Route::get('build/finish/create','BuildController@createFinishPage');
+    Route::get('build/finish/list','BuildController@listFinishPage')->middleware('role:build_finish_list');
+    Route::get('build/finish/create','BuildController@createFinishPage')->middleware('role:build_finish_edit');
     Route::get('build/pay/list','BuildController@listPayPage');
     Route::get('build/get/list','BuildController@listGetPage');
     Route::get('build/finish/single','BuildController@finishSinglePage');

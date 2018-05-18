@@ -164,25 +164,60 @@ class PayController extends Controller
         $project_content = Input::get('project_content');
         $proposer = Input::get('proposer');
         $approver = Input::get('approver');
+        $role = getRole('pay_list');
         $DbObj = DB::table('pay_applies');
-        if ($number){
-            $DbObj->where('number','like','%'.$number.'%');
+        if ($role=='all'){
+            if ($number){
+                $DbObj->where('number','like','%'.$number.'%');
+            }
+            if ($project_number){
+                $DbObj->where('project_number','like','%'.$project_number.'%');
+            }
+            if ($project_content){
+                $DbObj->where('project_content','like','%'.$project_content.'%');
+            }
+            if ($proposer){
+                $DbObj->where('proposer','like','%'.$proposer.'%');
+            }
+            if ($approver){
+                $DbObj->where('approver','like','%'.$approver.'%');
+            }
+        }elseif($role=='only'){
+            $DbObj->where('proposer','=',Auth::user()->username);
+            if ($number){
+                $DbObj->where('number','like','%'.$number.'%');
+            }
+            if ($project_number){
+                $DbObj->where('project_number','like','%'.$project_number.'%');
+            }
+            if ($project_content){
+                $DbObj->where('project_content','like','%'.$project_content.'%');
+            }
+            if ($approver){
+                $DbObj->where('approver','like','%'.$approver.'%');
+            }
+        }else{
+            $idArr = getRoleProject('pay_list');
+            $DbObj->whereIn('project_id',$idArr);
+            if ($number){
+                $DbObj->where('number','like','%'.$number.'%');
+            }
+            if ($project_number){
+                $DbObj->where('project_number','like','%'.$project_number.'%');
+            }
+            if ($project_content){
+                $DbObj->where('project_content','like','%'.$project_content.'%');
+            }
+            if ($proposer){
+                $DbObj->where('proposer','like','%'.$proposer.'%');
+            }
+            if ($approver){
+                $DbObj->where('approver','like','%'.$approver.'%');
+            }
+
         }
-        if ($project_number){
-            $DbObj->where('project_number','like','%'.$project_number.'%');
-        }
-        if ($project_content){
-            $DbObj->where('project_content','like','%'.$project_content.'%');
-        }
-        if ($proposer){
-            $DbObj->where('proposer','like','%'.$proposer.'%');
-        }
-        if ($approver){
-            $DbObj->where('approver','like','%'.$approver.'%');
-        }
-        if ($number){
-            $DbObj->where('number','like','%'.$number.'%');
-        }
+
+
         $data = $DbObj->paginate(10);
         return view('pay.list',['lists'=>$data]);
     }

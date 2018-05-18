@@ -383,7 +383,7 @@
 {{--                        @if(!empty($bailReturn))--}}
                         @for($i=0;$i<count($bailReturn);$i++)
                         <tr >
-                            <template >
+                            {{--<template >--}}
                                 <td>{{$bailReturn[$i]->pay_date}}</td>
                                 <td>{{$bailReturn[$i]->price}}</td>
                                 <td>{{$bailReturn[$i]->pay_unit}}</td>
@@ -404,7 +404,7 @@
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'marginRecyle')">修改</button>
                                 </td>
-                            </template>
+                            {{--</template>--}}
                         </tr>
                             @endfor
                         </tbody>
@@ -442,7 +442,7 @@
                         <tbody>
                         @foreach($tips as $tip)
                         <tr >
-                            <template >
+                            {{--<template >--}}
                                 <td>{{ $tip->pay_date }}</td>
                                 <td>{{ $tip->price }}</td>
                                 <td>{{ $tip->pay_unit }}</td>
@@ -450,7 +450,7 @@
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'requirement')">修改</button>
                                 </td>
-                            </template>
+                            {{--</template>--}}
                         </tr>
                             @endforeach
                         </tbody>
@@ -461,13 +461,13 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <h4  class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
+                    {{--<h4  class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>--}}
                 </div>
                 <!-- / 预计请款计划 -->
 
                 <!-- 开票 -->
                 <h4 class="ui dividing header blue margin-top-50">开票</h4>
-                <template >
+                {{--<template >--}}
                     <div class="check-item">
                         <table class="ui celled structured table center aligned">
                             <thead>
@@ -527,10 +527,10 @@
                             {{--</tbody>--}}
                         {{--</table>--}}
                     {{--</div>--}}
-                </template>
-                <template >
-                    <h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>
-                </template>
+                {{--</template>--}}
+                {{--<template >--}}
+                    {{--<h4 class="ui horizontal divider header" style="padding-top:20px;">暂无数据</h4>--}}
+                {{--</template>--}}
                 <!-- / 开票 -->
 
                 <!-- 发包公司收款情况 -->
@@ -641,7 +641,7 @@
                                 {{--<td>{{ $item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'masterContract')">修改</button>
-                                    <button @click="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
+                                    <button onclick="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 
                             {{--</template>--}}
@@ -724,7 +724,7 @@
 
                                 <td>
                                     <button class="ui mini button primary" @click="EditFnc(item, index, 'subContract')">修改</button>
-                                    <button @click="window._helper.fullWindow('{{url('check/sub/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
+                                    <button onclick="window._helper.fullWindow('{{url('check/sub/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 
                             {{--</template>--}}

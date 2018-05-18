@@ -43,13 +43,21 @@ class ProjectController extends Controller
         $number = Input::get('id');
         $name = Input::get('name');
         $DbObj = DB::table('projects');
-        if ($number){
-            $DbObj->where('number','like','%'.$number.'%');
+        $type = Input::get('type');
+        if ($type){
+            $idArr = getRoleProject($type);
+            $DbObj->whereIn('id',$idArr);
+            if ($number){
+                $DbObj->where('number','like','%'.$number.'%');
+            }
+            if ($name){
+                $DbObj->where('name','like','%'.$name.'%');
+            }
+            $data = $DbObj->get();
+        }else{
+            $data = [];
         }
-        if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
-        }
-        $data = $DbObj->get();
+
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

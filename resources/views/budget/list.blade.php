@@ -177,7 +177,7 @@
                     <th class="function-two">工程金额</th>
                     <th class="function-two">其他</th>
                     <th class="function-toggle-three">已发生成本（展开）</th>
-                    <th class="function-three">可领料成本</th>
+                    <th class="function-three">领料成本</th>
                     <th class="function-three">施工成本</th>
                     <th class="function-three">报销材料款</th>
                     <th class="function-three">报销工程款</th>

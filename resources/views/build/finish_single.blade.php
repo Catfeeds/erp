@@ -152,7 +152,7 @@
                 <div class="simple dimmer content">
                     <div class="center">
                         <div class="buy_dialog">
-                            <div class="dialog_header">选择复核人</div>
+                            <div class="dialog_header">选择{{$apply->state==2?'复核':'审批'}}人</div>
                             <div class="dialog_content">
                                 <el-checkbox-group v-model="checkedMen" @change="handleCheckManChange">
                                     <el-checkbox v-for="man in menList" :label="man.id" :key="man.id">@{{man.name}}</el-checkbox>

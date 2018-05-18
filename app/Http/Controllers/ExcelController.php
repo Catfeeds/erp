@@ -22,6 +22,7 @@ use App\Models\Team;
 use App\Models\Warehouse;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Excel;
@@ -138,8 +139,19 @@ class ExcelController extends Controller
     }
     public function exportPayApplies()
     {
-        $data = PayApply::select(['number','price','use','project_number','project_content',
-            'proposer','approver','pay_date','cash','transfer','bank','account','other'])->get()->toArray();
+        $role = getRole('pay_list');
+        if ($role=='all'){
+            $data = PayApply::select(['number','price','use','project_number','project_content',
+                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->orderBy('id','DESC')->get()->toArray();
+        }elseif ($role=='only'){
+            $data = PayApply::select(['number','price','use','project_number','project_content',
+                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->where('proposer','=',Auth::user()->username)->orderBy('id','DESC')->get()->toArray();
+        }else{
+            $idArr = getRoleProject('pay_list');
+            $data = PayApply::select(['number','price','use','project_number','project_content',
+                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->whereIn('project_id',$idArr)->orderBy('id','DESC')->get()->toArray();
+        }
+
         //
         for ($i=0;$i<count($data);$i++){
             $data[$i]['bank'] = $data[$i]['bank'].' '.$data[$i]['account'];
