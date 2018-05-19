@@ -71,11 +71,11 @@ Route::get('export/build/list','ExcelController@exportBuildList');
 Route::get('export/build/finish/list','ExcelController@exportBuildFinishList');
 Route::get('export/build/pay/list','ExcelController@exportBuildPayList');
 Route::group(['middleware'=>'auth'],function (){
-   Route::get('project/list','ProjectController@listProject');
+   Route::get('project/list','ProjectController@listProject')->middleware('role:project_list');
    Route::get('index','UserController@index');
-   Route::get('project/create','ProjectController@createProjectPage');
-   Route::post('project/create','ProjectController@createProject');
-   Route::get('project/detail','ProjectController@listProjectsDetail');
+   Route::get('project/create','ProjectController@createProjectPage')->middleware('role:project_edit');
+   Route::post('project/create','ProjectController@createProject')->middleware('role:project_edit');
+   Route::get('project/detail','ProjectController@listProjectsDetail')->middleware('role:project_detail');
    Route::get('project/check','ProjectController@showProjectsDetail');
    Route::get('project/auth','ProjectController@showProjectsAuth');
    Route::get('project/auth_edit','ProjectController@createProjectAuthPage');
@@ -118,7 +118,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('del/invoice','SystemController@delInvoiceType')->middleware('role:data_invoice_type');
    Route::get('del/team ','SystemController@delTeam')->middleware('role:data_build_team');
    Route::get('del/category ','SystemController@delCategory')->middleware('role:data_payment');
-   Route::get('budget/list','ProjectController@listBudgetsPage');
+   Route::get('budget/list','ProjectController@listBudgetsPage')->middleware('role:budget_list');
 //   Route::get('budget/detail','ProjectController@showBudgetPage');
    Route::post('create/user','UserController@register')->middleware('role:data_user');
    Route::get('user/list','UserController@listUsers')->middleware('role:data_user');
@@ -132,7 +132,7 @@ Route::group(['middleware'=>'auth'],function (){
 
    Route::post('pay/apply','PayController@createFinishPayApply');
    //验收和收款管理
-   Route::get('check/list','ProjectController@checkListsPage');
+   Route::get('check/list','ProjectController@checkListsPage')->middleware('role:check_list');
    Route::post('project/acceptance','ProjectController@acceptanceProject');
    Route::get('project/acceptance','ProjectController@acceptancePage');
    Route::get('check/detail','ProjectController@checkDetailPage');
