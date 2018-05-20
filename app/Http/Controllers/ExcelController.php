@@ -707,6 +707,41 @@ class ExcelController extends Controller
             });
         })->export('xls');
     }
+    public function importPayment(Request $post)
+    {
+        $file = $post->file('file');
+        if ($file){
+            $list = [];
+            $this->excel->selectSheetsByIndex(0)->load($file,function ($sheet) use (&$list){
+                $sheet->ignoreEmpty()->each(function ($data) use (&$list){
+                    $origin = $data->toArray();
+                    $origin = array_values($origin);
+                    $swap = [];
+                    $swap['name'] = isset($origin[0])?$origin[0]:'';
+                    $swap['param'] = isset($origin[1])?$origin[1]:'';
+                    $swap['unit'] = isset($origin[2])?$origin[2]:'';
+                    $swap['number'] = isset($origin[3])?$origin[3]:'';
+                    $swap['price'] = isset($origin[4])?$origin[4]:'';
+                    $swap['remark'] = isset($origin[5])?$origin[5]:'';
+                    array_push($list,$swap);
+//                    dd($origin);
+                });
+            });
+//            dd($list);
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>$list
+
+            ]);
+//            dd($file);
+        }else{
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'空文件'
+            ]);
+        }
+    }
     public function importBudget(Request $post)
     {
 //        return redirect()->back()->with('status','dadf');

@@ -83,6 +83,7 @@ Route::get('export/stock/out/list','ExcelController@exportStockOutList');
 Route::get('export/build/get/list','ExcelController@exportBuildGetList');
 //Route::get('export/stock/out/list','ExcelController@exportStockOutList');
 Route::post('import/budget','ExcelController@importBudget');
+Route::post('import/payment','ExcelController@importPayment');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject')->middleware('role:project_list');
    Route::get('index','UserController@index');

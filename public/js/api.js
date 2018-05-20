@@ -195,7 +195,7 @@
       })
     }
 
-    searchPurchaseProject(search = {}){
+    searchPurchaseProject(search = {}) {
       return this._http.get(`/search/purchase/project`, {
         params: search
       })
@@ -420,6 +420,11 @@
     //上传
     createUpload(data = {}) {
       return this._http.post('/upload', data)
+    }
+
+    //excel 导入
+    createExcel(data = {}) {
+      return this._http.post('/import/payment', data)
     }
   }
 

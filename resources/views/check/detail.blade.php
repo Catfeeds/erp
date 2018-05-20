@@ -491,7 +491,7 @@
                                     <td>{{$item->unit}}</td>
                                     <td>{{$item->rate}}%</td>
                                     <td>
-                                        <button class="ui mini button primary" @click="EditFnc(item, index, 'invoice')">修改</button>
+                                        <button class="ui mini button primary" onclick="modityInvoice">修改</button>
                                         <button @click="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                     </td>
                                 {{--</template>--}}
@@ -551,16 +551,19 @@
                         <tbody>
                         @if(!empty($subCompanies))
                         @foreach($subCompanies as $company)
+                            <from>
                         <tr >
-                            {{--<template >--}}
+                            {{--<temp late >--}}
+                            {{--<input type="hidden" name="id" value="{{{{$company->id}}}}">--}}
                                 <td>{{ $company->date }}</td>
-                                <td>{{ $company->price }} ￥</td>
+                                <td id="price">{{ $company->price }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
-                                    <button class="ui mini button primary">修改</button>
+                                    <button class="ui mini button primary" onclick="modifyPay(this)">修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
+                            </from>
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -771,4 +774,21 @@
 @endsection
 @section('pageJs')
     <script src="{{url('js/check_detail.js')}}"></script>
+    <script type="text/javascript">
+        function modifyPay(obj) {
+            console.log('click')
+            id = $(obj).parent().parent().attr('id')
+            price = $(obj).parent().parent().find('td').eq(1).text()
+            date = $(obj).parent().parent().find('td').eq(0).text()
+            layer.prompt({
+                formType: 0,
+                value: '初始值',
+                title: '这里是title'
+            }, function(value, index, elem){
+                alert(value); //得到value
+                layer.close(index);
+            });
+            console.log(date)
+        }
+    </script>
 @endsection

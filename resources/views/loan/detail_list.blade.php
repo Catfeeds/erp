@@ -83,6 +83,20 @@
                 </thead>
 
                 <tbody>
+                <tr>
+                    <td>期初</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{$start}}￥</td>
+                    <td>{{$loanStart}}￥</td>
+                </tr>
                 @foreach($lists as $list)
                     @if(strstr($list['number'],'BXFK'))
                 <tr>

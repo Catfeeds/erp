@@ -93,7 +93,7 @@
         </div>
 
         <div class="margin-top-20" style="text-align:right;">
-            <a class="ui positive button" href="#">
+            <a class="ui positive button" href="{{url('excel/excel2.xls')}}">
                 <i class="icon download"></i>
                 <span>请款单标准格式导出</span>
             </a>

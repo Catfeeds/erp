@@ -65,7 +65,7 @@
                                 <div class="fake-input">@{{ index + 1 }}</div>
                             </div>
                             <div class="three wide column">
-                                <div class="fake-input">@{{ item.id }}</div>
+                                <div class="fake-input">@{{ item.number }}</div>
                             </div>
                             <div class="three wide column">
                                 <div class="fake-input">@{{ item.price.toLocaleString('en-US') }}￥</div>

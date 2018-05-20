@@ -357,7 +357,7 @@ class BuildController extends Controller
                 $invoice->number = $list['number'];
                 $invoice->type = $type->name;
                 $invoice->without_tax = $list['without_tax'];
-                $invoice->with_tax = $list['with_tax'];
+                $invoice->with_tax = $list['without_tax']+$list['tax'];
                 $invoice->tax = $list['tax'];
                 $invoice->save();
             }

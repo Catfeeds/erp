@@ -485,7 +485,7 @@ class StockController extends Controller
 //        dd($id);
         $project = Project::find($id);
         $invoice = Invoice::where('state','=',1)->get();
-        $budgets = $project->budget()->get();
+        $budgets = $project->budget()->where('type','=',1)->get();
         foreach ($budgets as $budget){
             $budget->material = Material::find($budget->material_id);
         }

@@ -144,7 +144,7 @@
                     <td style="white-space:nowrap;">
 
                         @if($apply->state==1)
-                            <a class="ui mini button" href="javascript:_helper.fullWindow('../build/pay_apply.html?id=1')">修改</a>
+                            <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('build/pay/finish')}}?id={{$apply->id}}')">修改</a>
                         @if(checkRole('build_pay_check',$apply->id))
                             <button class="ui mini button primary paySingleBtn" data-id="{{$apply->id}}">复核</button>
                         @else

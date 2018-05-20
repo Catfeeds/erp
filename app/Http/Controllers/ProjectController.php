@@ -46,12 +46,12 @@ class ProjectController extends Controller
         $name = Input::get('name');
         $DbObj = DB::table('projects');
         $type = Input::get('type');
-//        $data = $DbObj->get();
-//        return response()->json([
-//            'code'=>'200',
-//            'msg'=>'SUCCESS',
-//            'data'=>$data
-//        ]);
+        $data = $DbObj->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$data
+        ]);
         if ($type){
             $idArr = getRoleProject($type);
             $DbObj->whereIn('id',$idArr);
@@ -120,6 +120,7 @@ class ProjectController extends Controller
         for ($i=0;$i<count($data);$i++){
             $swap[$i] = $data[$i]['unit'];
         }
+        $swap = array_unique($swap);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

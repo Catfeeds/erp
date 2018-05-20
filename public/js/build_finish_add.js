@@ -196,6 +196,47 @@
               })
           },
 
+          //excel 导入
+          fileUpload(e) {
+            const files = e.target.files
+            if (!files || !files.length) {
+              return
+            }
+            const file = files[0]
+            let formData = new FormData()
+            formData.append('file', file)
+            _http.UploadManager.createExcel(formData)
+              .then(res => {
+                if (res.data.code === '200') {
+                  const resData = res.data.data
+                  const originList = this.buildFinishAdd.lists
+                  const newList = resData.reduce((all, item, index) => {
+                    item.id = originList.length > 0 ? originList[originList.length - 1].id ? originList[originList.length - 1].id + 1 + index : 1 + index : 1 + index;
+                    return all.concat([item])
+                  }, [])
+                  this.buildFinishAdd.lists = [...this.buildFinishAdd.lists, ...newList]
+                  this.$notify({
+                    title: '成功',
+                    message: `导入成功`,
+                    type: 'success'
+                  })
+                } else {
+                  this.$notify({
+                    title: '错误',
+                    message: res.data.msg,
+                    type: 'error'
+                  })
+                }
+              })
+              .catch(err => {
+                this.$notify({
+                  title: '错误',
+                  message: '服务器出错',
+                  type: 'error'
+                })
+              })
+          },
+
           //新增项
           addItem() {
             const list = this.buildFinishAdd.lists

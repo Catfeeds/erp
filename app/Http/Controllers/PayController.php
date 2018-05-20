@@ -232,10 +232,10 @@ class PayController extends Controller
         $apply->apply_date = $post->get('date');
         $apply->price = $post->get('preice');
         $apply->reason = $post->get('reason');
-        $loanPrice = LoanList::where('borrower','=',$apply->borrower)->sum('price');
+        $loanPrice = LoanList::where('borrower','=',$apply->borrower)->where('state','>=',3)->sum('price');
         $submitPrice = LoanPay::where('applier','=',$apply->borrower)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$apply->borrower)->where('state','!=',4)->sum('price');
-        $apply->loanBalance = $loanPrice-$submitPrice;
+        $price = LoanSubmit::where('loan_user','=',$apply->borrower)->where('state','>=',3)->sum('price');
+        $apply->loanBalance = $loanPrice-$submitPrice+$apply->price;
         $apply->submitBalance = $price;
         if ($apply->save()){
             return response()->json([
@@ -392,10 +392,10 @@ class PayController extends Controller
         $loan->date = $post->get('date');
         $loan->price = $post->get('price');
         $loan->loan_user = $post->get('loan_user');
-        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->sum('price');
+        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
         $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','!=',4)->sum('price');
-        $loan->loanBalance = $loanPrice-$submitPrice;
+        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
         $loan->submitBalance = $price;
         if ($loan->save()){
             foreach ($lists as $item){
@@ -440,10 +440,10 @@ class PayController extends Controller
         $loan->price = $post->get('price');
         $loan->project_id = $post->get('project_id');
         $loan->loan_user = $post->get('loan_user');
-        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->sum('price');
+        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
         $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','!=',4)->sum('price');
-        $loan->loanBalance = $loanPrice-$submitPrice;
+        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
         $loan->submitBalance = $price;
         if ($loan->save()){
             foreach ($lists as $item){
