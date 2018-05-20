@@ -51,7 +51,8 @@
             }
             this.throttle.project_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                id: queryString,
+                type: 'stock_return_edit'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -88,7 +89,8 @@
             }
             this.throttle.project_content_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                name: queryString,
+                type: 'stock_return_edit'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {

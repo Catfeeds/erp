@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\Budget;
+use App\Models\Category;
 use App\Models\LoanList;
 use App\Models\LoanPay;
 use App\Models\LoanPayList;
 use App\Models\LoanSubmit;
+use App\Models\LoanSubmitList;
 use App\Models\Material;
 use App\Models\OutContract;
 use App\Models\PayApply;
@@ -17,6 +20,8 @@ use App\Models\Purchase;
 use App\Models\PurchaseList;
 use App\Models\RequestPayment;
 use App\Models\Stock;
+use App\Models\StockRecord;
+use App\Models\StockRecordList;
 use App\Models\Supplier;
 use App\Models\Team;
 use App\Models\Warehouse;
@@ -381,12 +386,12 @@ class ExcelController extends Controller
             $swap['main'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->where('type','=',1)->sum('price'));
             $unit = OutContract::where('project_id','=',$projects[$i]->id)->pluck('unit')->toArray();
             $swap['unit'] = implode('|',$unit);
-            $swap['unit'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->where('type','=',2)->sum('price'));
+            $swap['pit'] = number_format(ProjectSituations::where('project_id','=',$projects[$i]->id)->where('type','=',2)->sum('price'));
             $swap['finishTime'] = date('Y-m-d',$projects[$i]->finishTime);
             $data[$i] = $swap;
         }
         $data = array_merge($tr,$data);
-        $this->excel->create('项目清单',function ($excel) use ($tr,$data){
+        $this->excel->create('已立项清单',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
                 for ($j=0;$j<$count;$j++){
@@ -413,10 +418,124 @@ class ExcelController extends Controller
                 $data = Project::orderBy('id','DESC')->get();
             }
         }
+        $all = [];
+        if (!empty($data)){
+            for ($i=0;$i<count($data);$i++){
+                $swap = [];
+                $swap['a'] = $data[$i]->number;
+                $swap['b'] = $data[$i]->name;
+                $swap['c'] = $data[$i]->pm;
+                $swap['d'] = date('Y-m-d',$data[$i]->finishTime);
+                $swap['e'] = $data[$i]->acceptance_date;
+                $swap['f'] = $data[$i]->deadline;
+                $swap['g'] = $data[$i]->situation()->sum('price');
+                $swap['h'] = $data[$i]->situation()->where('type','=',1)->sum('price');
+                $swap['i'] = $data[$i]->situation()->where('type','=',2)->sum('price');
+                $swap['j'] = $data[$i]->situation()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price');
+                $swap['k'] = number_format($data[$i]->situation()->where('type','=',1)->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price'));
+                $swap['l'] = number_format($data[$i]->situation()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price'));
+                $swap['m'] = $data[$i]->invoices()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price');
+                $swap['n'] = number_format($data[$i]->invoices()->sum('price'));
+                $swap['o'] = number_format($data[$i]->collects()->where('type','=',2)->sum('price'));
+                $swap['p'] = number_format($data[$i]->collects()->where('type','=',3)->sum('price'));
+                $swap['q'] = $data[$i]->stockRecords()->where('type','=',3)->sum('cost')+$data[$i]->requestPayments()->where('state','=',3)->sum('price')+$data[$i]->loanSubmits()->where('state','>',3)->sum('price')+$data[$i]->payApplies()->sum('price')-$data[$i]->stockRecords()->where('type','=',2)->sum('cost');
+                $swap['r'] = $data[$i]->stockRecords()->where('type','=',3)->sum('cost');
+                $swap['s'] = $data[$i]->requestPayments()->where('state','=',3)->sum('price');
+                $swap['t'] = $data[$i]->loanSubmits()->where('state','>',3)->sum('price');
+                $swap['u'] = $data[$i]->payApplies()->sum('price');
+                $swap['v'] = $data[$i]->stockRecords()->where('type','=',2)->sum('cost');
+                $all[$i] = $swap;
+            }
+        }
+        $tr = [[
+            '项目号','项目内容','项目经理','约定完工日期','验收日期','保修截至日期','项目实际金额',
+            '主合同金额','分包合同金额','项目剩余未收款','主合同未收款','分包合同未收款','应收账款','已开票请款','主合同收款',
+            '分包合同收款','已发生成本','领料成本','施工成本','报销项目成本	','费用其他成本','退料成本'
+        ]];
+        $all = array_merge($tr,$all);
+        $this->excel->create('项目明细清单',function ($excel) use ($tr,$all){
+            $excel->sheet('sheet1',function ($sheet) use ($all){
+                $count = count($all);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$all[$j]);
+                }
+            });
+        })->export('xls');
     }
     public function exportBudgetList()
     {
+        $search = Input::get('search');
+        $role = getRole('budget_list');
+        if ($role=='all'){
+            if ($search){
+                $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $projects = Project::orderBy('id','DESC')->paginate(10);
+            }
+        }else{
+            $idArr = getRoleProject('budget_list');
+            $db = Project::whereIn('id',$idArr);
+            if ($search){
+                $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+            }
+            $projects = $db->orderBy('id','DESC')->paginate(10);
+        }
+        $data = [];
+        if (!empty($projects)){
+            foreach ($projects as $project){
+                $swap = [];
+                $materialId = Category::where('title','=','材料')->where('state','=',1)->pluck('id')->first();
+                $idArr = $project->loanSubmits()->where('state','>',2)->pluck('id')->toArray();
+                $materialCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$materialId)->sum('price');
+                $engineId = Category::where('title','=','工程款')->where('state','=',1)->pluck('id')->first();
+                $engineCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$engineId)->sum('price');
+                $otherCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','!=',$materialId)->where('category_id','!=',$engineId)->sum('price');
+                $project->materialCount = $materialCount;
+                $project->engineCount = $engineCount;
+                $project->otherCount = $otherCount;
+//                dd($project);
+                $swap['a'] = $project->number;
+                $swap['b'] = $project->name;
+                $swap['c'] = $project->pm;
+                $swap['d'] = $project->situation()->sum('price');
+                $swap['e'] = $project->situation()->where('type','=',1)->sum('price');
+                $swap['f'] = $project->situation()->where('type','=',2)->sum('price');
+                $swap['g'] = $project->budget()->sum('cost');
+                $swap['h'] = $project->budget()->where('type','=',1)->sum('cost');
+                $swap['i'] = $project->budget()->where('type','=',2)->sum('cost');
+                $swap['j'] = $project->budget()->where('type','=',3)->sum('cost');
+                $swap['k'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost');
+                $swap['l'] = $project->stockRecords()->where('type','=',3)->sum('cost');
+                $swap['m'] = $project->requestPayments()->where('state','=',3)->sum('price');
+                $swap['n'] = $project->materialCount;
+                $swap['o'] = $project->engineCount;
+                $swap['p'] = $project->otherCount;
+                $swap['q'] = $project->payApplies()->sum('price');
+                $swap['r'] = $project->stockRecords()->where('type','=',2)->sum('cost');
+                $swap['s'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost').'/'.$project->budget()->sum('cost');
+                $swap['t'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost').'/'.$project->budget()->where('type','=',1)->sum('cost');
+                $swap['u'] = $project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount.'/'.$project->budget()->where('type','=',2)->sum('cost');
+                $swap['v'] = $project->otherCount+$project->payApplies()->sum('price').'/'.$project->budget()->where('type','=',3)->sum('cost');
+                array_push($data,$swap);
+            }
+        }
 
+        $tr = [[
+            '项目号','项目内容','项目经理','项目实际金额','主合同金额','分包合同金额','预算总额',
+            '物料采购金额','工程金额','其他','已发生成本','领料成本','施工成本','报销材料款','报销工程款',
+            '报销其他费用','费用付款其他成本','退料成本','总成本 / 预算','物料实际成本 / 预算','工程实际成本 / 预算',
+            '其他成本 / 预算'
+        ]];
+        $data = array_merge($tr,$data);
+        $this->excel->create('预算清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+//        dd($projects);
     }
     public function exportProjectBudget()
     {
@@ -580,6 +699,536 @@ class ExcelController extends Controller
         $tr =[['施工队','施工经理','项目编号','	项目内容','项目经理','	已完工请款','	已申请付款','	已付款','应付账款']];
         $data = array_merge($tr,$data);
         $this->excel->create('施工付款清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function importBudget(Request $post)
+    {
+//        return redirect()->back()->with('status','dadf');
+        $project_id = $post->project_id;
+        $file = $post->file('file');
+        if ($file){
+//            $this->excel->load($file,function ($reader){
+//               dd($reader->ignoreEmpty()->all());
+//            });
+            DB::beginTransaction();
+            try{
+                Budget::where('project_id','=',$project_id)->delete();
+            $this->excel->selectSheetsByIndex(0)->load($file,function ($sheet) use($project_id){
+//               dd($sheet);
+
+                    $sheet->ignoreEmpty()->each(function ($data) use ($project_id){
+                        $origin = $data->toArray();
+                        $origin = array_values($origin);
+//                        dd($origin);
+                        if (!empty($origin)){
+                            $budget = new Budget();
+                            $budget->project_id = $project_id;
+                            if ($origin[8]=='物料') {
+                                $material = Material::where('state','=',1)->
+                                    where('name','=',$origin[0])->where('param','=',$origin[1])->
+                                    where('model','=',$origin[2])->where('factory','=',$origin[3])
+                                    ->where('unit','=',$origin['4'])->first();
+                                if (empty($material)){
+                                    $material = new Material();
+                                    $material->name = $origin[0];
+                                    $material->param = $origin[1];
+                                    $material->model = $origin[2];
+                                    $material->factory = $origin[3];
+                                    $material->unit = $origin[4];
+                                    $material->save();
+                                }
+                                $budget->material_id = $material->id;
+                                $budget->name = $material->name;
+                                $budget->param = $material->param;
+                                $budget->model = $material->model;
+                                $budget->factory = $material->factory;
+                                $budget->unit = $material->unit;
+                                $budget->type = 1;
+//                                dd($origin);
+                            }elseif($origin[8]=='工程'){
+                                $budget->name = empty($origin[0])?'无':(string)$origin[0];
+                                $budget->param = empty($origin[1])?'无':(string)$origin[1];
+                                $budget->model = empty($origin[2])?'无':(string)$origin[2];
+                                $budget->factory = empty($origin[3])?'无':(string)$origin[3];
+                                $budget->unit = empty($origin[4])?'无':(string)$origin[4];
+                                $budget->type = 2;
+                            }else{
+                                $budget->name = empty($origin[0])?'无':(string)$origin[0];
+                                $budget->param = empty($origin[1])?'无':(string)$origin[1];
+                                $budget->model = empty($origin[2])?'无':(string)$origin[2];
+                                $budget->factory = empty($origin[3])?'无':(string)$origin[3];
+                                $budget->unit = empty($origin[4])?'无':(string)$origin[4];
+                                $budget->type = 3;
+                            }
+                            $budget->price = $origin[5];
+                            $budget->number = $origin[6];
+                            $budget->need_buy = $origin[6];
+                            $budget->cost = $origin[7];
+                            $budget->save();
+                        }
+
+//                   var_dump($origin);
+                    });
+
+
+            });
+                DB::commit();
+                return redirect()->back()->with('status','导入成功!');
+//                    return 'DDDD';
+//                    return view()
+//                    return redirect()->to()->with('status','导入成功！');
+//                    return redirect('budget/detail?id='.$project_id);
+//                    return redirect('budget/detail?id='.$project_id)->with('status','导入成功！');
+            }catch (\Exception $exception){
+//                    dd($exception->getMessage());
+                DB::rollback();
+                return redirect()->back()->with('status','数据格式错误');
+//                    return redirect('budget/detail?id='.$project_id)->with('status','数据格式错误！');
+            }
+        }else{
+            return redirect()->back()->with('status','空文件!');
+        }
+
+    }
+    public function exportBudget()
+    {
+        $id = Input::get('id');
+        $list = Budget::where('project_id','=',$id)->get();
+        $tr = [['物料名称','性能及技术参数','品牌型号','生产厂家','单位','单价','数量','金额','物料/工程/其他']];
+        $data = [];
+        if (!empty($list)){
+            for ($i=0;$i<count($list);$i++){
+                if ($list[$i]->type==1){
+                    $type = '物料';
+                }elseif ($list[$i]->type ==2){
+                    $type = '工程';
+                }else{
+                    $type = '其他';
+                }
+                $swap = [];
+                $swap['name'] = $list[$i]->name;
+                $swap['param'] = $list[$i]->param;
+                $swap['model'] = $list[$i]->model;
+                $swap['factory'] = $list[$i]->factory;
+                $swap['unit'] = $list[$i]->unit;
+                $swap['price'] = $list[$i]->price;
+                $swap['number'] = $list[$i]->number;
+                $swap['cost'] = $list[$i]->cost;
+                $swap['type'] = $type;
+                $data[$i] = $swap;
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('预算清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportPurchaseList()
+    {
+        $role = getRole('buy_list');
+        $db = Purchase::where('state','=',3);
+//        $search = Input::get('search');
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $db->whereIn('project_id',$idArr);
+        }
+        $list = $db->get();
+        $tr = [[
+            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理','预算内/外','已收货','未收货',
+            '已付款','应付账款','发票条件','已收票','未收票','项目状态'
+        ]];
+        $data = [];
+        if (!empty($list)){
+            foreach ($list as $item){
+                $swap = [];
+                $project = Project::find($item->project_id);
+                $swap['number'] = $item->number;
+                $swap['supplier'] = $item->supplier;
+                $swap['cost'] = $item->lists()->sum('cost');
+                $swap['project_number'] = $project->number;
+                $swap['project_content'] = $project->name;
+                $swap['project_manager'] = $project->pm;
+                $swap['type'] = $item->type==1?'内':'外';
+                $swap['buy'] = $item->lists()->sum('received');
+                $swap['need'] = $item->lists()->sum('need');
+                $swap['pay'] = number_format($item->payments()->sum('pay_price'));
+                $swap['need_pay'] = $item->lists()->sum('cost')-$item->payments()->sum('pay_price');
+                $swap['content'] = $item->content;
+                $swap['invoices'] = $item->invoices()->sum('with_tax');
+                $swap['unInvoices'] = $item->payments()->sum('pay_price')-$item->invoices()->sum('with_tax');
+                $swap['state'] = $item->lists()->sum('cost')-$item->payments()->sum('pay_price')==0?'已结清':'未结清';
+                array_push($data,$swap);
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('采购清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportPurchasePayList()
+    {
+        $role = getRole('buy_list');
+        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
+        }else{
+            $lists = $db->orderBy('id','DESC')->get();
+        }
+        $data = [];
+        $tr = [[
+            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理','已付款','应付账款','系统状态','操作状态'
+        ]];
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $swap = [];
+                $project = Project::find($list->project_id);
+                $swap['number'] = $list->number;
+                $swap['supplier'] = $list->supplier;
+                $swap['cost'] = $list->lists()->sum('cost');
+                $swap['project_number'] = $project->number;
+                $swap['project_content'] = $project->name;
+                $swap['project_manager'] = $project->pm;
+                $swap['pay'] = number_format($list->payments()->sum('pay_price'));
+                $swap['need'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price');
+                $swap['payState'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清';
+                $swap['handle'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已处理':'待处理';
+                array_push($data,$swap);
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('采购付款清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportPurchaseChargeList()
+    {
+        $role = getRole('buy_list');
+        $db = Purchase::where('state','=',3);
+        if ($role=='any'){
+            $idArr = getRoleProject('buy_list');
+            $purchases = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
+        }else{
+            $purchases = $db->orderBy('id','DESC')->get();
+        }
+        $data = [];
+        $tr =[[
+            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理','发票条件','已收票','未收票','系统状态'
+        ]];
+        if (!empty($purchases)){
+            foreach ($purchases as $purchase){
+                $swap = [];
+                $project = Project::find($purchase->project_id);
+                $swap['number'] = $purchase->number;
+                $swap['supplier'] = $purchase->supplier;
+                $swap['cost'] = $purchase->lists()->sum('cost');
+                $swap['project_number'] = $project->number;
+                $swap['project_content'] = $project->name;
+                $swap['project_manager'] = $project->pm;
+                $swap['content'] = $purchase->content;
+                $swap['invoices'] = $purchase->invoices()->sum('with_tax');
+                $swap['unInvoices'] = $purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax');
+                $swap['state'] = $purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')==0?'已结清':'未结清';
+                array_push($data,$swap);
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('采购收票清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportPurchaseParityList()
+    {
+        $id = Input::get('material_id');
+        $start = Input::get('s');
+        $end = Input::get('e');
+        if (!empty($start)){
+            $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>=',$start)
+                ->whereDate('created_at','<=',$end)->get();
+        }else{
+            $lists = [];
+        }
+//        dd($lists);
+        $data = [];
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $swap = [];
+                $list->purchase = Purchase::find($list->purchase_id);
+                $swap['date'] = $list->purchase->date;
+                $swap['number'] = $list->purchase->number;
+                $swap['supplier'] = $list->purchase->supplier;
+                $swap['content'] = $list->purchase->content;
+                $swap['payContent'] = $list->purchase->condition;
+                $swap['sum'] = $list->number;
+                $swap['price'] = $list->price;
+                $swap['time'] = $list->warranty_time;
+                array_push($data,$swap);
+            }
+        }
+
+        $tr = [[
+           '采购日期','采购编号','供货商','发票条件','付款条件','数量','单价','保修时间'
+        ]];
+        $data = array_merge($tr,$data);
+//        dd($data);
+        $this->excel->create('物料采购比价清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportStockBuyList()
+    {
+        $role = getRole('stock_buy_list');
+        $db = Purchase::where('state','=',3);
+        $data = [];
+        if ($role=='any'){
+            $idArr = getRoleProject('stock_buy_list');
+            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+        }else{
+            $lists = $db->orderBy('id','DESC')->paginate(10);
+        }
+        if (empty($lists)){
+            foreach ($lists as $list){
+                $swap = [];
+                $project = Project::find($list->project_id);
+                $swap['number'] = $list->number;
+                $swap['supplier'] = $list->supplier;
+                $swap['cost'] = $list->lists()->sum('cost');
+                $swap['project_number'] = $project->number;
+                $swap['project_content'] = $project->name;
+                $swap['project_manager'] = $project->pm;
+                $swap['receive'] = $list->lists()->pluck('price')->first() * $list->lists()->sum('received');
+                $swap['need'] = $list->lists()->pluck('price')->first() * $list->lists()->sum('need');
+                $swap['state'] = $list->lists()->sum('need')==0?'已结清':'未结清';
+                array_push($data,$swap);
+            }
+        }
+        $tr = [[
+            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理	','已收货','未收货','系统状态'
+        ]];
+        $data = array_merge($tr,$data);
+//        dd($data);
+        $this->excel->create('采购收货入库清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportStockReturnList()
+    {
+        $data = [];
+
+        $role = getRole('stock_return_list');
+        if ($role=='all'){
+            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_return_list');
+            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->paginate(10);
+        }
+        $tr = [[
+            '退料编号	','物料名称','型号','生产厂家','单位','退料数量','退料单价','退料金额','项目编号',
+            '项目内容	','项目经理','退料人','入库仓库	','收货人'
+        ]];
+        if (empty($lists)){
+            foreach ($lists as $list){
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+                $swap = [];
+                $swap['number'] = $list->record->number;
+                $swap['name'] = $list->material->name;
+                $swap['model'] = $list->material->model;
+                $swap['factory'] = $list->material->factory;
+                $swap['unit'] = $list->material->unit;
+                $swap['sum'] = $list->sum;
+                $swap['price'] = $list->price;
+                $swap['cost'] = $list->cost;
+                $swap['project_number'] = $list->record->project_number;
+                $swap['project_content'] = $list->record->project_content;
+                $swap['project_manager'] = $list->record->project_manager;
+                $swap['returnee'] = $list->record->worker;
+                $swap['warehouse'] = $list->record->warehouse;
+                $swap['worker'] = $list->record->returnee;
+                array_push($data,$swap);
+            }
+        }
+//        dd($data);
+        $data = array_merge($tr,$data);
+        $this->excel->create('退料入货清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportStockGetList()
+    {
+        $data = [];
+        $role = getRole('stock_get_list');
+        if ($role =='all'){
+            $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_get_list');
+            $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }
+        $tr = [[
+            '领料编号	','出库仓库','物料名称	','型号','单位','库存均价','领料数量','领料金额','项目编号',
+            '项目内容','项目经理','领料人'
+        ]];
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $swap = [];
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+                $swap['number'] = $list->record->number;
+                $swap['warehouse'] = $list->record->warehouse;
+                $swap['name'] = $list->material->name;
+                $swap['model'] = $list->material->model;
+                $swap['unit'] = $list->material->unit;
+                $swap['price'] = $list->price;
+                $swap['sum'] = $list->sum;
+                $swap['cost'] = $list->cost;
+                $swap['project_number'] = $list->record->project_number;
+                $swap['project_content'] = $list->record->project_content;
+                $swap['project_manager'] = $list->record->project_manager;
+                $swap['worker'] = $list->record->worker;
+                array_push($data,$swap);
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create('领料出库清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportStockOutList()
+    {
+        $data =[];
+        $role = getRole('stock_out_list');
+        if ($role =='all'){
+            $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_get_list');
+            $id_arr = StockRecord::where('type','=',4)->whereIn('project_id',$idArr)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $swap =[];
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+                $swap['number'] = $list->record->number;
+                $swap['warehouse'] = $list->record->warehouse;
+                $swap['name'] = $list->material->name;
+                $swap['param'] = $list->material->param;
+                $swap['model'] = $list->material->model;
+                $swap['factory'] = $list->material->factory;
+                $swap['unit'] = $list->material->unit;
+                $swap['purchase_number'] = $list->record->purchase_number;
+                $swap['supplier'] = $list->record->supplier;
+                $swap['price'] = $list->price;
+                $swap['sum'] = $list->sum;
+                $swap['cost'] = $list->cost;
+                $swap['project_number'] = $list->record->project_number;
+                $swap['project_content'] = $list->record->project_content;
+                $swap['project_manager'] = $list->record->project_manager;
+                $swap['worker'] = $list->record->worker;
+                array_push($data,$swap);
+            }
+        }
+        $tr = [[
+            '退货出库编号','出库仓库','物料名称','性能及技术参数','品牌型号','生产厂家','单位','采购编号',
+            '供应商','单价','退货数量','退货金额','项目编号','项目内容','项目经理','退货人'
+        ]];
+        $data = array_merge($tr,$data);
+        $this->excel->create('退货出库清单',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+    }
+    public function exportBuildGetList()
+    {
+        $data = [];
+        $role = getRole('build_invoice_list');
+        if ($role == 'all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }else{
+            $idArr = getRoleProject('build_invoice_list');
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->get();
+        }
+
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $swap = [];
+                $list->invoice_price = $list->invoices()->sum('with_tax');
+                $swap['team'] = $list->team;
+                $swap['manager'] = $list->manager;
+                $swap['project_number'] = $list->project_number;
+                $swap['project_content'] = $list->project_content;
+                $swap['project_manager'] = $list->project_number;
+                $swap['request'] = $list->price;
+                $swap['pay'] = $list->pay_price;
+                $swap['need'] = $list->need_price;
+                $swap['invoice'] = $list->invoice_price;
+                $swap['need_invoice'] = $list->price-$list->invoice_price;
+                array_push($data,$swap);
+            }
+        }
+        $tr = [[
+            '施工队','施工经理','项目编号','项目内容','项目经理','已完工请款','已付款','应付账款','已收票',
+            '未收票'
+        ]];
+        $data = array_merge($tr,$data);
+        $this->excel->create(' 施工收票清单',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
                 for ($j=0;$j<$count;$j++){

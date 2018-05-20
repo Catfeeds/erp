@@ -17,7 +17,7 @@
                     <i class="icon plus"></i>
                     <span>新增退货出库</span>
                 </a>
-                <a href="#" class="ui positive button">
+                <a href="{{url('export/stock/out/list')}}" class="ui positive button">
                     <i class="icon print"></i>
                     <span>导出</span>
                 </a>

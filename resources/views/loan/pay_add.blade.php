@@ -125,7 +125,7 @@
                             <div class="inline fields">
                                 <label class="six wide field flex-center">借款余额</label>
                                 <div class="eleven wide field">
-                                    <div class="fake-input">@{{ deAmount.toLocaleString('en-US') }}￥</div>
+                                    <div class="fake-input">@{{ current_count.toLocaleString('en-US') }}￥</div>
                                 </div>
                             </div>
                         </div>
@@ -189,7 +189,7 @@
                                 <div class="fake-input">@{{ index + 1 }}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">@{{ item.value.id }}</div>
+                                <div class="fake-input">@{{ item.value.number }}</div>
                             </div>
                             <div class="three wide column">
                                 <div class="fake-input">@{{ item.value.price.toLocaleString('en-US') }}￥</div>

@@ -17,7 +17,7 @@
                     <i class="icon plus"></i>
                     <span>新增领料出库</span>
                 </a>
-                <a href="javascript:_helper.fullWindow('../stock/get_print.html?id=1')" class="ui positive button">
+                <a href="{{url('export/stock/get/list')}}" class="ui positive button">
                     <i class="icon print"></i>
                     <span>导出</span>
                 </a>
@@ -71,7 +71,7 @@
                     </td>
                     <td>{{$list->record->warehouse}}</td>
                     <td>{{$list->material->name}}</td>
-                    <td>{{$list->material->param}}</td>
+                    <td>{{$list->material->model}}</td>
                     <td>{{$list->material->unit}}</td>
                     <td>{{$list->price}} ￥</td>
                     <td>{{$list->sum}}</td>

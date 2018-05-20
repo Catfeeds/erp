@@ -113,8 +113,16 @@ class BuildController extends Controller
     }
     public function listGetPage()
     {
-        $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-        $lists = ProjectTeam::whereIn('id',$id)->get();
+        $role = getRole('build_invoice_list');
+        if ($role == 'all'){
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->get();
+        }else{
+            $idArr = getRoleProject('build_invoice_list');
+            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->get();
+        }
+
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->invoice_price = $list->invoices()->sum('with_tax');

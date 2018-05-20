@@ -6,8 +6,10 @@ use App\Http\Requests\BudgetPost;
 use App\Http\Requests\CreateProjectPost;
 use App\Models\Bail;
 use App\Models\Budget;
+use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\InvoiceList;
+use App\Models\LoanSubmitList;
 use App\Models\MainContract;
 use App\Models\Material;
 use App\Models\OutContract;
@@ -44,6 +46,12 @@ class ProjectController extends Controller
         $name = Input::get('name');
         $DbObj = DB::table('projects');
         $type = Input::get('type');
+//        $data = $DbObj->get();
+//        return response()->json([
+//            'code'=>'200',
+//            'msg'=>'SUCCESS',
+//            'data'=>$data
+//        ]);
         if ($type){
             $idArr = getRoleProject($type);
             $DbObj->whereIn('id',$idArr);
@@ -70,7 +78,7 @@ class ProjectController extends Controller
         $number = Input::get('project');
         $project = Project::where('number','=',$number)->first();
         if ($project){
-            $budgets = $project->budget()->get();
+            $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
                 $budget->material = Material::find($budget->material_id);
             }
@@ -433,6 +441,21 @@ class ProjectController extends Controller
             }
             $projects = $db->orderBy('id','DESC')->paginate(10);
         }
+        if (!empty($projects)){
+            foreach ($projects as $project){
+                $materialId = Category::where('title','=','材料')->where('state','=',1)->pluck('id')->first();
+                $idArr = $project->loanSubmits()->where('state','>',2)->pluck('id')->toArray();
+                $materialCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$materialId)->sum('price');
+                $engineId = Category::where('title','=','工程款')->where('state','=',1)->pluck('id')->first();
+                $engineCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$engineId)->sum('price');
+                $otherCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','!=',$materialId)->where('category_id','!=',$engineId)->sum('price');
+                $project->materialCount = $materialCount;
+                $project->engineCount = $engineCount;
+                $project->otherCount = $otherCount;
+//                dd($project);
+            }
+        }
+
         return view('budget.list',['projects'=>$projects]);
     }
     public function showBudgetPage()
@@ -481,27 +504,43 @@ class ProjectController extends Controller
 //        dd($budgets);
         if (!empty($budgets)){
             foreach ($budgets as $item){
-                if (isset($item['material_id'])){
-                    $budget = new Budget();
-                    $budget->project_id = $project_id;
-                    $budget->material_id = $item['material_id'];
-                    $budget->price = $item['price'];
-                    $budget->number = $item['number'];
-                    $budget->cost = $item['price']*$item['number'];
-                    $budget->type = $item['type'];
-                    $budget->need_buy = $item['number'];
-                    $budget->save();
+                if ($item['type']==1){
+                    if (isset($item['material_id'])){
+                        $budget = new Budget();
+                        $budget->project_id = $project_id;
+                        $budget->material_id = $item['material_id'];
+                        $budget->price = $item['price'];
+                        $budget->number = $item['number'];
+                        $budget->cost = $item['price']*$item['number'];
+                        $budget->type = $item['type'];
+                        $budget->need_buy = $item['number'];
+                        $budget->save();
+                    }else{
+                        $materail = new Material();
+                        $materail->name = $item['name'];
+                        $materail->param = $item['param'];
+                        $materail->model = $item['model'];
+                        $materail->factory = $item['factory'];
+                        $materail->unit = $item['unit'];
+                        $materail->save();
+                        $budget = new Budget();
+                        $budget->project_id = $project_id;
+                        $budget->material_id = $materail->id;
+                        $budget->price = $item['price'];
+                        $budget->number = $item['number'];
+                        $budget->cost = $item['price']*$item['number'];
+                        $budget->type = $item['type'];
+                        $budget->need_buy = $item['number'];
+                        $budget->save();
+                    }
                 }else{
-                    $materail = new Material();
-                    $materail->name = $item['name'];
-                    $materail->param = $item['param'];
-                    $materail->model = $item['model'];
-                    $materail->factory = $item['factory'];
-                    $materail->unit = $item['unit'];
-                    $materail->save();
                     $budget = new Budget();
                     $budget->project_id = $project_id;
-                    $budget->material_id = $materail->id;
+                    $budget->name = $item['name']?$item['name']:'无';
+                    $budget->param = $item['param']?$item['param']:'无';
+                    $budget->model = $item['model']?$item['model']:'无';
+                    $budget->factory = $item['factory']?$item['factory']:'无';
+                    $budget->unit = $item['unit']?$item['unit']:'无';
                     $budget->price = $item['price'];
                     $budget->number = $item['number'];
                     $budget->cost = $item['price']*$item['number'];
@@ -509,6 +548,7 @@ class ProjectController extends Controller
                     $budget->need_buy = $item['number'];
                     $budget->save();
                 }
+
             }
         }
         return response()->json([
@@ -848,9 +888,20 @@ class ProjectController extends Controller
     {
         $role = getRole('buy_list');
         $db = Purchase::where('state','=',3);
+        $search = Input::get('search');
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
             $db->whereIn('project_id',$idArr);
+        }
+        if ($search){
+
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+//            dd($idArray);
+            if (!empty($idArray)){
+                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
+            }else{
+                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+            }
         }
         $lists = $db->paginate(10);
         return view('buy.list',['lists'=>$lists]);
@@ -968,7 +1019,7 @@ class ProjectController extends Controller
                 $list->purchase = Purchase::find($list->purchase_id);
             }
         }
-        return view('buy.parity',['lists'=>$lists]);
+        return view('buy.parity',['lists'=>$lists,'s'=>$start,'e'=>$end,'id'=>$id]);
     }
     public function createBudgetaryPage()
     {
@@ -1077,11 +1128,11 @@ class ProjectController extends Controller
         $id = Input::get('id');
         $project = Project::find($id);
         $budgets = $project->budget()->get();
-        foreach ($budgets as $budget){
-            if ($budget->material_id!=0){
-                $budget->material = Material::find($budget->material_id);
-            }
-        }
+//        foreach ($budgets as $budget){
+//            if ($budget->material_id!=0){
+//                $budget->material = Material::find($budget->material_id);
+//            }
+//        }
         return view('budget.print',['project'=>$project,'budgets'=>$budgets]);
     }
     public function checkProject()

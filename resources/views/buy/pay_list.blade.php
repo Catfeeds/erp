@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap" style="align-items: flex-end;">
             <div>
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/purchases/pay/list')}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>
@@ -99,10 +99,10 @@
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>123,521 ￥</td>
-                    <td>52,212 ￥</td>
-                    <td>已结清</td>
-                    <td>待处理</td>
+                    <td>{{number_format($list->payments()->sum('pay_price'))}} ￥</td>
+                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')}} ￥</td>
+                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
+                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已处理':'待处理'}}</td>
                 </tr>
                 @endforeach
 

@@ -644,7 +644,10 @@ class PayController extends Controller
     public function addRequestPayment(Request $post)
     {
         $id = $post->id;
+        DB::beginTransaction();
+        try{
         if (!$id){
+//            dd($id);
             $project = Project::where('number','=',$post->get('project_id'))->first();
             $team = Team::find($post->get('team'));
             $projectTeam = ProjectTeam::where('team_id','=',$post->get('team'))->where('project_id','=',$project->id)->first();
@@ -678,7 +681,9 @@ class PayController extends Controller
             $payment->applier = Auth::user()->name;
             $payment->applier_id = Auth::id();
             $payment->save();
+            $cost = 0;
             if (!empty($lists)){
+
                 foreach ($lists as $item){
                     $list = new RequestPaymentList();
                     $list->payment_id = $payment->id;
@@ -692,32 +697,84 @@ class PayController extends Controller
                     $list->number = $item['number'];
                     $list->unit = $item['unit'];
                     $list->price = $item['price'];
-                    $list->total = $item['total'];
-
+                    $list->total = $item['price']*$item['number'];
+                    $cost+=$list->total;
                     $list->save();
                 }
+
+            }
+            if ($cost!=$payment->price){
+                throw new \Exception('金额不等！');
             }
         }else{
+
 //            $project_id = $post->project_id;
             $payment = RequestPayment::find($id);
+//            dd($payment);
             if (is_numeric($post->project_id)){
-                echo 'STRING';
+                $project = Project::find($post->project_id);
+//                $payment->project_id = $project->id;
+                $payment->project_number = $project->number;
+                $payment->project_content = $project->name;
+                $payment->project_manager = $project->pm;
             }
             if (is_numeric($post->team)){
                 $team = Team::find($post->team);
                 $payment->team = $team->name;
                 $payment->manager = $team->manager;
             }
+            $payment->request_date = $post->get('date');
+            $payment->price = $post->get('price');
+            $payment->applier = Auth::user()->name;
+            $payment->applier_id = Auth::id();
+            $payment->save();
+            $cost = 0;
+            if (!empty($lists)){
+
+                $payment->lists()->delete();
+                foreach ($lists as $item){
+                    $list = new RequestPaymentList();
+                    $list->payment_id = $payment->id;
+                    $list->name = $item['name'];
+                    if (isset($item['para'])){
+                        $list->param = $item['para'];
+                    }
+                    if (isset($item['remark'])){
+                        $list->remark = $item['remark'];
+                    }
+                    $list->number = $item['number'];
+                    $list->unit = $item['unit'];
+                    $list->price = $item['price'];
+                    $list->total = $item['price']*$item['number'];
+                    $cost+=$list->total;
+                    $list->save();
+                }
+//                dd($cost);
+
+            }
+            if ($cost!=$payment->price){
+                throw new \Exception('金额不等！');
+            }
 //            $projectTeam = ProjectTeam::find($post->project_team);
         }
+        DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$payment->id
+                ]
+            ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+//            dd($exception);
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'数据错误！'
+            ]);
+        }
 
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS',
-            'data'=>[
-                'id'=>$payment->id
-            ]
-        ]);
+
     }
     public function createFinishPayApply(Request $post)
     {

@@ -79,9 +79,11 @@ class StockController extends Controller
             $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->paginate(10);
         }
 
-        foreach ($lists as $list){
-            $list->material = $list->material()->first();
-            $list->record = $list->record()->first();
+        if (empty($lists)){
+            foreach ($lists as $list){
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+            }
         }
 //        dd($lists);
         return view('stock.return_list',['lists'=>$lists]);
@@ -107,12 +109,23 @@ class StockController extends Controller
     }
     public function listOutList()
     {
-        $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
-        $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
-        foreach ($lists as $list){
-            $list->material = $list->material()->first();
-            $list->record = $list->record()->first();
+        $role = getRole('stock_out_list');
+        if ($role =='all'){
+            $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+        }else{
+            $idArr = getRoleProject('stock_get_list');
+            $id_arr = StockRecord::where('type','=',4)->whereIn('project_id',$idArr)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
         }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->material = $list->material()->first();
+                $list->record = $list->record()->first();
+            }
+        }
+
+
         return view('stock.out_list',['lists'=>$lists]);
     }
     public function checkBuy()

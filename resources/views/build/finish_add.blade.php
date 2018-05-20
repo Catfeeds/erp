@@ -112,8 +112,9 @@
                 <div class="ui five column doubling stackable grid font-size-13">
                     <div class="two wide column form-thead">设备名称</div>
                     <div class="two wide column form-thead">性能参数</div>
-                    <div class="two wide column form-thead">数量</div>
+
                     <div class="two wide column form-thead">单位</div>
+                    <div class="two wide column form-thead">数量</div>
                     <div class="two wide column form-thead">含税单价</div>
                     <div class="two wide column form-thead">含税总价</div>
                     <div class="two wide column form-thead">备注</div>
@@ -127,17 +128,19 @@
                         <div class="two wide column">
                             <input type="text" placeholder="性能参数" v-model="item.para">
                         </div>
-                        <div class="two wide column">
-                            <input type="text" placeholder="数量" v-model.number="item.number">
-                        </div>
+
                         <div class="two wide column">
                             <input type="text" placeholder="单位" v-model="item.unit">
+                        </div>
+                        <div class="two wide column">
+                            <input type="text" placeholder="数量" v-model.number="item.number">
                         </div>
                         <div class="two wide column">
                             <input type="number" v-model.number="item.price" placeholder="含税单价">
                         </div>
                         <div class="two wide column">
-                            <input type="number" v-model.number="item.total" placeholder="含税总价">
+                            {{--<input type="number" v-model.number="item.total" placeholder="含税总价">--}}
+                            <div class="fake-input">@{{ (item.price * item.number || 0).toLocaleString('en-US') }}</div>
                         </div>
                         <div class="two wide column">
                             <input type="text" placeholder="备注" v-model="item.remark">

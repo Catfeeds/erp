@@ -17,13 +17,16 @@
         <div class="invisible" id="budgetCreate" data-id="{{$project->id}}">
 
             <!-- 操作 -->
+            <form method="post" enctype="multipart/form-data" action="{{url('import/budget')}}?project_id={{$project->id}}">
             <div class="content-operation">
                 <label for="contractUpload" class="ui positive icon button">
                     <i class="icon download"></i>
-                    <span>导入</span>
-                    <input style="display:none;" type="file" id="contractUpload" multiple @change="fileUpload($event)">
+
+                    <input type="file" name="file" >
+                   <button type="submit">导入</button>
                 </label>
             </div>
+            </form>
             <!-- / 操作 -->
 
 

@@ -40,11 +40,11 @@
                 @for($i=0;$i<count($budgets);$i++)
                 <tr>
                     <td>{{$i+1}}</td>
-                    <td>{{$budgets[$i]->material->name}}</td>
-                    <td>{{$budgets[$i]->material->param}}</td>
-                    <td>{{$budgets[$i]->material->model}}</td>
-                    <td>{{$budgets[$i]->material->factory}}</td>
-                    <td>{{$budgets[$i]->material->unit}}</td>
+                    <td>{{$budgets[$i]->name}}</td>
+                    <td>{{$budgets[$i]->param}}</td>
+                    <td>{{$budgets[$i]->model}}</td>
+                    <td>{{$budgets[$i]->factory}}</td>
+                    <td>{{$budgets[$i]->unit}}</td>
                     <td>{{$budgets[$i]->price}}</td>
                     <td>{{$budgets[$i]->number}}</td>
                     <td>{{$budgets[$i]->cost}}</td>
@@ -77,7 +77,7 @@
             </table>
             <div class="content-operation print-hide">
                 <div class="flex-row flex-end">
-                    <a class="ui icon button positive" href="#" style="margin: 0 20px;">
+                    <a class="ui icon button positive" href="{{url('export/budget')}}?id={{$project->id}}" style="margin: 0 20px;">
                         <i class="icon download"></i>
                         <span>导出 EXCEL 表</span>
                     </a>

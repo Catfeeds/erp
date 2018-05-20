@@ -31,7 +31,7 @@
                 </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/stock/buy/list')}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>

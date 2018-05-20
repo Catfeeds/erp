@@ -23,7 +23,8 @@
 
           throttle: {
             user_timer: null
-          }
+          },
+          current_count: 0
 
         },
         mounted() {
@@ -61,13 +62,9 @@
             const list = this.currentCheckedList
             let sum = 0
             list.forEach((it, index) => {
-              sum += parseFloat(it.price)
+              sum += parseFloat(it.value.price)
             })
             return sum
-          },
-
-          deAmount() {
-            return this.checkAmount - parseFloat(this.loanForm.daduction)
           }
         },
         methods: {
@@ -122,7 +119,8 @@
               })
               .then(res => {
                 if (res.data.code === '200') {
-                  this.currentList = res.data.data
+                  this.currentList = res.data.data,
+                  this.current_count = Number(res.data.count) || 0
                 } else {
                   this.$notify({
                     title: '错误',

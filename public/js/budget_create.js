@@ -81,12 +81,22 @@
           //新增预算
           addNewBudget() {
             let newData = Object.assign({}, this.newBudget)
-            console.log(newData)
-            for (let it in newData) {
-              if (newData[it] === '' || typeof newData[it] === 'undefined') {
+            const type = newData.type
+            if (type == 1) {
+              for (let it in newData) {
+                if (newData[it] === '' || typeof newData[it] === 'undefined') {
+                  this.$notify.error({
+                    title: '错误',
+                    message: '请确保已填写所有项！'
+                  })
+                  return false
+                }
+              }
+            } else {
+              if (!newData.name || newData.price === '' || newData.number === '') {
                 this.$notify.error({
                   title: '错误',
-                  message: '请确保已填写所有项！'
+                  message: '物料名称、物料价格、物料数量必填！'
                 })
                 return false
               }

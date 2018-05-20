@@ -12,12 +12,12 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap" style="align-items: flex-end;">
             <div>
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/purchases/list')}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>
             </div>
-            <form action="/views/buy/list.html" class="ui form flex-fluid">
+            <form method="get" class="ui form flex-fluid">
                 <div class="flex-row flex-around flex-wrap">
                     <div class="inline fields">
                         <label>收货情况：</label>
@@ -92,7 +92,7 @@
                             <div class="item" data-value="4">项目内容</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>
@@ -128,7 +128,7 @@
                         <a href="javascript:_helper.fullWindow('{{url('stock/check/budgetary')}}?id={{$list->id}}');">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{$list->lists()->sum('price')}} ￥</td>
+                    <td>{{$list->lists()->sum('cost')}} ￥</td>
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>

@@ -51,7 +51,8 @@
             }
             this.throttle.project_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                id: queryString,
+                type: 'stock_get_list'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -80,7 +81,8 @@
             }
             this.throttle.project_id_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                name: queryString,
+                type: 'stock_get_list'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -144,13 +146,6 @@
           handleSelectStock(item) {
             this.stockGetAdd.warehouse_id = item.id
             this.stockGetAdd.warehouse_name = item.name
-              // this.currentMaterial = ''
-              // this.currentMaterialName = ''
-              this.stockGetAdd.lists = []
-                  // this.currentMaterial = [material]
-
-
-              this.currentMaterialName= ''
           },
 
 
@@ -205,8 +200,7 @@
               material: this.currentMaterial.material,
               price: this.currentMaterial.price,
               material_id: this.currentMaterial.id,
-              number: 0,
-                stock_number:  this.currentMaterial.number
+              number: 0
             }
             this.stockGetAdd.lists.push(data)
           },

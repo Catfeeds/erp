@@ -17,12 +17,12 @@
                     <i class="icon plus"></i>
                     <span>新增退料入库</span>
                 </a>
-                <a href="javascript:_helper.fullWindow('')" class="ui positive button">
+                <a href="{{url('export/stock/return/list')}}" class="ui positive button">
                     <i class="icon print"></i>
                     <span>导出</span>
                 </a>
             </div>
-            <form action="/views/buy/project_list.html" class="ui form flex-fluid">
+            <form method="get" class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">

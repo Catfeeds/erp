@@ -61,7 +61,7 @@
                 </div>
                 <div class="margin-top-20 flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/purchase/parity/list')}}?material_id={{$id}}&s={{$s}}&e={{$e}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>

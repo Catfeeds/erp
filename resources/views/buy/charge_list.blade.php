@@ -13,7 +13,7 @@
         <!-- 操作区域 -->
         <div class="content-operation flex-row flex-between flex-wrap" style="align-items: flex-end;">
             <div>
-                <a class="ui green button" href="#">
+                <a class="ui green button" href="{{url('export/purchase/charge/list')}}">
                     <i class="icon download"></i>
                     <span>Excel 导出</span>
                 </a>

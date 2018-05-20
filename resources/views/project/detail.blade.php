@@ -155,7 +155,7 @@
                     <th class="function-three">主合同收款</th>
                     <th class="function-three">分包合同收款</th>
                     <th class="function-toggle-four">已发生成本（展开）</th>
-                    <th class="function-four">可领料成本</th>
+                    <th class="function-four">领料成本</th>
                     <th class="function-four">施工成本</th>
                     <th class="function-four">报销项目成本</th>
                     <th class="function-four">费用其他成本</th>
