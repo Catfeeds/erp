@@ -697,7 +697,8 @@ class SystemController extends Controller
 //        dd($stockId);
         foreach ($stockId as $item){
             $item->material = $item->material();
-            $item->price = sprintf('%.2f',$item->cost/$item->number);
+            $price = $item->number==0?0:$item->cost/$item->number;
+            $item->price = sprintf('%.2f',$price);
         }
         return response()->json([
             'code'=>'200',
