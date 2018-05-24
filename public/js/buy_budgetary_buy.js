@@ -197,7 +197,7 @@
                   
                   this.selectData.id = res.data.data.id
                   _http.UserManager.searchAuthUsers({
-                    role: 'buy_budgetary_check',
+                    role: 'buy_bugetary_check',
                     // project_id: this.budgetary_buy.project_id
                   })
                     .then(resp => {
