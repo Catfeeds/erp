@@ -39,7 +39,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目合同金额</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">{{$project->price}}￥</div>
+                                <div class="fake-input">{{number_format($project->price)}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -81,22 +81,24 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($mainContracts as $mainContract)
+                    @for($i=0;$i<count($mainContracts);$i++)
+                    {{--@foreach($mainContracts as $mainContract)--}}
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">{{$mainContract->id}}</div>
+                            <div class="fake-input">{{$i+1}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$mainContract->unit}}</div>
+                            <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$mainContract->price}}￥</div>
+                            <div class="fake-input">{{number_format($mainContracts[$i]->price)}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">{{$mainContract->remark}}</div>
+                            <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
                         </div>
                     </div>
-                    @endforeach
+                        @endfor
+                    {{--@endforeach--}}
                 </div>
             </div>
             <!-- /主合同中标情况 -->
@@ -111,22 +113,23 @@
                     <div class="six wide column form-thead">备注</div>
                 </div>
                 <div class="form-wrap special-form">
-                    @foreach($outContracts as $outContract  )
+                    @for($i=0;$i<count($outContracts);$i++)
+                    {{--@foreach($outContracts as $outContract  )--}}
                     <div class="ui three column doubling stackable grid center aligned">
                         <div class="two wide column">
-                            <div class="fake-input">{{$outContract->id}}</div>
+                            <div class="fake-input">{{$i+1}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$outContract->unit}}</div>
+                            <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$outContract->price}}￥</div>
+                            <div class="fake-input">{{number_format($outContracts[$i]->price)}}￥</div>
                         </div>
                         <div class="six wide column">
-                            <div class="fake-input">{{$outContract->remark}}</div>
+                            <div class="fake-input">{{$outContracts[$i]->remark}}</div>
                         </div>
                     </div>
-                    @endforeach
+                    @endfor
 
                 </div>
             </div>
@@ -166,11 +169,11 @@
                                     @else
                                         <td rowspan="{{count($situations[$i]->lists)}}">分包合同后期追加或减少</td>
                                     @endif
-                                    <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} ￥</td>
+                                    <td rowspan="{{count($situations[$i]->lists)}}">{{number_format($situations[$i]->price)}} ￥</td>
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -180,7 +183,7 @@
                                 <tr>
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -209,20 +212,20 @@
                     <tbody>
                     <tr>
                         <td rowspan="3">预算总额</td>
-                        <td rowspan="3">{{$project->budget()->sum('cost')}} ￥</td>
+                        <td rowspan="3">{{number_format($project->budget()->sum('cost'))}} ￥</td>
                         <td>物料采购金额</td>
-                        <td>{{$project->budget()->where('type','=',1)->sum('cost')}} ￥</td>
+                        <td>{{number_format($project->budget()->where('type','=',1)->sum('cost'))}} ￥</td>
                         <td rowspan="3">
                             <a href="javascript:_helper.fullWindow('{{url('budget/print')}}?id={{$project->id}}');">查看预算清单</a>
                         </td>
                     </tr>
                     <tr>
                         <td>工程金额</td>
-                        <td>{{$project->budget()->where('type','=',2)->sum('cost')}} ￥</td>
+                        <td>{{number_format($project->budget()->where('type','=',2)->sum('cost'))}} ￥</td>
                     </tr>
                     <tr>
                         <td>其他</td>
-                        <td>{{$project->budget()->where('type','=',3)->sum('cost')}} ￥</td>
+                        <td>{{number_format($project->budget()->where('type','=',3)->sum('cost'))}} ￥</td>
                     </tr>
                     </tbody>
                 </table>

@@ -112,7 +112,7 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
-                            <label class="four wide field">付款条件</label>
+                            <label class="four wide field">发票条件</label>
                             <div class="twelve wide field">
                                 <el-select v-model="extrabudgetary.info.content" placeholder="请选择内容">
                                     <el-option v-for="item in invoiceType" :key="item.id" :label="item.name" :value="item.id">

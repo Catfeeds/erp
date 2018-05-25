@@ -715,7 +715,9 @@ class ExcelController extends Controller
             $this->excel->selectSheetsByIndex(0)->load($file,function ($sheet) use (&$list){
                 $sheet->ignoreEmpty()->each(function ($data) use (&$list){
                     $origin = $data->toArray();
+                    dd($origin);
                     $origin = array_values($origin);
+//                    dd($origin);
                     $swap = [];
                     $swap['name'] = isset($origin[0])?$origin[0]:'';
                     $swap['param'] = isset($origin[1])?$origin[1]:'';

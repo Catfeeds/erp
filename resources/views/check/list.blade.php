@@ -60,18 +60,18 @@
                     </td>
                     <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
-                    <td>{{$project->price}}</td>
-                    <td>{{$project->situation()->sum('price')}}</td>
-                    <td>{{$project->situation()->where('type','=',1)->sum('price')}}</td>
-                    <td>{{$project->situation()->where('type','=',2)->sum('price')}}</td>
+                    <td>{{number_format($project->price)}}</td>
+                    <td>{{number_format($project->situation()->sum('price'))}}</td>
+                    <td>{{number_format($project->situation()->where('type','=',1)->sum('price'))}}</td>
+                    <td>{{number_format($project->situation()->where('type','=',2)->sum('price'))}}</td>
                     <td>{{$project->acceptance_date}}</td>
                     <td>{{$project->deadline}}</td>
-                    <td>{{$project->invoices()->sum('price')}}</td>
-                    <td>{{$project->collects()->where('type','=',2)->sum('price')}}</td>
-                    <td>{{$project->collects()->where('type','=',3)->sum('price')}}</td>
-                    <td>{{$project->invoices()->sum('price')-$project->collects()->where('type','=',3)->sum('price')-$project->collects()->where('type','=',2)->sum('price')}}</td>
-                    <td>{{$project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price')}}</td>
-                    <td>{{$project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price')}}</td>
+                    <td>{{number_format($project->invoices()->sum('price'))}}</td>
+                    <td>{{number_format($project->collects()->where('type','=',2)->sum('price'))}}</td>
+                    <td>{{number_format($project->collects()->where('type','=',3)->sum('price'))}}</td>
+                    <td>{{number_format($project->invoices()->sum('price')-$project->collects()->where('type','=',3)->sum('price')-$project->collects()->where('type','=',2)->sum('price'))}}</td>
+                    <td>{{number_format($project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'))}}</td>
+                    <td>{{number_format($project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price'))}}</td>
                 </tr>
                 @endforeach
                 </tbody>
