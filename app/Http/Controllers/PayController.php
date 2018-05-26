@@ -746,10 +746,10 @@ class PayController extends Controller
                     $list->unit = $item['unit'];
                     $list->price = $item['price'];
                     $list->total = $item['price']*$item['number'];
-                    $cost+=$list->total;
+                    $cost += $list->total;
                     $list->save();
                 }
-//                dd($cost);
+                dd($cost);
 
             }
             if ($cost!=$payment->price){
