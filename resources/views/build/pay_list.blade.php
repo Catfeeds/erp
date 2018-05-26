@@ -84,7 +84,7 @@
                     <td>{{$list->price}} ￥</td>
                     <td>{{$list->applies()->where('state','>=',3)->sum('apply_price')}} ￥</td>
                     <td>{{$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
-                    <td>{{$list->applies()->where('state','>=',3)->sum('apply_price')-$list->applies()->where('state','=',4)->sum('apply_price')}}￥</td>
+                    <td>{{$list->price-$list->applies()->where('state','=',4)->sum('apply_price')}}￥</td>
 {{--                    <td>{{$list->need_price==0?'已处理':'待处理'}}</td>--}}
                     <td style="white-space:nowrap;">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/single')}}?id={{$list->id}}')">查看</a>
