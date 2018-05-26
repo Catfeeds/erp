@@ -729,9 +729,10 @@ class PayController extends Controller
             $payment->applier_id = Auth::id();
             $payment->save();
             $cost = 0;
+            $lists = $post->get('lists');
             if (!empty($lists)){
                 $payment->lists()->delete();
-                dd($lists);
+//                dd($lists);
                 foreach ($lists as $item){
                     $list = new RequestPaymentList();
 
