@@ -747,13 +747,14 @@ class PayController extends Controller
                     $list->price = $item['price'];
                     $list->total = $item['price']*$item['number'];
                     $cost += $list->total;
+                    dd($cost);
                     $list->save();
                 }
 
 
             }
             if ($cost!=$payment->price){
-                dd($cost);
+//                dd($cost);
                 throw new \Exception('金额不等！');
             }
 //            $projectTeam = ProjectTeam::find($post->project_team);
