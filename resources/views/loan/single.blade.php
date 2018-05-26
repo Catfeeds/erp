@@ -37,7 +37,7 @@
 
             <tr>
                 <th>报销人</th>
-                <th class="fake-td">{{$loan->applier}}</th>
+                <th class="fake-td">{{$loan->loan_user}}</th>
                 <th>复核人</th>
                 <th class="fake-td">{{$loan->checker}}</th>
                 <th>审批人</th>

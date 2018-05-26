@@ -15,7 +15,7 @@
         </div>
 
         <input type="hidden" id="projectId" value="{{$projectTeam->id}}">
-        <input type="hidden" id="teamId" value="">
+        <input type="hidden" id="teamId" value="{{$pay->id}}">
 
         <h1 class="ui header blue aligned center">付款申请录入</h1>
         <div id="buildPayApply">

@@ -24,11 +24,11 @@
                 <th colspan="7">完工请款</th>
             </tr>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>施工队</th>
+                <th>施工经理</th>
+                <th>项目编号</th>
+                <th>项目内容</th>
+                <th>项目经理</th>
                 <th></th>
                 <th>已完工请款</th>
                 <th>请款编号</th>
@@ -41,12 +41,21 @@
             @if(!empty($payments))
             @for($i=0;$i<count($payments);$i++)
             <tr>
+                @if($i==0)
+                <th class="fake-td">{{$team->team}}</th>
+                <th class="fake-td">{{$team->manager}}</th>
+                <th class="fake-td">{{$team->project_number}}</th>
+                <th class="fake-td">{{$team->project_content}}</th>
+                <th class="fake-td">{{$team->project_manager}}</th>
                 <th class="fake-td"></th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
+                @else
+                    <th class="fake-td"></th>
+                    <th class="fake-td"></th>
+                    <th class="fake-td"></th>
+                    <th class="fake-td"></th>
+                    <th class="fake-td"></th>
+                    <th class="fake-td"></th>
+                    @endif
                 <th class="fake-td">{{$i+1}}</th>
                 <th class="fake-td">{{$payments[$i]->number}}</th>
                 <th class="fake-td">{{$payments[$i]->request_date}}</th>

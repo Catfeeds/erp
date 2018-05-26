@@ -15,6 +15,7 @@ use App\Models\Task;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class BuildController extends Controller
@@ -167,49 +168,62 @@ class BuildController extends Controller
     }
     public function finishBuildPayApply(Request $post)
     {
-        $id = Input::get('id');
-        if ($id){
-            $pay = BuildPayFinish::find($id);
-        }else{
-            $pay = new BuildPayFinish();
-            $pay->project_team = $post->get('project_id');
-            $count = BuildPayFinish::whereDate('created_at', date('Y-m-d',time()))->count();
-            $pay->number = 'SQFK'.date('Ymd',time()).sprintf("%03d", $count+1);
-            $projectTeam = ProjectTeam::find($pay->project_team);
-            $projectTeam->pay_price += $post->get('price');
-            $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
-            $projectTeam->save();
-        }
-        $pay->apply_date = $post->get('date');
-        $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price');
-        if ($price<$post->get('price')){
+        $id = Input::get('team_id');
+        DB::beginTransaction();
+        try{
+            if ($id){
+                $pay = BuildPayFinish::find($id);
+                $projectTeam = ProjectTeam::find($pay->project_team);
+            }else{
+                $pay = new BuildPayFinish();
+                $pay->project_team = $post->get('project_id');
+                $count = BuildPayFinish::whereDate('created_at', date('Y-m-d',time()))->count();
+                $pay->number = 'SQFK'.date('Ymd',time()).sprintf("%03d", $count+1);
+                $projectTeam = ProjectTeam::find($pay->project_team);
+                $projectTeam->pay_price += $post->get('price');
+                $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
+                $projectTeam->save();
+            }
+            $pay->apply_date = $post->get('date');
+            $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price');
+            if ($price<$post->get('price')){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'不能超过剩余应付帐款！'
+                ]);
+            }
+            $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',3)->sum('apply_price');
+            if ($price<$post->get('price')){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'不能超过请款金额！'
+                ]);
+            }
+            $pay->apply_price = $post->get('price');
+            $pay->payee = $post->get('payee');
+            $pay->bank = $post->get('bank');
+            $pay->account = $post->get('account');
+            $pay->worker = Auth::user()->username;
+            $pay->worker_id = Auth::id();
+            DB::commit();
+            if ($pay->save()){
+                return response()->json([
+                    'code'=>'200',
+                    'msg'=>'SUCCESS',
+                    'data'=>[
+                        'id'=>$pay->id
+                    ]
+                ]);
+            }
+        }catch (\Exception $exception){
+            DB::rollback();
+//            dd($exception);
             return response()->json([
                 'code'=>'400',
-                'msg'=>'不能超过剩余应付帐款！'
+                'msg'=>'数据出错！'
             ]);
         }
-        $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',3)->sum('apply_price');
-        if ($price<$post->get('price')){
-            return response()->json([
-                'code'=>'400',
-                'msg'=>'不能超过请款金额！'
-            ]);
-        }
-        $pay->apply_price = $post->get('price');
-        $pay->payee = $post->get('payee');
-        $pay->bank = $post->get('bank');
-        $pay->account = $post->get('account');
-        $pay->worker = Auth::user()->username;
-        $pay->worker_id = Auth::id();
-        if ($pay->save()){
-            return response()->json([
-                'code'=>'200',
-                'msg'=>'SUCCESS',
-                'data'=>[
-                    'id'=>$pay->id
-                ]
-            ]);
-        }
+
     }
     public function selectPayApplyChecker()
     {

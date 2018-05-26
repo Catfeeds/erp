@@ -116,7 +116,7 @@
             </table>
 
             <div class="flex-row flex-center margin-top-50" id="btnGroup">
-                @if($apply->state==1)
+                @if($apply->state<3)
                 <a class="ui icon button" href="{{url('build/finish/edit')}}?id={{$apply->id}}" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>修改</span>
@@ -127,14 +127,14 @@
                     </button>
                 @else
                     @endif
-                @if(checkRole('build_finish_check',$apply->id))
+                @if(checkRole('build_finish_check',$apply->id)&&$apply->state==2)
                 <button class="ui icon button primary" @click="recheckFnc"  style="margin:0 10px;">
                     <i class="icon legal"></i>
                     <span>复核</span>
                 </button>
                 @else
                     @endif
-                @if(checkRole('build_pay_pass',$apply->id))
+                @if(checkRole('build_finish_pass',$apply->id)&&$apply->state==3)
                 <a class="ui icon button primary"  @click="passFnc" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>审批</span>
