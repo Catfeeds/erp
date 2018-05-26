@@ -730,10 +730,11 @@ class PayController extends Controller
             $payment->save();
             $cost = 0;
             if (!empty($lists)){
-
                 $payment->lists()->delete();
+                dd($lists);
                 foreach ($lists as $item){
                     $list = new RequestPaymentList();
+
                     $list->payment_id = $payment->id;
                     $list->name = $item['name'];
                     if (isset($item['para'])){
@@ -747,7 +748,7 @@ class PayController extends Controller
                     $list->price = $item['price'];
                     $list->total = $item['price']*$item['number'];
                     $cost += $list->total;
-                    dd($cost);
+//                    dd($cost);
                     $list->save();
                 }
 
