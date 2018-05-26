@@ -551,9 +551,12 @@ class StockController extends Controller
         $id = Input::get('id');
         $purchase = Purchase::find($id);
         $lists = $purchase->lists()->get();
-        foreach ($lists as $list){
-            $list->material = Material::find($list->material_id);
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->material = Material::find($list->material_id);
+            }
         }
+
         $purchase->lists = $lists;
         if ($purchase->type==1){
             $checkRole = 'buy_bugetary_check';
@@ -594,7 +597,7 @@ class StockController extends Controller
     }
     public function addOutPage()
     {
-        $lists = Purchase::orderBy('id','DESC')->paginate(10);
+        $lists = Purchase::where('state','=',3)->orderBy('id','DESC')->paginate(10);
         foreach ($lists as $list){
             $list->lists = $list->lists()->get();
             $receivedPrice = 0;

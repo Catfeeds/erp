@@ -39,9 +39,9 @@
                 </tr>
                 <tr>
                     <th class="bg-white">采购金额</th>
-                    <th class="font-normal bg-white" colspan="4">{{$purchase->lists()->sum('cost')}} ￥</th>
+                    <th class="font-normal bg-white" colspan="4">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
                     <th class="bg-white">未收票</th>
-                    <th class="font-normal bg-white" colspan="4">{{$purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')}} ￥</th>
+                    <th class="font-normal bg-white" colspan="4">{{number_format($purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax'))}} ￥</th>
                 </tr>
                 <tr>
                     <th colspan="10">收票记录</th>
@@ -67,9 +67,9 @@
                     <td>{{$invoice->invoice_date}}</td>
                     <td>{{$invoice->number}}</td>
                     <td>{{\App\Models\Invoice::find($invoice->type)->name}}</td>
-                    <td>{{$invoice->without_tax}} ￥</td>
-                    <td>{{$invoice->tax}} ￥</td>
-                    <td>{{$invoice->with_tax}}￥</td>
+                    <td>{{number_format($invoice->without_tax)}} ￥</td>
+                    <td>{{number_format($invoice->tax)}} ￥</td>
+                    <td>{{number_format($invoice->with_tax)}}￥</td>
                     <td>{{\App\User::find($invoice->worker)->name}}</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/invoice')}}?id={{$invoice->id}}')" title="修改">修改</a>
@@ -80,9 +80,9 @@
                 <tfoot>
                 <tr>
                     <th colspan="5">合计</th>
-                    <th>{{$purchase->invoices()->sum('without_tax')}} ￥</th>
-                    <th>{{$purchase->invoices()->sum('tax')}} ￥</th>
-                    <th>{{$purchase->invoices()->sum('with_tax')}} ￥</th>
+                    <th>{{number_format($purchase->invoices()->sum('without_tax'))}} ￥</th>
+                    <th>{{number_format($purchase->invoices()->sum('tax'))}} ￥</th>
+                    <th>{{number_format($purchase->invoices()->sum('with_tax'))}} ￥</th>
                     <th></th>
                     <th></th>
                 </tr>

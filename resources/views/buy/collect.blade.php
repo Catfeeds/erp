@@ -109,9 +109,9 @@
                     <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->model}}</td>
                     <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->factory}}</td>
                     <td>{{\App\Models\Material::find($purchase->lists[$i]->material_id)->unit}}</td>
-                    <td>{{$purchase->lists[$i]->price}} ￥</td>
+                    <td>{{number_format($purchase->lists[$i]->price)}} ￥</td>
                     <td>{{$purchase->lists[$i]->number}}</td>
-                    <td>{{$purchase->lists[$i]->cost}} ￥</td>
+                    <td>{{number_format($purchase->lists[$i]->cost)}} ￥</td>
                     <td>{{$purchase->lists[$i]->warranty_date}}</td>
                         @endfor
                         @else
@@ -130,7 +130,7 @@
                 <tfoot>
                 <tr>
                     <th colspan="12">合计</th>
-                    <th>{{$purchase->lists()->sum('cost')}} ￥</th>
+                    <th>{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
                     <th></th>
                 </tr>
                 </tfoot>

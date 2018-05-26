@@ -78,14 +78,14 @@
                 <tr>
                     <td>{{$i+1}}</td>
                     <td>{{$lists[$i]->date}}</td>
-                    <td>{{$lists[$i]->price}} ￥</td>
+                    <td>{{number_format($lists[$i]->price)}} ￥</td>
                     <td>{{\App\User::find($lists[$i]->apply_id)->username}}</td>
                     <td>{{$lists[$i]->check==0?'':\App\User::find($lists[$i]->check)->name}}</td>
                     @if($lists[$i]->worker_id==0)
                     <td colspan="6">暂无数据</td>
                     @else
                         <td>{{$lists[$i]->pay_date}}</td>
-                        <td>{{$lists[$i]->pay_price}} ￥</td>
+                        <td>{{number_format($lists[$i]->pay_price)}} ￥</td>
                         <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->name}}</td>
                         <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->account}}</td>
                         <td class="table-content">{{$lists[$i]->remark}}</td>
@@ -113,11 +113,11 @@
                 <tfoot>
                 <tr>
                     <th colspan="2">合计</th>
-                    <th>{{$purchase->payments()->sum('price')}} ￥</th>
+                    <th>{{number_format($purchase->payments()->sum('price'))}} ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>{{$purchase->payments()->sum('pay_price')}}  ￥</th>
+                    <th>{{number_format($purchase->payments()->sum('pay_price'))}}  ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>

@@ -87,13 +87,13 @@
                         <a href="javascript:_helper.fullWindow('{{url('buy/list/invoice')}}?id={{$purchase->id}}')">{{$purchase->number}}</a>
                     </td>
                     <td>{{$purchase->supplier}}</td>
-                    <td>{{$purchase->lists()->sum('cost')}} ￥</td>
+                    <td>{{number_format($purchase->lists()->sum('cost'))}} ￥</td>
                     <td>{{\App\Models\Project::find($purchase->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($purchase->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($purchase->project_id)->pm}}</td>
                     <td>{{$purchase->content}}</td>
-                    <td>{{$purchase->invoices()->sum('with_tax')}} ￥</td>
-                    <td>{{$purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')}} ￥</td>
+                    <td>{{number_format($purchase->invoices()->sum('with_tax'))}} ￥</td>
+                    <td>{{number_format($purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax'))}} ￥</td>
                     <td>{{$purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')==0?'已':'未'}}结清</td>
                 </tr>
                 @endforeach

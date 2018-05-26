@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <th>采购金额</th>
-                <th colspan="3" class="font-normal bg-white">{{$purchase->lists()->sum('cost')}} ￥</th>
+                <th colspan="3" class="font-normal bg-white">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
             </tr>
             <tr>
                 <th>项目编号</th>
@@ -90,13 +90,13 @@
                     <td>{{$list->material->model}}</td>
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
-                    <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->price:0}} ￥</td>
+                    <td>{{$list->budget_id!=0?number_format(\App\Models\Budget::find($list->budget_id)->price):0}} ￥</td>
                     <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->number:0}}</td>
                     <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->buy_number:0}}</td>
                     <td>{{$list->budget_id!=0?\App\Models\Budget::find($list->budget_id)->need_buy:0}}</td>
                     <td>{{$list->number}}</td>
-                    <td>{{$list->price}} ￥</td>
-                    <td>{{$list->cost}} ￥</td>
+                    <td>{{number_format($list->price)}} ￥</td>
+                    <td>{{number_format($list->cost)}} ￥</td>
                     <td>{{$list->warranty_date}}</td>
                     <td>{{$list->warranty_time}} 天</td>
                 </tr>

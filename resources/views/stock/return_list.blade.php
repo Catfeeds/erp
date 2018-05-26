@@ -51,6 +51,7 @@
                 <tr>
                     <th>退料编号</th>
                     <th>物料名称</th>
+                    <th>性能与技术参数</th>
                     <th>型号</th>
                     <th>生产厂家</th>
                     <th>单位</th>
@@ -72,6 +73,7 @@
                         <a href="javascript:_helper.fullWindow('{{url('stock/return/print')}}?id={{$list->record->id}}')">{{$list->record->number}}</a>
                     </td>
                     <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
                     <td>{{$list->material->model}}</td>
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>

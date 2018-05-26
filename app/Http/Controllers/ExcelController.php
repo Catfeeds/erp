@@ -715,16 +715,17 @@ class ExcelController extends Controller
             $this->excel->selectSheetsByIndex(0)->load($file,function ($sheet) use (&$list){
                 $sheet->ignoreEmpty()->each(function ($data) use (&$list){
                     $origin = $data->toArray();
-                    dd($origin);
-                    $origin = array_values($origin);
+//                    dd($origin);
+//                    $origin = array_values($origin);
 //                    dd($origin);
                     $swap = [];
-                    $swap['name'] = isset($origin[0])?$origin[0]:'';
-                    $swap['param'] = isset($origin[1])?$origin[1]:'';
-                    $swap['unit'] = isset($origin[2])?$origin[2]:'';
-                    $swap['number'] = isset($origin[3])?$origin[3]:'';
-                    $swap['price'] = isset($origin[4])?$origin[4]:'';
-                    $swap['remark'] = isset($origin[5])?$origin[5]:'';
+                    $swap['name'] = isset($origin['设备名称'])?$origin['设备名称']:'';
+                    $swap['param'] = isset($origin['性能参数'])?$origin['性能参数']:'';
+                    $swap['unit'] = isset($origin['单位'])?$origin['单位']:'';
+                    $swap['number'] = isset($origin['数量'])?$origin['数量']:'';
+                    $swap['price'] = isset($origin['含税单价'])?$origin['含税单价']:0;
+                    $swap['remark'] = isset($origin['备注'])?$origin['备注']:'';
+//                    dd($swap);
                     array_push($list,$swap);
 //                    dd($origin);
                 });

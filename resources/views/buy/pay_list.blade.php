@@ -95,12 +95,12 @@
                         <a href="javascript:_helper.fullWindow('{{url('buy/payment/list')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{$list->lists()->sum('cost')}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'))}} ￥</td>
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{number_format($list->payments()->sum('pay_price'))}} ￥</td>
-                    <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'))}} ￥</td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已处理':'待处理'}}</td>
                 </tr>

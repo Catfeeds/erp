@@ -52,7 +52,9 @@
                     <th>领料编号</th>
                     <th>出库仓库</th>
                     <th>物料名称</th>
+                    <th>性能与技术参数</th>
                     <th>型号</th>
+                    <th>生产厂家</th>
                     <th>单位</th>
                     <th>库存均价</th>
                     <th>领料数量</th>
@@ -71,7 +73,9 @@
                     </td>
                     <td>{{$list->record->warehouse}}</td>
                     <td>{{$list->material->name}}</td>
+                    <td>{{$list->material->param}}</td>
                     <td>{{$list->material->model}}</td>
+                    <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
                     <td>{{$list->price}} ￥</td>
                     <td>{{$list->sum}}</td>
