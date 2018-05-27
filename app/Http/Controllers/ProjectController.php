@@ -46,12 +46,12 @@ class ProjectController extends Controller
         $name = Input::get('name');
         $DbObj = DB::table('projects');
         $type = Input::get('type');
-        $data = $DbObj->get();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS',
-            'data'=>$data
-        ]);
+//        $data = $DbObj->get();
+//        return response()->json([
+//            'code'=>'200',
+//            'msg'=>'SUCCESS',
+//            'data'=>$data
+//        ]);
         if ($type){
             $idArr = getRoleProject($type);
             $DbObj->whereIn('id',$idArr);
@@ -689,10 +689,13 @@ class ProjectController extends Controller
                 $list = new InvoiceList();
                 $list->invoice_id = $invoice->id;
                 $list->number = $item['number'];
-                $list->tax_include = $item['with_tax'];
+                $list->tax_include = $item['tax']+$item['without_tax'];
                 $list->tax_price = $item['tax'];
                 $list->tax_without = $item['without_tax'];
-                $list->remark = $item['remark'];
+                if (isset($item['remark'])){
+                    $list->remark = $item['remark'];
+                }
+
                 $list->save();
             }
         }
@@ -829,7 +832,7 @@ class ProjectController extends Controller
                         $list->price = $item['price'];
                         $list->number = $item['number'];
                         $list->need = $item['number'];
-                        $list->cost = $item['cost'];
+                        $list->cost = $item['number']*$item['price'];
                         $list->warranty_date = $item['warranty_date'];
                         $list->warranty_time = $item['warranty_time'];
                         $list->save();
@@ -956,7 +959,7 @@ class ProjectController extends Controller
             $project = null;
         }
         if (!empty($project)){
-            $purchases = $project->purchases()->get();
+            $purchases = $project->purchases()->where('state','=',3)->get();
             foreach ($purchases as $purchase){
                 if (!empty($purchase)){
                     $purchase->lists = $purchase->lists()->get();
@@ -992,13 +995,14 @@ class ProjectController extends Controller
     }
     public function searchPurchaseProject()
     {
-        $name = Input::get('search');
+        $name = Input::get('name');
         $idArr = Purchase::where('state','=',3)->pluck('id')->toArray();
         $db = Project::whereIn('id',$idArr);
         if ($name){
             $db->where('name','like','%'.$name.'%')
                 ->orWhere('number','like','%'.$name.'%');
         }
+//        dd($name);
         $data = $db->orderBy('id','DESC')->select(['name','number'])->get()->toArray();
         return response()->json([
             'code'=>'200',

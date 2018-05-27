@@ -353,6 +353,7 @@ class StockController extends Controller
             $recordPrice = 0;
             foreach ($lists as $list){
                 $swap = Stock::find($list['id']);
+//                dd($swap);
 //                $materail_id = $swap->material_id;
 
                 $price = $swap->cost/$swap->number;

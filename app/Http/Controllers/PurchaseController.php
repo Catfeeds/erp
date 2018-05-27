@@ -286,7 +286,7 @@ class PurchaseController extends Controller
                 $invoice->type = $list['type'];
                 $invoice->without_tax = $list['without_tax'];
                 $invoice->tax = $list['tax'];
-                $invoice->with_tax = $list['with_tax'];
+                $invoice->with_tax = $list['tax']+$list['without_tax'];
                 $invoice->worker = Auth::id();
                 $invoice->save();
             }

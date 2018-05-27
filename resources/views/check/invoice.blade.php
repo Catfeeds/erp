@@ -101,9 +101,9 @@
                 <div class="ui six column doubling stackable grid">
                     <div class="one wide column form-thead">序号</div>
                     <div class="three wide column form-thead">发票号码</div>
-                    <div class="two wide column form-thead">含税销售额</div>
+                    <div class="two wide column form-thead">不含税销售额</div>
                     <div class="three wide column form-thead">税额</div>
-                    <div class="three wide column form-thead">不含税销售额</div>
+                    <div class="three wide column form-thead">含税销售额</div>
                     <div class="three wide column form-thead">摘要</div>
                     <div class="one wide column form-thead">操作</div>
                 </div>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="two wide column">
                             <div class="block ui icon input">
-                                <input v-model.number="item.with_tax" type="number" placeholder="请输入含税销售额">
+                                <input v-model.number="item.without_tax" type="number" placeholder="请输入含税销售额">
                                 <i class="yen icon"></i>
                             </div>
                         </div>
@@ -129,7 +129,8 @@
                         </div>
                         <div class="three wide column">
                             <div class="block ui icon input">
-                                <input v-model.number="item.without_tax" type="number" placeholder="请输入不含税销售额">
+                                <div class="fake-input">@{{ ((item.tax || 0)+(item.without_tax || 0)).toLocaleString('en-US') }}</div>
+                                {{--<input v-model.number="item.with_tax" type="number" placeholder="请输入不含税销售额">--}}
                                 <i class="yen icon"></i>
                             </div>
                         </div>

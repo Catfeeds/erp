@@ -11,7 +11,25 @@
             <div class="divider"> / </div>
             <div class="active section">新增期间费用报销</div>
         </div>
-        <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
+        @if(!empty($submit))
+
+            <input type="hidden" id="id" value="{{$submit->id}}">
+            <input type="hidden" id="loanUser" value="{{$submit->loan_user}}">
+            <input type="hidden" id="date" value="{{$submit->date}}">
+            <input type="hidden" id="topAmount" value="{{$submit->price}}">
+            <div style="display: none;" id="lists">{{json_encode($lists)}}</div>
+            {{--<input type="hidden" id="loanUser" value="{{$submit->loan_user}}">--}}
+            {{--<input type="hidden" id="date" value="{{$submit->date}}">--}}
+            {{--<input type="hidden" id="topAmount" value="{{$submit->price}}">--}}
+            {{--<input type="hidden" id="projectId" value="{{$submit->project_id}}">--}}
+            {{--<input type="hidden" id="Id" value="{{$submit->id}}">--}}
+            {{--<input type="hidden" id="projectNumber" value="{{\App\Models\Project::find($submit->project_id)->number}}">--}}
+            {{--<input type="hidden" id="projectContent" value="{{\App\Models\Project::find($submit->project_id)->name}}">--}}
+            {{--<div style="display: none;" id="lists"></div>--}}
+        @else
+            <input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
+        @endif
+        {{--<input type="hidden" id="loanUser" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">--}}
         <h1 class="ui header blue aligned center">新增期间费用报销</h1>
         <div id="loanSubmitOther" class="invisible">
             <h4 class="ui dividing header blue">信息录入</h4>

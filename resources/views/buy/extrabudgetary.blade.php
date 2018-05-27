@@ -210,7 +210,8 @@
                             <input v-model.number="item.number" type="number" min="0" placeholder="数量">
                         </div>
                         <div class="one wide column">
-                            <input v-model.number="item.cost" type="number" placeholder="金额">
+                            {{--<input v-model.number="item.cost" type="number" placeholder="金额">--}}
+                            <div class="fake-input">@{{ ((item.price || 0)*(item.number || 0)).toLocaleString('en-US') }}</div>
                         </div>
                         <div class="two wide column">
                             <el-date-picker v-model="item.warranty_date" type="date" placeholder="截至日期" value-format="yyyy-MM-dd">

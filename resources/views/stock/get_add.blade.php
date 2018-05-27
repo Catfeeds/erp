@@ -16,23 +16,23 @@
         <div class="invisible" id="stockGetAdd">
             <h4 class="ui dividing header blue">基本信息</h4>
             <div class="ui form">
-                <div class="ui three column doubling stackable grid">
-                    <div class="column">
-                        <div class="inline fields">
-                            <label class="four wide field flex-center">采购形式</label>
-                            <div class="twelve wide field">
-                                <div class="ui radio checkbox" style="margin-right:30px;">
-                                    <input type="radio" name="system" value="1" @change="currentType=1" checked>
-                                    <label>项目采购</label>
-                                </div>
-                                <div class="ui radio checkbox">
-                                    <input type="radio" name="system" value="2" @change="currentType=2">
-                                    <label>统一采购</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="ui three column doubling stackable grid">--}}
+                    {{--<div class="column">--}}
+                        {{--<div class="inline fields">--}}
+                            {{--<label class="four wide field flex-center">采购形式</label>--}}
+                            {{--<div class="twelve wide field">--}}
+                                {{--<div class="ui radio checkbox" style="margin-right:30px;">--}}
+                                    {{--<input type="radio" name="system" value="1" @change="currentType=1" checked>--}}
+                                    {{--<label>项目采购</label>--}}
+                                {{--</div>--}}
+                                {{--<div class="ui radio checkbox">--}}
+                                    {{--<input type="radio" name="system" value="2" @change="currentType=2">--}}
+                                    {{--<label>统一采购</label>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="ui three column doubling stackable grid">
                     <template v-if="currentType == 1">
                         <div class="column">
@@ -180,32 +180,40 @@
             <h5 class="ui header right aligned">合计总额：@{{ sumAmount.toLocaleString('en-US') }} ￥</h5>
             <div class="ui form form-item">
                 <div class="ui five column doubling stackable grid font-size-13">
-                    <div class="two wide column form-thead">序号</div>
+                    <div class="one wide column form-thead">序号</div>
                     <div class="two wide column form-thead">物料名称</div>
+                    <div class="two wide column form-thead">性能与技术参数</div>
                     <div class="two wide column form-thead">品牌型号</div>
-                    <div class="two wide column form-thead">单位</div>
+                    <div class="one wide column form-thead">生产厂家</div>
+                    <div class="one wide column form-thead">单位</div>
                     <div class="one wide column form-thead">库存数量</div>
                     <div class="one wide column form-thead">库存均价</div>
                     <div class="two wide column form-thead">领料数量</div>
                     <div class="two wide column form-thead">领料金额</div>
-                    <div class="two wide column form-thead">操作</div>
+                    <div class="one wide column form-thead">操作</div>
                 </div>
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                     <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in stockGetAdd.lists" :key="item.id">
-                        <div class="two wide column">
+                        <div class="one wide column">
                             <div class="fake-input">@{{ index + 1}}</div>
                         </div>
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.material && item.material.name || '无'}}</div>
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.param || '无'}}</div>
                         </div>
                         <div class="two wide column">
+                            <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
+                        </div>
+                        <div class="one wide column">
+                            <div class="fake-input">@{{ item.material && item.material.factory || '无'}}</div>
+                        </div>
+                        <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item && item.stock_number  || '无'}}</div>
+                            <div class="fake-input">@{{ item && item.stock_number  || 0}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item && item.price.toLocaleString('en-US') + ' ￥' || '无'}}</div>
@@ -216,7 +224,7 @@
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.number?(item.number*item.price).toLocaleString('en-US'):0}} ￥</div>
                         </div>
-                        <div class="two wide column flex-row">
+                        <div class="one wide column flex-row">
                             <div class="fake-input">
                                 <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('lists', item, index)"></i>
                             </div>

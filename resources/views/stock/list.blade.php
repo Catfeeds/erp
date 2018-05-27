@@ -55,22 +55,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($stocks as $stock)
+                @for($i=0;$i<count($stocks);$i++)
+{{--                @foreach($stocks as $stock)--}}
                 <tr>
-                    <td>{{$stock->id}}</td>
+                    <td>{{$i+1}}</td>
                     <td>
-                        <a href="javascript:_helper.fullWindow('{{url('stock/check')}}?id={{$stock->id}}')">{{$stock->material()->name}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('stock/check')}}?id={{$stocks[$i]->id}}')">{{$stocks[$i]->material()->name}}</a>
                     </td>
-                    <td>{{$stock->material()->param}}</td>
-                    <td>{{$stock->material()->model}}</td>
-                    <td>{{$stock->material()->factory}}</td>
-                    <td>{{$stock->material()->unit}}</td>
-                    <td>{{$stock->number}} </td>
-                    <td>{{number_format($stock->cost)}}￥</td>
-                    <td>{{$stock->number==0?0:number_format($stock->cost/$stock->number)}} ￥</td>
-                    <td>{{$stock->warehouse()->name}}</td>
+                    <td>{{$stocks[$i]->material()->param}}</td>
+                    <td>{{$stocks[$i]->material()->model}}</td>
+                    <td>{{$stocks[$i]->material()->factory}}</td>
+                    <td>{{$stocks[$i]->material()->unit}}</td>
+                    <td>{{$stocks[$i]->number}} </td>
+                    <td>{{number_format($stocks[$i]->cost)}}￥</td>
+                    <td>{{$stocks[$i]->number==0?0:number_format($stocks[$i]->cost/$stocks[$i]->number)}} ￥</td>
+                    <td>{{$stocks[$i]->warehouse()->name}}</td>
                 </tr>
-                @endforeach
+                {{--@endforeach--}}
+                    @endfor
                 </tbody>
             </table>
         </div>

@@ -382,6 +382,7 @@ class PayController extends Controller
         $lists = $post->get('lists');
         if ($id){
             $loan = LoanSubmit::find($id);
+            $loan->lists()->delete();
         }else{
             $loan = new LoanSubmit();
             $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
@@ -821,6 +822,16 @@ class PayController extends Controller
     }
     public function createSubmitOtherPage()
     {
+        $id = Input::get('id');
+        if ($id){
+            $submit = LoanSubmit::find($id);
+            $lists = $submit->lists()->get();
+            foreach ($lists as $list){
+                $list->type = Category::find($list->category_id)->title;
+                $list->detailType = Detail::find($list->kind_id)->title;
+            }
+            return view('loan.submit_other',['submit'=>$submit,'lists'=>$lists]);
+        }
         return view('loan.submit_other');
     }
     public function createSubmitProjectPage()
@@ -877,20 +888,21 @@ class PayController extends Controller
         $name = Input::get('name');
         if ($role=='all'){
             if ($name){
-                $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->where('borrower','=',$name)->groupBy('name')->get()->toArray();
-                $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->where('loan_user','=',$name)->groupBy('name')->get()->toArray();
+                $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->where('borrower','like','%'.$name.'%')->groupBy('name')->get()->toArray();
+                $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->where('loan_user','like','%'.$name.'%')->groupBy('name')->get()->toArray();
             }else{
                 $list = LoanList::select(['borrower as name','price'])->where('state','=',2)->groupBy('name')->get()->toArray();
                 $list2 = LoanSubmit::select(['loan_user as name','price'])->where('state','=',3)->groupBy('name')->get()->toArray();
             }
             $swap = array_merge(array_column($list,'name'),array_column($list2,'name'));
             $swap = array_unique($swap);
+            $swap = array_merge($swap);
         }else{
             $swap = [Auth::user()->username];
 //            dd($swap);
         }
 //        dd($list2);
-
+//        dd($swap);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

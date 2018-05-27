@@ -107,7 +107,7 @@
                             <label class="six wide field flex-center">仓库</label>
                             <div class="eleven wide field">
                                 <div class="fake-input" v-if="stockBuyAdd.projectId">@{{ stockBuyAdd.projectId }}</div>
-                                <el-autocomplete v-else popper-class="my-autocomplete" v-model="stockBuyAdd.warehouse_name" :fetch-suggestions="querySearch" placeholder="请输入项目内容"
+                                <el-autocomplete v-else popper-class="my-autocomplete" v-model="stockBuyAdd.warehouse_name" :fetch-suggestions="querySearch" placeholder="请输入仓库"
                                                  @select="handleSelect">
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>

@@ -747,6 +747,7 @@ class ExcelController extends Controller
     }
     public function importBudget(Request $post)
     {
+//        dd($post);
 //        return redirect()->back()->with('status','dadf');
         $project_id = $post->project_id;
         $file = $post->file('file');
@@ -762,53 +763,58 @@ class ExcelController extends Controller
 
                     $sheet->ignoreEmpty()->each(function ($data) use ($project_id){
                         $origin = $data->toArray();
-                        $origin = array_values($origin);
+                        var_dump($origin);
+//                        dd($origin);
+//                        $origin = array_values($origin);
 //                        dd($origin);
                         if (!empty($origin)){
-                            $budget = new Budget();
-                            $budget->project_id = $project_id;
-                            if ($origin[8]=='物料') {
-                                $material = Material::where('state','=',1)->
-                                    where('name','=',$origin[0])->where('param','=',$origin[1])->
-                                    where('model','=',$origin[2])->where('factory','=',$origin[3])
-                                    ->where('unit','=',$origin['4'])->first();
-                                if (empty($material)){
-                                    $material = new Material();
-                                    $material->name = $origin[0];
-                                    $material->param = $origin[1];
-                                    $material->model = $origin[2];
-                                    $material->factory = $origin[3];
-                                    $material->unit = $origin[4];
-                                    $material->save();
-                                }
-                                $budget->material_id = $material->id;
-                                $budget->name = $material->name;
-                                $budget->param = $material->param;
-                                $budget->model = $material->model;
-                                $budget->factory = $material->factory;
-                                $budget->unit = $material->unit;
-                                $budget->type = 1;
+                            if ($origin['物料名称']){
+                                $budget = new Budget();
+                                $budget->project_id = $project_id;
+                                if ($origin['物料工程其他']=='物料') {
+                                    $material = Material::where('state','=',1)->
+                                    where('name','=',$origin['物料名称'])->where('param','=',$origin['性能及技术参数'])->
+                                    where('model','=',$origin['品牌型号'])->where('factory','=',$origin['生产厂家'])
+                                        ->where('unit','=',$origin['单位'])->first();
+                                    if (empty($material)){
+                                        $material = new Material();
+                                        $material->name = $origin['物料名称'];
+                                        $material->param = $origin['性能及技术参数'];
+                                        $material->model = $origin['品牌型号'];
+                                        $material->factory = $origin['生产厂家'];
+                                        $material->unit = $origin['单位'];
+                                        $material->save();
+                                    }
+                                    $budget->material_id = $material->id;
+                                    $budget->name = $material->name;
+                                    $budget->param = $material->param;
+                                    $budget->model = $material->model;
+                                    $budget->factory = $material->factory;
+                                    $budget->unit = $material->unit;
+                                    $budget->type = 1;
 //                                dd($origin);
-                            }elseif($origin[8]=='工程'){
-                                $budget->name = empty($origin[0])?'无':(string)$origin[0];
-                                $budget->param = empty($origin[1])?'无':(string)$origin[1];
-                                $budget->model = empty($origin[2])?'无':(string)$origin[2];
-                                $budget->factory = empty($origin[3])?'无':(string)$origin[3];
-                                $budget->unit = empty($origin[4])?'无':(string)$origin[4];
-                                $budget->type = 2;
-                            }else{
-                                $budget->name = empty($origin[0])?'无':(string)$origin[0];
-                                $budget->param = empty($origin[1])?'无':(string)$origin[1];
-                                $budget->model = empty($origin[2])?'无':(string)$origin[2];
-                                $budget->factory = empty($origin[3])?'无':(string)$origin[3];
-                                $budget->unit = empty($origin[4])?'无':(string)$origin[4];
-                                $budget->type = 3;
+                                }elseif($origin['物料工程其他']=='工程'){
+                                    $budget->name = empty($origin['物料名称'])?'无':(string)$origin['物料名称'];
+                                    $budget->param = empty($origin['性能及技术参数'])?'无':(string)$origin['性能及技术参数'];
+                                    $budget->model = empty($origin['品牌型号'])?'无':(string)$origin['品牌型号'];
+                                    $budget->factory = empty($origin['生产厂家'])?'无':(string)$origin['生产厂家'];
+                                    $budget->unit = empty($origin['单位'])?'无':(string)$origin['单位'];
+                                    $budget->type = 2;
+                                }else{
+                                    $budget->name = empty($origin['物料名称'])?'无':(string)$origin['物料名称'];
+                                    $budget->param = empty($origin['性能及技术参数'])?'无':(string)$origin['性能及技术参数'];
+                                    $budget->model = empty($origin['品牌型号'])?'无':(string)$origin['品牌型号'];
+                                    $budget->factory = empty($origin['生产厂家'])?'无':(string)$origin['生产厂家'];
+                                    $budget->unit = empty($origin['单位'])?'无':(string)$origin['单位'];
+                                    $budget->type = 3;
+                                }
+                                $budget->price = $origin['单价'];
+                                $budget->number = $origin['数量'];
+                                $budget->need_buy = $origin['数量'];
+                                $budget->cost = $origin['金额'];
+                                $budget->save();
                             }
-                            $budget->price = $origin[5];
-                            $budget->number = $origin[6];
-                            $budget->need_buy = $origin[6];
-                            $budget->cost = $origin[7];
-                            $budget->save();
+
                         }
 
 //                   var_dump($origin);
@@ -1051,11 +1057,11 @@ class ExcelController extends Controller
         $data = [];
         if ($role=='any'){
             $idArr = getRoleProject('stock_buy_list');
-            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
         }else{
-            $lists = $db->orderBy('id','DESC')->paginate(10);
+            $lists = $db->orderBy('id','DESC')->get();
         }
-        if (empty($lists)){
+        if (!empty($lists)){
             foreach ($lists as $list){
                 $swap = [];
                 $project = Project::find($list->project_id);
@@ -1072,7 +1078,7 @@ class ExcelController extends Controller
             }
         }
         $tr = [[
-            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理	','已收货','未收货','系统状态'
+            '采购编号','供货商','采购金额','项目编号','项目内容','项目经理','已收货','未收货','系统状态'
         ]];
         $data = array_merge($tr,$data);
 //        dd($data);

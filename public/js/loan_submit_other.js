@@ -30,6 +30,7 @@
           }
         },
         mounted() {
+          this.submitOtherForm.id = $('#id').val() || ''
           this.submitOtherForm.price = $('#topAmount').val()
           this.submitOtherForm.date = $('#date').val() || _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           this.submitOtherForm.loan_user = $('#loanUser').val()
@@ -120,6 +121,7 @@
 
           formatData(data) {
             let result = {
+              id: data.id,
               loan_user: data.loan_user,
               date: data.date,
               price: data.price,

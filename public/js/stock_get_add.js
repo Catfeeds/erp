@@ -200,6 +200,7 @@
               material: this.currentMaterial.material,
               price: this.currentMaterial.price,
               material_id: this.currentMaterial.id,
+                stock_number:this.currentMaterial.number,
               number: 0
             }
             this.stockGetAdd.lists.push(data)
