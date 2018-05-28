@@ -184,10 +184,10 @@
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                     <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in budgetary_buy.lists" :key="item.own_id">
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material && item.material.name || '无'}}</div>
+                            <div class="fake-input">@{{ item.material.material && item.material.material.name || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
+                            <div class="fake-input">@{{ item.material.material && item.material.material.model || '无'}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.price.toLocaleString('en-US') || '无'}} ￥</div>
