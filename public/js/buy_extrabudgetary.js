@@ -62,7 +62,8 @@
             clearTimeout(this.throttle.id_timer)
             this.throttle.id_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                id: queryString,
+                type:'buy_extrabugetary_edit'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -95,7 +96,8 @@
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                name: queryString,
+                  type:'buy_extrabugetary_edit'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {

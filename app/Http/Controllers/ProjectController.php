@@ -53,15 +53,26 @@ class ProjectController extends Controller
 //            'data'=>$data
 //        ]);
         if ($type){
-            $idArr = getRoleProject($type);
-            $DbObj->whereIn('id',$idArr);
-            if ($number){
-                $DbObj->where('number','like','%'.$number.'%');
+            if ($type=='buy_budgetary_edit'||$type==''||$type==''){
+                if ($number){
+                    $DbObj->where('number','like','%'.$number.'%');
+                }
+                if ($name){
+                    $DbObj->where('name','like','%'.$name.'%');
+                }
+                $data = $DbObj->get();
+            }else{
+                $idArr = getRoleProject($type);
+                $DbObj->whereIn('id',$idArr);
+                if ($number){
+                    $DbObj->where('number','like','%'.$number.'%');
+                }
+                if ($name){
+                    $DbObj->where('name','like','%'.$name.'%');
+                }
+                $data = $DbObj->get();
             }
-            if ($name){
-                $DbObj->where('name','like','%'.$name.'%');
-            }
-            $data = $DbObj->get();
+
         }else{
             $data = [];
         }
