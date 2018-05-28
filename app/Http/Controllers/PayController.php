@@ -341,7 +341,8 @@ class PayController extends Controller
 //        dd($list2);
         $swap = array_merge(array_column($list,'name'),array_column($list2,'name'));
         $swap = array_unique($swap);
-        dd($swap);
+        $swap = array_merge($swap);
+//        dd($swap);
         $result = [];
         for ($i=0;$i<count($swap);$i++){
             $result[$i]['name'] = $swap[$i];
