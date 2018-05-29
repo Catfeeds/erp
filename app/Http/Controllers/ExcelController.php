@@ -343,7 +343,7 @@ class ExcelController extends Controller
                 $swap['unit'] = $material->unit;
                 $swap['number'] = $stock[$i]->number;
                 $swap['cost'] = $stock[$i]->cost;
-                $swap['price'] = sprintf('%.2f',$stock[$i]->cost/$stock[$i]->number);
+                $swap['price'] = $stock[$i]->number==0?0:sprintf('%.2f',$stock[$i]->cost/$stock[$i]->number);
                 $swap['warehouse'] = $warehouse->name;
                 $data[$i] = $swap;
             }
