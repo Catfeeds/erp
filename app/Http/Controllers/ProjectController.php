@@ -1061,7 +1061,7 @@ class ProjectController extends Controller
     }
     public function createExtraBudgetaryPage()
     {
-        $invoice = Invoice::all();
+        $invoice = Invoice::where('state','=',1)->get();
         return view('buy.extrabudgetary',['invoice'=>$invoice]);
     }
     public function showProjectsAuth()
