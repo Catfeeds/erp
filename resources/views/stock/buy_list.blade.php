@@ -84,9 +84,9 @@
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>{{$list->lists()->pluck('price')->first() * $list->lists()->sum('received')}} ￥</td>
-                    <td>{{$list->lists()->pluck('price')->first() * $list->lists()->sum('need')}} ￥</td>
-                    <td>{{$list->lists()->sum('need')==0?'已结清':'未结清'}}</td>
+                    <td>{{$list->received}} ￥</td>
+                    <td>{{$list->need}} ￥</td>
+                    <td>{{$list->need==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach
                 </tbody>

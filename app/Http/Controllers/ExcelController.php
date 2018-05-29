@@ -1063,6 +1063,13 @@ class ExcelController extends Controller
         }
         if (!empty($lists)){
             foreach ($lists as $list){
+                $received = 0;
+                $need = 0;
+                $swap = $list->lists()->get();
+                for ($i=0;$i<count($swap);$i++){
+                    $received += $swap[$i]->price * $swap[$i]->received;
+                    $need += $swap[$i]->price * $swap[$i]->need;
+                }
                 $swap = [];
                 $project = Project::find($list->project_id);
                 $swap['number'] = $list->number;
@@ -1071,9 +1078,9 @@ class ExcelController extends Controller
                 $swap['project_number'] = $project->number;
                 $swap['project_content'] = $project->name;
                 $swap['project_manager'] = $project->pm;
-                $swap['receive'] = $list->lists()->pluck('price')->first() * $list->lists()->sum('received');
-                $swap['need'] = $list->lists()->pluck('price')->first() * $list->lists()->sum('need');
-                $swap['state'] = $list->lists()->sum('need')==0?'已结清':'未结清';
+                $swap['receive'] = $received;
+                $swap['need'] = $need;
+                $swap['state'] = $need==0?'已结清':'未结清';
                 array_push($data,$swap);
             }
         }

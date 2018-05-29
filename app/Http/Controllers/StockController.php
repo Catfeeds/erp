@@ -65,6 +65,19 @@ class StockController extends Controller
         }else{
             $lists = $db->orderBy('id','DESC')->paginate(10);
         }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $received = 0;
+                $need = 0;
+                $swap = $list->lists()->get();
+                for ($i=0;$i<count($swap);$i++){
+                    $received += $swap[$i]->price * $swap[$i]->received;
+                    $need += $swap[$i]->price * $swap[$i]->need;
+                }
+                $list->received = $received;
+                $list->need = $need;
+            }
+        }
         return view('stock.buy_list',['lists'=>$lists]);
     }
     public function listReturnList()
