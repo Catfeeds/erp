@@ -116,7 +116,7 @@
             </table>
 
             <div class="flex-row flex-center margin-top-50" id="btnGroup">
-                @if($apply->state<3)
+                @if($apply->state<=3)
                 <a class="ui icon button" href="{{url('build/finish/edit')}}?id={{$apply->id}}" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>修改</span>

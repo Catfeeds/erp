@@ -236,7 +236,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('finish/add','PayController@addRequestPayment');
     Route::get('build/finish/list','BuildController@listFinishPage')->middleware('role:build_finish_list');
     Route::get('build/finish/create','BuildController@createFinishPage')->middleware('role:build_finish_edit');
-//    Route::get('build/pay/list','BuildController@listPayPage');
+    Route::get('build/pay/list','BuildController@listPayPage');
     Route::get('build/get/list','BuildController@listGetPage');
     Route::get('build/finish/single','BuildController@finishSinglePage');
     Route::get('build/finish/print','BuildController@printBuildFinish');

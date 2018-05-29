@@ -46,14 +46,14 @@ class ProjectController extends Controller
         $name = Input::get('name');
         $DbObj = DB::table('projects');
         $type = Input::get('type');
-        $data = $DbObj->get();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS',
-            'data'=>$data
-        ]);
+//        $data = $DbObj->get();
+//        return response()->json([
+//            'code'=>'200',
+//            'msg'=>'SUCCESS',
+//            'data'=>$data
+//        ]);
         if ($type){
-            if ($type=='buy_budgetary_edit'||$type==''||$type==''){
+            if ($type=='buy_budgetary_edit'||$type=='buy_extrabugetary_edit'||$type=='build_finish_list'){
                 if ($number){
                     $DbObj->where('number','like','%'.$number.'%');
                 }
