@@ -900,9 +900,9 @@ class ExcelController extends Controller
                 $swap['number'] = $item->number;
                 $swap['supplier'] = $item->supplier;
                 $swap['cost'] = $item->lists()->sum('cost');
-                $swap['project_number'] = $project->number;
-                $swap['project_content'] = $project->name;
-                $swap['project_manager'] = $project->pm;
+                $swap['project_number'] = $project?$project->number:'';
+                $swap['project_content'] = $project?$project->name:'';
+                $swap['project_manager'] = $project?$project->pm:'';
                 $swap['type'] = $item->type==1?'内':'外';
                 $swap['buy'] = $item->lists()->sum('received');
                 $swap['need'] = $item->lists()->sum('need');

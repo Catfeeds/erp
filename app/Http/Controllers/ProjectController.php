@@ -686,34 +686,49 @@ class ProjectController extends Controller
     }
     public function createInvoice(Request $post)
     {
-        $project_id = $post->get('project_id');
-        $lists = $post->get('lists');
-        $invoice = new ProjectInvoice();
-        $swap = Invoice::find($post->get('rate'));
-        $invoice->project_id = $project_id;
-        $invoice->unit = $post->get('payee');
-        $invoice->date = $post->get('date');
-        $invoice->rate = $swap->rate;
-        $invoice->price = $post->get('price');
-        if ($invoice->save()){
-            foreach ($lists as $item){
-                $list = new InvoiceList();
-                $list->invoice_id = $invoice->id;
-                $list->number = $item['number'];
-                $list->tax_include = $item['tax']+$item['without_tax'];
-                $list->tax_price = $item['tax'];
-                $list->tax_without = $item['without_tax'];
-                if (isset($item['remark'])){
-                    $list->remark = $item['remark'];
+        DB::beginTransaction();
+        try{
+            $project_id = $post->get('project_id');
+            $lists = $post->get('lists');
+            $invoice = new ProjectInvoice();
+            $swap = Invoice::find($post->get('rate'));
+            $invoice->project_id = $project_id;
+            $invoice->unit = $post->get('payee');
+            $invoice->date = $post->get('date');
+            $invoice->rate = $swap->rate;
+            $invoice->price = $post->get('price');
+            if ($invoice->save()){
+                $price = 0;
+                foreach ($lists as $item){
+                    $list = new InvoiceList();
+                    $list->invoice_id = $invoice->id;
+                    $list->number = $item['number'];
+                    $list->tax_include = $item['tax']+$item['without_tax'];
+                    $list->tax_price = $item['tax'];
+                    $list->tax_without = $item['without_tax'];
+                    if (isset($item['remark'])){
+                        $list->remark = $item['remark'];
+                    }
+                    $list->save();
+                    $price+=$list->tax_include;
                 }
-
-                $list->save();
             }
+            if ($price!=$invoice->price){
+                throw new \Exception('金额不等！');
+            }
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }catch (\Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
         }
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
+
     }
     public function createCollect(Request $post)
     {
@@ -801,14 +816,15 @@ class ProjectController extends Controller
     }
     public function createPurchase(Request $post)
     {
-        $project_id = $post->get('project_id');
+        $project_id = $post->get('project_id',0);
+//        dd($project_id);
         $basic = $post->get('info');
         $lists = $post->get('lists');
         $contracts = $post->get('contracts');
         DB::beginTransaction();
         try{
             $purchase = new Purchase();
-            $purchase->project_id = $project_id;
+            $purchase->project_id = $project_id?$project_id:0;
             $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
             $purchase->number = 'CG'.date('Ymd',time()).sprintf("%03d", $count+1);
             $supplier = Supplier::find($basic['supplier_id']);

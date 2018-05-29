@@ -43,11 +43,11 @@
             </tr>
             <tr>
                 <th>项目编号</th>
-                <th colspan="3" class="font-normal bg-white">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                <th colspan="3" class="font-normal bg-white">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
             </tr>
             <tr>
                 <th>项目内容</th>
-                <th colspan="3" class="font-normal bg-white">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                <th colspan="3" class="font-normal bg-white">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
             </tr>
             <tr>
                 <th>发票条件</th>

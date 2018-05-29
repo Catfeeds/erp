@@ -129,9 +129,9 @@
                     </td>
                     <td>{{$list->supplier}}</td>
                     <td>{{number_format($list->lists()->sum('cost'))}} ￥</td>
-                    <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
-                    <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
-                    <td>{{\App\Models\Project::find($list->project_id)->pm}}</td>
+                    <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
+                    <td class="table-content">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{$list->type==1?'内':'外'}}</td>
                     <td>{{$list->lists()->sum('received')}}</td>
                     <td>{{$list->lists()->sum('need')}}</td>
