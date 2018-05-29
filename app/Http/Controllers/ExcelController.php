@@ -328,7 +328,7 @@ class ExcelController extends Controller
     }
     public function exportStockList()
     {
-        $stock = Stock::all();
+        $stock = Stock::orderBy('cost','DESC')->get();
         $tr = [['物料名称','性能与技术参数','品牌型号','生产厂家','单位','库存数量','库存金额','平均单价','仓库']];
         $data = [];
         if (!empty($stock)){
