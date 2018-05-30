@@ -264,6 +264,7 @@ class PurchaseController extends Controller
         $payment->worker = Auth::user()->name;
         $payment->worker_id = Auth::id();
         $payment->remark = $post->get('remark');
+        $payment->state = 3;
         if ($payment->save()){
             return response()->json([
                 'code'=>'200',
