@@ -42,7 +42,8 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                } else {
+                  location.reload();
+              } else {
                   this.$notify({
                     title: '错误',
                     message: res.data.msg,
