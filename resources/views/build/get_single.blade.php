@@ -24,7 +24,7 @@
                     <th>项目经理</th>
                     <th class="fake-td">{{$projectTeam->project_manager}}</th>
                     <th>完工请款金额</th>
-                    <th class="fake-td" colspan="2">{{$projectTeam->price}} ￥</th>
+                    <th class="fake-td" colspan="2">{{$projectTeam->payments()->where('state','>=',3)->sum('price')}} ￥</th>
                 </tr>
                 <tr>
                     <th>项目编号</th>
@@ -32,7 +32,7 @@
                     <th>项目内容</th>
                     <th colspan="4" class="fake-td">{{$projectTeam->project_content}}</th>
                     <th>已付款金额</th>
-                    <th class="fake-td" colspan="2">{{$projectTeam->pay_price}} ￥</th>
+                    <th class="fake-td" colspan="2">{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')}} ￥</th>
                 </tr>
                 <tr>
                     <th colspan="10">收票记录</th>
@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <th colspan="8">未收票金额</th>
-                    <th>{{$projectTeam->pay_price-$projectTeam->invoices()->sum('with_tax')}}￥</th>
+                    <th>{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')-$projectTeam->invoices()->sum('with_tax')}}￥</th>
                     <th></th>
                 </tr>
                 </tfoot>
