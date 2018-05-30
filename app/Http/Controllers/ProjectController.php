@@ -61,7 +61,7 @@ class ProjectController extends Controller
                 if ($name){
                     $DbObj->where('name','like','%'.$name.'%');
                 }
-                $data = $DbObj->get();
+                $data = $DbObj->orderBy('id','DESC')->get();
             }else{
                 $idArr = getRoleProject($type);
                 $DbObj->whereIn('id',$idArr);
@@ -71,7 +71,7 @@ class ProjectController extends Controller
                 if ($name){
                     $DbObj->where('name','like','%'.$name.'%');
                 }
-                $data = $DbObj->get();
+                $data = $DbObj->orderBy('id','DESC')->get();
             }
 
         }else{
