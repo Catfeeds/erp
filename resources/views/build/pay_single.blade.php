@@ -122,6 +122,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                @if(!empty($applies))
                 @foreach($applies as $apply)
                 <tr>
                     <td>{{$apply->number}}</td>
@@ -163,6 +164,7 @@
                 </tr>
 
                     @endforeach
+                    @endif
                 </tbody>
                 <tfoot>
                 <tr>
