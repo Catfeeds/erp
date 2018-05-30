@@ -964,7 +964,7 @@ class ProjectController extends Controller
         }
         if(!empty($lists)){
             foreach ($lists as $list){
-                $count = $list->payments()->where('state','=',1)->count();
+                $count = $list->payments()->where('state','=',2)->count();
                 $list->count = $count;
             }
         }
