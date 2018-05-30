@@ -1105,6 +1105,7 @@ class ProjectController extends Controller
     }
     public function createProjectAuthPage()
     {
+//        dd(Input::all());
         $id = Input::get('user_id');
         $project_id = Input::get('project_id');
         $type = Input::get('type');
@@ -1123,11 +1124,17 @@ class ProjectController extends Controller
                 $role->start = $project->createTime;
                 $role->end = $project->finishTime;
             }elseif($type==2){
+                if (empty($project->deadline)){
+                    return redirect()->back()->with('status','请先设置保修截至日期!');
+                }
                 $role->start = strtotime($project->acceptance_date);
                 $role->end = strtotime($project->deadline);
             }else{
+                if (empty($project->deadline)){
+                    return redirect()->back()->with('status','请先设置保修截至日期!');
+                }
                 $role->start = strtotime($project->deadline);
-                $role->end = strtotime('2050-12-28');
+                $role->end = strtotime($project->deadline)+63158400;
             }
             $role->save();
         }
@@ -1136,6 +1143,7 @@ class ProjectController extends Controller
     public function createProjectAuth(Request $post)
     {
         $data = $post->all();
+//        dd($data);
         $project_id = $data['project_id'];
         $type = $data['type'];
         $user_id = $data['user_id'];

@@ -71,7 +71,7 @@
 
         <!-- 第一项 -->
         <h4 class="ui dividing header blue">立项日期
-            <span style="margin: 0 30px;">至预计完工日期</span> 权限设置情况</h4>
+            <span style="margin: 0 30px;">{{date('Y-m-d',$project->createTime)}}至预计完工日期{{$project->acceptance_date}}</span> 权限设置情况</h4>
         <div style="text-align: right;">
             <button class="ui button positive auth-add" data-type="1">新增人员</button>
         </div>
@@ -100,7 +100,7 @@
 
         <!-- 第二项 -->
         <h4 class="ui dividing header blue">验收日期
-            <span style="margin: 0 30px;">至保修截止日期</span> 权限设置情况</h4>
+            <span style="margin: 0 30px;">{{$project->acceptance_date}}至保修截止日期{{$project->deadline}}</span> 权限设置情况</h4>
         <div style="text-align: right;">
             <button class="ui button positive auth-add" data-type="2">新增人员</button>
         </div>
@@ -129,7 +129,7 @@
         @if($project->state==2)
         <!-- 第三项 -->
         <h4 class="ui dividing header blue">保修截止日期
-            <span style="margin: 0 30px;">至</span> 权限设置情况</h4>
+            <span style="margin: 0 30px;">{{$project->deadline}}至{{date('Y-m-d',strtotime($project->deadline)+63158400)}}</span> 权限设置情况</h4>
         <div style="text-align: right;">
             <button class="ui button positive auth-add" data-type="3">新增人员</button>
         </div>
