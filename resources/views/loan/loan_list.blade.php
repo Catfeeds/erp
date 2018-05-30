@@ -38,7 +38,7 @@
                 <tbody>
                 @for($i=0;$i<count($lists);$i++)
                 {{--@foreach($lists as $list)--}}
-                <tr data-id="{{$i+1}}">
+                <tr data-id="{{$lists[$i]->id}}">
                     <td>{{$lists[$i]->number}}</td>
                     <td>{{$lists[$i]->price}}￥</td>
                     <td style="max-width:300px">{{$lists[$i]->reason}}</td>
