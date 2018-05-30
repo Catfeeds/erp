@@ -369,7 +369,7 @@ class PayController extends Controller
     }
     public function listLoanListPage()
     {
-        $lists = LoanList::paginate(10);
+        $lists = LoanList::orderBy('id','DESC')->paginate(10);
         return view('loan.loan_list',['lists'=>$lists]);
     }
     public function showLoanPay()

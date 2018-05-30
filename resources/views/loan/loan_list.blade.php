@@ -36,48 +36,50 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lists as $list)
-                <tr data-id="{{$list->id}}">
-                    <td>{{$list->number}}</td>
-                    <td>{{$list->price}}￥</td>
-                    <td style="max-width:300px">{{$list->reason}}</td>
-                    <td>{{$list->borrower}}</td>
-                    @if($list->approver_id==0)
+                @for($i=0;$i<count($lists);$i++)
+                {{--@foreach($lists as $list)--}}
+                <tr data-id="{{$i+1}}">
+                    <td>{{$lists[$i]->number}}</td>
+                    <td>{{$lists[$i]->price}}￥</td>
+                    <td style="max-width:300px">{{$lists[$i]->reason}}</td>
+                    <td>{{$lists[$i]->borrower}}</td>
+                    @if($lists[$i]->approver_id==0)
                     <td>未审批</td>
                     @else
-                        <td>{{\App\User::find($list->approver_id)->name}}</td>
+                        <td>{{\App\User::find($lists[$i]->approver_id)->name}}</td>
                     @endif
-                    @if(empty($list->pay_date))
+                    @if(empty($lists[$i]->pay_date))
                     <td colspan="4">暂无数据</td>
                     @else
-                        <td>{{$list->pay_date}}</td>
-                        <td>{{$list->pay_type==1?'现金':'转账'}}</td>
-                    @if($list->pay_type==1)
+                        <td>{{$lists[$i]->pay_date}}</td>
+                        <td>{{$lists[$i]->pay_type==1?'现金':'转账'}}</td>
+                    @if($lists[$i]->pay_type==1)
                             <td></td>
                         @else
-                        <td>{{$list->bank}} {{$list->account}}</td>
+                        <td>{{$lists[$i]->bank}} {{$lists[$i]->account}}</td>
                         @endif
-                        <td>{{$list->manager}}</td>
+                        <td>{{$lists[$i]->manager}}</td>
                         @endif
                     <td style="white-space:nowrap;">
-                        @if($list->state==1)
+                        @if($lists[$i]->state==1)
                         <button class="ui mini button negative loanLoanListCancel">撤销</button>
-                        @if(checkRole('loan_loan_pass',$list->id))
+                        @if(checkRole('loan_loan_pass',$lists[$i]->id))
                         <button class="ui mini button positive loanLoanListCheck">审批</button>
                             @else
                             @endif
-                            @elseif($list->state==2)
-                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('loan/pay')}}?id={{$list->id}}')">录入/修改</a>
-                            <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$list->id}}')">凭证</a>
+                            @elseif($lists[$i]->state==2)
+                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('loan/pay')}}?id={{$lists[$i]->id}}')">录入/修改</a>
+                            <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$lists[$i]->id}}')">凭证</a>
                             @else
                         @endif
                     </td>
                 </tr>
-                @endforeach
+                @endfor
+                {{--@endforeach--}}
                 </tbody>
             </table>
         </div>
-
+        {{$lists->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
