@@ -459,7 +459,7 @@ class PayController extends Controller
                 }
             }
             if ($swapPrice!=$loan->price){
-                throw new \Exception('金额不等！');
+                throw new Exception('金额不等！');
             }
             DB::commit();
             return response()->json([
@@ -529,7 +529,7 @@ class PayController extends Controller
                 }
             }
             if ($swapPrice!=$loan->price){
-                throw new \Exception('金额不等！');
+                throw new Exception('金额不等！');
             }
             DB::commit();
             return response()->json([
