@@ -166,7 +166,7 @@ class PurchaseController extends Controller
             $payment->date = Input::get('date');
             $payment->price = Input::get('price');
             $purchase = Purchase::find($payment->purchase_id);
-            $count = $purchase->lists()->sum('price')-($purchase->payments()->where('id','!=',$payment_id)->sum('price')+$payment->price);
+            $count = $purchase->lists()->sum('cost')-($purchase->payments()->where('id','!=',$payment_id)->sum('price')+$payment->price);
 //            dd($count);
             if ($count<0){
                 return response()->json([
@@ -182,7 +182,7 @@ class PurchaseController extends Controller
             $payment->price = Input::get('price');
             $payment->apply_id = Auth::id();
             $purchase = Purchase::find($payment->purchase_id);
-            $count = $purchase->lists()->sum('price')-($purchase->payments()->sum('price')+$payment->price);
+            $count = $purchase->lists()->sum('cost')-($purchase->payments()->sum('price')+$payment->price);
             if ($count<0){
                 return response()->json([
                     'code'=>'400',
