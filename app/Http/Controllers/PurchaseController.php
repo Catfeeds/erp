@@ -422,8 +422,8 @@ class PurchaseController extends Controller
         $invoice->date = $post->date?$post->date:$invoice->date;
         $invoice->invoice_date = $post->invoice_date?$post->invoice_date:$invoice->invoice_date;
         $invoice->number = $post->number?$post->number:$invoice->number;
-        $type = Invoice::where()->where('state','=',1)->first();
-        $invoice->type = $post->type?$post->type:$invoice->type;
+        $type = Invoice::where('name','=',$post->type)->where('state','=',1)->first();
+        $invoice->type = $type?$type->id:$invoice->type;
         $invoice->without_tax = $post->without_tax?$post->without_tax:$invoice->without_tax;
         $invoice->tax = $post->tax?$post->tax:$invoice->tax;
         $invoice->with_tax = $invoice->tax+$invoice->without_tax;
