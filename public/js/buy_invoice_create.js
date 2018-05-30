@@ -42,7 +42,7 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                  location.reload();
+                  setTimeout(location.reload(),1000);
               } else {
                   this.$notify({
                     title: '错误',
