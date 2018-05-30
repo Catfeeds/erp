@@ -938,6 +938,21 @@ class ProjectController extends Controller
             }
         }
         $lists = $db->paginate(10);
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $received = 0;
+                $need = 0;
+                $data  = $list->lists()->get();
+                if (!empty($data)){
+                    foreach ($data as $datum){
+                        $received+= $datum->price*$datum->received;
+                        $need+= $datum->price*$datum->need;
+                    }
+                }
+                $list->received = $received;
+                $list->need = $need;
+            }
+        }
         return view('buy.list',['lists'=>$lists]);
     }
     public function listProjectPurchasesPage()

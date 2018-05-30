@@ -133,13 +133,13 @@
                     <td class="table-content">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{$list->type==1?'内':'外'}}</td>
-                    <td>{{$list->lists()->sum('received')}}</td>
-                    <td>{{$list->lists()->sum('need')}}</td>
+                    <td>{{number_format($list->received)}}￥</td>
+                    <td>{{number_format($list->need)}}￥</td>
                     <td>{{number_format($list->payments()->sum('pay_price'))}} ￥</td>
                     <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'))}} ￥</td>
                     <td>{{$list->content}}</td>
                     <td>{{number_format($list->invoices()->sum('with_tax'))}} ￥</td>
-                    <td>{{number_format($list->payments()->sum('pay_price')-$list->invoices()->sum('with_tax'))}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost')-$list->invoices()->sum('with_tax'))}} ￥</td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach
