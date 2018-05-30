@@ -321,7 +321,7 @@ class PurchaseController extends Controller
     {
         $id = Input::get('purchase_id');
         $purchase = Purchase::find($id);
-        $invoice = Invoice::select(['id','name'])->get();
+        $invoice = Invoice::select(['id','name'])->where('state','=',1)->get();
         return view('buy.invoice_create',['purchase'=>$purchase,'invoice'=>$invoice]);
     }
     public function searchPurchase()
@@ -403,6 +403,15 @@ class PurchaseController extends Controller
         $purchase = Purchase::find($id);
         $invoices = $purchase->invoices()->get();
         return view('buy.invoice_print',['purchase'=>$purchase,'invoices'=>$invoices]);
+    }
+    public function editBuyInvoice()
+    {
+        $id = Input::get('id');
+//        $purchase = Purchase::find($id);
+        $invoice = PurchaseInvoice::find($id);
+        $invoiceTypes = Invoice::select(['id','name'])->where('state','=',1)->get();
+//        dd($invoiceTypes);
+        return view('buy.invoice_edit',['invoice'=>$invoice,'types'=>$invoiceTypes]);
     }
 
 

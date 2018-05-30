@@ -14,14 +14,14 @@
             <div class="active section">收票信息修改</div>
         </div>
 
-        <input type="hidden" value="" id="editId">
-        <input type="hidden" value="" id="getDate">
-        <input type="hidden" id="invoiceDate" value="2018-03-13">
-        <input type="hidden" id="type" value="1">
-        <input type="hidden" id="withTax" value="1">
-        <input type="hidden" id="withoutTax" value="1">
-        <input type="hidden" id="number" value="1">
-        <div style="display: none" id="invoiceType"></div>
+        <input type="hidden" value="{{$invoice->id}}" id="editId">
+        <input type="hidden" value="{{$invoice->date}}" id="getDate">
+        <input type="hidden" id="invoiceDate" value="{{$invoice->invoice_date}}">
+        <input type="hidden" id="type" value="{{$invoice->type}}">
+        <input type="hidden" id="withTax" value="{{$invoice->with_tax}}">
+        <input type="hidden" id="withoutTax" value="{{$invoice->without_tax}}">
+        <input type="hidden" id="number" value="{{$invoice->number}}">
+        <div style="display: none" id="invoiceType">{{json_encode($types)}}</div>
 
         <h1 class="ui red header blue center aligned">收票信息修改</h1>
         <div class="invisible" id="buyInvoiceEdit">
@@ -116,5 +116,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/buy_invoice_edit .js')}}"></script>
+    <script src="{{url('js/buy_invoice_edit.js')}}"></script>
 @endsection

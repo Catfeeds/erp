@@ -22,7 +22,7 @@
           this.form.type = $('#type').val()
           this.form.with_tax = $('#withTax').val()
           this.form.without_tax = $('#withoutTax').val()
-          const invoiceType = $('#invoiceType').text().val()
+          const invoiceType = $('#invoiceType').text().trim()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
           $('#buyInvoiceEdit').removeClass('invisible')
         },
