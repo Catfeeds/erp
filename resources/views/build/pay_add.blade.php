@@ -87,7 +87,7 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
-                            <label class="six wide field flex-center">收款银行</label>
+                            <label class="six wide field flex-center">付款银行</label>
                             <div class="eleven wide field">
                                 <el-select v-model="addForm.bank_id" placeholder="请选择银行账号">
                                     <el-option v-for="(item, index) in banks" :label="item.name + ' ' + item.account" :value="item.id"></el-option>
