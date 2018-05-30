@@ -559,7 +559,7 @@
                                 <td id="price">{{ $company->price }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
-                                    <button class="ui mini button primary" onclick="modifyPay(this)">修改</button>
+                                    <button class="ui mini button primary" >修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -774,21 +774,5 @@
 @endsection
 @section('pageJs')
     <script src="{{url('js/check_detail.js')}}"></script>
-    <script type="text/javascript">
-        function modifyPay(obj) {
-            console.log('click')
-            id = $(obj).parent().parent().attr('id')
-            price = $(obj).parent().parent().find('td').eq(1).text()
-            date = $(obj).parent().parent().find('td').eq(0).text()
-            layer.prompt({
-                formType: 0,
-                value: '初始值',
-                title: '这里是title'
-            }, function(value, index, elem){
-                alert(value); //得到value
-                layer.close(index);
-            });
-            console.log(date)
-        }
-    </script>
+
 @endsection
