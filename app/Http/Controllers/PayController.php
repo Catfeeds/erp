@@ -392,6 +392,11 @@ class PayController extends Controller
         $lists = $post->get('lists');
         if ($id){
             $loan = LoanSubmit::find($id);
+            $loan->state = 1;
+            $loan->checker_id = 0;
+            $loan->passer_id = 0;
+            $loan->passer = '';
+            $loan->checker = '';
             $loan->lists()->delete();
         }else{
             $loan = new LoanSubmit();
@@ -442,6 +447,11 @@ class PayController extends Controller
             if ($id){
                 $loan = LoanSubmit::find($id);
                 $loan->lists()->delete();
+                $loan->state = 1;
+                $loan->checker_id = 0;
+                $loan->passer_id = 0;
+                $loan->passer = '';
+                $loan->checker = '';
             }else{
                 $loan = new LoanSubmit();
                 $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
