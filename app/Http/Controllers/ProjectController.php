@@ -962,6 +962,12 @@ class ProjectController extends Controller
         }else{
             $lists = $db->orderBy('id','DESC')->paginate(10);
         }
+        if(!empty($lists)){
+            foreach ($lists as $list){
+                $count = $list->payments()->where('state','=',1)->count();
+                $list->count = $count;
+            }
+        }
         return view('buy.pay_list',['lists'=>$lists]);
     }
     public function listPurchasesChargePage()

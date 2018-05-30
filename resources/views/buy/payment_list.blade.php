@@ -32,11 +32,11 @@
                 </tr>
                 <tr>
                     <th class="bg-white">项目编号</th>
-                    <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                    <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
                     <th class="bg-white">项目内容</th>
-                    <th class="font-normal bg-white" colspan="4">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                    <th class="font-normal bg-white" colspan="4">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
                     <th class="bg-white">项目经理</th>
-                    <th class="font-normal bg-white" colspan="2">{{\App\Models\Project::find($purchase->project_id)->pm}}</th>
+                    <th class="font-normal bg-white" colspan="2">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</th>
                 </tr>
                 <tr>
                     <th class="bg-white">付款条件</th>
@@ -44,9 +44,9 @@
                 </tr>
                 <tr>
                     <th class="bg-white">采购金额</th>
-                    <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('price'))}} ￥</th>
+                    <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
                     <th class="bg-white">应付账款余额</th>
-                    <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('price')-$purchase->payments()->sum('pay_price'))}} ￥</th>
+                    <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price'))}} ￥</th>
                 </tr>
                 <tr>
                     <th colspan="12">付款记录</th>
@@ -96,7 +96,7 @@
                         <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/payment')}}?id={{$lists[$i]->id}}')" title="修改付款申请">修改</a>
                         @else
                             @endif
-                            @if(checkRole('buy_pay_pass',$lists[$i]->id))
+                            @if(checkRole('buy_pay_pass',$lists[$i]->id)&&$lists[$i]->state==1)
                         <a class="ui mini positive button payment-check" data-id="{{$lists[$i]->id}}" title="复核">复核</a>
                         @else
                             @endif

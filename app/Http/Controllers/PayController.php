@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Mockery\Exception;
 
 class PayController extends Controller
 {
@@ -312,10 +313,17 @@ class PayController extends Controller
     }
     public function finishLoan(Request $post)
     {
+        $type = $post->get('pay_type');
+        if (empty($type)||$type==0){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'请先选择付款类型!'
+            ]);
+        }
         $loan = LoanList::find($post->get('id'));
         $loan->pay_date = $post->get('date');
-        $loan->pay_type = $post->get('pay_type');
-        $loan->manager = $post->get('people');
+        $loan->pay_type = $type;
+        $loan->manager = $post->get('manager');
 //        $loan->manager_id = Auth::id();
         $loan->bank = $post->get('bank');
         $loan->account = $post->get('account');
@@ -515,53 +523,70 @@ class PayController extends Controller
     }
     public function createLoanPay(Request $post)
     {
-        $id = $post->get('id');
-        if ($id){
-            $pay = LoanPay::find($id);
-        }else{
-            $pay = new LoanPay();
-            $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
-            $pay->number = 'BXFK'.date('Ymd',time()).sprintf("%03d", $count+1);
-        }
-//        $pay->user_id = $post->get('user_id');
-        $pay->date = $post->get('date');
-        $pay->deduction = empty($post->get('daduction'))?0:$post->get('daduction');
-        $pay->cash = empty($post->get('cash'))?0:$post->get('cash');
-        $pay->transfer = empty($post->get('transfer'))?0:$post->get('transfer');
-        $pay->price = $pay->cash+$pay->deduction+$pay->transfer;
-        $bank = BankAccount::find($post->get('bank'));
-        if ($bank){
-            $pay->bank = $bank->name ;
-            $pay->account = $post->get('account');
-        }
-        $pay->worker = Auth::id();
-
-        $lists = $post->get('lists');
-        if ($pay->save()){
-            foreach ($lists as $item){
-                $list = new LoanPayList();
-                $list->loan_id = $item;
-                $list->pay_id = $pay->id;
-                $submit = LoanSubmit::find($item);
-                $pay->applier = $submit->loan_user;
-                $submit->state=4;
-                $submit->FKNumber = $pay->number;
-                $submit->save();
-                $list->save();
+        DB::beginTransaction();
+//        dd($post->all());
+        try{
+            $id = $post->get('id');
+            if ($id){
+                $pay = LoanPay::find($id);
+            }else{
+                $pay = new LoanPay();
+                $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
+                $pay->number = 'BXFK'.date('Ymd',time()).sprintf("%03d", $count+1);
             }
+//        $pay->user_id = $post->get('user_id');
+            $pay->date = $post->get('date');
+            $pay->deduction = empty($post->get('daduction'))?0:$post->get('daduction');
+            $pay->cash = empty($post->get('cash'))?0:$post->get('cash');
+            $pay->transfer = empty($post->get('transfer'))?0:$post->get('transfer');
+            $pay->price = $pay->cash+$pay->deduction+$pay->transfer;
+            $bank = BankAccount::find($post->get('bank'));
+            if ($bank){
+                $pay->bank = $bank->name ;
+                $pay->account = $post->get('account');
+            }
+            $pay->worker = Auth::id();
+            $lists = $post->get('lists');
+            $swapPrice = 0;
+            if ($pay->save()){
+
+                foreach ($lists as $item){
+                    $list = new LoanPayList();
+                    $list->loan_id = $item;
+                    $list->pay_id = $pay->id;
+                    $submit = LoanSubmit::find($item);
+                    $swapPrice+=$submit->price;
+                    $pay->applier = $submit->loan_user;
+                    $submit->state=4;
+                    $submit->FKNumber = $pay->number;
+                    $submit->save();
+                    $list->save();
+                }
 
 
+            }
+            if ($swapPrice!=$pay->price){
+                throw new Exception('金额不等！');
+            }
+            $loanPrice = LoanList::where('borrower','=',$pay->applier)->where('state','>=',3)->sum('price');
+            $submitPrice = LoanPay::where('applier','=',$pay->applier)->where('state','>=',3)->sum('deduction');
+            $price = LoanSubmit::where('loan_user','=',$pay->applier)->where('state','!=',4)->sum('price');
+            $pay->loanBalance = $loanPrice-$submitPrice;
+            $pay->submitBalance = $price;
+            $pay->save();
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }catch (Exception $exception) {
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
         }
-        $loanPrice = LoanList::where('borrower','=',$pay->applier)->sum('price');
-        $submitPrice = LoanPay::where('applier','=',$pay->applier)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$pay->applier)->where('state','!=',4)->sum('price');
-        $pay->loanBalance = $loanPrice-$submitPrice;
-        $pay->submitBalance = $price;
-        $pay->save();
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
+
     }
     public function changeLoanApplyState()
     {

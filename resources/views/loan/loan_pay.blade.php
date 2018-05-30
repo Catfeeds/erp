@@ -12,7 +12,7 @@
             <div class="active section">付款</div>
         </div>
         <input type="hidden" value="{{$loan->id}}" id="payId">
-        <input type="hidden" value="{{$loan->manager}}" id="manager">
+        <input type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->username}}" id="manager">
         <input type="hidden" value="{{$loan->bank}}" id="bank">
         <input type="hidden" value="{{$loan->account}}" id="account">
         <div style="display: none" id="banks">{{json_encode($bank)}}</div>
@@ -91,7 +91,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">付款经办人</label>
                             <div class="eleven wide field">
-                                <input type="text" v-model="loanForm.people" placeholder="请输入付款经办人">
+                                <input type="text" v-model="loanForm.manager"  placeholder="请输入付款经办人">
                             </div>
                         </div>
                     </div>
