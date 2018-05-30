@@ -138,7 +138,8 @@
                         <input type="number" v-model.number="item.price" placeholder="含税单价">
                     </div>
                     <div class="two wide column">
-                        <input type="number" v-model.number="item.total" placeholder="含税总价">
+                        <div class="fake-input">@{{ (item.price * item.number || 0).toLocaleString('en-US') }}</div>
+                        {{--<input type="number" v-model.number="item.total" placeholder="含税总价">--}}
                     </div>
                     <div class="two wide column">
                         <input type="text" placeholder="备注" v-model="item.remark">
