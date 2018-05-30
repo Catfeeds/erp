@@ -402,7 +402,7 @@
                                     <td></td>
                                 @endif
                                 <td>
-                                    <button class="ui mini button primary" @click="EditFnc(item, index, 'marginRecyle')">修改</button>
+                                    <button class="ui mini button primary" onclick="EditFnc(item, index, 'marginRecyle')">修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -448,7 +448,7 @@
                                 <td>{{ $tip->pay_unit }}</td>
                                 <td>{{ $tip->remark }}</td>
                                 <td>
-                                    <button class="ui mini button primary" @click="EditFnc(item, index, 'requirement')">修改</button>
+                                    <button class="ui mini button primary" @onclick="EditFnc(item, index, 'requirement')">修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -492,7 +492,7 @@
                                     <td>{{$item->rate}}%</td>
                                     <td>
                                         <button class="ui mini button primary" onclick="modityInvoice">修改</button>
-                                        <button @click="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
+                                        <button onclick="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                     </td>
                                 {{--</template>--}}
                             </tr>
