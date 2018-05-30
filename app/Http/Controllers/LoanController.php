@@ -174,10 +174,15 @@ class LoanController extends Controller
     {
         $user = Input::get('name');
         $lists = LoanSubmit::where('state','=',3)->where('loan_user','=',$user)->get();
+        $loanPrice = LoanList::where('borrower','=',$user)->where('state','>=',3)->sum('price');
+//            dd($loanPrice);
+        $submitPrice = LoanPay::where('applier','=',$user)->sum('deduction');
+//        $price = LoanSubmit::where('loan_user','=',$user)->where('state','=',3)->sum('price');
+        $count = $loanPrice-$submitPrice;
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
-//            'count'=>,
+            'count'=>$count,
             'data'=>$lists
         ]);
     }
