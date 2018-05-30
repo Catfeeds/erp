@@ -20,13 +20,14 @@
         <input type="hidden" id="type" value="{{$invoice->type}}">
         <input type="hidden" id="withTax" value="{{$invoice->with_tax}}">
         <input type="hidden" id="withoutTax" value="{{$invoice->without_tax}}">
+        <input type="hidden" id="tax" value="{{$invoice->tax}}">
         <input type="hidden" id="number" value="{{$invoice->number}}">
         <div style="display: none" id="invoiceType">{{json_encode($types)}}</div>
 
         <h1 class="ui red header blue center aligned">收票信息修改</h1>
         <div class="invisible" id="buyInvoiceEdit">
 
-            <form action="">
+            <form method="post">
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
@@ -43,7 +44,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">收票经办人</label>
                                 <div class="twelve wide field">
-                                    <div class="fake-input">陈先生</div>
+                                    <div class="fake-input">{{\App\User::find($invoice->worker)->username}}</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">发票号码</label>
                                 <div class="twelve wide field">
-                                    <input type="text" v-model="number"  placeholder="请输入发票号码">
+                                    <input type="text" v-model="form.number" name="number"  placeholder="请输入发票号码">
                                 </div>
                             </div>
                         </div>
@@ -79,7 +80,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">不含税金额</label>
                                 <div class="twelve wide field">
-                                    <input type="number" name="without_tax" placeholder="请输入不含税金额" value="">
+                                    <input type="number" v-model="form.without_tax" name="without_tax" placeholder="请输入不含税金额" value="">
                                 </div>
                             </div>
                         </div>
@@ -87,7 +88,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">税额</label>
                                 <div class="twelve wide field">
-                                    <input type="number" name="tax" placeholder="请输入税额" value="">
+                                    <input type="number" name="tax" v-model="form.tax" placeholder="请输入税额" value="">
                                 </div>
                             </div>
                         </div>
@@ -95,7 +96,8 @@
                             <div class="inline fields">
                                 <label class="four wide field">含税金额</label>
                                 <div class="twelve wide field">
-                                    <input type="number" v-model="with_tax" name="amount" placeholder="请输入含税金额" value="">
+                                    <div class="fake-input">@{{ parseInt(form.tax)+parseInt(form.without_tax) }}</div>
+                                    {{--<input type="number" v-model="form.with_tax" name="amount" placeholder="请输入含税金额" value="">--}}
                                 </div>
                             </div>
                         </div>

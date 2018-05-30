@@ -415,52 +415,69 @@ class PayController extends Controller
 //        dd($post->all());
         $id = $post->get('id');
         $lists = $post->get('lists');
-        if ($id){
-            $loan = LoanSubmit::find($id);
-            $loan->state = 1;
-            $loan->checker_id = 0;
-            $loan->passer_id = 0;
-            $loan->passer = '';
-            $loan->checker = '';
-            $loan->lists()->delete();
-        }else{
-            $loan = new LoanSubmit();
-            $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
-            $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
-        }
-        $loan->user_id = Auth::id();
-        $loan->type = 1;
-        $loan->date = $post->get('date');
-        $loan->price = $post->get('price');
-        $loan->loan_user = $post->get('loan_user');
+        DB::beginTransaction();
+        try{
+            if ($id){
+                $loan = LoanSubmit::find($id);
+                $loan->state = 1;
+                $loan->checker_id = 0;
+                $loan->passer_id = 0;
+                $loan->passer = '';
+                $loan->checker = '';
+                $loan->lists()->delete();
+            }else{
+                $loan = new LoanSubmit();
+                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+                $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
+            }
+            $loan->user_id = Auth::id();
+            $loan->type = 1;
+            $loan->date = $post->get('date');
+            $loan->price = $post->get('price');
+            $loan->loan_user = $post->get('loan_user');
 //        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
 //        $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
 //        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
 //        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
 //        $loan->submitBalance = $price;
-        if ($loan->save()){
-            foreach ($lists as $item){
-                $list = new LoanSubmitList();
-                $list->loan_id = $loan->id;
-                if (!empty($item['kind_id'])){
-                    $list->kind_id = $item['kind_id'];
+            $swapPrice = 0;
+            if ($loan->save()){
+                foreach ($lists as $item){
+                    $list = new LoanSubmitList();
+                    $list->loan_id = $loan->id;
+                    if (!empty($item['kind_id'])){
+                        $list->kind_id = $item['kind_id'];
+                    }
+                    $list->category_id = $item['category_id'];
+                    $list->number = $item['number'];
+                    $list->price = $item['price'];
+                    if (isset($item['remark'])){
+                        $list->remark = $item['remark'];
+                    }
+                    $swapPrice+=$item['price'];
+                    $list->save();
                 }
-                $list->category_id = $item['category_id'];
-                $list->number = $item['number'];
-                $list->price = $item['price'];
-                if (isset($item['remark'])){
-                    $list->remark = $item['remark'];
-                }
-                $list->save();
             }
+            if ($swapPrice!=$loan->price){
+                throw new \Exception('金额不等！');
+            }
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>[
+                    'id'=>$loan->id
+                ]
+            ]);
+        }catch (Exception $exception){
+            DB::rollback();
+//            dd($exception);
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
         }
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS',
-            'data'=>[
-                'id'=>$loan->id
-            ]
-        ]);
+
     }
     //新增报销
     public function createSubmitProject(Request $post)

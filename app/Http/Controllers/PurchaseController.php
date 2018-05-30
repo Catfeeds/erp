@@ -314,8 +314,8 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        $purchase->invoices = $purchase->invoices()->get();
-        return view('buy.invoice_list',['purchase'=>$purchase]);
+        $invoices = $purchase->invoices()->get();
+        return view('buy.invoice_list',['purchase'=>$purchase,'invoices'=>$invoices]);
     }
     public function createInvoicePage()
     {
@@ -404,7 +404,7 @@ class PurchaseController extends Controller
         $invoices = $purchase->invoices()->get();
         return view('buy.invoice_print',['purchase'=>$purchase,'invoices'=>$invoices]);
     }
-    public function editBuyInvoice()
+    public function editBuyInvoicePage()
     {
         $id = Input::get('id');
 //        $purchase = Purchase::find($id);
@@ -412,6 +412,24 @@ class PurchaseController extends Controller
         $invoiceTypes = Invoice::select(['id','name'])->where('state','=',1)->get();
 //        dd($invoiceTypes);
         return view('buy.invoice_edit',['invoice'=>$invoice,'types'=>$invoiceTypes]);
+    }
+    public function editBuyInvoice(Request $post)
+    {
+        $invoice = PurchaseInvoice::find($post->id);
+        if (!$invoice){
+            return redirect()->back()->with('status','没找到该发票信息！');
+        }
+        $invoice->date = $post->date?$post->date:$invoice->date;
+        $invoice->invoice_date = $post->invoice_date?$post->invoice_date:$invoice->invoice_date;
+        $invoice->number = $post->number?$post->number:$invoice->number;
+        $type = Invoice::where()->where('state','=',1)->first();
+        $invoice->type = $post->type?$post->type:$invoice->type;
+        $invoice->without_tax = $post->without_tax?$post->without_tax:$invoice->without_tax;
+        $invoice->tax = $post->tax?$post->tax:$invoice->tax;
+        $invoice->with_tax = $invoice->tax+$invoice->without_tax;
+        if ($invoice->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
     }
 
 

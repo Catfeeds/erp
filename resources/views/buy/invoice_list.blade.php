@@ -60,22 +60,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($purchase->invoices as $invoice)
+                @for($i=0;$i<count($invoices);$i++)
+{{--                @foreach($purchase->invoices as $invoice)--}}
                 <tr>
-                    <td>{{$invoice->id}}</td>
-                    <td>{{$invoice->date}}</td>
-                    <td>{{$invoice->invoice_date}}</td>
-                    <td>{{$invoice->number}}</td>
-                    <td>{{\App\Models\Invoice::find($invoice->type)->name}}</td>
-                    <td>{{number_format($invoice->without_tax)}} ￥</td>
-                    <td>{{number_format($invoice->tax)}} ￥</td>
-                    <td>{{number_format($invoice->with_tax)}}￥</td>
-                    <td>{{\App\User::find($invoice->worker)->name}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$invoices[$i]->date}}</td>
+                    <td>{{$invoices[$i]->invoice_date}}</td>
+                    <td>{{$invoices[$i]->number}}</td>
+                    <td>{{\App\Models\Invoice::find($invoices[$i]->type)->name}}</td>
+                    <td>{{number_format($invoices[$i]->without_tax)}} ￥</td>
+                    <td>{{number_format($invoices[$i]->tax)}} ￥</td>
+                    <td>{{number_format($invoices[$i]->with_tax)}}￥</td>
+                    <td>{{\App\User::find($invoices[$i]->worker)->name}}</td>
                     <td style="white-space:nowrap">
-                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/invoice')}}?id={{$invoice->id}}')" title="修改">修改</a>
+                        <a class="ui mini button" href="javascript:_helper.fullWindow('{{url('buy/edit/invoice')}}?id={{$invoices[$i]->id}}')" title="修改">修改</a>
                     </td>
                 </tr>
-                    @endforeach
+                    {{--@endforeach--}}
+                    @endfor
                 </tbody>
                 <tfoot>
                 <tr>

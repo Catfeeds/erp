@@ -205,7 +205,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('buy/print/budgetary','PurchaseController@printBuyBudgetary');
     Route::get('buy/print/payment','PurchaseController@printBuyPayment');
     Route::get('buy/print/invoice','PurchaseController@printBuyInvoice');
-    Route::get('buy/edit/invoice','PurchaseController@editBuyInvoice');
+    Route::get('buy/edit/invoice','PurchaseController@editBuyInvoicePage');
+    Route::post('buy/edit/invoice','PurchaseController@editBuyInvoice');
     //库存管理
     Route::get('stock/list','StockController@listStockList');
     Route::get('stock/buy/list','StockController@listBuyList');
