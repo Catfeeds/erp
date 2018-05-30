@@ -140,7 +140,12 @@ class LoanController extends Controller
             $loan->state = 3;
             $loan->passer_id = Auth::id();
             $loan->passer = Auth::user()->name;
-//            $loan->
+            $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+            $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
+            $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','=',3)->sum('price');
+            $loan->loanBalance = $loanPrice-$submitPrice;
+            $loan->submitBalance = $price+$loan->price;
+//            dd($loan);
             $loan->save();
             Task::where('type','=','loan_project_submit_pass')->where('content','=',$id)->update(['state'=>0]);
             Task::where('type','=','loan_submit_pass')->where('content','=',$id)->update(['state'=>0]);
@@ -219,7 +224,7 @@ class LoanController extends Controller
             $loanStart = 0;
         }else{
             $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','=',3)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
             $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
@@ -228,7 +233,7 @@ class LoanController extends Controller
             if (!empty($swap1)){
                 array_push($swap4,$swap1[0]);
             }
-            $swap2 = LoanSubmit::where('loan_user','=',$name)->where('state','=',3)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
+            $swap2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
             if (!empty($swap2)){
                 array_push($swap4,$swap2[0]);
             }

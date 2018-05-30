@@ -225,28 +225,39 @@ class PayController extends Controller
     //借款
     public function createLoanApply(Request $post)
     {
-        $apply = new LoanList();
-        $apply->borrower = $post->get('loan_user');
-        $apply->borrower_id = Auth::id();
-        $count = LoanList::whereDate('created_at', date('Y-m-d',time()))->count();
-        $apply->number = 'JK'.date('Ymd',time()).sprintf("%03d", $count+1);
-        $apply->apply_date = $post->get('date');
-        $apply->price = $post->get('preice');
-        $apply->reason = $post->get('reason');
-        $loanPrice = LoanList::where('borrower','=',$apply->borrower)->where('state','>=',3)->sum('price');
-        $submitPrice = LoanPay::where('applier','=',$apply->borrower)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$apply->borrower)->where('state','>=',3)->sum('price');
-        $apply->loanBalance = $loanPrice-$submitPrice+$apply->price;
-        $apply->submitBalance = $price;
-        if ($apply->save()){
+        DB::beginTransaction();
+        try{
+            $apply = new LoanList();
+            $apply->borrower = $post->get('loan_user');
+            $apply->borrower_id = Auth::id();
+            $count = LoanList::whereDate('created_at', date('Y-m-d',time()))->count();
+            $apply->number = 'JK'.date('Ymd',time()).sprintf("%03d", $count+1);
+            $apply->apply_date = $post->get('date');
+            $apply->price = $post->get('preice');
+            $apply->reason = $post->get('reason');
+//            $loanPrice = LoanList::where('borrower','=',$apply->borrower)->where('state','>=',3)->sum('price');
+//            $submitPrice = LoanPay::where('applier','=',$apply->borrower)->sum('deduction');
+//            $price = LoanSubmit::where('loan_user','=',$apply->borrower)->where('state','=',3)->sum('price');
+//            $apply->loanBalance = $loanPrice-$submitPrice+$apply->price;
+//            $apply->submitBalance = $price;
+            DB::commit();
+            if ($apply->save()){
+                return response()->json([
+                    'code'=>'200',
+                    'msg'=>'SUCCESS',
+                    'data'=>[
+                        'id'=>$apply->id
+                    ]
+                ]);
+            }
+        }catch (Exception $exception){
+            DB::rollback();
             return response()->json([
-                'code'=>'200',
-                'msg'=>'SUCCESS',
-                'data'=>[
-                    'id'=>$apply->id
-                ]
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
             ]);
         }
+
     }
     public function cancelLoan()
     {
@@ -322,14 +333,26 @@ class PayController extends Controller
             ]);
         }
         $loan = LoanList::find($post->get('id'));
+        if ($loan->state == 3 ){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'已付款的借款申请不能再付款!'
+            ]);
+        }
         $loan->pay_date = $post->get('date');
         $loan->pay_type = $type;
         $loan->manager = $post->get('manager');
 //        $loan->manager_id = Auth::id();
-        $loan->bank = $post->get('bank');
+        $bankId = $post->get('bank');
+        $loan->bank = $bankId?BankAccount::find($bankId)->name:'';
         $loan->account = $post->get('account');
         $loan->manager_id = Auth::id();
         $loan->state = 3;
+        $loanPrice = LoanList::where('borrower','=',$loan->borrower)->where('state','=',3)->sum('price');
+        $submitPrice = LoanPay::where('applier','=',$loan->borrower)->sum('deduction');
+        $price = LoanSubmit::where('loan_user','=',$loan->borrower)->where('state','=',3)->sum('price');
+        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
+        $loan->submitBalance = $price;
         if ($loan->save()){
             return response()->json([
                 'code'=>'200',
@@ -410,11 +433,11 @@ class PayController extends Controller
         $loan->date = $post->get('date');
         $loan->price = $post->get('price');
         $loan->loan_user = $post->get('loan_user');
-        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-        $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
-        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
-        $loan->submitBalance = $price;
+//        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+//        $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
+//        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+//        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
+//        $loan->submitBalance = $price;
         if ($loan->save()){
             foreach ($lists as $item){
                 $list = new LoanSubmitList();
@@ -465,11 +488,11 @@ class PayController extends Controller
             $loan->price = $post->get('price');
             $loan->project_id = $post->get('project_id');
             $loan->loan_user = $post->get('loan_user');
-            $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-            $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
-            $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-            $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
-            $loan->submitBalance = $price;
+//            $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+//            $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
+//            $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
+//            $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
+//            $loan->submitBalance = $price;
             $swapPrice = 0;
             if ($loan->save()){
                 foreach ($lists as $item){
@@ -561,15 +584,27 @@ class PayController extends Controller
             $pay->worker = Auth::id();
             $lists = $post->get('lists');
             $swapPrice = 0;
+            $name = $post->get('name');
+            $loanPrice = LoanList::where('borrower','=',$name)->where('state','>=',3)->sum('price');
+//            dd($loanPrice);
+            $submitPrice = LoanPay::where('applier','=',$name)->sum('deduction');
+            $price = LoanSubmit::where('loan_user','=',$name)->where('state','=',3)->sum('price');
+            $pay->loanBalance = $loanPrice-$submitPrice-$pay->deduction;
+            $pay->submitBalance = $price-$pay->price;
+//            dd($pay);
             if ($pay->save()){
-
                 foreach ($lists as $item){
+                    $submit = LoanSubmit::find($item);
+                    if ($submit->state!=3){
+                        throw new Exception('当前状态下不能付款！');
+                    }
                     $list = new LoanPayList();
                     $list->loan_id = $item;
                     $list->pay_id = $pay->id;
-                    $submit = LoanSubmit::find($item);
+
                     $swapPrice+=$submit->price;
                     $pay->applier = $submit->loan_user;
+
                     $submit->state=4;
                     $submit->FKNumber = $pay->number;
                     $submit->save();
@@ -581,11 +616,7 @@ class PayController extends Controller
             if ($swapPrice!=$pay->price){
                 throw new Exception('金额不等！');
             }
-            $loanPrice = LoanList::where('borrower','=',$pay->applier)->where('state','>=',3)->sum('price');
-            $submitPrice = LoanPay::where('applier','=',$pay->applier)->sum('deduction');
-            $price = LoanSubmit::where('loan_user','=',$pay->applier)->where('state','!=',4)->sum('price');
-            $pay->loanBalance = $loanPrice-$submitPrice;
-            $pay->submitBalance = $price;
+
             $pay->save();
             DB::commit();
             return response()->json([
