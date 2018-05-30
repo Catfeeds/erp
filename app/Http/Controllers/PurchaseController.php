@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rules\In;
+use Mockery\Exception;
 
 class PurchaseController extends Controller
 {
@@ -274,28 +275,39 @@ class PurchaseController extends Controller
     }
     public function createInvoices(Request $post)
     {
-        $id = $post->get('purchase_id');
-        $date = $post->get('date');
-        $lists = Input::get('lists');
-        if (!empty($lists)){
-            foreach ($lists as $list){
-                $invoice = new PurchaseInvoice();
-                $invoice->purchase_id = $id;
-                $invoice->date = $date;
-                $invoice->invoice_date = $list['date'];
-                $invoice->number = $list['number'];
-                $invoice->type = $list['type'];
-                $invoice->without_tax = $list['without_tax'];
-                $invoice->tax = $list['tax'];
-                $invoice->with_tax = $list['tax']+$list['without_tax'];
-                $invoice->worker = Auth::id();
-                $invoice->save();
+        DB::beginTransaction();
+        try{
+            $id = $post->get('purchase_id');
+            $date = $post->get('date');
+            $lists = Input::get('lists');
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $invoice = new PurchaseInvoice();
+                    $invoice->purchase_id = $id;
+                    $invoice->date = $date;
+                    $invoice->invoice_date = $list['date'];
+                    $invoice->number = $list['number'];
+                    $invoice->type = $list['type'];
+                    $invoice->without_tax = $list['without_tax'];
+                    $invoice->tax = $list['tax'];
+                    $invoice->with_tax = $list['tax']+$list['without_tax'];
+                    $invoice->worker = Auth::id();
+                    $invoice->save();
+                }
             }
+            DB::commit();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }catch (Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'code'=>'400',
+                'msg'=>$exception->getMessage()
+            ]);
         }
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
+
     }
     public function listInvoices()
     {
