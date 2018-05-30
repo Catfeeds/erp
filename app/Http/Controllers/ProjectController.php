@@ -54,7 +54,7 @@ class ProjectController extends Controller
 //        ]);
         if ($type){
             if ($type=='buy_budgetary_edit'||$type=='buy_extrabugetary_edit'||$type=='build_finish_list'||$type=='stock_get_list'||
-            $type=='loan_project_submit_edit'){
+            $type=='loan_project_submit_edit'||$type=='stock_return_edit'){
                 if ($number){
                     $DbObj->where('number','like','%'.$number.'%');
                 }
