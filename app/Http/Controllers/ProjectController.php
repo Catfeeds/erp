@@ -937,7 +937,7 @@ class ProjectController extends Controller
                 $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
             }
         }
-        $lists = $db->paginate(10);
+        $lists = $db->orderBy('id','DESC')->paginate(10);
         if (!empty($lists)){
             foreach ($lists as $list){
                 $received = 0;
