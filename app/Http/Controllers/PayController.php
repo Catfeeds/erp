@@ -765,6 +765,12 @@ class PayController extends Controller
 
 //            $project_id = $post->project_id;
             $payment = RequestPayment::find($id);
+            $payment->state = 1;
+            $payment->passer = '';
+            $payment->checker = '';
+            $payment->checker_id = 0;
+            $payment->passer_id = 0;
+
 //            dd($payment);
             if (is_numeric($post->project_id)){
                 $project = Project::find($post->project_id);
