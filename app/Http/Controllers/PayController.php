@@ -259,6 +259,7 @@ class PayController extends Controller
             ]);
         }else{
             $loan->delete();
+            Task::where('type','=','loan_loan_pass')->where('content','=',$id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
