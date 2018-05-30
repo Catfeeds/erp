@@ -582,7 +582,7 @@ class PayController extends Controller
                 throw new Exception('金额不等！');
             }
             $loanPrice = LoanList::where('borrower','=',$pay->applier)->where('state','>=',3)->sum('price');
-            $submitPrice = LoanPay::where('applier','=',$pay->applier)->where('state','>=',3)->sum('deduction');
+            $submitPrice = LoanPay::where('applier','=',$pay->applier)->sum('deduction');
             $price = LoanSubmit::where('loan_user','=',$pay->applier)->where('state','!=',4)->sum('price');
             $pay->loanBalance = $loanPrice-$submitPrice;
             $pay->submitBalance = $price;
