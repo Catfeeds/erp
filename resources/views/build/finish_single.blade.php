@@ -127,14 +127,14 @@
                     </button>
                 @else
                     @endif
-                @if(checkRole('build_finish_check',$apply->id)&&$apply->state==2)
+                @if(checkRole('build_finish_check',$apply->id)&&$apply->state==1)
                 <button class="ui icon button primary" @click="recheckFnc"  style="margin:0 10px;">
                     <i class="icon legal"></i>
                     <span>复核</span>
                 </button>
                 @else
                     @endif
-                @if(checkRole('build_finish_pass',$apply->id)&&$apply->state==3)
+                @if(checkRole('build_finish_pass',$apply->id)&&$apply->state==2)
                 <a class="ui icon button primary"  @click="passFnc" style="margin:0 10px;">
                     <i class="icon edit"></i>
                     <span>审批</span>
