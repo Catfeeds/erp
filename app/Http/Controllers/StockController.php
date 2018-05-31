@@ -504,18 +504,20 @@ class StockController extends Controller
             if (!empty($lists)){
                 foreach ($lists as $list){
                     $materail = Material::find($list->material_id);
-                    $list->name = $materail->name;
-                    $list->param = $materail->param;
-                    $list->model = $materail->model;
-                    $list->factory = $materail->factory;
-                    $list->unit = $materail->unit;
                     $list->material = $materail;
+                    $list->material->number = $list->number;
+//                    $list->material->material = $materail;
+                    $list->material->price = $list->price;
+                    $list->material->buy_number = $list->received;
+                    $list->material->need_buy = $list->need;
                     $list->own_id = $list->id;
                     $list->need_number = $list->need;
+                    $list->buy_number = $list->received;
                     $list->material->edit = true;
                     $list->edit = true;
                 }
             }
+//            dd($lists);
             $purchase->supplier_name = $purchase->supplier;
             $purchase->content = $purchase->content_id;
             $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
@@ -532,7 +534,10 @@ class StockController extends Controller
             $invoice = Invoice::where('state','=',1)->get();
             $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
-                $budget->material = Material::find($budget->material_id);
+                $materail = Material::find($budget->material_id);
+                $budget->name = $materail->name;
+                $budget->model = $materail->model;
+                $budget->material = $materail;
                 $budget->material->edit = true;
                 $budget->index = $budget->id;
                 $budget->need_number = $budget->need_buy;
@@ -549,7 +554,13 @@ class StockController extends Controller
             $invoice = Invoice::where('state','=',1)->get();
             $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
-                $budget->material = Material::find($budget->material_id);
+                $materail = Material::find($budget->material_id);
+                $budget->name = $materail->name;
+                $budget->model = $materail->model;
+                $budget->material = $materail;
+                $budget->material->edit = true;
+                $budget->index = $budget->id;
+                $budget->need_number = $budget->need_buy;
             }
 //        dd($budgets);
             return view('buy.budgetary_buy',[

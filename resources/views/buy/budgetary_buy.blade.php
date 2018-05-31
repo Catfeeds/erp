@@ -119,56 +119,56 @@
             <h4 class="ui dividing header blue">采购物料清单</h4>
 
             <!-- 物料详细 -->
-            {{--<h4 class="inline-center">物料采购需求</h4>--}}
-            {{--<table class="ui center aligned table selectable">--}}
-                {{--<thead>--}}
-                {{--<tr>--}}
-                    {{--<th>物料名称</th>--}}
-                    {{--<th>性能及技术参数</th>--}}
-                    {{--<th>品牌型号</th>--}}
-                    {{--<th>生产厂家</th>--}}
-                    {{--<th>单位</th>--}}
-                    {{--<th>预算单价</th>--}}
-                    {{--<th>预算数量</th>--}}
-                    {{--<th>已采购数量</th>--}}
-                    {{--<th>未采购数量</th>--}}
-                    {{--<th>操作</th>--}}
-                {{--</tr>--}}
-                {{--</thead>--}}
-                {{--<tbody>--}}
-                {{--<template v-if="materialsComputed && materialsComputed.length">--}}
-                    {{--<tr v-for="(item, index) in materialsComputed" :key="item.id">--}}
-                        {{--<td>@{{ item.material.name }}</td>--}}
-                        {{--<td>@{{ item.material.param }}</td>--}}
-                        {{--<td>@{{ item.material.model }}</td>--}}
-                        {{--<td>@{{ item.material.factory }}</td>--}}
-                        {{--<td>@{{ item.material.unit }}</td>--}}
-                        {{--<td>@{{ item.price.toLocaleString('en-US') }}</td>--}}
-                        {{--<td>@{{ item.number.toLocaleString('en-US') }}</td>--}}
-                        {{--<td>@{{ item.buy_number.toLocaleString('en-US') }}</td>--}}
-                        {{--<td>@{{ item.need_buy.toLocaleString('en-US') }}</td>--}}
-                        {{--<td v-if="item.need_buy>0">--}}
-                            {{--<button class="ui mini positive icon button" @click="addMaterial(item, index)">--}}
-                                {{--<i class="icon plus"></i>--}}
-                                {{--<span>添加物料</span>--}}
-                            {{--</button>--}}
-                        {{--</td>--}}
-                        {{--<td v-else>采购数量已满足</td>--}}
-                    {{--</tr>--}}
-                {{--</template>--}}
-                {{--<template v-else>--}}
-                    {{--<tr>--}}
-                        {{--<td colspan="10">暂无数据</td>--}}
-                    {{--</tr>--}}
-                {{--</template>--}}
-                {{--</tbody>--}}
-            {{--</table>--}}
+            <h4 class="inline-center">物料采购需求</h4>
+            <table class="ui center aligned table selectable">
+                <thead>
+                <tr>
+                    <th>物料名称</th>
+                    <th>性能及技术参数</th>
+                    <th>品牌型号</th>
+                    <th>生产厂家</th>
+                    <th>单位</th>
+                    <th>预算单价</th>
+                    <th>预算数量</th>
+                    <th>已采购数量</th>
+                    <th>未采购数量</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <template v-if="materialsComputed && materialsComputed.length">
+                    <tr v-for="(item, index) in materialsComputed" :key="item.id">
+                        <td>@{{ item.material.name }}</td>
+                        <td>@{{ item.material.param }}</td>
+                        <td>@{{ item.material.model }}</td>
+                        <td>@{{ item.material.factory }}</td>
+                        <td>@{{ item.material.unit }}</td>
+                        <td>@{{ item.price.toLocaleString('en-US') }}</td>
+                        <td>@{{ item.number.toLocaleString('en-US') }}</td>
+                        <td>@{{ item.buy_number.toLocaleString('en-US') }}</td>
+                        <td>@{{ item.need_buy.toLocaleString('en-US') }}</td>
+                        <td v-if="item.need_buy>0">
+                            <button class="ui mini positive icon button" @click="addMaterial(item, index)">
+                                <i class="icon plus"></i>
+                                <span>添加物料</span>
+                            </button>
+                        </td>
+                        <td v-else>采购数量已满足</td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="10">暂无数据</td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
             <!-- /物料详细 -->
 
             <div class="flex-row" style="width:50%;">
                 <div class="font-bold" style="white-space:nowrap;align-self:flex-end;margin-right:20px;">采购金额</div>
-                <div class="fake-input inline-center">@{{ budgetary_buy.amount.toLocaleString('en-US') || 0 }} ￥
-                </div>
+                {{--<div class="fake-input inline-center">@{{ budgetary_buy.amount.toLocaleString('en-US') || 0 }} ￥--}}
+                {{--</div>--}}
             </div>
             <h4 class="inline-center">采购物料清单</h4>
             <div class="ui form form-item">
@@ -189,10 +189,10 @@
                 <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                     <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in budgetary_buy.lists" :key="item.own_id">
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material.material && item.material.material.name || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.name || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.material.material && item.material.material.model || '无'}}</div>
+                            <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item.material && item.material.price.toLocaleString('en-US') || '无'}} ￥</div>
