@@ -512,6 +512,8 @@ class StockController extends Controller
                     $list->material = $materail;
                     $list->own_id = $list->id;
                     $list->need_number = $list->need;
+                    $list->material->edit = true;
+                    $list->edit = true;
                 }
             }
             $purchase->supplier_name = $purchase->supplier;
@@ -526,11 +528,12 @@ class StockController extends Controller
             $data['amount'] = $purchase->lists()->sum('cost');
 //            $data['project_number'] = empty($project)?'':$project->number;
 //            $data['project_content'] = empty($project)?'':$project->name;
-//            return json_encode($data);
+//            return response()->json($data);
             $invoice = Invoice::where('state','=',1)->get();
             $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
                 $budget->material = Material::find($budget->material_id);
+                $budget->material->edit = true;
                 $budget->index = $budget->id;
                 $budget->need_number = $budget->need_buy;
             }

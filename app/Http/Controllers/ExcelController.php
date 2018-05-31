@@ -265,7 +265,7 @@ class ExcelController extends Controller
             $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
-            array_multisort(array_column($lists,'date'),SORT_ASC,$lists);
+            array_multisort(array_column($lists,'date'),SORT_DESC,$lists);
         }
         $tr = [['日期','借款编号','借款金额','报销编号','报销金额	','付款编号','付款金额','其中：抵扣借款','其中：现金付款','其中：银行转账','未支付报销余额','借款余额']];
         if (!empty($lists)){

@@ -77,7 +77,7 @@
                         <th>已采购金额</th>
                         <th>剩余未采购数量</th>
                         <th>剩余未采购金额</th>
-                        <th>操作</th>
+                        {{--<th>操作</th>--}}
                     </tr>
                     </thead>
                     <template v-if="preMaterialsList && preMaterialsList.length">
@@ -97,9 +97,9 @@
                             <td>@{{ (item.buy_number * item.price).toLocaleString('en-US') }} ￥</td>
                             <td>@{{ item.need_buy.toLocaleString('en-US') }}</td>
                             <td>@{{ (item.need_buy * item.price).toLocaleString('en-US') }} ￥</td>
-                            <td>
-                                <el-button type="text" @click="checkDetail(item, index)">查询明细</el-button>
-                            </td>
+                            {{--<td>--}}
+                                {{--<el-button type="text" @click="checkDetail(item, index)">查询明细</el-button>--}}
+                            {{--</td>--}}
                         </tr>
                         </tbody>
                         <tfoot>
