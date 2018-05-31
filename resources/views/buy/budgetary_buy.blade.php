@@ -17,11 +17,11 @@
         <div id="invoiceType" style="display:none">{{json_encode($invoices)}}</div>
         <div id="materials" style="display:none">{{json_encode($budgets)}}</div>
         <input type="hidden" id="projectId" value="{{$project->id}}">
-        @if(isset($editData))
-            <input type="hidden" id="getId" value="{{$editData['info']->id}}">
-            <div id="editData" style="display:none">{{json_encode($editData)}}</div>
-        @else
-        @endif
+        {{--@if(isset($editData))--}}
+            <input type="hidden" id="getId" value="{{isset($editData)?$editData['info']->id:''}}">
+            <div id="editData" style="display:none">{{isset($editData)?json_encode($editData):''}}</div>
+        {{--@else--}}
+        {{--@endif--}}
 
         <h1 class="ui red header blue center aligned">预算内采购</h1>
 

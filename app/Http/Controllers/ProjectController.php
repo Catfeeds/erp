@@ -882,7 +882,7 @@ class ProjectController extends Controller
         $contracts = $post->get('contracts');
         DB::beginTransaction();
         try{
-            $id = $basic['id'];
+            $id = isset($basic['id'])?$basic['id']:0;
             if ($id){
 //                dd($id);
                 $purchase = Purchase::find($id);
