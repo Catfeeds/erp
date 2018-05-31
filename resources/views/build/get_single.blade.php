@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <th colspan="8">未收票金额</th>
-                    <th>{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')-$projectTeam->invoices()->sum('with_tax')}}￥</th>
+                    <th>{{$projectTeam->payments()->where('state','>=',3)->sum('price')->sum('apply_price')-$projectTeam->invoices()->sum('with_tax')}}￥</th>
                     <th></th>
                 </tr>
                 </tfoot>

@@ -83,10 +83,13 @@
         </table>
 
         <div class="flex-row flex-center margin-top-50" id="paySingleBtn">
+            @if($apply->state==1)
             <button class="ui icon button negative" id="paySingleCancel" style="margin:0 20px;">
                 <i class="icon delete"></i>
                 <span>撤销</span>
             </button>
+            @else
+            @endif
             @if(checkRole('pay_pass',$apply->id)&&$apply->state==1)
             <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
                 <i class="icon edit"></i>

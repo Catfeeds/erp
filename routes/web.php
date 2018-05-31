@@ -322,6 +322,6 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/print','PayController@printPay');
     Route::get('pay/confirm','PayController@confirmApply');
     Route::post('pay/select','PayController@selectApprover');
-    Route::get('pay/print','PayController@printPay');
+//    Route::get('pay/print','PayController@printPay');
 
 });

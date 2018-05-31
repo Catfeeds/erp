@@ -66,24 +66,24 @@
                 <th>抵扣借款</th>
                 <th>现金付款</th>
                 <th>银行转账</th>
-                <th></th>
-                <th></th>
+                <th>未支付报销余额</th>
+                <th>借款余额</th>
             </tr>
             <tr>
                 <th>初始数据</th>
-                <th class="fake-td">{{$loan->deduction}}￥</th>
-                <th class="fake-td">{{$loan->cash}}￥</th>
-                <th class="fake-td">{{$loan->transfer}}￥</th>
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
+                <th class="fake-td"></th>
+                <th class="fake-td">{{$loan->submitBalance+$loan->price}}￥</th>
+                <th class="fake-td">{{$loan->loanBalance}}￥</th>
             </tr>
             <tr>
                 <th>本次支付</th>
                 <th class="fake-td">{{$loan->deduction}}￥</th>
                 <th class="fake-td">{{$loan->cash}}￥</th>
                 <th class="fake-td">{{$loan->transfer}}￥</th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
+                <th class="fake-td">{{$loan->submitBalance}}￥</th>
+                <th class="fake-td">{{$loan->loanBalance}}￥</th>
             </tr>
             <tr>
                 <th>付款银行及账号</th>
