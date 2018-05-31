@@ -88,9 +88,9 @@
                     </td>
                     <td>{{$purchase->supplier}}</td>
                     <td>{{number_format($purchase->lists()->sum('cost'))}} ￥</td>
-                    <td>{{\App\Models\Project::find($purchase->project_id)->number}}</td>
-                    <td class="table-content">{{\App\Models\Project::find($purchase->project_id)->name}}</td>
-                    <td>{{\App\Models\Project::find($purchase->project_id)->pm}}</td>
+                    <td>{{$list->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</td>
+                    <td class="table-content">{{$list->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</td>
+                    <td>{{$list->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</td>
                     <td>{{$purchase->content}}</td>
                     <td>{{number_format($purchase->invoices()->sum('with_tax'))}} ￥</td>
                     <td>{{number_format($purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax'))}} ￥</td>

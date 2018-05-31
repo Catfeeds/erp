@@ -62,8 +62,7 @@
             clearTimeout(this.throttle.id_timer)
             this.throttle.id_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString,
-                type:'buy_extrabugetary_edit'
+                id: queryString
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -96,8 +95,7 @@
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString,
-                  type:'buy_extrabugetary_edit'
+                name: queryString
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -174,8 +172,8 @@
             }
 
             if (newMaterial.status) {
-              data.material = newMaterial
-              data.material_id = newMaterial.id
+              data.material = Object.assign({}, newMaterial)
+              data.material_id = data.material.id
             } else {
               data.name = newMaterial.name
             }
@@ -314,7 +312,7 @@
                   })
                   this.selectData.id = res.data.data.id
                   _http.UserManager.searchAuthUsers({
-                    role: 'buy_extrabugetary_check',
+                    role: 'buy_extrabudgetary_check',
                     // project_id: this.extrabudgetary.project_id
                   })
                     .then(resp => {

@@ -17,8 +17,14 @@
           $('#checkInvoice').removeClass('invisible')
           this.invoiceForm.project_id = $('#projectId').val()
           this.invoiceForm.id = $('#getId').val()
+
           const invoiceType = $('#invoiceType').text().trim()
+          const editData = $('#editData').text().trim()
+            console.log(editData)
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
+          editData === ''?'':this.invoiceForm = JSON.parse(editData)
+            console.log(this.invoiceForm)
+
         },
         methods: {
           //单位搜索
@@ -86,6 +92,9 @@
                     message: `提交成功`,
                     type: 'success'
                   })
+                  setTimeout(() => {
+                    window.close();
+                  }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',

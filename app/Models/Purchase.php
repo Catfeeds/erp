@@ -19,4 +19,8 @@ class Purchase extends Model
     {
         return $this->hasMany('App\Models\PurchaseInvoice','purchase_id','id');
     }
+    public function contracts()
+    {
+        return $this->hasMany('App\Models\PurchaseContract','purchase_id','id');
+    }
 }

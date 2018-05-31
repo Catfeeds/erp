@@ -16,6 +16,14 @@
 
         <input type="hidden" id="projectId" value="{{$project->id}}">
         <div id="invoiceType" style="display:none">{{json_encode($invoice)}}</div>
+        @if(isset($projectInvoice))
+            <input type="hidden" id="getId" value="{{$projectInvoice->id}}">
+            <input type="hidden" id="rate" value="{{$projectInvoice->rate}}">
+            <div id="editData" style="display:none">{{json_encode($projectInvoice)}}</div>
+        @else
+
+            @endif
+
 
         <h1 class="ui red header blue center aligned">开票</h1>
         <div class="invisible" id="checkInvoice">

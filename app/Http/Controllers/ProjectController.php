@@ -675,9 +675,33 @@ class ProjectController extends Controller
     public function checkInvoicePage()
     {
         $id = Input::get('id');
-        $project = Project::find($id);
-        $invoice = Invoice::select('id','rate as value')->where('state','=',1)->get();
-        return view('check.invoice',['project'=>$project,'invoice'=>$invoice]);
+        $invoiceId = Input::get('invoice_id');
+        if ($id){
+            $project = Project::find($id);
+            $invoice = Invoice::select('id','rate as value')->where('state','=',1)->get();
+            return view('check.invoice',['project'=>$project,'invoice'=>$invoice]);
+        }
+        if ($invoiceId){
+            $projectInvoice = ProjectInvoice::find($invoiceId);
+            $project = Project::find($projectInvoice->project_id);
+            $invoice = Invoice::select('id','rate as value')->where('state','=',1)->get();
+            $projectInvoice->rate = (int) $projectInvoice->rate;
+            $projectInvoice->payee = $projectInvoice->unit;
+            $projectInvoice->company = $projectInvoice->unit;
+            $lists = $projectInvoice->lists()->get();
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $list->with_tax = $list->tax_include;
+                    $list->tax = $list->tax_price;
+                    $list->without_tax = $list->tax_without;
+                }
+            }
+            $projectInvoice->lists = $lists;
+//            return json_encode($projectInvoice);
+            return view('check.invoice',['project'=>$project,'invoice'=>$invoice,'projectInvoice'=>$projectInvoice]);
+        }
+
+
     }
     public function checkCollectPage()
     {
@@ -689,34 +713,68 @@ class ProjectController extends Controller
     {
         DB::beginTransaction();
         try{
-            $project_id = $post->get('project_id');
-            $lists = $post->get('lists');
-            $invoice = new ProjectInvoice();
-            $swap = Invoice::find($post->get('rate'));
-            $invoice->project_id = $project_id;
-            $invoice->unit = $post->get('payee');
-            $invoice->date = $post->get('date');
-            $invoice->rate = $swap->rate;
-            $invoice->price = $post->get('price');
-            if ($invoice->save()){
-                $price = 0;
-                foreach ($lists as $item){
-                    $list = new InvoiceList();
-                    $list->invoice_id = $invoice->id;
-                    $list->number = $item['number'];
-                    $list->tax_include = $item['tax']+$item['without_tax'];
-                    $list->tax_price = $item['tax'];
-                    $list->tax_without = $item['without_tax'];
-                    if (isset($item['remark'])){
-                        $list->remark = $item['remark'];
+            $id = $post->get('id');
+            if ($id){
+                $lists = $post->get('lists');
+                $invoice = ProjectInvoice::find($id);
+                $invoice->lists()->delete();
+//                $swap = Invoice::find($post->get('rate'));
+//                $invoice->project_id = $project_id;
+                $invoice->unit = $post->get('payee');
+                $invoice->date = $post->get('date');
+                $invoice->rate = $post->get('rate');
+                $invoice->price = $post->get('price');
+                if ($invoice->save()){
+                    $price = 0;
+                    foreach ($lists as $item){
+                        $list = new InvoiceList();
+                        $list->invoice_id = $invoice->id;
+                        $list->number = $item['number'];
+                        $list->tax_include = $item['tax']+$item['without_tax'];
+                        $list->tax_price = $item['tax'];
+                        $list->tax_without = $item['without_tax'];
+                        if (isset($item['remark'])){
+                            $list->remark = $item['remark'];
+                        }
+                        $list->save();
+                        $price+=$list->tax_include;
                     }
-                    $list->save();
-                    $price+=$list->tax_include;
+                }
+                if ($price!=$invoice->price){
+                    throw new \Exception('金额不等！');
+                }
+            }else{
+                $project_id = $post->get('project_id');
+                $lists = $post->get('lists');
+                $invoice = new ProjectInvoice();
+//                $swap = Invoice::find($post->get('rate'));
+                $invoice->project_id = $project_id;
+                $invoice->unit = $post->get('payee');
+                $invoice->date = $post->get('date');
+                $invoice->rate = $post->get('rate');
+                $invoice->price = $post->get('price');
+                if ($invoice->save()){
+                    $price = 0;
+                    foreach ($lists as $item){
+                        $list = new InvoiceList();
+                        $list->invoice_id = $invoice->id;
+                        $list->number = $item['number'];
+                        $list->tax_include = $item['tax']+$item['without_tax'];
+                        $list->tax_price = $item['tax'];
+                        $list->tax_without = $item['without_tax'];
+                        if (isset($item['remark'])){
+                            $list->remark = $item['remark'];
+                        }
+                        $list->save();
+                        $price+=$list->tax_include;
+                    }
+                }
+                if ($price!=$invoice->price){
+                    throw new \Exception('金额不等！');
                 }
             }
-            if ($price!=$invoice->price){
-                throw new \Exception('金额不等！');
-            }
+
+
             DB::commit();
             return response()->json([
                 'code'=>'200',
@@ -1083,8 +1141,20 @@ class ProjectController extends Controller
     }
     public function createExtraBudgetaryPage()
     {
-        $invoice = Invoice::where('state','=',1)->get();
-        return view('buy.extrabudgetary',['invoice'=>$invoice]);
+        $id = Input::get('id');
+        if ($id){
+            $purchase = Purchase::find($id);
+            $contracts = $purchase->contracts()->get();
+            $lists = $purchase->lists()->get();
+            $purchase->supplier_name = $purchase->supplier;
+//            $content =
+            dd($purchase);
+//            echo $id;
+        }else{
+            $invoice = Invoice::where('state','=',1)->get();
+            return view('buy.extrabudgetary',['invoice'=>$invoice]);
+        }
+
     }
     public function showProjectsAuth()
     {

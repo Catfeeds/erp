@@ -489,9 +489,9 @@
                                     <td>{{$item->date}}</td>
                                     <td>{{$item->price}}￥</td>
                                     <td>{{$item->unit}}</td>
-                                    <td>{{$item->rate}}%</td>
+                                    <td>{{\App\Models\Invoice::find($item->rate)?\App\Models\Invoice::find($item->rate)->rate:$item->rate}}%</td>
                                     <td>
-                                        <button class="ui mini button primary" onclick="modityInvoice">修改</button>
+                                        <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/invoice')}}?invoice_id={{$item->id}}')">修改</button>
                                         <button onclick="window._helper.fullWindow('{{url('check/invoice/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                     </td>
                                 {{--</template>--}}
