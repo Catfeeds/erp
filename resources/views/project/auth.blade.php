@@ -71,7 +71,7 @@
 
         <!-- 第一项 -->
         <h4 class="ui dividing header blue">立项日期
-            <span style="margin: 0 30px;">{{date('Y-m-d',$project->createTime)}}至预计完工日期{{$project->acceptance_date}}</span> 权限设置情况</h4>
+            <span style="margin: 0 30px;">{{date('Y-m-d',$project->createTime)}}至预计完工日期{{date('Y-m-d',$project->finishTime)}}</span> 权限设置情况</h4>
         <div style="text-align: right;">
             <button class="ui button positive auth-add" data-type="1">新增人员</button>
         </div>
