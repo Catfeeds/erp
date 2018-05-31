@@ -81,6 +81,9 @@
                     message: `提交成功`,
                     type: 'success'
                   })
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',

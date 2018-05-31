@@ -173,6 +173,9 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/bail/edit','ProjectController@editBailInvoicePage');
    Route::post('check/bail/edit','ProjectController@editBailInvoice');
     Route::get('edit/check/tip','ProjectController@editTipPage');
+    Route::post('edit/check/tip','ProjectController@editCheckTip');
+    Route::get('check/bail/tip/edit','ProjectController@editCheckBailTipPage');
+    Route::post('check/bail/tip/edit','ProjectController@editCheckBailTip');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
     Route::post('create/budget','ProjectController@addBudget');

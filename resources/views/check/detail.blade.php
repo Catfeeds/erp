@@ -359,51 +359,58 @@
                     <table class="ui celled structured table center aligned special" >
                         <thead>
                         <tr>
-                            <th colspan="10">履约保证金回收情况</th>
+                            <th colspan="11">履约保证金回收情况</th>
                         </tr>
                         <tr>
-                            <th colspan="4">预计回收</th>
-                            <th colspan="5">实际回收</th>
-                            <th>操作</th>
+                            <th colspan="5">预计回收</th>
+                            <th colspan="6">实际回收</th>
+                            {{--<th>操作</th>--}}
                         </tr>
                         <tr>
                             <th>预计回收日期</th>
                             <th>预计回收金额</th>
                             <th>付款人</th>
                             <th>备注</th>
+                            <th>操作</th>
                             <th>实际回收日期</th>
                             <th>实际回收金额</th>
                             <th>付款人</th>
                             <th>付款银行</th>
                             <th>付款账户</th>
-                            <th>/</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
 {{--                        @if(!empty($bailReturn))--}}
                         @for($i=0;$i<count($bailReturn);$i++)
-                        <tr >
+{{--                            {{dd($bailReturn)}}--}}
+                        <tr>
                             {{--<template >--}}
                                 <td>{{$bailReturn[$i]->pay_date}}</td>
                                 <td>{{$bailReturn[$i]->price}}</td>
                                 <td>{{$bailReturn[$i]->pay_unit}}</td>
                                 <td>{{$bailReturn[$i]->remark}}</td>
+                                <td>
+                                <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/tip/edit')}}?id={{$bailReturn[$i]->id}}')">修改</button>
+                                </td>
                                 @if(isset($bailGet[$i]))
                                 <td>{{$bailGet[$i]->date}}</td>
                                 <td>{{$bailGet[$i]->price}}</td>
                                 <td>{{$bailGet[$i]->payee}}</td>
                                 <td>{{$bailGet[$i]->bank}}</td>
                                 <td>{{$bailGet[$i]->account}}</td>
+                                <td>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/edit')}}?id={{$bailGet[$i]->id}}')">修改</button>
+                                </td>
                                 @else
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                 @endif
-                                <td>
-                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/edit')}}?id={{$bailGet[$i]->id}}')">修改</button>
-                                </td>
+
                             {{--</template>--}}
                         </tr>
                             @endfor

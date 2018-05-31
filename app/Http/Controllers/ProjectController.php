@@ -1580,5 +1580,37 @@ class ProjectController extends Controller
         $project = Project::find($tip->project_id);
         return view('check.tip',['tip'=>$tip,'project'=>$project]);
     }
+    public function editCheckTip(Request $post)
+    {
+//        dd($post->all());
+        $id = $post->id;
+        $tip = Tip::find($id);
+        $tip->pay_date = $post->pay_date?$post->pay_date:$tip->pay_date;
+        $tip->pay_unit = $post->pay_unit?$post->pay_unit:$tip->pay_unit;
+        $tip->price = $post->price?$post->price:$tip->price;
+        $tip->remark = $post->remark?$post->remark:$tip->remark;
+        if ($tip->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
+    public function editCheckBailTipPage()
+    {
+        $id = Input::get('id');
+        $tip = Tip::find($id);
+        $project = Project::find($tip->project_id);
+        return view('check.bailTip',['tip'=>$tip,'project'=>$project]);
+    }
+    public function editCheckBailTip(Request $post)
+    {
+        $id = $post->id;
+        $tip = Tip::find($id);
+        $tip->pay_date = $post->pay_date?$post->pay_date:$tip->pay_date;
+        $tip->pay_unit = $post->pay_unit?$post->pay_unit:$tip->pay_unit;
+        $tip->price = $post->price?$post->price:$tip->price;
+        $tip->remark = $post->remark?$post->remark:$tip->remark;
+        if ($tip->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
 
 }

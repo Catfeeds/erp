@@ -60,7 +60,7 @@
 
 
             <!-- 预计请款 -->
-            <h4 class="ui red header blue center aligned">收票信息修改</h4>
+            <h4 class="ui red header blue center aligned">预计收回履约保证金信息修改</h4>
             <div  id="buyInvoiceEdit">
 
                 <form method="post">
