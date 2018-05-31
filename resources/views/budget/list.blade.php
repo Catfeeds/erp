@@ -215,7 +215,7 @@
                     <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost'))}}/{{number_format($project->budget()->sum('cost'))}}￥</td>
                     <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost'))}}/{{number_format($project->budget()->where('type','=',1)->sum('cost'))}}￥</td>
                     <td>{{number_format($project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount)}}/{{number_format($project->budget()->where('type','=',2)->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->otherCount+$project->payApplies()->sum('price'))}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'))}}￥</td>
+                    <td>{{number_format($project->otherCount+$project->payApplies()->where('state','>=',2)->sum('price'))}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'))}}￥</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>
