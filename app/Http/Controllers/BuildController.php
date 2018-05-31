@@ -431,7 +431,7 @@ class BuildController extends Controller
         $invoice->type = $post->type?$post->type:$invoice->type;
         $invoice->without_tax = $post->amount_without_tax?$post->amount_without_tax:$invoice->without_tax;
         $invoice->tax = $post->tax?$post->tax:$invoice->tax;
-        $invoice->with_tax = $post->amount?$post->amount:$invoice->with_tax;
+        $invoice->with_tax = $invoice->without_tax+$invoice->tax;
         if ($invoice->save()){
             return redirect()->back()->with('status','修改成功！');
         }
