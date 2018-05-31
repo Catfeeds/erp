@@ -21,7 +21,10 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">人员名称</label>
                             <div class="eleven wide field">
-                                <input type="hidden" id="authId" value="{{$user->id}}">
+                                {{--<input type="hidden" id="authId" value="{{$user->id}}">
+                                --}}
+
+                                <input type="hidden" id="currentId" value="{{$user->id}}">
                                 <input type="hidden" id="authName" value="{{$user->name}}">
                                 <input type="text" v-model="authForm.username" placeholder="请输入人员名称">
                             </div>

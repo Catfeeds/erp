@@ -47,15 +47,23 @@ class UserController extends Controller
     }
     public function register(Request $post)
     {
-        $username = $post->get('username');
-        $count = User::where('username','=',$username)->where('state','=',1)->count();
-        if ($count!=0){
-            return response()->json([
-                'code'=>'400',
-                'msg'=>'该用户已存在！'
-            ]);
+        $id = $post->get('id');
+
+        if ($id){
+            $user = User::find($id);
+        }else{
+            $username = $post->get('username');
+            $count = User::where('username','=',$username)->where('state','=',1)->count();
+            if ($count!=0){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'该用户已存在！'
+                ]);
+            }
+            $user = new User();
+
         }
-        $user = new User();
+
         $user->username = $post->get('username');
         $user->department = $post->get('department');
         $user->phone = $post->get('phone');

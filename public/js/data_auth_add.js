@@ -14,7 +14,7 @@
           }
         },
         mounted() {
-          this.authForm.id = $('currentId').val() || ''
+          this.authForm.id = $('#currentId').val() || ''
           this.authForm.username = $('#authName').val()
           this.authForm.department = $('#authDepartment').val()
           this.authForm.phone = $('#authNumber').val()

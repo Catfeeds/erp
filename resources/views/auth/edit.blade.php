@@ -12,7 +12,7 @@
             <div class="active section">权限编辑 - 陈巧笑</div>
         </div>
         <h4 class="ui header">操作人员：
-            <span class="font-normal">陈巧笑</span>
+            <span class="font-normal">{{\Illuminate\Support\Facades\Auth::user()->username}}</span>
         </h4>
         <form action="" method="POST">
             <div class="table-head-nowrap">

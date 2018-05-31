@@ -531,7 +531,8 @@ class StockController extends Controller
             $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
                 $budget->material = Material::find($budget->material_id);
-//                $budget->need_number = $budget->need_buy;
+                $budget->index = $budget->id;
+                $budget->need_number = $budget->need_buy;
             }
 //            dd($budgets);
             return view('buy.budgetary_buy',[
@@ -736,7 +737,11 @@ class StockController extends Controller
 //            $start =
             $startData = StockRecord::where('date','<',$start)->where('warehouse_id','=',$stock->warehouse_id)->orderBy('id','DESC')->first();
             if (!empty($startData)){
-                $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first()->toArray();
+//                dd($startData);
+                $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first();
+                $startData = empty($startData)?new StockRecordList():$startData->toArray();
+//                dd($startData);
+                //                ->toArray();
             }else{
                 $startData = new StockRecordList();
             }
