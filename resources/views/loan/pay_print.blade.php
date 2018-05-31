@@ -75,7 +75,7 @@
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
                 <th class="fake-td">{{$loan->submitBalance+$loan->price}}￥</th>
-                <th class="fake-td">{{$loan->loanBalance}}￥</th>
+                <th class="fake-td">{{$loan->loanBalance+$loan->deduction}}￥</th>
             </tr>
             <tr>
                 <th>本次支付</th>
