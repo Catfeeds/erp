@@ -122,5 +122,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/check_collect.js')}}"></script>
+    <script src="{{url('js/check_sub.js')}}"></script>
 @endsection

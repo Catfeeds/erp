@@ -26,9 +26,9 @@
                 </tr>
                 <tr>
                     <th>项目编号</th>
-                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                    <th class="fake-td" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
                     <th>项目内容</th>
-                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                    <th class="fake-td" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
                     <th>收货入库编号</th>
                 </tr>
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <th>项目经理</th>
-                    <th class="fake-td" colspan="3">{{\App\Models\Project::find($purchase->project_id)->pm}}</th>
+                    <th class="fake-td" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</th>
                     <th>采购金额</th>
                     <th class="fake-td" colspan="3">{{$purchase->lists()->sum('cost')}} ￥</th>
                     <th>收货人</th>
