@@ -460,10 +460,10 @@ class ProjectController extends Controller
             foreach ($projects as $project){
                 $materialId = Category::where('title','=','材料')->where('state','=',1)->pluck('id')->first();
                 $idArr = $project->loanSubmits()->where('state','>',2)->pluck('id')->toArray();
-                $materialCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$materialId)->sum('price');
+                $materialCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$materialId)->where('state','>=',3)->sum('price');
                 $engineId = Category::where('title','=','工程款')->where('state','=',1)->pluck('id')->first();
-                $engineCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$engineId)->sum('price');
-                $otherCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','!=',$materialId)->where('category_id','!=',$engineId)->sum('price');
+                $engineCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','=',$engineId)->where('state','>=',3)->sum('price');
+                $otherCount = LoanSubmitList::whereIn('loan_id',$idArr)->where('category_id','!=',$materialId)->where('category_id','!=',$engineId)->where('state','>=',3)->sum('price');
                 $project->materialCount = $materialCount;
                 $project->engineCount = $engineCount;
                 $project->otherCount = $otherCount;

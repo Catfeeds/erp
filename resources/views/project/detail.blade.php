@@ -182,11 +182,11 @@
                     <td class="function-three">{{number_format($project->invoices()->sum('price'))}}￥</td>
                     <td class="function-three">{{number_format($project->collects()->where('type','=',2)->sum('price'))}}￥</td>
                     <td class="function-three">{{number_format($project->collects()->where('type','=',3)->sum('price'))}}￥</td>
-                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
+                    <td>{{$project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
                     <td class="function-four">{{$project->stockRecords()->where('type','=',3)->sum('cost')}}￥</td>
                     <td class="function-four">{{$project->requestPayments()->where('state','=',3)->sum('price')}}￥</td>
-                    <td class="function-four">{{$project->loanSubmits()->where('state','>',3)->sum('price')}}￥</td>
-                    <td class="function-four">{{$project->payApplies()->sum('price')}}￥</td>
+                    <td class="function-four">{{$project->loanSubmits()->where('state','>=',3)->sum('price')}}￥</td>
+                    <td class="function-four">{{$project->payApplies()->where('state','>=',3)->sum('price')}}￥</td>
                     <td class="function-four">{{$project->stockRecords()->where('type','=',2)->sum('cost')}}￥</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('project/auth')}}?id={{$project->id}}')">权限设置</a>
