@@ -165,6 +165,14 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/master/print','ProjectController@checkMasterInvoice');
    Route::get('check/sub/print','ProjectController@checkSubInvoice');
    Route::get('check/sub/edit','ProjectController@editSubInvoicePage');
+   Route::post('check/sub/edit','ProjectController@editSubInvoice');
+   Route::get('check/master/edit','ProjectController@editMasterInvoicePage');
+   Route::post('check/master/edit','ProjectController@editMasterInvoice');
+   Route::get('check/company/edit','ProjectController@editCompanyInvoicePage');
+   Route::post('check/company/edit','ProjectController@editCompanyInvoice');
+   Route::get('check/bail/edit','ProjectController@editBailInvoicePage');
+   Route::post('check/bail/edit','ProjectController@editBailInvoice');
+    Route::get('edit/check/tip','ProjectController@editTipPage');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
     Route::post('create/budget','ProjectController@addBudget');

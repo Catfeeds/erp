@@ -54,7 +54,7 @@ class ProjectController extends Controller
 //        ]);
         if ($type){
             if ($type=='buy_budgetary_edit'||$type=='buy_extrabugetary_edit'||$type=='build_finish_list'||$type=='stock_get_list'||
-            $type=='loan_project_submit_edit'||$type=='stock_return_edit'){
+            $type=='loan_project_submit_edit'||$type=='stock_return_edit'||$type=='pay_add'){
                 if ($number){
                     $DbObj->where('number','like','%'.$number.'%');
                 }
@@ -1484,6 +1484,101 @@ class ProjectController extends Controller
         $collect = ProjectCollect::find($id);
         $project = Project::find($collect->project_id);
         return view('check.subContract',['collect'=>$collect,'project'=>$project]);
+    }
+    public function editSubInvoice(Request $post)
+    {
+//        dd(Input::all());
+        $id = $post->id;
+        $collect = ProjectCollect::find($id);
+        $collect->price = $post->price?$post->price:$collect->price;
+        $collect->payee = $post->payee?$post->payee:$collect->payee;
+        $collect->date = $post->date?$post->date:$collect->date;
+        $collect->bank = $post->bank?$post->bank:$collect->bank;
+        $collect->account = $post->account?$post->account:$collect->account;
+        if ($collect->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
+    public function editMasterInvoicePage()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        return view('check.master',['collect'=>$collect,'project'=>$project]);
+    }
+    public function editMasterInvoice(Request $post)
+    {
+        $id = $post->id;
+        $collect = ProjectCollect::find($id);
+        $collect->price = $post->price?$post->price:$collect->price;
+        $collect->payee = $post->payee?$post->payee:$collect->payee;
+        $collect->date = $post->date?$post->date:$collect->date;
+        $collect->bank = $post->bank?$post->bank:$collect->bank;
+        $collect->account = $post->account?$post->account:$collect->account;
+        if ($collect->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
+    public function editCompanyInvoicePage()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        return view('check.company',['collect'=>$collect,'project'=>$project]);
+    }
+    public function editCompanyInvoice(Request $post)
+    {
+        $id = $post->id;
+        $collect = ProjectCollect::find($id);
+        $collect->price = $post->price?$post->price:$collect->price;
+//        $collect->payee = $post->payee?$post->payee:$collect->payee;
+        $collect->date = $post->date?$post->date:$collect->date;
+//        $collect->bank = $post->bank?$post->bank:$collect->bank;
+//        $collect->account = $post->account?$post->account:$collect->account;
+        if ($collect->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
+    public function editBailInvoicePage()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+//        dd($collect);
+        return view('check.bail',['collect'=>$collect,'project'=>$project]);
+    }
+    public function editBailInvoice(Request $post)
+    {
+        $id = $post->id;
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        $price = $post->price;
+        $swap =$project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price');
+        if ($swap==0){
+            if ($price>$collect->price){
+                return redirect()->back()->with('status','不能超过原有金额！');
+            }
+        }else{
+            if ($swap+$collect->price<$price){
+                return redirect()->back()->with('status','不能超过履约保证金余额！');
+            }
+        }
+
+        $collect->price = $post->price?$post->price:$collect->price;
+        $collect->payee = $post->payee?$post->payee:$collect->payee;
+        $collect->date = $post->date?$post->date:$collect->date;
+        $collect->bank = $post->bank?$post->bank:$collect->bank;
+        $collect->account = $post->account?$post->account:$collect->account;
+        if ($collect->save()){
+            return redirect()->back()->with('status','修改成功！');
+        }
+    }
+    public function editTipPage()
+    {
+        $id = Input::get('id');
+        $tip = Tip::find($id);
+        $project = Project::find($tip->project_id);
+        return view('check.tip',['tip'=>$tip,'project'=>$project]);
     }
 
 }

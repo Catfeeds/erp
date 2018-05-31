@@ -402,7 +402,7 @@
                                     <td></td>
                                 @endif
                                 <td>
-                                    <button class="ui mini button primary" onclick="EditFnc(item, index, 'marginRecyle')">修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/edit')}}?id={{$bailGet[$i]->id}}')">修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -448,7 +448,7 @@
                                 <td>{{ $tip->pay_unit }}</td>
                                 <td>{{ $tip->remark }}</td>
                                 <td>
-                                    <button class="ui mini button primary" @onclick="EditFnc(item, index, 'requirement')">修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('edit/check/tip')}}?id={{$tip->id}}')">修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -559,7 +559,7 @@
                                 <td id="price">{{ $company->price }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
-                                    <button class="ui mini button primary" >修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/company/edit')}}?id={{$item->id}}')" >修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
@@ -643,7 +643,7 @@
                                 <td>{{ $item->account }}</td>
                                 {{--<td>{{ $item.remark }}</td>--}}
                                 <td>
-                                    <button class="ui mini button primary" @click="EditFnc(item, index, 'masterContract')">修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/master/edit')}}?id={{$item->id}}')" >修改</button>
                                     <button onclick="window._helper.fullWindow('{{url('check/master/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 

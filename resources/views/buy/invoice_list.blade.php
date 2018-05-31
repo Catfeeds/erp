@@ -31,11 +31,11 @@
                 </tr>
                 <tr>
                     <th class="bg-white">项目编号</th>
-                    <th class="font-normal bg-white" colspan="2">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                    <th class="font-normal bg-white" colspan="2">{{$purchase->project_id==0?"":\App\Models\Project::find($purchase->project_id)->number}}</th>
                     <th class="bg-white">项目内容</th>
-                    <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                    <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?"":\App\Models\Project::find($purchase->project_id)->name}}</th>
                     <th class="bg-white">项目经理</th>
-                    <th class="font-normal bg-white" colspan="2">{{\App\Models\Project::find($purchase->project_id)->pm}}</th>
+                    <th class="font-normal bg-white" colspan="2">{{$purchase->project_id==0?"":\App\Models\Project::find($purchase->project_id)->pm}}</th>
                 </tr>
                 <tr>
                     <th class="bg-white">采购金额</th>
@@ -61,13 +61,14 @@
                 </thead>
                 <tbody>
                 @for($i=0;$i<count($invoices);$i++)
+                    {{--{{dd($invoices)}}--}}
 {{--                @foreach($purchase->invoices as $invoice)--}}
                 <tr>
                     <td>{{$i+1}}</td>
                     <td>{{$invoices[$i]->date}}</td>
                     <td>{{$invoices[$i]->invoice_date}}</td>
                     <td>{{$invoices[$i]->number}}</td>
-                    <td>{{\App\Models\Invoice::find($invoices[$i]->type)->name}}</td>
+                    <td>{{is_numeric($invoices[$i]->type)?\App\Models\Invoice::find($invoices[$i]->type)->name:''}}</td>
                     <td>{{number_format($invoices[$i]->without_tax)}} ￥</td>
                     <td>{{number_format($invoices[$i]->tax)}} ￥</td>
                     <td>{{number_format($invoices[$i]->with_tax)}}￥</td>

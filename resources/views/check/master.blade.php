@@ -1,7 +1,7 @@
-@extends('layouts.main_no_nav')
-@section('title','分包合同修改')
+@extends('layouts.main')
+@section('title','已立项清单')
 @section('content')
-
+    <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
 
         <div class="ui breadcrumb">
@@ -17,20 +17,15 @@
 
         <div class="invisible margin-top-20" id="checkCollect">
             <div class="ui top attached tabular menu" style="cursor:pointer;">
-                <div class="item active" data-tab="tab-1">分包合同收款</div>
-                {{--<div class="item" data-tab="tab-2">主合同收款</div>--}}
-                {{----}}
-                {{--<div class="item active" data-tab="tab-3">收回履约保证金</div>--}}
+                <div class="item active" data-tab="tab-2">主合同收款</div>
             </div>
 
 
 
-
-
-            <!-- 分包合同收款 -->
-            <div class="ui tab attached segment active collect-item" data-tab="tab-1">
-                <h3 class="ui header center aligned">分包合同收款</h3>
+            <!-- 主合同收款 -->
+            <div class="ui tab attached segment active collect-item" data-tab="tab-2">
                 <form method="post">
+                <h3 class="ui header center aligned">主合同收款</h3>
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
@@ -53,15 +48,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">付款单位</label>
                                 <div class="twelve wide field">
-                                    {{--<el-autocomplete popper-class="my-autocomplete" v-model="collectForm.subContract.payee" :fetch-suggestions="querySearchCompany"--}}
-                                                     {{--placeholder="请选择付款单位" @select="handleSelectCompanyC">--}}
-                                        {{--<i class="el-icon-edit el-input__icon" slot="suffix">--}}
-                                        {{--</i>--}}
-                                        {{--<template slot-scope="props">--}}
-                                            {{--<div class="name">@{{ props.item }}</div>--}}
-                                        {{--</template>--}}
-                                    {{--</el-autocomplete>--}}
-                                    <input name="payee" value="{{$collect->payee}}">
+                                    <input name="payee" type="text" value="{{$collect->payee}}">
                                 </div>
                             </div>
                         </div>
@@ -69,9 +56,9 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款日期</label>
                                 <div class="twelve wide field">
-                                    <input name="date" value="{{$collect->date}}" type="date">
-                                    {{--<el-date-picker type="date" placeholder="请选择收款日期" value-format="yyyy-MM-dd">--}}
+                                    {{--<el-date-picker v-model="collectForm.masterContract.pay_date" type="date" placeholder="请选择收款日期" value-format="yyyy-MM-dd">--}}
                                     {{--</el-date-picker>--}}
+                                    <input name="date" type="date" value="{{$collect->date}}">
                                 </div>
                             </div>
                         </div>
@@ -79,7 +66,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款金额</label>
                                 <div class="twelve wide field icon input">
-                                    <input name="price" value="{{$collect->price}}" type="number" placeholder="请输入收款金额">
+                                    <input value="{{$collect->price}}" name="price" type="number" placeholder="请输入收款金额">
                                     <i class="yen icon"></i>
                                 </div>
                             </div>
@@ -88,9 +75,9 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款银行</label>
                                 <div class="twelve wide field icon input">
-                                    <input type="text" value="{{$collect->bank}}" name="bank">
-                                    {{--<el-autocomplete popper-class="my-autocomplete" v-model="collectForm.subContract.bank" :fetch-suggestions="querySearchBank"--}}
-                                                     {{--placeholder="请输入收款银行" @select="handleSelectBankC">--}}
+                                    <input name="bank" value="{{$collect->bank}}">
+                                    {{--<el-autocomplete popper-class="my-autocomplete" v-model="collectForm.masterContract.bank" :fetch-suggestions="querySearchBank"--}}
+                                                     {{--placeholder="请输入收款银行" @select="handleSelectBankB">--}}
                                         {{--<i class="el-icon-edit el-input__icon" slot="suffix">--}}
                                         {{--</i>--}}
                                         {{--<template slot-scope="props">--}}
@@ -105,8 +92,8 @@
                             <div class="inline fields">
                                 <label class="four wide field">银行账号</label>
                                 <div class="twelve wide field icon input">
-                                    <input name="account" type="text" value="{{$collect->account}}">
-                                    {{--<div class="fake-input">@{{ collectForm.subContract.account || '暂无' }}</div>--}}
+                                    <input name="account" value="{{$collect->account}}">
+                                    {{--<div class="fake-input">@{{ collectForm.masterContract.account || '暂无' }}</div>--}}
                                 </div>
                             </div>
                         </div>
@@ -120,8 +107,7 @@
                 </div>
                 </form>
             </div>
-
-            <!-- / 分包合同收款 -->
+            <!-- / 主合同收款 -->
 
 
         </div>
@@ -129,5 +115,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/check_sub.js')}}"></script>
+    <script src="{{url('js/check_collect.js')}}"></script>
 @endsection
