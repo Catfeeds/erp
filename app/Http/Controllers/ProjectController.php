@@ -897,6 +897,10 @@ class ProjectController extends Controller
                 $purchase->content = Invoice::find($basic['content'])->name;
                 $purchase->content_id = $basic['content'];
                 if ($purchase->save()){
+                    Task::where('content','=',$purchase->id)->where('type','=','buy_extrabugetary_check')->delete();
+                    Task::where('content','=',$purchase->id)->where('type','=','buy_bugetary_check')->delete();
+                    Task::where('content','=',$purchase->id)->where('type','=','buy_extrabugetary_pass')->delete();
+                    Task::where('content','=',$purchase->id)->where('type','=','buy_bugetary_pass')->delete();
                     $purchase->lists()->delete();
                     $purchase->contracts()->delete();
                     foreach ($lists as $item){
