@@ -11,7 +11,7 @@
 
           //新增物料
           newMaterial: {},
-
+ 
           throttle: {
             id_timer: null,
             name_timer: null,
@@ -31,7 +31,10 @@
         mounted() {
           this.extrabudgetary.info.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
           const invoiceType = $('#invoiceType').text().trim()
+          this.extrabudgetary.buy_id = $('#getId').val()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
+          const editData = $('#editData').text().trim()
+          editData === ''?'':this.extrabudgetary = JSON.parse(editData);
           $('#buyExtrabudgetary').removeClass('invisible')
         },
 
@@ -271,6 +274,7 @@
           dataFormat(data) {
             let result = {
               info: data.info,
+              buy_id: data.buy_id || '',
               project_id: data.project_id,
               contracts: data.contracts,
               lists: []

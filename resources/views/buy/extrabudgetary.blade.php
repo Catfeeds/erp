@@ -12,8 +12,12 @@
             <div class="active section">预算外采购</div>
         </div>
         <div id="invoiceType" style="display:none">{{json_encode($invoice)}}</div>
+        @if(isset($editData))
+            <input type="hidden" id="getId" value="{{$editData['info']->id}}">
+            <div id="editData" style="display:none">{{json_encode($editData)}}</div>
+            @else
+            @endif
 
-        <input type="hidden" id="purchaseId" value="">
         <h1 class="ui red header blue center aligned">预算外采购</h1>
         <div class="invisible" id="buyExtrabudgetary">
 

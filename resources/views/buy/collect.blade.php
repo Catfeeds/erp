@@ -126,14 +126,15 @@
                         <td></td>
                     @endif
                 </tr>
+                        <tr>
+                            <td colspan="12">合计</td>
+                            <td>{{number_format($purchase->lists()->sum('cost'))}} ￥</td>
+                            <td></td>
+                        </tr>
                 </tbody>
-                <tfoot>
-                <tr>
-                    <th colspan="12">合计</th>
-                    <th>{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
-                    <th></th>
-                </tr>
-                </tfoot>
+                {{--<tfoot>--}}
+
+                {{--</tfoot>--}}
                 @endforeach
 
             @else

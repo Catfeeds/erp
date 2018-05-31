@@ -691,9 +691,9 @@ class ProjectController extends Controller
             $lists = $projectInvoice->lists()->get();
             if (!empty($lists)){
                 foreach ($lists as $list){
-                    $list->with_tax = $list->tax_include;
-                    $list->tax = $list->tax_price;
-                    $list->without_tax = $list->tax_without;
+                    $list->with_tax = (float)$list->tax_include;
+                    $list->tax = (float)$list->tax_price;
+                    $list->without_tax = (float)$list->tax_without;
                 }
             }
             $projectInvoice->lists = $lists;
@@ -1146,9 +1146,32 @@ class ProjectController extends Controller
             $purchase = Purchase::find($id);
             $contracts = $purchase->contracts()->get();
             $lists = $purchase->lists()->get();
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $materail = Material::find($list->material_id);
+                    $list->name = $materail->name;
+                    $list->param = $materail->param;
+                    $list->model = $materail->model;
+                    $list->factory = $materail->factory;
+                    $list->unit = $materail->unit;
+                    $list->material = $materail;
+                }
+            }
             $purchase->supplier_name = $purchase->supplier;
+            $purchase->content = $purchase->content_id;
+            $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
 //            $content =
-            dd($purchase);
+            $data = [];
+            $data['info'] = $purchase;
+            $data['contracts'] = $contracts;
+            $data['lists'] = $lists;
+            $data['project_id'] = empty($project)?0:$project->id;
+            $data['project_number'] = empty($project)?'':$project->number;
+            $data['project_content'] = empty($project)?'':$project->name;
+//            return json_encode($data);
+            $invoice = Invoice::where('state','=',1)->get();
+            return view('buy.extrabudgetary',['invoice'=>$invoice,'editData'=>$data]);
+//            dd($data);
 //            echo $id;
         }else{
             $invoice = Invoice::where('state','=',1)->get();
