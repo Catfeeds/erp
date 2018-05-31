@@ -1,6 +1,7 @@
 @extends('layouts.main_no_nav')
 @section('title','分包合同修改')
 @section('content')
+
     <div class="normal-content print-no-padding">
 
         <div class="ui breadcrumb">
@@ -14,17 +15,20 @@
         </div>
         <input type="hidden" id="projectId" value="{{$project->id}}">
 
-        <div class=" margin-top-20"  style="cursor:pointer;">
-                {{--<div class="item" >分包合同收款</div>--}}
-            {{--</div>t">--}}
-            {{--<div class="ui top attached tabular men--}}
+        <div class="invisible margin-top-20" id="checkCollect">
+            <div class="ui top attached tabular menu" style="cursor:pointer;">
+                <div class="item active" data-tab="tab-1">分包合同收款</div>
+                {{--<div class="item" data-tab="tab-2">主合同收款</div>--}}
+                {{----}}
+                {{--<div class="item active" data-tab="tab-3">收回履约保证金</div>--}}
+            </div>
 
 
 
 
 
             <!-- 分包合同收款 -->
-            <div class="ui tab attached segment " >
+            <div class="ui tab attached segment active collect-item" data-tab="tab-1">
                 <h3 class="ui header center aligned">分包合同收款</h3>
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
@@ -72,7 +76,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款金额</label>
                                 <div class="twelve wide field icon input">
-                                    <input v-model.number="collectForm.subContract.price" type="number" placeholder="请输入收款金额">
+                                    <input value="{{$collect->price}}" type="number" placeholder="请输入收款金额">
                                     <i class="yen icon"></i>
                                 </div>
                             </div>
@@ -118,5 +122,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    {{--<script src="{{url('js/project_list.js')}}"></script>--}}
+    <script src="{{url('js/check_collect.js')}}"></script>
 @endsection
