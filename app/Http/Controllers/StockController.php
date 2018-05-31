@@ -184,9 +184,9 @@ class StockController extends Controller
                 $record->supplier_id = $info->supplier_id;
                 $record->supplier = Supplier::find($info->supplier_id)->name;
                 $project = Project::find($info->project_id);
-                $record->project_number = $project->number;
-                $record->project_content = $project->name;
-                $record->project_manager = $project->pm;
+                $record->project_number = empty($project)?'':$project->number;
+                $record->project_content = empty($project)?'':$project->name;
+                $record->project_manager = empty($project)?'':$project->pm;
                 $Rlist = new StockRecordList();
                 $Rlist->record_id = $record->id;
                 $Rlist->material_id = $purchase->material_id;
