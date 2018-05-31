@@ -126,7 +126,6 @@
             </tbody>
         </table>
         <!-- /第二项 -->
-        @if($project->state==2)
         <!-- 第三项 -->
         <h4 class="ui dividing header blue">保修截止日期
             <span style="margin: 0 30px;">{{$project->deadline}}至{{date('Y-m-d',strtotime($project->deadline)+63158400)}}</span> 权限设置情况</h4>
@@ -154,8 +153,6 @@
             @endforeach
             </tbody>
         </table>
-        @else
-            @endif
         <!-- /第三项 -->
 
 

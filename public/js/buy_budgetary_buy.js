@@ -25,11 +25,14 @@
         },
         mounted() {
           this.budgetary_buy.info.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+          this.budgetary_buy.buy_id = $('#getId').val()
           const invoiceType = $('#invoiceType').text().trim()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
           const materials = $('#materials').text().trim()
           this.materials = materials === '' ? [] : JSON.parse(materials)
           this.budgetary_buy.project_id = $('#projectId').val()
+          const editData = $('#editData').text().trim()
+          editData === ''?'':this.budgetary_buy = JSON.parse(editData);
           $('#budgetaryBuy').removeClass('invisible')
         },
 
@@ -161,6 +164,7 @@
           
           dataFormat(data) {
             let result = {
+              buy_id: data.buy_id,
               info: data.info,
               project_id: data.project_id,
               contracts: data.contracts,
@@ -197,7 +201,7 @@
                   
                   this.selectData.id = res.data.data.id
                   _http.UserManager.searchAuthUsers({
-                    role: 'buy_bugetary_check',
+                    role: 'buy_budgetary_check',
                     // project_id: this.budgetary_buy.project_id
                   })
                     .then(resp => {

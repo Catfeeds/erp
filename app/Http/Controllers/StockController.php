@@ -495,20 +495,68 @@ class StockController extends Controller
     }
     public function buyBudgetary(Request $post)
     {
+        $buy_id = $post->get('buy_id');
         $id = $post->get('id');
-//        dd($id);
-        $project = Project::find($id);
-        $invoice = Invoice::where('state','=',1)->get();
-        $budgets = $project->budget()->where('type','=',1)->get();
-        foreach ($budgets as $budget){
-            $budget->material = Material::find($budget->material_id);
-        }
+        if ($buy_id){
+            $purchase = Purchase::find($buy_id);
+            $contracts = $purchase->contracts()->get();
+            $lists = $purchase->lists()->get();
+            if (!empty($lists)){
+                foreach ($lists as $list){
+                    $materail = Material::find($list->material_id);
+                    $list->name = $materail->name;
+                    $list->param = $materail->param;
+                    $list->model = $materail->model;
+                    $list->factory = $materail->factory;
+                    $list->unit = $materail->unit;
+                    $list->material = $materail;
+                    $list->own_id = $list->id;
+                    $list->need_number = $list->need;
+                }
+            }
+            $purchase->supplier_name = $purchase->supplier;
+            $purchase->content = $purchase->content_id;
+            $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
+//            $content =
+            $data = [];
+            $data['info'] = $purchase;
+            $data['contracts'] = $contracts;
+            $data['lists'] = $lists;
+            $data['project_id'] = empty($project)?0:$project->id;
+            $data['amount'] = $purchase->lists()->sum('cost');
+//            $data['project_number'] = empty($project)?'':$project->number;
+//            $data['project_content'] = empty($project)?'':$project->name;
+//            return json_encode($data);
+            $invoice = Invoice::where('state','=',1)->get();
+            $budgets = $project->budget()->where('type','=',1)->get();
+            foreach ($budgets as $budget){
+                $budget->material = Material::find($budget->material_id);
+//                $budget->need_number = $budget->need_buy;
+            }
+//            dd($budgets);
+            return view('buy.budgetary_buy',[
+                'project'=>$project,
+                'invoices'=>$invoice,
+                'budgets'=>$budgets,
+                'editData'=>$data
+            ]);
+        }else{
+            $project = Project::find($id);
+            $invoice = Invoice::where('state','=',1)->get();
+            $budgets = $project->budget()->where('type','=',1)->get();
+            foreach ($budgets as $budget){
+                $budget->material = Material::find($budget->material_id);
+            }
 //        dd($budgets);
-        return view('buy.budgetary_buy',[
-            'project'=>$project,
-            'invoices'=>$invoice,
-            'budgets'=>$budgets
-        ]);
+            return view('buy.budgetary_buy',[
+                'project'=>$project,
+                'invoices'=>$invoice,
+                'budgets'=>$budgets
+            ]);
+        }
+
+//        dd($id);
+
     }
     public function buyCheckPage()
     {

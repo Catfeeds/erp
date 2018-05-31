@@ -882,66 +882,132 @@ class ProjectController extends Controller
         $contracts = $post->get('contracts');
         DB::beginTransaction();
         try{
-            $purchase = new Purchase();
-            $purchase->project_id = $project_id?$project_id:0;
-            $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
-            $purchase->number = 'CG'.date('Ymd',time()).sprintf("%03d", $count+1);
-            $supplier = Supplier::find($basic['supplier_id']);
-            $purchase->date = $basic['date'];
-            $purchase->supplier = $supplier->name;
-            $purchase->supplier_id = $basic['supplier_id'];
-            $purchase->bank = $supplier->bank;
-            $purchase->account = $supplier->account;
-            $purchase->condition = $basic['condition'];
-            $purchase->type = $basic['type'];
-            $purchase->content = Invoice::find($basic['content'])->name;
-            $purchase->worker_id = Auth::id();
-            $purchase->worker = Auth::user()->username;
-            if ($purchase->save()){
-                foreach ($lists as $item){
-                    if ($item['material_id']){
-                        $list = new PurchaseList();
-                        $list->purchase_id = $purchase->id;
-                        if ($purchase->type ==1){
-                            $list->budget_id = $item['material_id'];
-                            $budget = Budget::find($item['material_id']);
-                            if ($budget->need_buy<$item['number']){
-                                throw new Exception('数量错误！');
+            $id = $basic['id'];
+            if ($id){
+//                dd($id);
+                $purchase = Purchase::find($id);
+                $supplier = Supplier::find($basic['supplier_id']);
+                $purchase->date = $basic['date'];
+                $purchase->supplier = $supplier->name;
+                $purchase->supplier_id = $basic['supplier_id'];
+                $purchase->bank = $supplier->bank;
+                $purchase->account = $supplier->account;
+                $purchase->condition = $basic['condition'];
+                $purchase->type = $basic['type'];
+                $purchase->content = Invoice::find($basic['content'])->name;
+                $purchase->content_id = $basic['content'];
+                if ($purchase->save()){
+                    $purchase->lists()->delete();
+                    $purchase->contracts()->delete();
+                    foreach ($lists as $item){
+                        if ($item['material_id']){
+                            $list = new PurchaseList();
+                            $list->purchase_id = $purchase->id;
+                            if ($purchase->type ==1){
+                                $list->budget_id = $item['material_id'];
+                                $budget = Budget::find($item['material_id']);
+                                if ($budget->need_buy<$item['number']){
+                                    throw new Exception('数量错误！');
+                                }
+                                $budget->buy_number += $item['number'];
+                                $budget->need_buy = $budget->number-$budget->buy_number;
+                                $budget->save();
+                                $list->material_id = $budget->material_id;
+                            }else{
+                                $list->material_id = $item['material_id'];
                             }
-                            $budget->buy_number += $item['number'];
-                            $budget->need_buy = $budget->number-$budget->buy_number;
-                            $budget->save();
-                            $list->material_id = $budget->material_id;
-                        }else{
-                            $list->material_id = $item['material_id'];
+                            $list->price = $item['price'];
+                            $list->number = $item['number'];
+                            $list->need = $item['number'];
+                            $list->cost = $item['number']*$item['price'];
+                            $list->warranty_date = $item['warranty_date'];
+                            $list->warranty_time = $item['warranty_time'];
+                            $list->save();
                         }
-                        $list->price = $item['price'];
-                        $list->number = $item['number'];
-                        $list->need = $item['number'];
-                        $list->cost = $item['number']*$item['price'];
-                        $list->warranty_date = $item['warranty_date'];
-                        $list->warranty_time = $item['warranty_time'];
-                        $list->save();
-                    }
 
+                    }
+                    foreach ($contracts as $item) {
+                        $contract = new PurchaseContract();
+                        $contract->purchase_id = $purchase->id;
+                        $contract->name = $item['name'];
+                        $contract->href = $item['href'];
+                        $contract->save();
+                    }
+                    DB::commit();
+                    return response()->json([
+                        'code'=>'200',
+                        'msg'=>'SUCCESS',
+                        'data'=>[
+                            'id'=>$purchase->id,
+                            'type'=>$purchase->type
+                        ]
+                    ]);
                 }
-                foreach ($contracts as $item) {
-                    $contract = new PurchaseContract();
-                    $contract->purchase_id = $purchase->id;
-                    $contract->name = $item['name'];
-                    $contract->href = $item['href'];
-                    $contract->save();
+//                dd($purchase);
+            }else{
+                $purchase = new Purchase();
+                $purchase->project_id = $project_id?$project_id:0;
+                $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
+                $purchase->number = 'CG'.date('Ymd',time()).sprintf("%03d", $count+1);
+                $supplier = Supplier::find($basic['supplier_id']);
+                $purchase->date = $basic['date'];
+                $purchase->supplier = $supplier->name;
+                $purchase->supplier_id = $basic['supplier_id'];
+                $purchase->bank = $supplier->bank;
+                $purchase->account = $supplier->account;
+                $purchase->condition = $basic['condition'];
+                $purchase->type = $basic['type'];
+                $purchase->content = Invoice::find($basic['content'])->name;
+                $purchase->content_id = $basic['content'];
+                $purchase->worker_id = Auth::id();
+                $purchase->worker = Auth::user()->username;
+                if ($purchase->save()){
+                    foreach ($lists as $item){
+                        if ($item['material_id']){
+                            $list = new PurchaseList();
+                            $list->purchase_id = $purchase->id;
+                            if ($purchase->type ==1){
+                                $list->budget_id = $item['material_id'];
+                                $budget = Budget::find($item['material_id']);
+                                if ($budget->need_buy<$item['number']){
+                                    throw new Exception('数量错误！');
+                                }
+                                $budget->buy_number += $item['number'];
+                                $budget->need_buy = $budget->number-$budget->buy_number;
+                                $budget->save();
+                                $list->material_id = $budget->material_id;
+                            }else{
+                                $list->material_id = $item['material_id'];
+                            }
+                            $list->price = $item['price'];
+                            $list->number = $item['number'];
+                            $list->need = $item['number'];
+                            $list->cost = $item['number']*$item['price'];
+                            $list->warranty_date = $item['warranty_date'];
+                            $list->warranty_time = $item['warranty_time'];
+                            $list->save();
+                        }
+
+                    }
+                    foreach ($contracts as $item) {
+                        $contract = new PurchaseContract();
+                        $contract->purchase_id = $purchase->id;
+                        $contract->name = $item['name'];
+                        $contract->href = $item['href'];
+                        $contract->save();
+                    }
+                    DB::commit();
+                    return response()->json([
+                        'code'=>'200',
+                        'msg'=>'SUCCESS',
+                        'data'=>[
+                            'id'=>$purchase->id,
+                            'type'=>$purchase->type
+                        ]
+                    ]);
                 }
-                DB::commit();
-                return response()->json([
-                    'code'=>'200',
-                    'msg'=>'SUCCESS',
-                    'data'=>[
-                        'id'=>$purchase->id,
-                        'type'=>$purchase->type
-                    ]
-                ]);
             }
+
         }catch (Exception $exception){
             DB::rollback();
             return response()->json([

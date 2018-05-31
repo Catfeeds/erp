@@ -84,6 +84,7 @@
                 </thead>
                 <tbody>
                 @foreach($purchase->lists as $list)
+                    {{--{{dd($purchase->lists)}}--}}
                 <tr>
                     <td>{{$list->material->name}}</td>
                     <td>{{$list->material->param}}</td>
@@ -106,7 +107,7 @@
         </div>
 
         <div class="flex-row flex-center margin-top-50">
-            <a class="ui icon button primary" href="#" style="margin:0 10px;">
+            <a class="ui icon button primary" href="{{$purchase->type==1?url("buy/budgetary_buy").'?buy_id='.$purchase->id:url('buy/extrabudgetary').'?id='.$purchase->id}}" style="margin:0 10px;">
                 <i class="icon edit"></i>
                 <span>修改</span>
             </a>
