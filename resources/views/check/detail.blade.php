@@ -726,7 +726,7 @@
                                 <td>{{ $item->account }}</td>
 
                                 <td>
-                                    <button class="ui mini button primary" @click="EditFnc(item, index, 'subContract')">修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/sub/edit')}}?id={{$item->id}}')">修改</button>
                                     <button onclick="window._helper.fullWindow('{{url('check/sub/print')}}?id={{$item->id}}')" class="ui mini button primary">凭证</button>
                                 </td>
 

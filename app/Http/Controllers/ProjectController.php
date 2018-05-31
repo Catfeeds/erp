@@ -1155,6 +1155,7 @@ class ProjectController extends Controller
                     $list->factory = $materail->factory;
                     $list->unit = $materail->unit;
                     $list->material = $materail;
+                    $list->own_id = $list->id;
                 }
             }
             $purchase->supplier_name = $purchase->supplier;
@@ -1476,6 +1477,13 @@ class ProjectController extends Controller
                 'msg'=>'SUCCESS'
             ]);
         }
+    }
+    public function editSubInvoicePage()
+    {
+        $id = Input::get('id');
+        $collect = ProjectCollect::find($id);
+        $project = Project::find($collect->project_id);
+        return view('check.subContract',['collect'=>$collect,'project'=>$project]);
     }
 
 }

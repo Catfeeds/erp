@@ -164,6 +164,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('check/invoice/print','ProjectController@checkPrintInvoice');
    Route::get('check/master/print','ProjectController@checkMasterInvoice');
    Route::get('check/sub/print','ProjectController@checkSubInvoice');
+   Route::get('check/sub/edit','ProjectController@editSubInvoicePage');
 //   //预算管理
    Route::get('budget/detail','ProjectController@detailBudgetsPage');
     Route::post('create/budget','ProjectController@addBudget');
