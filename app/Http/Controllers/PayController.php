@@ -80,6 +80,12 @@ class PayController extends Controller
         $apply->cash = $post->get('cash');
         $apply->transfer = $post->get('transfer');
         $apply->other = $post->get('other');
+        if ($apply->price!=$apply->cash+$apply->transfer+$apply->other){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'金额不等！'
+            ]);
+        }
         $apply->bank = $post->get('bank');
         $apply->account = $post->get('account');
         $apply->manager = $post->get('manager');
@@ -96,7 +102,7 @@ class PayController extends Controller
     {
         $id = Input::get('id');
         $apply = PayApply::find($id);
-        if ($apply->state ==1){
+        if ($apply->state !=3){
 //            $apply->state =0;
             $apply->delete();
             Task::where('type','=','pay_pass')->where('content','=',$id)->delete();
@@ -219,7 +225,7 @@ class PayController extends Controller
         }
 
 
-        $data = $DbObj->paginate(10);
+        $data = $DbObj->orderBy('id','DESC')->paginate(10);
         return view('pay.list',['lists'=>$data]);
     }
     //借款
@@ -383,6 +389,8 @@ class PayController extends Controller
             $result[$i]['loan_price'] = LoanList::where('borrower','=',$swap[$i])->where('state','=',3)->sum('price')-LoanPay::where('applier','=',$swap[$i])->sum('deduction');
             $result[$i]['submit_price'] = LoanSubmit::where('loan_user','=',$swap[$i])->where('state','=',3)->sum('price');
         }
+        array_multisort(array_column($result,'loan_price'),SORT_DESC,$result);
+//        array_sort($result,'')
 //        dd($result);
 //        $result=[];
         return view('loan.list',['lists'=>$result]);
@@ -551,7 +559,7 @@ class PayController extends Controller
     }
     public function listLoanPayPage()
     {
-        $lists = LoanPay::paginate(10);
+        $lists = LoanPay::orderBy('id','DESC')->paginate(10);
         foreach ($lists as $list){
             $idArr = LoanPayList::where('pay_id','=',$list->id)->pluck('loan_id')->toArray();
             $list->BXNumber = LoanSubmit::whereIn('id',$idArr)->pluck('number')->toArray();

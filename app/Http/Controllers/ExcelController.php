@@ -267,7 +267,9 @@ class ExcelController extends Controller
             $lists = array_merge($swap,$list3);
             array_multisort(array_column($lists,'date'),SORT_DESC,$lists);
         }
+        $nTr = [['人员名称',$name,'开始日期',$s,'结束日期',$e]];
         $tr = [['日期','借款编号','借款金额','报销编号','报销金额	','付款编号','付款金额','其中：抵扣借款','其中：现金付款','其中：银行转账','未支付报销余额','借款余额']];
+        $tr = array_merge($nTr,$tr);
         if (!empty($lists)){
             for ($i=0;$i<count($lists);$i++){
                 if (strstr($lists[$i]['number'],'BXFK')){
@@ -547,9 +549,12 @@ class ExcelController extends Controller
     public function exportPurchaseCollect()
     {
         $value = Input::get('search');
+
         $tr = [['采购日期	','采购编号','预算内/外','供货商','物料名称','性能及技术','品牌型号','生产厂家','单位','单价','数量','保修截止日期']];
         if ($value){
             $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
+            $pTr = [['项目编号',$project->number,'项目内容',$project->name,'项目保修截止日期',$project->deadline]];
+            $tr = array_merge($pTr,$tr);
             $idArr = $project->purchases()->pluck('id')->toArray();
             $lists = PurchaseList::whereIn('purchase_id',$idArr)->get();
         }else{
@@ -570,7 +575,7 @@ class ExcelController extends Controller
                 $swap['material_model'] = $material->model;
                 $swap['material_factory'] = $material->factory;
                 $swap['material_unit'] = $material->unit;
-                $swap['price'] = $material->price;
+                $swap['price'] = $lists[$i]->price;
                 $swap['sum'] = $lists[$i]->number;
                 $swap['warranty_date'] = $lists[$i]->warranty_date;
                 $data[$i] = $swap;
@@ -946,9 +951,9 @@ class ExcelController extends Controller
                 $swap['number'] = $list->number;
                 $swap['supplier'] = $list->supplier;
                 $swap['cost'] = $list->lists()->sum('cost');
-                $swap['project_number'] = $project->number;
-                $swap['project_content'] = $project->name;
-                $swap['project_manager'] = $project->pm;
+                $swap['project_number'] = $project?$project->number:'';
+                $swap['project_content'] = $project?$project->name:'';
+                $swap['project_manager'] = $project?$project->pm:'';
                 $swap['pay'] = number_format($list->payments()->sum('pay_price'));
                 $swap['need'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price');
                 $swap['payState'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清';
@@ -987,9 +992,9 @@ class ExcelController extends Controller
                 $swap['number'] = $purchase->number;
                 $swap['supplier'] = $purchase->supplier;
                 $swap['cost'] = $purchase->lists()->sum('cost');
-                $swap['project_number'] = $project->number;
-                $swap['project_content'] = $project->name;
-                $swap['project_manager'] = $project->pm;
+                $swap['project_number'] = $project?$project->number:'';
+                $swap['project_content'] = $project?$project->name:'';
+                $swap['project_manager'] = $project?$project->pm:'';
                 $swap['content'] = $purchase->content;
                 $swap['invoices'] = $purchase->invoices()->sum('with_tax');
                 $swap['unInvoices'] = $purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax');
@@ -1018,6 +1023,19 @@ class ExcelController extends Controller
         }else{
             $lists = [];
         }
+        $material = Material::find($id);
+        $mTr = [['物料名称','性能及技术参数','型号','生产商家','单位','开始时间','结束时间']];
+        $mData = [[
+            'name'=>$material->name,
+            'param'=>$material->param,
+            'model'=>$material->model,
+            'factory'=>$material->factory,
+            'unit'=>$material->unit,
+            'start'=>$start,
+            'end'=>$end
+        ]];
+        $mTr  = array_merge($mTr,$mData);
+//        dd($mTr);
 //        dd($lists);
         $data = [];
         if (!empty($lists)){
@@ -1035,10 +1053,10 @@ class ExcelController extends Controller
                 array_push($data,$swap);
             }
         }
-
         $tr = [[
            '采购日期','采购编号','供货商','发票条件','付款条件','数量','单价','保修时间'
         ]];
+        $tr = array_merge($mTr,$tr);
         $data = array_merge($tr,$data);
 //        dd($data);
         $this->excel->create('物料采购比价清单',function ($excel) use ($tr,$data){
@@ -1075,9 +1093,9 @@ class ExcelController extends Controller
                 $swap['number'] = $list->number;
                 $swap['supplier'] = $list->supplier;
                 $swap['cost'] = $list->lists()->sum('cost');
-                $swap['project_number'] = $project->number;
-                $swap['project_content'] = $project->name;
-                $swap['project_manager'] = $project->pm;
+                $swap['project_number'] = $project?$project->number:'';
+                $swap['project_content'] = $project?$project->name:'';
+                $swap['project_manager'] = $project?$project->pm:'';
                 $swap['receive'] = $received;
                 $swap['need'] = $need;
                 $swap['state'] = $need==0?'已结清':'未结清';

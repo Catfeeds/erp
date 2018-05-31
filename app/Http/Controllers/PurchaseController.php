@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
 use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\PruchaseCheck;
@@ -250,23 +251,37 @@ class PurchaseController extends Controller
         $payment = PurchasePayment::find($id);
         return view('buy.payment_finish',['payment'=>$payment]);
     }
+    public function finishPaymentDelete()
+    {
+        $id = Input::get('id');
+        $payment = PurchasePayment::find($id);
+        if ($payment->state==3){
+            return redirect()->back()->with('status','已付款的申请不可删除！');
+        }
+        $payment->delete();
+        return redirect()->back()->with('status','删除成功！');
+    }
     public function finishPayment(Request $post)
     {
         $id = $post->get('id');
         $payment = PurchasePayment::find($id);
-        if ($payment->state!=2){
+        if ($payment->state==1){
             return response()->json([
                 'code'=>'400',
                 'msg'=>'未经复核！'
             ]);
         }
-        $payment->pay_price = $payment->price;
-        $payment->pay_date = $post->get('pay_date');
-        $payment->bank_id = $post->get('bank_id');
-        $payment->worker = Auth::user()->name;
-        $payment->worker_id = Auth::id();
-        $payment->remark = $post->get('remark');
-        $payment->state = 3;
+        if ($payment->state == 3){
+            $payment->remark = $post->get('remark');
+        }else{
+            $payment->pay_price = $payment->price;
+            $payment->pay_date = $post->get('pay_date');
+            $payment->bank_id = $post->get('bank_id');
+            $payment->worker = Auth::user()->name;
+            $payment->worker_id = Auth::id();
+
+            $payment->state = 3;
+        }
         if ($payment->save()){
             return response()->json([
                 'code'=>'200',
@@ -430,6 +445,41 @@ class PurchaseController extends Controller
         if ($invoice->save()){
             return redirect()->back()->with('status','修改成功！');
         }
+    }
+    public function delPurchase()
+    {
+        $id = Input::get('id');
+        $purchase = Purchase::find($id);
+        if ($purchase->state > 2){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不能删除！'
+            ]);
+        }
+        if ($purchase->type==1){
+            $purchaseList = $purchase->lists()->get();
+            if (!empty($purchaseList)){
+                for ($i=0;$i<count($purchaseList);$i++){
+                    $budget = Budget::find($purchaseList[$i]->budget_id);
+                    $budget->buy_number = $budget->buy_number-$purchaseList[$i]->number;
+                    $budget->need_buy = $budget->number-$budget->buy_number;
+                    $budget->save();
+//                            dd($budget);
+                }
+            }
+        }
+        $purchase->lists()->delete();
+        $purchase->contracts()->delete();
+        $purchase->delete();
+        Task::where('type','=','buy_extrabugetary_check')->where('content','=',$id)->delete();
+        Task::where('type','=','buy_bugetary_check')->where('content','=',$id)->delete();
+        Task::where('type','=','buy_extrabugetary_pass')->where('content','=',$id)->delete();
+        Task::where('type','=','buy_bugetary_pass')->where('content','=',$id)->delete();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS'
+        ]);
+//        dd($id);
     }
 
 

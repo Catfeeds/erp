@@ -19,7 +19,7 @@
             </div>
             <form method="get" class="ui form flex-fluid">
                 <div class="flex-row flex-around flex-wrap">
-                    <div class="inline fields">
+                    {{--<div class="inline fields">
                         <label>收货情况：</label>
                         <div class="field">
                             <div class="ui radio checkbox">
@@ -33,52 +33,52 @@
                                 <label>未收全</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="inline fields">
-                        <label>付款情况：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="payment" value="1">
-                                <label>已付清</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="payment" value="0">
-                                <label>未付清</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inline fields">
-                        <label>收票情况：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="invoice" value="1">
-                                <label>已全收</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="invoice" value="0">
-                                <label>未全收</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inline fields">
-                        <label>项目状态：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="status" value="1">
-                                <label>已结清</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="status" value="0">
-                                <label>未结清</label>
-                            </div>
-                        </div>
-                    </div>
+                    </div>--}}
+                    {{--<div class="inline fields">--}}
+                        {{--<label>付款情况：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="payment" value="1">--}}
+                                {{--<label>已付清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="payment" value="0">--}}
+                                {{--<label>未付清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="inline fields">--}}
+                        {{--<label>收票情况：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="invoice" value="1">--}}
+                                {{--<label>已全收</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="invoice" value="0">--}}
+                                {{--<label>未全收</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="inline fields">--}}
+                        {{--<label>项目状态：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="status" value="1">--}}
+                                {{--<label>已结清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="status" value="0">--}}
+                                {{--<label>未结清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
@@ -146,7 +146,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$lists->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

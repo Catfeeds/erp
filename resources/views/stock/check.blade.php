@@ -153,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <h3 class="ui header center aligned">暂无数据</h3>
+        {{--<h3 class="ui header center aligned">暂无数据</h3>--}}
         <div class="stockCheck table-head-nowrap">
 
             <table class="ui celled structured table center aligned">

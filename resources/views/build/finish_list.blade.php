@@ -74,7 +74,7 @@
                     <td>{{$apply->project_number}}</td>
                     <td class="table-content">{{$apply->project_content}}</td>
                     <td>{{$apply->project_manager}}</td>
-                    <td>{{$apply->price}} ￥</td>
+                    <td>{{number_format($apply->price)}} ￥</td>
                     <td>{{$apply->applier}}</td>
                     @if($apply->state<2)
                     <td>未复核</td>

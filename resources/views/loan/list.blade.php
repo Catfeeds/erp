@@ -25,8 +25,8 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>{{$list['name']}}</td>
-                    <td>{{$list['loan_price']}}￥</td>
-                    <td>{{$list['submit_price']}}￥</td>
+                    <td>{{number_format($list['loan_price'])}}￥</td>
+                    <td>{{number_format($list['submit_price'])}}￥</td>
                 </tr>
                 @endforeach
                     @else

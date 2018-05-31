@@ -57,6 +57,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="column">
+                            <div class="inline fields">
+                                <label class="six wide field flex-center">当前查询物料</label>
+                                <div class="ten wide field">
+                                    <div class="fake-input">{{\Illuminate\Support\Facades\Input::get('name')}}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="margin-top-20 flex-row flex-between flex-wrap">

@@ -73,7 +73,7 @@
                         <td>
                             <a href="javascript:_helper.fullWindow('{{url('pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                         </td>
-                        <td>{{$list->price}}￥</td>
+                        <td>{{number_format($list->price)}}￥</td>
                         <td style="max-width:350px;">{{$list->use}}</td>
                         <td>{{$list->project_number}}</td>
                         <td class="table-content">{{$list->project_content}}</td>
@@ -85,10 +85,10 @@
                             @else
 
                             <td>{{$list->pay_date}}</td>
-                            <td>{{$list->cash}}￥</td>
-                            <td>{{$list->transfer}}￥</td>
+                            <td>{{number_format($list->cash)}}￥</td>
+                            <td>{{number_format($list->transfer)}}￥</td>
                             <td>{{$list->bank}} {{$list->account}}</td>
-                            <td>{{$list->other}}￥</td>
+                            <td>{{number_format($list->other)}}￥</td>
                             <td style="max-width: 250px;">{{$list->remark}}</td>
                             <td>{{$list->manager}}</td>
                         @endif

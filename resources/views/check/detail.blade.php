@@ -381,11 +381,12 @@
                         </tr>
                         </thead>
                         <tbody>
-{{--                        @if(!empty($bailReturn))--}}
-                        @for($i=0;$i<count($bailReturn);$i++)
+                        @if($showCount!=0)
+                        @for($i=0;$i<$showCount;$i++)
 {{--                            {{dd($bailReturn)}}--}}
                         <tr>
                             {{--<template >--}}
+                            @if(isset($bailReturn[$i]))
                                 <td>{{$bailReturn[$i]->pay_date}}</td>
                                 <td>{{$bailReturn[$i]->price}}</td>
                                 <td>{{$bailReturn[$i]->pay_unit}}</td>
@@ -393,6 +394,14 @@
                                 <td>
                                 <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/tip/edit')}}?id={{$bailReturn[$i]->id}}')">修改</button>
                                 </td>
+                            @else
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                @endif
+
                                 @if(isset($bailGet[$i]))
                                 <td>{{$bailGet[$i]->date}}</td>
                                 <td>{{$bailGet[$i]->price}}</td>
@@ -414,6 +423,8 @@
                             {{--</template>--}}
                         </tr>
                             @endfor
+                            @else
+                            @endif
                         </tbody>
                         <tfoot>
                         <tr>

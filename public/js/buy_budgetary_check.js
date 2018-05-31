@@ -13,6 +13,54 @@
 
         mounted() {
           const vm = this
+          
+          $('#budgetaryCheckDelete').on('click', function () {
+            vm.$confirm('确定删除, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+              .then(() => {
+                _http.BuyManager.deleteBuy({
+                  id: $(this).data('id')
+                })
+                  .then(res => {
+                    if (res.data.code === '200') {
+                      const data = res.data.data
+                      vm.$message({
+                        type: 'success',
+                        message: '已删除!'
+                      })
+                      $(this).parents('div').html(`
+                      <h2 class="ui header" style="text-align:center">该项目已删除</h2>
+                      `)
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
+                    } else {
+                      vm.$notify({
+                        title: '错误',
+                        message: res.data.msg,
+                        type: 'error'
+                      })
+                    }
+                  })
+                  .catch(err => {
+                    vm.$notify({
+                      title: '错误',
+                      message: '服务器出错',
+                      type: 'error'
+                    })
+                  })
+              })
+              .catch(() => {
+                vm.$message({
+                  type: 'info',
+                  message: '已取消'
+                })
+              })
+          })
+
           $('#budgetaryCheckRecheck').on('click', function () {
             vm.$confirm('确定复核, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -26,7 +74,7 @@
                   .then(res => {
                     if (res.data.code === '200') {
                       const data = res.data.data
-                      const currentType = data.type == 1 ? 'buy_bugetary_pass' : 'buy_extrabugetary_pass'
+                  const currentType = data.type == 1 ? 'buy_bugetary_pass' : 'buy_extrabugetary_pass'
                       vm.selectData.id = data.id
                       vm.$message({
                         type: 'success',
@@ -130,6 +178,7 @@
                     message: '已选择了审批人',
                     type: 'success'
                   })
+                  $('.ui.dimmer').removeClass('active')
                 } else {
                   vm.$notify({
                     title: '错误',

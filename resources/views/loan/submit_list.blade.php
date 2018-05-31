@@ -15,36 +15,36 @@
 
             <form action="" class="ui form">
                 <div class="flex-row" style="justify-content: flex-end;">
-                    <div class="inline fields" style="margin-right:50px;">
-                        <label>付款状态：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="1">
-                                <label>已付款</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="0">
-                                <label>未付款</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inline fields">
-                        <label>报销类型：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="1">
-                                <label>期间费用报销</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="0">
-                                <label>项目成本报销</label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="inline fields" style="margin-right:50px;">--}}
+                        {{--<label>付款状态：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="1">--}}
+                                {{--<label>已付款</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="0">--}}
+                                {{--<label>未付款</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="inline fields">--}}
+                        {{--<label>报销类型：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="1">--}}
+                                {{--<label>期间费用报销</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="0">--}}
+                                {{--<label>项目成本报销</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
@@ -112,7 +112,7 @@
                     @else
                         <td>项目报销</td>
                     @endif
-                    <td>{{$list->price}}￥</td>
+                    <td>{{number_format($list->price)}}￥</td>
                     <td>
                         @if($list->project_id!=0)
                             {{\App\Models\Project::find($list->project_id)->number}}

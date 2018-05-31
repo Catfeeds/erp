@@ -18,7 +18,7 @@
                     <span>新建立项</span>
                 </button>
             </div>
-            <form action="/views/buy/project_list.html" class="ui form flex-fluid">
+            <form method="get" class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">
@@ -31,7 +31,7 @@
                             <div class="item" data-value="4">项目内容</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>

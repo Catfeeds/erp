@@ -28,7 +28,7 @@
                 <th>项目经理</th>
                 <th class="fake-td">{{$projectTeam->project_manager}}</th>
                 <th>完工请款金额</th>
-                <th class="fake-td">{{$projectTeam->price}} ￥</th>
+                <th class="fake-td">{{number_format($projectTeam->price)}} ￥</th>
             </tr>
             <tr>
                 <th>项目编号</th>
@@ -36,7 +36,7 @@
                 <th>项目内容</th>
                 <th colspan="4" class="fake-td">{{$projectTeam->project_content}}</th>
                 <th>已付款金额</th>
-                <th class="fake-td">{{$projectTeam->pay_price}} ￥</th>
+                <th class="fake-td">{{number_format($projectTeam->pay_price)}} ￥</th>
             </tr>
             <tr>
                 <th colspan="10">收票记录</th>
@@ -62,18 +62,18 @@
                 <td>{{$invoices[$i]->number}}</td>
                 <td>{{$invoices[$i]->type}}</td>
                 <td>{{$invoices[$i]->worker}}</td>
-                <td>{{$invoices[$i]->without_tax}} ￥</td>
-                <td>{{$invoices[$i]->tax}} ￥</td>
-                <td>{{$invoices[$i]->with_tax}} ￥</td>
+                <td>{{number_format($invoices[$i]->without_tax)}} ￥</td>
+                <td>{{number_format($invoices[$i]->tax)}} ￥</td>
+                <td>{{number_format($invoices[$i]->with_tax)}} ￥</td>
             </tr>
             @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="6">合计</th>
-                <th>{{$projectTeam->invoices()->sum('without_tax')}} ￥</th>
-                <th>{{$projectTeam->invoices()->sum('tax')}} ￥</th>
-                <th>{{$projectTeam->invoices()->sum('with_tax')}} ￥</th>
+                <th>{{number_format($projectTeam->invoices()->sum('without_tax'))}} ￥</th>
+                <th>{{number_format($projectTeam->invoices()->sum('tax'))}} ￥</th>
+                <th>{{number_format($projectTeam->invoices()->sum('with_tax'))}} ￥</th>
             </tr>
             <tr>
                 <th colspan="8">未收票金额</th>

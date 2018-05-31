@@ -14,21 +14,21 @@
         <div class="content-operation">
 
             <form action="" class="ui form">
-                <div class="inline fields" style="justify-content:flex-end;">
-                    <label>系统状态：</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="1">
-                            <label>待处理</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="0">
-                            <label>已处理</label>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="inline fields" style="justify-content:flex-end;">--}}
+                    {{--<label>系统状态：</label>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="1">--}}
+                            {{--<label>待处理</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="0">--}}
+                            {{--<label>已处理</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="flex-row flex-between flex-wrap">
                     <div>
                         <a class="ui green button" href="{{url('export/build/pay/list')}}">

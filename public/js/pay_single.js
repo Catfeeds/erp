@@ -22,6 +22,9 @@
                   title: '成功',
                   message: '撤销成功!'
                 })
+            setTimeout(() => {
+                window.close();
+        }, 2000)
               } else {
                 this.$notify({
                   title: '错误',

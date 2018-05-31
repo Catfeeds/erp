@@ -183,6 +183,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('budget/print','ProjectController@printBudget');
    //采购管理
     Route::get('purchases/list','ProjectController@listPurchasesPage');
+    Route::get('del/purchase','PurchaseController@delPurchase');
     Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
 //    Route::get('purchase/pay/list','ProjectController@listProjectPurchasesPage');
     Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage');
@@ -206,6 +207,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('purchase/payment/select/check','PurchaseController@selectPaymentCheck');
     Route::post('purchase/payment/finish','PurchaseController@finishPayment');
     Route::get('purchase/payment/finish','PurchaseController@finishPaymentPage');
+    Route::get('purchase/payment/delete','PurchaseController@finishPaymentDelete');
     Route::post('purchase/invoice/create','PurchaseController@createInvoices');
     Route::get('buy/budgetary','ProjectController@createBudgetaryPage');
     Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage');
@@ -267,6 +269,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('build/pay/select/checker','BuildController@selectPayApplyChecker');
     Route::post('build/pay/select/passer','BuildController@selectPayApplyPasser');
     Route::get('build/pay/add','BuildController@payAddPage');
+    Route::get('build/pay/add/delete','BuildController@payAddDelete');
     Route::post('build/pay/add','BuildController@payAdd');
     Route::get('build/get/single','BuildController@getSinglePage');
     Route::get('build/get/add','BuildController@getAddPage');

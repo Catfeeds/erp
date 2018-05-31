@@ -14,21 +14,21 @@
         <div class="content-operation">
 
             <form action="" class="ui form">
-                <div class="inline fields" style="justify-content:flex-end;">
-                    <label>系统状态：</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="1">
-                            <label>已结清</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="0">
-                            <label>未结清</label>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="inline fields" style="justify-content:flex-end;">--}}
+                    {{--<label>系统状态：</label>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="1">--}}
+                            {{--<label>已结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="0">--}}
+                            {{--<label>未结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="flex-row flex-between flex-wrap">
                     <div>
                         <a class="ui green button" href="{{url('export/build/list')}}">
@@ -81,11 +81,11 @@
                     <td>{{$list->project_number}}</td>
                     <td>{{$list->project_content}}</td>
                     <td>{{$list->project_manager}}</td>
-                    <td>{{$list->payments()->where('state','=',3)->sum('price')}} ￥</td>
-                    <td>{{$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
-                    <td>{{$list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price')}} ￥</td>
-                    <td>{{$list->invoices()->sum('with_tax')}} ￥</td>
-                    <td>{{$list->applies()->where('state','=',4)->sum('apply_price')-$list->invoices()->sum('with_tax')}} ￥</td>
+                    <td>{{number_format($list->payments()->where('state','=',3)->sum('price'))}} ￥</td>
+                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'))}} ￥</td>
+                    <td>{{number_format($list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'))}} ￥</td>
+                    <td>{{number_format($list->invoices()->sum('with_tax'))}} ￥</td>
+                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price')-$list->invoices()->sum('with_tax'))}} ￥</td>
                     <td>{{$list->payments()->where('state','=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price')!=0?'未结清':'已结清'}}</td>
                 </tr>
                 @endforeach

@@ -21,19 +21,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($tasks as $task)
+                @for($i=0;$i<count($tasks);$i++)
+                {{--@foreach($tasks as $task)--}}
                 <template >
                     <tr>
-                        <td>{{$task->id}}</td>
-                        <td>{{$task->title}}</td>
-                        <td>{{$task->number}}</td>
+                        <td>{{$i+1}}</td>
+                        <td>{{$tasks[$i]->title}}</td>
+                        <td>{{$tasks[$i]->number}}</td>
                         <td>待处理</td>
                         <td>
-                            <a class="ui mini button positive" href="{{url($task->url)}}">查看</a>
+                            <a class="ui mini button positive" href="{{url($tasks[$i]->url)}}">查看</a>
                         </td>
                     </tr>
                 </template>
-                @endforeach
+                @endfor
 
                 <template v-else>
                     <tr>

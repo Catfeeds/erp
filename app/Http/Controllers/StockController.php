@@ -50,7 +50,7 @@ class StockController extends Controller
                 $stocks = Stock::whereIn('warehouse_id',$idArr)->orderBy('cost','DESC')->paginate(10);
             }
         }else{
-            $stocks = Stock::orderBy('id','cost')->paginate(10);
+            $stocks = Stock::orderBy('cost','DESC')->paginate(10);
         }
 
         return view('stock.list',['stocks'=>$stocks]);
@@ -85,11 +85,11 @@ class StockController extends Controller
         $role = getRole('stock_return_list');
         if ($role=='all'){
             $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_return_list');
             $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 
         if (empty($lists)){
@@ -106,11 +106,11 @@ class StockController extends Controller
         $role = getRole('stock_get_list');
         if ($role =='all'){
             $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_get_list');
             $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }
         if (!empty($lists)){
             foreach ($lists as $list){
@@ -125,11 +125,11 @@ class StockController extends Controller
         $role = getRole('stock_out_list');
         if ($role =='all'){
             $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_get_list');
             $id_arr = StockRecord::where('type','=',4)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }
         if (!empty($lists)){
             foreach ($lists as $list){
@@ -505,6 +505,7 @@ class StockController extends Controller
                 foreach ($lists as $list){
                     $materail = Material::find($list->material_id);
                     $list->material = $materail;
+                    $list->material_id = $list->budget_id;
                     $list->material->number = $list->number;
 //                    $list->material->material = $materail;
                     $list->material->price = $list->price;
@@ -674,7 +675,18 @@ class StockController extends Controller
     }
     public function addOutPage()
     {
-        $lists = Purchase::where('state','=',3)->orderBy('id','DESC')->paginate(10);
+        $db = Purchase::where('state','=',3);
+        $search = Input::get('search');
+        if ($search){
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+//            dd($idArray);
+            if (!empty($idArray)){
+                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
+            }else{
+                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+            }
+        }
+        $lists = $db->orderBy('id','DESC')->paginate(10);
         foreach ($lists as $list){
             $list->lists = $list->lists()->get();
             $receivedPrice = 0;

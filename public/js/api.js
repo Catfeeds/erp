@@ -4,8 +4,8 @@
 }(window, function () {
 
   // const url = 'http://119.23.202.220:8080'
+  // const url = 'http://192.168.1.78/erp/public'
   const url = 'http://193.112.181.116:8080'
-  // const url = 'http://localhost/erp/public'
 
   class ProjectManager {
     constructor() {
@@ -704,6 +704,12 @@
     searchPurchase(search = {}) {
       return this._http.get(`/search/purchase`, {
         params: search
+      })
+    }
+
+    deleteBuy(data = {}){
+      return this._http.get(`/del/purchase`, {
+        params: data
       })
     }
   }

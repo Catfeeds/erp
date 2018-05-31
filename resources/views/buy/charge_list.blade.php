@@ -18,30 +18,30 @@
                     <span>Excel 导出</span>
                 </a>
             </div>
-            <form action="/views/buy/charge_list.html" class="ui form flex-fluid">
+            <form method="get" class="ui form flex-fluid">
                 <div class="flex-row flex-end flex-wrap">
-                    <div class="inline fields" style="margin-right:50px;">
-                        <select name="invoice" class="ui dropdown">
-                            <option value="">选择发票条件</option>
-                            <option value="1">专用票17%</option>
-                            <option value="0">专用票9%</option>
-                        </select>
-                    </div>
-                    <div class="inline fields">
-                        <label>系统状态：</label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="1">
-                                <label>已结清</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="system" value="0">
-                                <label>未结清</label>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div class="inline fields" style="margin-right:50px;">--}}
+                        {{--<select name="invoice" class="ui dropdown">--}}
+                            {{--<option value="">选择发票条件</option>--}}
+                            {{--<option value="1">专用票17%</option>--}}
+                            {{--<option value="0">专用票9%</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    {{--<div class="inline fields">--}}
+                        {{--<label>系统状态：</label>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="1">--}}
+                                {{--<label>已结清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="field">--}}
+                            {{--<div class="ui radio checkbox">--}}
+                                {{--<input type="radio" name="system" value="0">--}}
+                                {{--<label>未结清</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
@@ -56,7 +56,7 @@
                             <div class="item" data-value="5">项目经理</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>

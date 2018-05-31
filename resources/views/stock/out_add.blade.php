@@ -16,22 +16,22 @@
         <!-- 操作区域 -->
         <div class="content-operation">
 
-            <form action="" class="ui form">
-                <div class="inline fields" style="justify-content:flex-end;">
-                    <label>系统状态：</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="1">
-                            <label>已结清</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="0">
-                            <label>未结清</label>
-                        </div>
-                    </div>
-                </div>
+            <form method="get" class="ui form">
+                {{--<div class="inline fields" style="justify-content:flex-end;">--}}
+                    {{--<label>系统状态：</label>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="1">--}}
+                            {{--<label>已结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="0">--}}
+                            {{--<label>未结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="ui left action right input fluid flex-fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">
@@ -45,7 +45,7 @@
                             <div class="item" data-value="5">项目经理</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>

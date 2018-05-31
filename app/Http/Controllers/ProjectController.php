@@ -652,6 +652,7 @@ class ProjectController extends Controller
         $bailGet = $project->collects()->where('type','=',1)->get();
 //        dd($tips);
 //        dd($lists);
+        $showCount = count($bailGet)>count($bailReturn)?count($bailGet):count($bailReturn);
         return view('check.detail',[
             'project'=>$project,
             'mainContracts'=>$mainContracts,
@@ -668,7 +669,8 @@ class ProjectController extends Controller
             'tips'=>$tips,
             'subCompanies'=>$subCompany,
             'bailReturn'=>$bailReturn,
-            'bailGet'=>$bailGet
+            'bailGet'=>$bailGet,
+            'showCount'=>$showCount
         ]);
 
     }
@@ -851,16 +853,19 @@ class ProjectController extends Controller
         $tips = $post->get('tips');
 //        dd($tips);
         foreach ($tips as $item){
-            $tip = new Tip();
-            $tip->project_id = $id;
-            $tip->pay_date = $item['pay_date'];
-            $tip->price = $item['price'];
-            $tip->pay_unit = $item['payee'];
-            if (isset($item['remark'])){
-                $tip->remark = $item['remark'];
+            if (isset($item['pay_date'])&&isset($item['price'])&&isset($item['payee'])){
+                $tip = new Tip();
+                $tip->project_id = $id;
+                $tip->pay_date = $item['pay_date'];
+                $tip->price = $item['price'];
+                $tip->pay_unit = $item['payee'];
+                if (isset($item['remark'])){
+                    $tip->remark = $item['remark'];
+                }
+                $tip->type = $item['type'];
+                $tip->save();
             }
-            $tip->type = $item['type'];
-            $tip->save();
+
         }
         return response()->json([
             'code'=>'200',
@@ -885,6 +890,7 @@ class ProjectController extends Controller
             $id = isset($basic['id'])?$basic['id']:0;
             if ($id){
 //                dd($id);
+//                dd($post->all());
                 $purchase = Purchase::find($id);
                 $supplier = Supplier::find($basic['supplier_id']);
                 $purchase->date = $basic['date'];
@@ -901,15 +907,35 @@ class ProjectController extends Controller
                     Task::where('content','=',$purchase->id)->where('type','=','buy_bugetary_check')->delete();
                     Task::where('content','=',$purchase->id)->where('type','=','buy_extrabugetary_pass')->delete();
                     Task::where('content','=',$purchase->id)->where('type','=','buy_bugetary_pass')->delete();
+
+//                    dd($purchaseList);
+                    if ($purchase->type==1){
+                        $purchaseList = $purchase->lists()->get();
+                        if (!empty($purchaseList)){
+                            for ($i=0;$i<count($purchaseList);$i++){
+                                $budget = Budget::find($purchaseList[$i]->budget_id);
+                                $budget->buy_number = $budget->buy_number-$purchaseList[$i]->number;
+                                $budget->need_buy = $budget->number-$budget->buy_number;
+                                $budget->save();
+//                            dd($budget);
+                            }
+                        }
+                    }
                     $purchase->lists()->delete();
                     $purchase->contracts()->delete();
                     foreach ($lists as $item){
+//                        if ($item['id']){
+//                            $list = PurchaseList::find($item['id']);
+////                            if ($list)
+//                            dd($item);
+//                        }
                         if ($item['material_id']){
                             $list = new PurchaseList();
                             $list->purchase_id = $purchase->id;
                             if ($purchase->type ==1){
                                 $list->budget_id = $item['material_id'];
                                 $budget = Budget::find($item['material_id']);
+//                                dd($budget);
                                 if ($budget->need_buy<$item['number']){
                                     throw new Exception('数量错误！');
                                 }
@@ -1086,25 +1112,60 @@ class ProjectController extends Controller
     public function listProjectPurchasesPage()
     {
         $role = getRole('buy_list');
+        $search = Input::get('search');
+        $type = Input::get('seartch-type');
+
+
 //        $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $lists = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            if ($type){
+                if ($type<=2){
+                    $purchaseId = Purchase::where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%')->pluck('id')->toArray();
+                    $lists = Purchase::whereIn('project_id',$idArr)->whereIn('id',$purchaseId)->orderBy('id','DESC')->paginate(10);
+                }else{
+                    $projectId = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $lists = Purchase::whereIn('project_id',$idArr)->whereIn('project_id',$projectId)->orderBy('id','DESC')->paginate(10);
+                }
+            }else{
+                $lists = Purchase::whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            }
         }else{
-            $lists = Purchase::orderBy('id','DESC')->paginate(10);
+            if ($type){
+                if ($type<=2){
+                    $purchaseId = Purchase::where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%')->pluck('id')->toArray();
+                    $lists = Purchase::whereIn('id',$purchaseId)->orderBy('id','DESC')->paginate(10);
+                }else{
+                    $projectId = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $lists = Purchase::whereIn('project_id',$projectId)->orderBy('id','DESC')->paginate(10);
+                }
+            }else{
+                $lists = Purchase::orderBy('id','DESC')->paginate(10);
+            }
+
         }
         return view('buy.project_list',['lists'=>$lists]);
     }
     public function listPurchasesPayPage()
     {
         $role = getRole('buy_list');
+        $search = Input::get('search');
         $db = Purchase::where('state','=',3);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
             $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
-        }else{
-            $lists = $db->orderBy('id','DESC')->paginate(10);
         }
+        if ($search){
+
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+//            dd($idArray);
+            if (!empty($idArray)){
+                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
+            }else{
+                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+            }
+        }
+        $lists = $db->orderBy('id','DESC')->paginate(10);
         if(!empty($lists)){
             foreach ($lists as $list){
                 $count = $list->payments()->where('state','=',2)->count();
@@ -1117,12 +1178,22 @@ class ProjectController extends Controller
     {
         $role = getRole('buy_list');
         $db = Purchase::where('state','=',3);
+        $search = Input::get('search');
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
             $purchases = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
-        }else{
-            $purchases = $db->orderBy('id','DESC')->paginate(10);
         }
+        if ($search){
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+//            dd($idArray);
+            if (!empty($idArray)){
+                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
+            }else{
+                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+            }
+        }
+            $purchases = $db->orderBy('id','DESC')->paginate(10);
+
 //        $purchases = Purchase::paginate(10);
         return view('buy.charge_list',['purchases'=>$purchases]);
     }

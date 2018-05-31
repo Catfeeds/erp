@@ -156,10 +156,14 @@
                         <button class="ui mini button primary payPassBtn" data-id="{{$apply->id}}">审批</button>
                         @else
                         @endif
-                        @if($apply->state==3)
+                        @if($apply->state>=3)
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/add')}}?id={{$apply->id}}')">录入</a>
                         @else
                         @endif
+                            @if($apply->state<4)
+                                <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/add/delete')}}?id={{$apply->id}}')">删除</a>
+                            @else
+                            @endif
                     </td>
                 </tr>
 

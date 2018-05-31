@@ -185,6 +185,7 @@
               tmp.cost = currentData.cost
               tmp.warranty_date = currentData.warranty_date
               tmp.warranty_time = currentData.warranty_time
+                tmp.id = currentData.id || 0
               result.lists.push(tmp)
             }
             return result

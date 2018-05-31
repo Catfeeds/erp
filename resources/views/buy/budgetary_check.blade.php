@@ -111,6 +111,13 @@
                 <i class="icon edit"></i>
                 <span>修改</span>
             </a>
+            @if($purchase->state<3)
+                <button class="ui icon button primary" data-id="{{$purchase->id}}" id="budgetaryCheckDelete" style="margin:0 10px;">
+                    <i class="icon cancel"></i>
+                    <span>删除</span>
+                </button>
+            @else
+                @endif
             @if(checkRole($check,$purchase->id))
             <button class="ui icon button primary" id="budgetaryCheckRecheck" style="margin:0 10px;" data-id="{{$purchase->id}}">
                 <i class="icon legal"></i>

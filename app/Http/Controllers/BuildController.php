@@ -117,11 +117,11 @@ class BuildController extends Controller
         $role = getRole('build_invoice_list');
         if ($role == 'all'){
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('build_invoice_list');
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 
         if (!empty($lists)){
@@ -220,7 +220,7 @@ class BuildController extends Controller
 //            dd($exception);
             return response()->json([
                 'code'=>'400',
-                'msg'=>'数据出错！'
+                'msg'=>'数据出错，请核对数据！'
             ]);
         }
 
@@ -319,24 +319,48 @@ class BuildController extends Controller
         $projectTeam = ProjectTeam::find($pay->project_team);
         return view('build.pay_add',['pay'=>$pay,'projectTeam'=>$projectTeam]);
     }
+    public function payAddDelete()
+    {
+        $id = Input::get('id');
+        $pay = BuildPayFinish::find($id);
+        if ($pay->state==4){
+            return redirect()->back()->with('status','当前状态不能删除！');
+        }
+        $pay->delete();
+        Task::where('type','=','build_pay_pass')->where('content','=',$id)->delete();
+        Task::where('type','=','build_pay_check')->where('content','=',$id)->delete();
+        return redirect()->back()->with('status','删除成功！');
+    }
     public function payAdd(Request $post)
     {
         $id = $post->get('apply_id');
         $pay = BuildPayFinish::find($id);
-        $pay->pay_worker = $post->get('worker');
-        $pay->pay_worker_id = Auth::id();
-        $bank = BankAccount::find($post->get('bank_id'));
-        $pay->pay_bank = $bank->name;
-        $pay->pay_account = $bank->account;
-        $pay->remark = $post->get('remark');
-        $pay->pay_date = $post->get('date');
-        $pay->pay_price = $pay->apply_price;
-        $pay->state = 4;
-        $pay->save();
-        $projectTeam = ProjectTeam::find($pay->project_team);
-        $projectTeam->pay_price +=$pay->pay_price;
-        $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
-        $projectTeam->save();
+        if ($pay->state<3){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许录入!'
+            ]);
+        }
+        if ($pay->state==4){
+            $pay->remark = $post->get('remark');
+            $pay->save();
+        }else{
+            $pay->pay_worker = $post->get('worker');
+            $pay->pay_worker_id = Auth::id();
+            $bank = BankAccount::find($post->get('bank_id'));
+            $pay->pay_bank = $bank->name;
+            $pay->pay_account = $bank->account;
+            $pay->remark = $post->get('remark');
+            $pay->pay_date = $post->get('date');
+            $pay->pay_price = $pay->apply_price;
+            $pay->state = 4;
+            $pay->save();
+            $projectTeam = ProjectTeam::find($pay->project_team);
+            $projectTeam->pay_price +=$pay->pay_price;
+            $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
+            $projectTeam->save();
+        }
+
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'

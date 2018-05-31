@@ -63,6 +63,7 @@
           },
           handleSelectProjectId(item) {
             this.payForm.project_id = item.id
+            this.payForm.project_number = item.number
             this.payForm.project_content = item.name
           },
 
@@ -70,7 +71,8 @@
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                name: queryString,
+                  type: 'pay_add'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
@@ -95,6 +97,7 @@
           },
           handleSelectProjectContent(item) {
             this.payForm.project_id = item.id
+            this.payForm.project_number = item.number
             this.payForm.project_content = item.name
           },
 

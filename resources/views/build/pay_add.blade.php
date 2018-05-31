@@ -66,7 +66,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">付款金额</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$pay->apply_price}} ￥</div>
+                                <div class="fake-input">{{number_format($pay->apply_price)}} ￥</div>
                             </div>
                         </div>
                     </div>

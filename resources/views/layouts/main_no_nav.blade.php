@@ -23,10 +23,12 @@
 <body>
 <!-- 通用布局 === 复用 -->
 <div class="index-navbar ui menu blue-background print-hide">
-    <span id="sidebarBtn" class="index-navbar-item-left pull-left">
+    {{--<a href="{{url('')}}">--}}
+    <span id="sidebarBtn" class="index-navbar-item-left pull-left" onclick="window.location.href='{{url('')}}'">
       <i class="sidebar icon"></i>
-      <span>森乾科技</span>
+      <span>广东思域</span>
     </span>
+    {{--</a>--}}
     <div class="index-navbar-item-show right menu">
         <a class="item">
             <i class="user icon"></i>
