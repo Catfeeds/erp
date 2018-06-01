@@ -283,7 +283,7 @@ class BuildController extends Controller
         $pay->checker = Auth::user()->username;
         $pay->checker_id = Auth::id();
         $pay->save();
-        Task::where('type','=','build_pay_check')->where('content','=',$id)->update(['state'=>0]);
+        Task::where('type','=','build_pay_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
@@ -306,7 +306,7 @@ class BuildController extends Controller
         $pay->passer = Auth::user()->username;
         $pay->passer_id = Auth::id();
         $pay->save();
-        Task::where('type','=','build_pay_pass')->where('content','=',$id)->update(['state'=>0]);
+        Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'
@@ -328,7 +328,7 @@ class BuildController extends Controller
         }
         $pay->delete();
         Task::where('type','=','build_pay_pass')->where('content','=',$id)->delete();
-        Task::where('type','=','build_pay_check')->where('content','=',$id)->delete();
+        Task::where('type','=','build_finish_pass')->where('content','=',$id)->delete();
         return redirect()->back()->with('status','删除成功！');
     }
     public function payAdd(Request $post)
