@@ -93,8 +93,14 @@ class ProjectController extends Controller
             $budgets = $project->budget()->where('type','=',1)->get();
             foreach ($budgets as $budget){
                 $budget->material = Material::find($budget->material_id);
-                $budget->cost = number_format($budget->cost);
+//                $budget->cost = number_format($budget->cost);
                 $budget->price = $budget->price;
+//                $purchaseId = Purchase::where()->pluck('');
+                $budget->buy_cost = PurchaseList::where('budget_id','=',$budget->id)->where('material_id','=',$budget->material_id)->sum('cost');
+                $budget->need_cost = $budget->cost-$budget->buy_cost;
+                $budget->cost = number_format($budget->cost);
+                $budget->need_cost = number_format($budget->need_cost);
+                $budget->buy_cost = number_format($budget->buy_cost);
             }
             return response()->json([
                 'code'=>'200',

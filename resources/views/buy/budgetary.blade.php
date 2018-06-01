@@ -94,9 +94,9 @@
                             <td>@{{ item.cost.toLocaleString('en-US') }} ￥</td>
                             <td>@{{ materialType[item.type] }}</td>
                             <td>@{{ item.buy_number.toLocaleString('en-US') }}</td>
-                            <td>@{{ (item.buy_number * item.price).toLocaleString('en-US') }} ￥</td>
+                            <td>@{{ item.buy_cost.toLocaleString('en-US') }} ￥</td>
                             <td>@{{ item.need_buy.toLocaleString('en-US') }}</td>
-                            <td>@{{ (item.need_buy * item.price).toLocaleString('en-US') }} ￥</td>
+                            <td>@{{ item.need_cost.toLocaleString('en-US') }} ￥</td>
                             {{--<td>--}}
                                 {{--<el-button type="text" @click="checkDetail(item, index)">查询明细</el-button>--}}
                             {{--</td>--}}
