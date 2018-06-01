@@ -84,7 +84,7 @@
                 <td>{{\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')}}</td>
                 <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('cost'),2)}}￥</td>
                 <td>{{$lists[$i]->old_sum}}</td>
-                <td>{{number_format($lists[$i]->old_cost,2}}￥</td>
+                <td>{{number_format($lists[$i]->old_cost,2)}}￥</td>
                 <td>{{$lists[$i]->sum}}</td>
                 <td>{{number_format($lists[$i]->cost,2)}}￥</td>
                 <td>{{$lists[$i]->need_sum}}</td>
