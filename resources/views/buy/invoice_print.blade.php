@@ -69,9 +69,9 @@
                     <td>{{$invoices[$i]->invoice_date}}</td>
                     <td>{{$invoices[$i]->number}}</td>
                     <td>{{\App\Models\Invoice::find($invoices[$i]->type)->name}}</td>
-                    <td>{{$invoices[$i]->without_tax}} ￥</td>
-                    <td>{{$invoices[$i]->tax}} ￥</td>
-                    <td>{{$invoices[$i]->with_tax}}￥</td>
+                    <td>{{number_format($invoices[$i]->without_tax)}} ￥</td>
+                    <td>{{number_format($invoices[$i]->tax)}} ￥</td>
+                    <td>{{number_format($invoices[$i]->with_tax)}}￥</td>
                     <td>{{\App\User::find($invoices[$i]->worker)->name}}</td>
                 </tr>
             @endfor
