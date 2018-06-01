@@ -79,13 +79,13 @@
                 <td>{{$lists[$i]->material->model}}</td>
                 <td>{{$lists[$i]->material->factory}}</td>
                 <td>{{$lists[$i]->material->unit}}</td>
-                <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->price:0}} ￥</td>
+                <td>{{$lists[$i]->budget_id!=0?number_format(\App\Models\Budget::find($lists[$i]->budget_id)->price):0}} ￥</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->number:0}}</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->buy_number:0}}</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->need_buy:0}}</td>
                 <td>{{$lists[$i]->number}}</td>
-                <td>{{$lists[$i]->price}} ￥</td>
-                <td>{{$lists[$i]->cost}} ￥</td>
+                <td>{{number_format($lists[$i]->price)}} ￥</td>
+                <td>{{number_format($lists[$i]->cost)}} ￥</td>
                 <td>{{$lists[$i]->warranty_date}}</td>
                 <td>{{$lists[$i]->warranty_time}} </td>
             </tr>
