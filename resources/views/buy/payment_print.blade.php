@@ -34,11 +34,11 @@
             </tr>
             <tr>
                 <th class="bg-white">项目编号</th>
-                <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
                 <th class="bg-white">项目内容</th>
-                <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
                 <th class="bg-white">项目经理</th>
-                <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->pm}}</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</th>
             </tr>
             <tr>
                 <th class="bg-white">付款条件</th>
