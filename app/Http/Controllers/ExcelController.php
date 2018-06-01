@@ -1132,7 +1132,7 @@ class ExcelController extends Controller
             $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->paginate(10);
         }
         $tr = [[
-            '退料编号	','物料名称','型号','生产厂家','单位','退料数量','退料单价','退料金额','项目编号',
+            '退料编号	','物料名称','性能与技术参数','型号','生产厂家','单位','退料数量','退料单价','退料金额','项目编号',
             '项目内容	','项目经理','退料人','入库仓库	','收货人'
         ]];
         if (!empty($lists)){
@@ -1142,6 +1142,7 @@ class ExcelController extends Controller
                 $swap = [];
                 $swap['number'] = $list->record->number;
                 $swap['name'] = $list->material->name;
+                $swap['param'] = $list->material->param;
                 $swap['model'] = $list->material->model;
                 $swap['factory'] = $list->material->factory;
                 $swap['unit'] = $list->material->unit;
