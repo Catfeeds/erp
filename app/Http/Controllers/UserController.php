@@ -185,6 +185,18 @@ class UserController extends Controller
             'data'=>$users
         ]);
     }
+    public function disableTask()
+    {
+        $id = Input::get('id');
+        $task = Task::find($id);
+        if ($task->user_id!=Auth::id()){
+            return redirect()->back()->with('status','无权访问！');
+        }
+        $task->state = 0;
+        $task->save();
+        return redirect()->back()->with('status','操作成功！');
+
+    }
 
 
     

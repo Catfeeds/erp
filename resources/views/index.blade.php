@@ -31,6 +31,7 @@
                         <td>待处理</td>
                         <td>
                             <a class="ui mini button positive" href="{{url($tasks[$i]->url)}}">查看</a>
+                            <a class="ui mini button positive" href="{{url('disable/task')}}?id={{$tasks[$i]->id}}">忽略</a>
                         </td>
                     </tr>
                 </template>

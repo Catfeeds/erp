@@ -52,6 +52,7 @@ Route::get('search/loaned/user','PayController@searchLoanUser');
 Route::get('search/stock/get','StockController@searchStockGet');
 Route::get('banks','SystemController@searchBank');
 Route::get('users','UserController@getUsers');
+Route::get('disable/task','UserController@disableTask');
 //export
 Route::get('export/user','ExcelController@exportUser');
 Route::get('export/supplier','ExcelController@exportSupplier');
