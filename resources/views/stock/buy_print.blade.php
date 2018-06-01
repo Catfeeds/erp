@@ -83,8 +83,8 @@
                 <td>{{number_format($lists[$i]->price,2)}} ￥</td>
                 <td>{{\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')}}</td>
                 <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('cost'),2)}}￥</td>
-                <td>{{$purchase->lists()->sum('received')}}</td>
-                <td>{{number_format($purchase->lists()->sum('received')*$purchase->lists()->pluck('price')->first(),2)}}￥</td>
+                <td>{{$lists[$i]->old_sum}}</td>
+                <td>{{number_format($lists[$i]->old_cost,2}}￥</td>
                 <td>{{$lists[$i]->sum}}</td>
                 <td>{{number_format($lists[$i]->cost,2)}}￥</td>
                 <td>{{$lists[$i]->need_sum}}</td>
@@ -95,14 +95,15 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="8">合计</th>
-                <th>{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
-                <th>0</th>
+                <th colspan="7">合计</th>
+                <th>{{$purchase->lists()->sum('sum')}} ￥</th>
+                <th>{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
+                <th>{{$buy_num}}</th>
+                <th>{{number_format($but_count,2)}}</th>
+                <th>{{$get_num}}</th>
+                <th>{{number_format($get_count,2)}}</th>
+                <th>{{$need_num}}</th>
+                <th>{{number_format($need_count,2)}}</th>
             </tr>
             </tfoot>
         </table>
