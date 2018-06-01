@@ -29,9 +29,9 @@
             </tr>
             <tr>
                 <th>项目编号</th>
-                <th class="font-normal bg-white" colspan="2">{{\App\Models\Project::find($purchase->project_id)->number}}</th>
+                <th class="font-normal bg-white" colspan="2">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
                 <th>项目内容</th>
-                <th class="font-normal bg-white" colspan="3">{{\App\Models\Project::find($purchase->project_id)->name}}</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
                 <th>供货商</th>
                 <th class="font-normal bg-white" colspan="7">{{$purchase->supplier}}</th>
             </tr>
