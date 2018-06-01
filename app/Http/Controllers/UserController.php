@@ -90,8 +90,8 @@ class UserController extends Controller
         $project_id = Input::get('project_id',0);
         if ($project_id!=0){
             $idArr = Role::where('role_name','=',$role)->where('role_value','=','all')->pluck('user_id')->toArray();
-//            $users = User::whereIn('id',$idArr)->where('id','!=',Auth::id())->select(['id','name'])->get();
-            $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
+            $users = User::whereIn('id',$idArr)->where('id','!=',Auth::id())->select(['id','name'])->get();
+//            $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
@@ -101,8 +101,8 @@ class UserController extends Controller
             $idArr = Role::where('role_name','=',$role)->where('role_value','=','all')->pluck('user_id')->toArray();
             $idArr2 = ProjectRole::where('role_value','=',$role)->where('project_id','=',$project_id)->pluck('user_id')->toArray();
             $idArr = array_merge($idArr,$idArr2);
-//            $users = User::whereIn('id',$idArr)->where('id','!=',Auth::id())->select(['id','name'])->get();
-            $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
+            $users = User::whereIn('id',$idArr)->where('id','!=',Auth::id())->select(['id','name'])->get();
+//            $users = User::whereIn('id',$idArr)->select(['id','name'])->get();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',

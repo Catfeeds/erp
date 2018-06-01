@@ -234,7 +234,7 @@ class BuildController extends Controller
             foreach ($users as $user){
                 $task = new Task();
                 $task->user_id = $user;
-                $task->type = 'build_pay_check';
+                $task->type = 'build_pay_pass';
                 $task->title = '施工付款申请复核';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
@@ -256,7 +256,7 @@ class BuildController extends Controller
             foreach ($users as $user){
                 $task = new Task();
                 $task->user_id = $user;
-                $task->type = 'build_pay_pass';
+                $task->type = 'build_finish_pass';
                 $task->title = '施工付款申请审批';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
@@ -436,6 +436,7 @@ class BuildController extends Controller
     {
         $id = Input::get('id');
         $invoice = BuildInvoice::find($id);
+//        dd($invoice);
         $invoices = Invoice::where('state','=',1)->select(['id','name'])->get()->toArray();
 //        $invoices = array_column($invoices,'name');
 //        dd($invoices);
@@ -452,7 +453,9 @@ class BuildController extends Controller
         $invoice->date = $post->get_date?$post->get_date:$invoice->date;
         $invoice->worker = $post->worker?$post->worker:$invoice->worker;
         $invoice->invoice_date = $post->invoice_date?$post->invoice_date:$invoice->invoice_date;
+        $type = Invoice::where('name','=',$post->type)->where('state','=',1)->first();
         $invoice->type = $post->type?$post->type:$invoice->type;
+        $invoice->type_id = $type?$type->id:$invoice->type_id;
         $invoice->without_tax = $post->amount_without_tax?$post->amount_without_tax:$invoice->without_tax;
         $invoice->tax = $post->tax?$post->tax:$invoice->tax;
         $invoice->with_tax = $invoice->without_tax+$invoice->tax;

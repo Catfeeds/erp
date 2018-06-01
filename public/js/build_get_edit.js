@@ -8,16 +8,23 @@
           form: {
             get_date: '',
             invoice_date: '',
-            type: ''
+            type: '',
+            number: '',
+            tax: '',
+              without_tax:''
           },
-          invoice_type: []
+            invoiceType: []
         },
         mounted() {
           const invoice_type = $("#invoiceTypeList").text().trim()
-          this.invoice_type = invoice_type === ''?[]:JSON.parse(invoice_type)
+          this.invoiceType = invoice_type === ''?[]:JSON.parse(invoice_type)
           this.form.get_date = $('#getDate').val()
           this.form.invoice_date = $('#invoiceDate').val()
           this.form.type = $('#invoiceType').val()
+          this.form.tax = $('#tax').val()
+          this.form.without_tax = $('#withoutTax').val()
+          this.form.number = $('#number').val()
+            console.log(this.form)
           $('#buildGetEdit').removeClass('invisible')
         },
         methods: {}
