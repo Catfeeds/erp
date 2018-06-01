@@ -1256,7 +1256,7 @@ class ProjectController extends Controller
     public function searchPurchaseProject()
     {
         $name = Input::get('name');
-        $idArr = Purchase::where('state','=',3)->pluck('id')->toArray();
+        $idArr = Purchase::where('state','=',3)->pluck('project_id')->toArray();
         $db = Project::whereIn('id',$idArr);
         if ($name){
             $db->where('name','like','%'.$name.'%')
