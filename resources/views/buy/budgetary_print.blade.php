@@ -25,7 +25,7 @@
                 <th>采购日期</th>
                 <th class="font-normal bg-white" colspan="3">{{$purchase->date}}</th>
                 <th>采购金额</th>
-                <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('price'))}} ￥</th>
+                <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
             </tr>
             <tr>
                 <th>项目编号</th>

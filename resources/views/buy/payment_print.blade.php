@@ -46,9 +46,9 @@
             </tr>
             <tr>
                 <th class="bg-white">采购金额</th>
-                <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('price'))}} ￥</th>
+                <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
                 <th class="bg-white">应付账款余额</th>
-                <th class="font-normal bg-white" colspan="6">{{number_format($purchase->lists()->sum('price')-$purchase->payments()->sum('pay_price'))}} ￥</th>
+                <th class="font-normal bg-white" colspan="6">{{number_format($purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price'))}} ￥</th>
             </tr>
             <tr>
                 <th colspan="11">付款记录</th>
