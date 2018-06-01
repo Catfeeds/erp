@@ -260,12 +260,13 @@ class ExcelController extends Controller
         if (!$name||!$s){
             $lists = [];
         }else{
-            $list1 = LoanList::where('borrower','=',$name)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list2 = LoanSubmit::where('loan_user','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
             $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
-            array_multisort(array_column($lists,'date'),SORT_ASC,$lists);
+            array_multisort(array_column($lists,'created_at'),SORT_ASC,$lists);
+//            dd($lists);
         }
         $nTr = [['人员名称',$name,'开始日期',$s,'结束日期',$e]];
         $tr = [['日期','借款编号','借款金额','报销编号','报销金额	','付款编号','付款金额','其中：抵扣借款','其中：现金付款','其中：银行转账','未支付报销余额','借款余额']];
