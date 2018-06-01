@@ -42,6 +42,14 @@
                 <th class="font-normal bg-white" colspan="7">{{$purchase->condition}}</th>
             </tr>
             <tr>
+                <th >经办人</th>
+                <th class="font-normal bg-white" colspan="2">{{$purchase->worker}}</th>
+                <th >复核人</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->check==0?"":\App\User::find($purchase->check)->username}}</th>
+                <th >审批人</th>
+                <th class="font-normal bg-white" colspan="7">{{$purchase->pass==0?'':\App\User::find($purchase->pass)->username}}</th>
+            </tr>
+            <tr>
                 <th colspan="15" class="inline-center">采购物料清单</th>
             </tr>
             <tr class="no-padding">

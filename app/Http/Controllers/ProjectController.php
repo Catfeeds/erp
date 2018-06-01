@@ -91,6 +91,9 @@ class ProjectController extends Controller
         $project = Project::where('number','=',$number)->first();
         if ($project){
             $budgets = $project->budget()->where('type','=',1)->get();
+//            $need_cost_count = 0;
+//            $budget_cost_count = 0;
+//            $buy_cost_count = 0;
             foreach ($budgets as $budget){
                 $budget->material = Material::find($budget->material_id);
 //                $budget->cost = number_format($budget->cost);
@@ -98,9 +101,12 @@ class ProjectController extends Controller
 //                $purchaseId = Purchase::where()->pluck('');
                 $budget->buy_cost = PurchaseList::where('budget_id','=',$budget->id)->where('material_id','=',$budget->material_id)->sum('cost');
                 $budget->need_cost = $budget->cost-$budget->buy_cost;
-                $budget->cost = number_format($budget->cost);
-                $budget->need_cost = number_format($budget->need_cost);
-                $budget->buy_cost = number_format($budget->buy_cost);
+//                $budget_cost_count += $budget->cost;
+//                $need_cost_count += $budget->need_cost;
+//                $buy_cost_count += $budget->buy_cost;
+//                $budget->cost = number_format($budget->cost);
+//                $budget->need_cost = number_format($budget->need_cost);
+//                $budget->buy_cost = number_format($budget->buy_cost);
             }
             return response()->json([
                 'code'=>'200',
@@ -1270,8 +1276,10 @@ class ProjectController extends Controller
         $start = Input::get('s');
         $end = Input::get('e');
         if (!empty($start)){
-            $lists = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>=',$start)
-                ->whereDate('created_at','<=',$end)->get();
+            $idArr = PurchaseList::where('material_id','=',$id)->whereDate('created_at','>=',$start)
+                ->whereDate('created_at','<=',$end)->pluck('purchase_id')->toArray();
+            $purchaseId = Purchase::whereIn('id',$idArr)->where('state','>=',3)->pluck('id')->toArray();
+            $lists = PurchaseList::where('material_id','=',$id)->whereIn('purchase_id',$purchaseId)->get();
         }else{
             $lists = [];
         }

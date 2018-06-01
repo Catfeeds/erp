@@ -35,15 +35,16 @@
               count2: 0,
               count3: 0
             }
-
-            if (list.lenght) {
+            // console.log(this.preMaterialsList)
+            if (list.length) {
               list.forEach((item, index) => {
+                console.log(item)
                 result.count1 += item.cost
-                result.count2 += item.buy_number * item.price
-                result.count3 += item.need_buy * item.price
+                result.count2 += item.buy_cost
+                result.count3 += item.need_cost
               })
             }
-
+            // console.log(result)
             return result
           },
 
