@@ -39,9 +39,9 @@
             if (list.length) {
               list.forEach((item, index) => {
                 console.log(item)
-                result.count1 += item.cost
-                result.count2 += item.buy_cost
-                result.count3 += item.need_cost
+                result.count1 += parseFloat(item.cost)
+                result.count2 += parseFloat(item.buy_cost)
+                result.count3 += parseFloat(item.need_cost)
               })
             }
             // console.log(result)
