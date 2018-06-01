@@ -68,7 +68,7 @@
                     <td>{{$stocks[$i]->material()->unit}}</td>
                     <td>{{$stocks[$i]->number}} </td>
                     <td>{{number_format($stocks[$i]->cost,2)}}￥</td>
-                    <td>{{$stocks[$i]->number==0?0:number_format($stocks[$i]->cost/$stocks[$i]->number),2}} ￥</td>
+                    <td>{{$stocks[$i]->number==0?0:number_format($stocks[$i]->cost/$stocks[$i]->number,2),2}} ￥</td>
                     <td>{{$stocks[$i]->warehouse()->name}}</td>
                 </tr>
                 {{--@endforeach--}}

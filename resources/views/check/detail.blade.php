@@ -340,12 +340,12 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th>{{number_format($project->bail()->sum('price'))}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('price'),2)}} ￥</th>
                             <th>/</th>
-                            <th>{{number_format($project->bail()->sum('cost'))}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('cost'),2)}} ￥</th>
                             <th>/</th>
                             <th>/</th>
-                            <th>{{number_format($project->bail()->sum('pay_price'))}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('pay_price'),2)}} ￥</th>
                             <th>/</th>
                             <th>/</th>
                             <th>/</th>
@@ -433,7 +433,7 @@
                         </tr>
                         <tr>
                             <th colspan="3">剩余未回收保证金</th>
-                            <th colspan="7"> {{number_format($project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price'))}}￥</th>
+                            <th colspan="7"> {{number_format($project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price'),2)}}￥</th>
                         </tr>
                         </tfoot>
                     </table>

@@ -50,7 +50,7 @@
                     <td>{{!$tip->project()?'':$tip->project()->pm}}</td>
                     <td>{{$tip->type==1?'履约保证金':'请款'}}</td>
                     <td>{{$tip->pay_date}}</td>
-                    <td>{{number_format($tip->price)}}</td>
+                    <td>{{number_format($tip->price,2)}}</td>
                     <td>{{$tip->pay_unit}}</td>
                     <td>{{$tip->remark}}</td>
                 </tr>
