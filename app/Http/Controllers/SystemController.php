@@ -146,7 +146,7 @@ class SystemController extends Controller
                 'data'=>[
                     'size'=>$count+1,
                     'name'=>$name,
-                    'url'=>'http://193.112.181.116:8080/'.($destinationPath.'/'.$name),
+                    'url'=>env('APP_URL').$destinationPath.'/'.$name,
                 ]
             ]);
         }
