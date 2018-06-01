@@ -403,6 +403,8 @@ class PurchaseController extends Controller
         foreach ($lists as $list){
             $list->material = Material::find($list->material_id);
         }
+//        dd($lists);
+//        dd($purchase);
 //        $purchase->lists = $lists;
         return view('buy.budgetary_print',['purchase'=>$purchase,'lists'=>$lists]);
     }

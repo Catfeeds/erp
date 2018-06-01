@@ -15,7 +15,7 @@
         </div>
 
 
-        <h1 class="ui header center aligned">采购立项记帐凭证（预算内） </h1>
+        <h1 class="ui header center aligned">采购立项记帐凭证（预算{{$purchase->type==1?'内':'外'}}） </h1>
         <p style="text-align:right;font-size: 13px;padding-right:25px;">记账凭证号：</p>
         <table class="ui celled structured table" id="budgetaryPrint">
             <thead>
@@ -79,7 +79,7 @@
                 <td>{{$lists[$i]->material->model}}</td>
                 <td>{{$lists[$i]->material->factory}}</td>
                 <td>{{$lists[$i]->material->unit}}</td>
-                <td>{{$lists[$i]->budget_id!=0?number_format(\App\Models\Budget::find($lists[$i]->budget_id,2)->price):0}} ￥</td>
+                <td>{{$lists[$i]->budget_id!=0?number_format(\App\Models\Budget::find($lists[$i]->budget_id)->price,2):0}} ￥</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->number:0}}</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->buy_number:0}}</td>
                 <td>{{$lists[$i]->budget_id!=0?\App\Models\Budget::find($lists[$i]->budget_id)->need_buy:0}}</td>

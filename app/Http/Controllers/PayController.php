@@ -779,9 +779,9 @@ class PayController extends Controller
                 $projectTeam->save();
             }
             $lists = $post->get('lists');
+            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
             $payment = new RequestPayment();
             $payment->project_team = $projectTeam->id;
-            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
             $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
             $payment->team = $team->name;
             $payment->manager = $team->manager;
@@ -830,18 +830,18 @@ class PayController extends Controller
             $payment->passer_id = 0;
 
 //            dd($payment);
-            if (is_numeric($post->project_id)){
-                $project = Project::find($post->project_id);
-//                $payment->project_id = $project->id;
-                $payment->project_number = $project->number;
-                $payment->project_content = $project->name;
-                $payment->project_manager = $project->pm;
-            }
-            if (is_numeric($post->team)){
-                $team = Team::find($post->team);
-                $payment->team = $team->name;
-                $payment->manager = $team->manager;
-            }
+//            if (is_numeric($post->project_id)){
+//                $project = Project::find($post->project_id);
+////                $payment->project_id = $project->id;
+//                $payment->project_number = $project->number;
+//                $payment->project_content = $project->name;
+//                $payment->project_manager = $project->pm;
+//            }
+//            if (is_numeric($post->team)){
+//                $team = Team::find($post->team);
+//                $payment->team = $team->name;
+//                $payment->manager = $team->manager;
+//            }
             $payment->request_date = $post->get('date');
             $payment->price = $post->get('price');
             $payment->applier = Auth::user()->name;
@@ -965,7 +965,7 @@ class PayController extends Controller
     {
         $id = Input::get('id');
         $payment = RequestPayment::find($id);
-        if ($payment->state!=1){
+        if ($payment->state >2){
             return response()->json([
                 'code'=>'400',
                 'msg'=>'当前状态不允许删除!'
