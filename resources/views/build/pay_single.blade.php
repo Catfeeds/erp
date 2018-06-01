@@ -77,7 +77,7 @@
             <tr>
                 <td>{{$list->number}}</td>
                 <td>{{$list->request_date}}</td>
-                <td>{{$list->price}} ￥</td>
+                <td>{{number_format($list->price,2)}} ￥</td>
                 <td>{{$list->applier}}</td>
                 <td>{{$list->checker}}</td>
                 <td>{{$list->passer}}</td>
@@ -87,7 +87,7 @@
             <tfoot>
             <tr>
                 <th colspan="2">合计</th>
-                <th>{{$projectTeam->payments()->where('state','=',3)->sum('price')}} ￥</th>
+                <th>{{$projectTeam->payments()->where('state','=',3)->sum('price'),2}} ￥</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -127,7 +127,7 @@
                 <tr>
                     <td>{{$apply->number}}</td>
                     <td>{{$apply->apply_date}}</td>
-                    <td>{{$apply->apply_price}} ￥</td>
+                    <td>{{number_format($apply->apply_price,2)}} ￥</td>
                     <td>{{$apply->payee}}</td>
                     <td>{{$apply->bank}}/{{$apply->account}}</td>
                     <td>{{$apply->worker}}</td>
@@ -135,7 +135,7 @@
                     <td>{{$apply->passer}}</td>
                     @if($apply->state==4)
                     <td>{{$apply->pay_date}}</td>
-                    <td>{{$apply->pay_price}} ￥</td>
+                    <td>{{number_format($apply->pay_price,2)}} ￥</td>
                     <td>{{$apply->pay_bank}}/{{$apply->pay_account}}</td>
                     <td style="min-width:200px;">{{$apply->remark}}</td>
                     <td>{{$apply->pay_worker}}</td>
@@ -173,11 +173,11 @@
                 <tfoot>
                 <tr>
                     <th colspan="13">已付款合计</th>
-                    <th>{{$projectTeam->applies()->where('state','=',4)->sum('apply_price')}}￥</th>
+                    <th>{{number_format($projectTeam->applies()->where('state','=',4)->sum('apply_price'),2)}}￥</th>
                 </tr>
                 <tr>
                     <th colspan="13">剩余应付账款</th>
-                    <th>{{$projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')}}￥</th>
+                    <th>{{number_format($projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price'),2)}}￥</th>
                 </tr>
                 </tfoot>
             </table>

@@ -106,18 +106,18 @@
                     <td></td>
                     <td></td>
                     <td>{{$list['number']}}</td>
-                    <td>{{number_format($list['price'])}}￥</td>
-                    <td>{{number_format($list['deduction'])}}￥</td>
-                    <td>{{number_format($list['cash'])}}</td>
-                    <td>{{number_format($list['transfer'])}}￥</td>
-                    <td>{{number_format($list['submitBalance'])}}￥</td>
-                    <td>{{number_format($list['loanBalance'])}}￥</td>
+                    <td>{{number_format($list['price'],2)}}￥</td>
+                    <td>{{number_format($list['deduction'],2)}}￥</td>
+                    <td>{{number_format($list['cash'],2)}}</td>
+                    <td>{{number_format($list['transfer'],2)}}￥</td>
+                    <td>{{number_format($list['submitBalance'],2)}}￥</td>
+                    <td>{{number_format($list['loanBalance'],2)}}￥</td>
                 </tr>
                 @elseif(strstr($list['number'],'JK'))
                         <tr>
                             <td>{{$list['date']}}</td>
                             <td>{{$list['number']}}</td>
-                            <td>{{number_format($list['price'])}}￥</td>
+                            <td>{{number_format($list['price'],2)}}￥</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -125,8 +125,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{number_format($list['submitBalance'])}}￥</td>
-                            <td>{{number_format($list['loanBalance'])}}￥</td>
+                            <td>{{number_format($list['submitBalance'],2)}}￥</td>
+                            <td>{{number_format($list['loanBalance'],2)}}￥</td>
                         </tr>
                         @else
                         <tr>
@@ -134,14 +134,14 @@
                             <td></td>
                             <td></td>
                             <td>{{$list['number']}}</td>
-                            <td>{{number_format($list['price'])}} ￥</td>
+                            <td>{{number_format($list['price'],2)}} ￥</td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{number_format($list['submitBalance'])}}￥</td>
-                            <td>{{number_format($list['loanBalance'])}}￥</td>
+                            <td>{{number_format($list['submitBalance'],2)}}￥</td>
+                            <td>{{number_format($list['loanBalance'],2)}}￥</td>
                         </tr>
                         @endif
 

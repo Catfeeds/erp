@@ -200,16 +200,16 @@
                     <td></td>
                     <td></td>
                     <td>{{empty($startData['stock_number'])?0:$startData['stock_number']}}</td>
-                    <td>{{empty($startData['stock_cost'])?0:$startData['stock_cost']}}</td>
-                    <td>{{empty($startData['stock_price'])?0:$startData['stock_price']}}</td>
+                    <td>{{empty($startData['stock_cost'])?0:number_format($startData['stock_cost'],2)}}</td>
+                    <td>{{empty($startData['stock_price'])?0:number_format($startData['stock_price'],2)}}</td>
                 </tr>
                 @foreach($lists as $list)
                 <tr>
                     <td>{{$list->record->date}}</td>
                     @if($list->record->type==1||$list->record->type==2)
                     <td>{{$list->sum}}</td>
-                    <td>{{$list->price}}￥</td>
-                    <td>{{$list->cost}}￥</td>
+                    <td>{{number_format($list->price,2)}}￥</td>
+                    <td>{{number_format($list->cost,2)}}￥</td>
                     <td>{{$list->record->supplier}}</td>
                     <td>{{$list->record->number}}</td>
                     @else
@@ -226,8 +226,8 @@
                     <td></td>
                     @else
                         <td>{{$list->sum}}</td>
-                        <td>{{$list->price}}￥</td>
-                        <td>{{$list->cost}}￥</td>
+                        <td>{{number_format($list->price,2)}}￥</td>
+                        <td>{{number_format($list->cost,2)}}￥</td>
                     @endif
                     <td>{{$list->record->project_number}}</td>
                     <td class="table-content">{{$list->record->project_content}}</td>
@@ -239,8 +239,8 @@
 
                     <td>{{$list->record->returnee}}</td>
                     <td>{{$list->stock_number}}</td>
-                    <td>{{$list->stock_cost}}￥</td>
-                    <td>{{$list->stock_price}}￥</td>
+                    <td>{{number_format($list->stock_cost,2)}}￥</td>
+                    <td>{{number_format($list->stock_price,2)}}￥</td>
                 </tr>
                 @endforeach
                 </tbody>

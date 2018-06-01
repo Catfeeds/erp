@@ -197,25 +197,25 @@
                     <td>{{$project->number}}</td>
                     <td>{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
-                    <td>{{number_format($project->situation()->sum('price'))}}￥</td>
-                    <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'))}}￥</td>
-                    <td class="function-one">{{number_format($project->situation()->where('type','=',2)->sum('price'))}}￥</td>
-                    <td>{{number_format($project->budget()->sum('cost'))}}￥</td>
-                    <td class="function-two">{{number_format($project->budget()->where('type','=',1)->sum('cost'))}}￥</td>
-                    <td class="function-two">{{number_format($project->budget()->where('type','=',2)->sum('cost'))}}￥</td>
-                    <td class="function-two">{{number_format($project->budget()->where('type','=',3)->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->materialCount+$project->engineCount+$project->otherCount-$project->stockRecords()->where('type','=',2)->sum('cost'))}}￥</td>
-                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'))}}￥</td>
-                    <td class="function-three">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'))}}￥</td>
-                    <td class="function-three">{{number_format($project->materialCount)}}￥</td>
-                    <td class="function-three">{{number_format($project->engineCount)}}￥</td>
-                    <td class="function-three">{{number_format($project->otherCount)}}￥</td>
-                    <td class="function-three">{{number_format($project->payApplies()->sum('price'))}}￥</td>
-                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost'))}}/{{number_format($project->budget()->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost'))}}/{{number_format($project->budget()->where('type','=',1)->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount)}}/{{number_format($project->budget()->where('type','=',2)->sum('cost'))}}￥</td>
-                    <td>{{number_format($project->otherCount+$project->payApplies()->where('state','>=',2)->sum('price'))}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'))}}￥</td>
+                    <td>{{number_format($project->situation()->sum('price'),2)}}￥</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}￥</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',2)->sum('price'),2)}}￥</td>
+                    <td>{{number_format($project->budget()->sum('cost'),2)}}￥</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}￥</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}￥</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->materialCount+$project->engineCount+$project->otherCount-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}￥</td>
+                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}￥</td>
+                    <td class="function-three">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}￥</td>
+                    <td class="function-three">{{number_format($project->materialCount),2}}￥</td>
+                    <td class="function-three">{{number_format($project->engineCount),2}}￥</td>
+                    <td class="function-three">{{number_format($project->otherCount),2}}￥</td>
+                    <td class="function-three">{{number_format($project->payApplies()->sum('price'),2)}}￥</td>
+                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount,2)}}/{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->otherCount+$project->payApplies()->where('state','>=',2)->sum('price'),2)}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}￥</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>

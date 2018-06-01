@@ -40,7 +40,7 @@
                     <th>项目经理</th>
                     <th class="fake-td" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</th>
                     <th>采购金额</th>
-                    <th class="fake-td" colspan="3">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
+                    <th class="fake-td" colspan="3">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
                     <th>收货人</th>
                 </tr>
                 <tr>
@@ -67,9 +67,9 @@
                     <td>{{$lists[$i]->material->model}}</td>
                     <td>{{$lists[$i]->material->factory}}</td>
                     <td>{{$lists[$i]->material->unit}}</td>
-                    <td>{{number_format($lists[$i]->price)}} ￥</td>
+                    <td>{{number_format($lists[$i]->price,2)}} ￥</td>
                     <td>{{$lists[$i]->number}}</td>
-                    <td>{{number_format($lists[$i]->cost)}} ￥</td>
+                    <td>{{number_format($lists[$i]->cost,2)}} ￥</td>
                 </tr>
                 @endfor
 
@@ -77,7 +77,7 @@
                 <tfoot>
                 <tr>
                     <th colspan="8">合计</th>
-                    <th>{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
+                    <th>{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
                 </tr>
                 </tfoot>
             </table>
@@ -118,9 +118,9 @@
                         @else
                         <tr>
                             <td>{{$list2[$i]->list[$j]['sum']}}</td>
-                            <td>{{$list2[$i]->list[$j]['cost']}} ￥</td>
+                            <td>{{number_format($list2[$i]->list[$j]['cost'],2)}} ￥</td>
                             <td>{{$list2[$i]->list[$j]['need_sum']}}</td>
-                            <td>{{$list2[$i]->list[$j]['need_cost']}} ￥</td>
+                            <td>{{number_format($list2[$i]->list[$j]['need_cost'],2)}} ￥</td>
                         </tr>
                         @endif
                             @endfor
@@ -128,9 +128,9 @@
                         <tfoot>
                         <tr>
                             <th></th>
-                            <th>{{number_format($list2[$i]->lists()->sum('cost'))}} ￥</th>
+                            <th>{{number_format($list2[$i]->lists()->sum('cost'),2)}} ￥</th>
                             <th></th>
-                            <th>{{number_format($list2[$i]->lists()->sum('need_cost'))}} ￥</th>
+                            <th>{{number_format($list2[$i]->lists()->sum('need_cost'),2)}} ￥</th>
                         </tr>
                         <tr>
                             <td colspan="4">

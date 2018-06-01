@@ -23,7 +23,7 @@
                 <th>报销日期</th>
                 <th class="fake-td">{{$loan->date}}</th>
                 <th>报销金额</th>
-                <th class="fake-td">{{$loan->price}}￥</th>
+                <th class="fake-td">{{number_format($loan->price,2)}}￥</th>
             </tr>
             @if($loan->project_id!=0)
             <tr>
@@ -64,14 +64,14 @@
                     @endif
                 <td>{{$loan->lists[$i]->remark}}</td>
                 <td>{{$loan->lists[$i]->number}}</td>
-                <td>{{$loan->lists[$i]->price}}￥</td>
+                <td>{{number_format($loan->lists[$i]->price,2)}}￥</td>
             </tr>
             @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="5">合计</th>
-                <th>{{$loan->lists()->sum('price')}}￥</th>
+                <th>{{number_format($loan->lists()->sum('price'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

@@ -37,7 +37,7 @@
             <tr>
                 <td>{{$i+1}}</td>
                 <td>{{$lists[$i]->number}}</td>
-                <td>{{$lists[$i]->price}}￥</td>
+                <td>{{number_format($lists[$i]->price,2)}}￥</td>
                 <td>{{$lists[$i]->checker}}</td>
                 <td>{{$lists[$i]->passer}}</td>
                 <td></td>
@@ -47,7 +47,7 @@
             <tfoot>
             <tr>
                 <th colspan="2">本次支付报销合计</th>
-                <th>{{$price}}￥</th>
+                <th>{{number_format($price,2)}}￥</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -62,17 +62,17 @@
             </tr>
             <tr>
                 <th>初始数据</th>
-                <th class="fake-td">{{$loan->deduction}}￥</th>
-                <th class="fake-td">{{$loan->cash}}￥</th>
-                <th class="fake-td">{{$loan->transfer}}￥</th>
+                <th class="fake-td">{{number_format($loan->deduction,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->cash,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->transfer,2)}}￥</th>
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
             </tr>
             <tr>
                 <th>本次支付</th>
-                <th class="fake-td">{{$loan->deduction}}￥</th>
-                <th class="fake-td">{{$loan->cash}}￥</th>
-                <th class="fake-td">{{$loan->transfer}}￥</th>
+                <th class="fake-td">{{number_format($loan->deduction,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->cash,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->transfer,2)}}￥</th>
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
             </tr>

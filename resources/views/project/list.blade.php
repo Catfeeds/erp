@@ -67,12 +67,12 @@
             <td>{{date('Y-m-d',$project->createTime)}}</td>
             <td class="table-content">{{$project->name}}</td>
             <td>{{$project->pm}}</td>
-            <td>{{number_format($project->price)}}</td>
-            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price'))}}</td>
+            <td>{{number_format($project->price,2)}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price'),2)}}</td>
             <td>{{$project->PartyA}}</td>
-            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',1)->sum('price'))}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',1)->sum('price'),2)}}</td>
             <td>{{implode('|',$project->unit)}}</td>
-            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price'))}}</td>
+            <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->where('type','=',2)->sum('price'),2)}}</td>
             <td>{{date('Y-m-d',$project->finishTime)}}</td>
             <td>{{$project->state==1?'未确认':'已确认'}}</td>
         </tr>

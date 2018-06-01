@@ -112,7 +112,7 @@
                     @else
                         <td>项目报销</td>
                     @endif
-                    <td>{{number_format($list->price)}}￥</td>
+                    <td>{{number_format($list->price,2)}}￥</td>
                     <td>
                         @if($list->project_id!=0)
                             {{\App\Models\Project::find($list->project_id)->number}}

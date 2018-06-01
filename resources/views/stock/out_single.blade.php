@@ -31,7 +31,7 @@
                 <th>采购日期</th>
                 <th class="fake-td">{{$purchase->date}}</th>
                 <th>采购金额</th>
-                <th class="fake-td">{{$purchase->lists()->sum('cost')}}￥</th>
+                <th class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
                 <th>项目编号</th>
                 <th class="fake-td">{{$record->project_number}}</th>
                 <th>项目内容</th>
@@ -77,11 +77,11 @@
                 <td>{{$list[$i]->material->unit}}</td>
                 <td>{{$list[$i]->price}}￥</td>
                 <td>{{$list[$i]->purchase_sum}}</td>
-                <td>{{$list[$i]->purchase_cost}}￥</td>
+                <td>{{number_format($list[$i]->purchase_cost,2)}}￥</td>
                 <td>{{$list[$i]->purchase_need}}</td>
-                <td>{{$list[$i]->purchase_need_cost}}￥</td>
+                <td>{{number_format($list[$i]->purchase_need_cost,2)}}￥</td>
                 <td>{{$list[$i]->sum}}</td>
-                <td>{{$list[$i]->cost}}￥</td>
+                <td>{{number_format($list[$i]->cost,2)}}￥</td>
             </tr>
             @endfor
             </tbody>
@@ -89,11 +89,11 @@
             <tr>
                 <th colspan="7">合计</th>
                 <th>{{$purchase->lists()->sum('number')}}</th>
-                <th>{{$purchase->lists()->sum('cost')}}￥</th>
+                <th>{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
                 <th>{{$purchase_need}}</th>
-                <th>{{$purchase_need_cost}}￥</th>
+                <th>{{number_format($purchase_need_cost,2)}}￥</th>
                 <th>{{$record->lists()->sum('sum')}}</th>
-                <th>{{$record->lists()->sum('cost')}}￥</th>
+                <th>{{number_format($record->lists()->sum('cost'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

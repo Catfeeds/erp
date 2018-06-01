@@ -14,21 +14,21 @@
         <div class="content-operation">
 
             <form action="" class="ui form">
-                <div class="inline fields" style="justify-content:flex-end;">
-                    <label>系统状态：</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="1">
-                            <label>已结清</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="system" value="0">
-                            <label>未结清</label>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="inline fields" style="justify-content:flex-end;">--}}
+                    {{--<label>系统状态：</label>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="1">--}}
+                            {{--<label>已结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="field">--}}
+                        {{--<div class="ui radio checkbox">--}}
+                            {{--<input type="radio" name="system" value="0">--}}
+                            {{--<label>未结清</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="flex-row flex-between flex-wrap">
                     <div>
                         <a class="ui green button" href="{{url('export/stock/buy/list')}}">
@@ -80,12 +80,12 @@
                         <a href="javascript:_helper.fullWindow('{{url('store/buy_check')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{$list->lists()->sum('cost')}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>{{$list->received}} ￥</td>
-                    <td>{{$list->need}} ￥</td>
+                    <td>{{number_format($list->received,2)}} ￥</td>
+                    <td>{{number_format($list->need,2)}} ￥</td>
                     <td>{{$list->need==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach

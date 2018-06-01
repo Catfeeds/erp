@@ -62,7 +62,7 @@
                 <th class="fake-td">{{$payments[$i]->applier}}</th>
                 <th class="fake-td">{{$payments[$i]->checker}}</th>
                 <th class="fake-td">{{$payments[$i]->passer}}</th>
-                <th class="fake-td">{{number_format($payments[$i]->price)}} ￥</th>
+                <th class="fake-td">{{number_format($payments[$i]->price,2)}} ￥</th>
             </tr>
             @endfor
             <tr>
@@ -73,7 +73,7 @@
                 <th></th>
                 <th></th>
                 <th colspan="6">合计</th>
-                <th>{{number_format($team->payments()->sum('price'))}} ￥</th>
+                <th>{{number_format($team->payments()->sum('price'),2)}} ￥</th>
             </tr>
             @else
                 @endif
@@ -103,14 +103,14 @@
             <tr>
                 <td>{{$applies[$i]->number}}</td>
                 <td>{{$applies[$i]->apply_date}}</td>
-                <td>{{$applies[$i]->apply_price}}￥</td>
+                <td>{{number_format($applies[$i]->apply_price,2)}}￥</td>
                 <td>{{$applies[$i]->payee}}</td>
                 <td>{{$applies[$i]->bank}} {{$applies[$i]->account}}</td>
                 <td>{{$applies[$i]->worker}}</td>
                 <td>{{$applies[$i]->checker}}</td>
                 <td>{{$applies[$i]->passer}}</td>
                 <td>{{$applies[$i]->pay_date}}</td>
-                <td>{{number_format($applies[$i]->pay_price)}}￥</td>
+                <td>{{number_format($applies[$i]->pay_price,2)}}￥</td>
                 <td>{{$applies[$i]->pay_bank}} {{$applies[$i]->pay_account}}</td>
                 <td style="max-width:150px;">{{$applies[$i]->remark}}</td>
                 <td>{{$applies[$i]->pay_worker}}</td>
@@ -120,11 +120,11 @@
             <tfoot>
             <tr>
                 <th colspan="12">已付款合计</th>
-                <th>{{number_format($team->applies()->sum('pay_price'))}}￥</th>
+                <th>{{number_format($team->applies()->sum('pay_price'),2)}}￥</th>
             </tr>
             <tr>
                 <th colspan="12">剩余应付账款</th>
-                <th>{{number_format($team->payments()->sum('price')-$team->applies()->sum('pay_price'))}}￥</th>
+                <th>{{number_format($team->payments()->sum('price')-$team->applies()->sum('pay_price'),2)}}￥</th>
             </tr>
             </tfoot>
             @else

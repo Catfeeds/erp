@@ -44,9 +44,9 @@
                 </tr>
                 <tr>
                     <th class="bg-white">采购金额</th>
-                    <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('cost'))}} ￥</th>
+                    <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
                     <th class="bg-white">应付账款余额</th>
-                    <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price'))}} ￥</th>
+                    <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price'),2)}} ￥</th>
                 </tr>
                 <tr>
                     <th colspan="12">付款记录</th>
@@ -85,7 +85,7 @@
                     <td colspan="6">暂无数据</td>
                     @else
                         <td>{{$lists[$i]->pay_date}}</td>
-                        <td>{{number_format($lists[$i]->pay_price)}} ￥</td>
+                        <td>{{number_format($lists[$i]->pay_price,2)}} ￥</td>
                         <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->name}}</td>
                         <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->account}}</td>
                         <td class="table-content">{{$lists[$i]->remark}}</td>
@@ -117,11 +117,11 @@
                 <tfoot>
                 <tr>
                     <th colspan="2">合计</th>
-                    <th>{{number_format($purchase->payments()->sum('price'))}} ￥</th>
+                    <th>{{number_format($purchase->payments()->sum('price'),2)}} ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>{{number_format($purchase->payments()->sum('pay_price'))}}  ￥</th>
+                    <th>{{number_format($purchase->payments()->sum('pay_price'),2)}}  ￥</th>
                     <th></th>
                     <th></th>
                     <th></th>

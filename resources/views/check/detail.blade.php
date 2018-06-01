@@ -46,7 +46,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目合同金额</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">{{$project->price}}￥</div>
+                                <div class="fake-input">{{number_format($project->price,2)}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                 <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContracts[$i]->price}}￥</div>
+                                <div class="fake-input">{{number_format($mainContracts[$i]->price,2)}}￥</div>
                             </div>
                             <div class="six wide column">
                                 <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
@@ -143,7 +143,7 @@
                                 <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$outContracts[$i]->price}}￥</div>
+                                <div class="fake-input">{{number_format($outContracts[$i]->price,2)}}￥</div>
                             </div>
                             <div class="six wide column">
                                 <div class="fake-input">{{$outContracts[$i]->remark}}</div>
@@ -192,7 +192,7 @@
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -202,7 +202,7 @@
                                 <tr>
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -252,7 +252,7 @@
                     @foreach($receipts as $receipt)
                     <tr>
                         <td>{{$receipt->ratio}}%</td>
-                        <td>{{$receipt->price}} ￥</td>
+                        <td>{{number_format($receipt->price,2)}} ￥</td>
                         <td>{{$receipt->condition}}</td>
                     </tr>
                     @endforeach
@@ -324,12 +324,12 @@
                         @foreach($bails as $bail)
                         <tr >
                             <td>{{$bail->unit}}</td>
-                            <td>{{$bail->price}} ￥</td>
+                            <td>{{number_format($bail->price,2)}} ￥</td>
                             <td>{{$bail->term}}</td>
                             <td>{{$bail->cost}} ￥</td>
                             <td>{{$bail->other}}</td>
                             <td>{{$bail->pay_date}}</td>
-                            <td> {{$bail->pay_price}}￥</td>
+                            <td> {{number_format($bail->pay_price,2)}}￥</td>
                             <td>{{$bail->payee}}</td>
                             <td>{{$bail->bank}}</td>
                             <td>{{$bail->bank_account}}</td>
@@ -340,12 +340,12 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th>{{$project->bail()->sum('price')}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('price'))}} ￥</th>
                             <th>/</th>
-                            <th>{{$project->bail()->sum('cost')}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('cost'))}} ￥</th>
                             <th>/</th>
                             <th>/</th>
-                            <th>{{$project->bail()->sum('pay_price')}} ￥</th>
+                            <th>{{number_format($project->bail()->sum('pay_price'))}} ￥</th>
                             <th>/</th>
                             <th>/</th>
                             <th>/</th>
@@ -388,7 +388,7 @@
                             {{--<template >--}}
                             @if(isset($bailReturn[$i]))
                                 <td>{{$bailReturn[$i]->pay_date}}</td>
-                                <td>{{$bailReturn[$i]->price}}</td>
+                                <td>{{number_format($bailReturn[$i]->price,2)}}</td>
                                 <td>{{$bailReturn[$i]->pay_unit}}</td>
                                 <td>{{$bailReturn[$i]->remark}}</td>
                                 <td>
@@ -404,7 +404,7 @@
 
                                 @if(isset($bailGet[$i]))
                                 <td>{{$bailGet[$i]->date}}</td>
-                                <td>{{$bailGet[$i]->price}}</td>
+                                <td>{{number_format($bailGet[$i]->price,2)}}</td>
                                 <td>{{$bailGet[$i]->payee}}</td>
                                 <td>{{$bailGet[$i]->bank}}</td>
                                 <td>{{$bailGet[$i]->account}}</td>
@@ -429,11 +429,11 @@
                         <tfoot>
                         <tr>
                             <th colspan="3">实际回收合计</th>
-                            <th colspan="7"> {{$project->collects()->where('type','=',1)->sum('price')}}￥</th>
+                            <th colspan="7"> {{number_format($project->collects()->where('type','=',1)->sum('price'),2)}}￥</th>
                         </tr>
                         <tr>
                             <th colspan="3">剩余未回收保证金</th>
-                            <th colspan="7"> {{$project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price')}}￥</th>
+                            <th colspan="7"> {{number_format($project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price'))}}￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -462,7 +462,7 @@
                         <tr >
                             {{--<template >--}}
                                 <td>{{ $tip->pay_date }}</td>
-                                <td>{{ $tip->price }}</td>
+                                <td>{{ number_format($tip->price,2) }}</td>
                                 <td>{{ $tip->pay_unit }}</td>
                                 <td>{{ $tip->remark }}</td>
                                 <td>
@@ -475,7 +475,7 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="4">{{$project->tips()->where('type','=',2)->sum('price')}} ￥</th>
+                            <th colspan="4">{{number_format($project->tips()->where('type','=',2)->sum('price'),2)}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -505,7 +505,7 @@
                             <tr >
                                 {{--<template >--}}
                                     <td>{{$item->date}}</td>
-                                    <td>{{$item->price}}￥</td>
+                                    <td>{{number_format($item->price,2)}}￥</td>
                                     <td>{{$item->unit}}</td>
                                     <td>{{\App\Models\Invoice::find($item->rate)?\App\Models\Invoice::find($item->rate)->rate:$item->rate}}%</td>
                                     <td>
@@ -519,7 +519,7 @@
                             <tfoot>
                             <tr>
                                 <th>合计</th>
-                                <th colspan="4">{{ $project->invoices()->sum('price')}} ￥</th>
+                                <th colspan="4">{{ number_format($project->invoices()->sum('price'),2)}} ￥</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -574,7 +574,7 @@
                             {{--<temp late >--}}
                             {{--<input type="hidden" name="id" value="{{{{$company->id}}}}">--}}
                                 <td>{{ $company->date }}</td>
-                                <td id="price">{{ $company->price }} ￥</td>
+                                <td id="price">{{ number_format($company->price,2) }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/company/edit')}}?id={{$item->id}}')" >修改</button>
@@ -588,7 +588,7 @@
 {{--                        @if(!empty($subCompanies))--}}
                         <tr>
                             <th>合计</th>
-                            <th colspan="3">{{$project->collects()->where('type','=',4)->sum('price')}} ￥</th>
+                            <th colspan="3">{{number_format($project->collects()->where('type','=',4)->sum('price'),2)}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -656,7 +656,7 @@
                             {{--<template>--}}
 
                                 <td>{{ $item->date }}</td>
-                                <td>{{ $item->price }} ￥</td>
+                                <td>{{ number_format($item->price,2) }} ￥</td>
                                 <td>{{ $item->bank }}</td>
                                 <td>{{ $item->account }}</td>
                                 {{--<td>{{ $item.remark }}</td>--}}
@@ -674,7 +674,7 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="5">{{$project->collects()->where('type','=',2)->sum('price')}} ￥</th>
+                            <th colspan="5">{{number_format($project->collects()->where('type','=',2)->sum('price'),2)}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -739,7 +739,7 @@
                                     <tr >
                             {{--<template >--}}
                                 <td>{{ $item->date }}</td>
-                                <td>{{ $item->price}} ￥</td>
+                                <td>{{ number_format($item->price,2)}} ￥</td>
                                 <td>{{ $item->bank }}</td>
                                 <td>{{ $item->account }}</td>
 
@@ -757,7 +757,7 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="5">{{$project->collects()->where('type','=',3)->sum('price')}} ￥</th>
+                            <th colspan="5">{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}} ￥</th>
                         </tr>
                         </tfoot>
                     </table>

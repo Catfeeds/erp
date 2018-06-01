@@ -49,9 +49,9 @@
             <tr>
                 <td>{{$i+1}}</td>
                 <td>{{$lists[$i]->number}}</td>
-                <td>{{$lists[$i]->tax_include}} ￥</td>
-                <td>{{$lists[$i]->tax_price}} ￥</td>
-                <td>{{$lists[$i]->tax_without}} ￥</td>
+                <td>{{number_format($lists[$i]->tax_include,2)}} ￥</td>
+                <td>{{number_format($lists[$i]->tax_price,2)}} ￥</td>
+                <td>{{number_format($lists[$i]->tax_without,2)}} ￥</td>
                 <td>{{$lists[$i]->remark}}</td>
             </tr>
             @endfor
@@ -59,9 +59,9 @@
             <tfoot>
             <tr>
                 <th colspan="2">合计</th>
-                <th>{{$invoice->lists()->sum('tax_include')}} ￥</th>
-                <th>{{$invoice->lists()->sum('tax_price')}} ￥</th>
-                <th>{{$invoice->lists()->sum('tax_without')}} ￥</th>
+                <th>{{number_format($invoice->lists()->sum('tax_include'),2)}} ￥</th>
+                <th>{{number_format($invoice->lists()->sum('tax_price'),2)}} ￥</th>
+                <th>{{number_format($invoice->lists()->sum('tax_without'),2)}} ￥</th>
                 <th></th>
             </tr>
             </tfoot>

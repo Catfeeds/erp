@@ -126,7 +126,7 @@
                     <td>{{$list->purchase->content}}</td>
                     <td>{{$list->purchase->condition}}</td>
                     <td>{{$list->number}}</td>
-                    <td>{{number_format($list->price)}} / {{\App\Models\Material::find($list->material_id)->unit}}</td>
+                    <td>{{number_format($list->price,2)}} / {{\App\Models\Material::find($list->material_id)->unit}}</td>
                     <td>{{$list->warranty_time}}</td>
                 </tr>
                     @endforeach

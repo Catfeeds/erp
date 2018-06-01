@@ -77,9 +77,9 @@
                     <td>{{$list->material->model}}</td>
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
-                    <td>{{$list->price}} ￥</td>
+                    <td>{{number_format($list->price,2)}} ￥</td>
                     <td>{{$list->sum}}</td>
-                    <td>{{$list->cost}} ￥</td>
+                    <td>{{number_format($list->cost,2)}} ￥</td>
                     <td>{{$list->record->project_number}}</td>
                     <td class="table-content">{{$list->record->project_content}}</td>
                     <td>{{$list->record->project_manager}}</td>

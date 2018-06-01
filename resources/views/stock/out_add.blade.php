@@ -75,7 +75,7 @@
                         <a class="stockOutItem" data-id="{{$list->id}}">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{$list->lists()->sum('cost')}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
                     @if($list->project_id!=0)
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
@@ -85,8 +85,8 @@
                         <td></td>
                         <td></td>
                     @endif
-                    <td>{{$list->receivedPrice}} </td>
-                    <td>{{$list->needPrice}} </td>
+                    <td>{{number_format($list->receivedPrice,2)}} </td>
+                    <td>{{number_format($list->needPrice,2)}} </td>
                     <td>{{$list->lists()->sum('need')==$list->lists()->sum('received')?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach

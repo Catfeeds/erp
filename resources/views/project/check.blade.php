@@ -46,7 +46,7 @@
                         <div class="inline fields">
                             <label class="four wide field">项目合同金额</label>
                             <div class="twelve wide field icon input">
-                                <div class="fake-input">{{$project->price}}￥</div>
+                                <div class="fake-input">{{number_format($project->price,2)}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                 <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{$mainContracts[$i]->price}}￥</div>
+                                <div class="fake-input">{{number_format($mainContracts[$i]->price,2)}}￥</div>
                             </div>
                             <div class="six wide column">
                                 <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
@@ -128,7 +128,7 @@
                             <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                         </div>
                         <div class="four wide column">
-                            <div class="fake-input">{{$outContracts[$i]->price}}￥</div>
+                            <div class="fake-input">{{number_format($outContracts[$i]->price,2)}}￥</div>
                         </div>
                         <div class="six wide column">
                             <div class="fake-input">{{$outContracts[$i]->remark}}</div>
@@ -177,7 +177,7 @@
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                             </tr>
 
@@ -187,7 +187,7 @@
                                 <tr>
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{$situations[$i]->lists[$j]->price}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -229,12 +229,12 @@
                     <tr>
                         <td>{{$i+1}}</td>
                         <td>{{$bails[$i]->unit}}</td>
-                        <td>{{$bails[$i]->price}}￥</td>
+                        <td>{{number_format($bails[$i]->price,2)}}￥</td>
                         <td>{{$bails[$i]->term}}</td>
                         <td>{{$bails[$i]->cost}}</td>
                         <td>{{$bails[$i]->other}}</td>
                         <td>{{$bails[$i]->pay_date}}</td>
-                        <td>{{$bails[$i]->pay_price}}￥</td>
+                        <td>{{number_format($bails[$i]->pay_price,2)}}￥</td>
                         <td>{{$bails[$i]->payee}}</td>
                         <td>{{$bails[$i]->bank}} {{$bails[$i]->account}}</td>
                         <td>{{$bails[$i]->condition}}</td>
@@ -275,7 +275,7 @@
                     @foreach($receipts as $receipt)
                     <tr>
                         <td>{{$receipt->ratio}} %</td>
-                        <td>{{$receipt->price}} ￥</td>
+                        <td>{{number_format($receipt->price,2)}} ￥</td>
                         <td>{{$receipt->condition}}</td>
                     </tr>
                     @endforeach
@@ -283,7 +283,7 @@
                     <tfoot>
                     <tr>
                         <th>合计</th>
-                        <th>{{$project->receipt()->sum('price')}} ￥</th>
+                        <th>{{number_format($project->receipt()->sum('price'),2)}} ￥</th>
                         <th></th>
                     </tr>
                     </tfoot>

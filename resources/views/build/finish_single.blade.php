@@ -69,7 +69,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">请款金额</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{number_format($apply->price)}} ￥</div>
+                                <div class="fake-input">{{number_format($apply->price,2)}} ￥</div>
                             </div>
                         </div>
                     </div>
@@ -100,8 +100,8 @@
                     <td>{{$list->param}}</td>
                     <td>{{$list->number}}</td>
                     <td>{{$list->unit}}</td>
-                    <td>{{number_format($list->price)}}</td>
-                    <td>{{number_format($list->total)}} ￥</td>
+                    <td>{{number_format($list->price,2)}}</td>
+                    <td>{{number_format($list->total,2)}} ￥</td>
                     <td>{{$list->remark}}</td>
                 </tr>
                 @endforeach
@@ -109,7 +109,7 @@
                 <tfoot>
                 <tr>
                     <th colspan="6">合计</th>
-                    <th>{{number_format($apply->lists()->sum('total'))}} ￥</th>
+                    <th>{{number_format($apply->lists()->sum('total'),2)}} ￥</th>
                     <th></th>
                 </tr>
                 </tfoot>

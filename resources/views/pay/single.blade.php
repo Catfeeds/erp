@@ -20,7 +20,7 @@
                 <th>付款编号</th>
                 <th class="fake-td"> {{$apply->number}}</th>
                 <th>付款金额</th>
-                <th class="fake-td" colspan="2"> {{$apply->price}}￥</th>
+                <th class="fake-td" colspan="2"> {{number_format($apply->price,2)}}￥</th>
             </tr>
             <tr>
                 <th>用途</th>
@@ -45,7 +45,7 @@
                 <th>付款日期</th>
                 <th class="fake-td">{{$apply->pay_date}}</th>
                 <th>付款金额</th>
-                <th colspan="2" class="fake-td">{{$apply->cash+$apply->transfer+$apply->other}}￥</th>
+                <th colspan="2" class="fake-td">{{number_format($apply->cash+$apply->transfer+$apply->other,2)}}￥</th>
             </tr>
             <tr>
                 <th colspan="5">付款方式</th>
@@ -55,19 +55,19 @@
             <tr>
                 <td>1</td>
                 <td>现金</td>
-                <td colspan="3">{{$apply->cash}}￥</td>
+                <td colspan="3">{{number_format($apply->cash,2)}}￥</td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>转账</td>
-                <td>{{$apply->transfer}}￥</td>
+                <td>{{number_format($apply->transfer,2)}}￥</td>
                 <td>银行及账号</td>
                 <td>{{$apply->bank}} {{$apply->account}}</td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>其他</td>
-                <td colspan="3">{{$apply->other}}</td>
+                <td colspan="3">{{number_format($apply->other,2)}}</td>
             </tr>
             </tbody>
             <tfoot>

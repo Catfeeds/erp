@@ -48,7 +48,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">履约保证金余额</label>
                                 <div class="twelve wide field">
-                                    <div class="fake-input">{{$project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price')}} ￥</div>
+                                    <div class="fake-input">{{number_format($project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price'),2)}} ￥</div>
                                 </div>
                             </div>
                         </div>

@@ -33,7 +33,7 @@
                 <th>采购日期</th>
                 <th class="fake-td" colspan="2">{{$purchase->date}}</th>
                 <th>采购金额</th>
-                <th class="fake-td">{{$purchase->lists()->sum('cost')}} ￥</th>
+                <th class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
                 <th>项目编号</th>
                 <th class="fake-td">{{$record->project_number}}</th>
                 <th>项目内容</th>
@@ -80,15 +80,15 @@
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->model}}</td>
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->factory}}</td>
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->unit}}</td>
-                <td>{{number_format($lists[$i]->price)}} ￥</td>
+                <td>{{number_format($lists[$i]->price,2)}} ￥</td>
                 <td>{{\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')}}</td>
-                <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('cost'))}}￥</td>
+                <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('cost'),2)}}￥</td>
                 <td>{{$purchase->lists()->sum('received')}}</td>
-                <td>{{number_format($purchase->lists()->sum('received')*$purchase->lists()->pluck('price')->first())}}￥</td>
+                <td>{{number_format($purchase->lists()->sum('received')*$purchase->lists()->pluck('price')->first(),2)}}￥</td>
                 <td>{{$lists[$i]->sum}}</td>
-                <td>{{number_format($lists[$i]->cost)}}￥</td>
+                <td>{{number_format($lists[$i]->cost,2)}}￥</td>
                 <td>{{$lists[$i]->need_sum}}</td>
-                <td>{{number_format($lists[$i]->need_cost)}} ￥</td>
+                <td>{{number_format($lists[$i]->need_cost,2)}} ￥</td>
             </tr>
             @endfor
 

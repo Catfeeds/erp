@@ -128,18 +128,18 @@
                         <a href="javascript:_helper.fullWindow('{{url('stock/check/budgetary')}}?id={{$list->id}}');">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{number_format($list->lists()->sum('cost'))}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{$list->type==1?'内':'外'}}</td>
-                    <td>{{number_format($list->received)}}￥</td>
-                    <td>{{number_format($list->need)}}￥</td>
-                    <td>{{number_format($list->payments()->sum('pay_price'))}} ￥</td>
-                    <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'))}} ￥</td>
+                    <td>{{number_format($list->received,2)}}￥</td>
+                    <td>{{number_format($list->need,2)}}￥</td>
+                    <td>{{number_format($list->payments()->sum('pay_price'),2)}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'),2)}} ￥</td>
                     <td>{{$list->content}}</td>
-                    <td>{{number_format($list->invoices()->sum('with_tax'))}} ￥</td>
-                    <td>{{number_format($list->lists()->sum('cost')-$list->invoices()->sum('with_tax'))}} ￥</td>
+                    <td>{{number_format($list->invoices()->sum('with_tax'),2)}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost')-$list->invoices()->sum('with_tax'),2)}} ￥</td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach

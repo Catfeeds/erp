@@ -40,7 +40,7 @@
                 {{--@foreach($lists as $list)--}}
                 <tr data-id="{{$lists[$i]->id}}">
                     <td>{{$lists[$i]->number}}</td>
-                    <td>{{number_format($lists[$i]->price)}}￥</td>
+                    <td>{{number_format($lists[$i]->price,2)}}￥</td>
                     <td style="max-width:300px">{{$lists[$i]->reason}}</td>
                     <td>{{$lists[$i]->borrower}}</td>
                     @if($lists[$i]->approver_id==0)

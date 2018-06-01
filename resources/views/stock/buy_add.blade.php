@@ -52,7 +52,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">采购金额</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$purchase->lists()->sum('cost')}} ￥</div>
+                                <div class="fake-input">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</div>
                             </div>
                         </div>
                     </div>

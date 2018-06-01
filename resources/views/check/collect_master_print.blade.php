@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td class="print-bold">分包合同收款</td>
-                <td>{{$project->situation()->where('type','=',1)->sum('price')}} ￥</td>
+                <td>{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}} ￥</td>
             </tr>
             <tr>
                 <td class="print-bold">付款单位</td>
@@ -48,7 +48,7 @@
             </tr>
             <tr>
                 <td class="print-bold">收款金额</td>
-                <td>{{$collect->price}} ￥</td>
+                <td>{{number_format($collect->price,2)}} ￥</td>
             </tr>
             </tbody>
         </table>

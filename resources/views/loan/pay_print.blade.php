@@ -46,7 +46,7 @@
                 <tr>
                     <td>{{$i+1}}</td>
                     <td>{{$lists[$i]->number}}</td>
-                    <td>{{$lists[$i]->price}}￥</td>
+                    <td>{{number_format($lists[$i]->price,2)}}￥</td>
                     <td>{{$lists[$i]->checker}}</td>
                     <td>{{$lists[$i]->passer}}</td>
                     <td></td>
@@ -74,16 +74,16 @@
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
-                <th class="fake-td">{{$loan->submitBalance+$loan->price}}￥</th>
-                <th class="fake-td">{{$loan->loanBalance+$loan->deduction}}￥</th>
+                <th class="fake-td">{{number_format($loan->submitBalance+$loan->price,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->loanBalance+$loan->deduction,2)}}￥</th>
             </tr>
             <tr>
                 <th>本次支付</th>
-                <th class="fake-td">{{$loan->deduction}}￥</th>
-                <th class="fake-td">{{$loan->cash}}￥</th>
-                <th class="fake-td">{{$loan->transfer}}￥</th>
-                <th class="fake-td">{{$loan->submitBalance}}￥</th>
-                <th class="fake-td">{{$loan->loanBalance}}￥</th>
+                <th class="fake-td">{{number_format($loan->deduction,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->cash,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->transfer,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->submitBalance,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->loanBalance,2)}}￥</th>
             </tr>
             <tr>
                 <th>付款银行及账号</th>

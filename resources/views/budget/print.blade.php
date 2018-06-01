@@ -45,9 +45,9 @@
                     <td>{{$budgets[$i]->model}}</td>
                     <td>{{$budgets[$i]->factory}}</td>
                     <td>{{$budgets[$i]->unit}}</td>
-                    <td>{{$budgets[$i]->price}}</td>
+                    <td>{{number_format($budgets[$i]->price,2)}}</td>
                     <td>{{$budgets[$i]->number}}</td>
-                    <td>{{$budgets[$i]->cost}}</td>
+                    <td>{{number_format($budgets[$i]->cost,2)}}</td>
                     @if($budgets[$i]->type==1)
                     <td>物料</td>
                         @elseif($budgets[$i]->type==2)
@@ -61,17 +61,17 @@
                 <tfoot>
                 <tr>
                     <th colspan="4" rowspan="3" style="font-weight:600;">预算总额</th>
-                    <th colspan="2" rowspan="3">{{$project->budget()->sum('cost')}} 元</th>
+                    <th colspan="2" rowspan="3">{{number_format($project->budget()->sum('cost'),2)}} 元</th>
                     <th colspan="2">物料采购金额</th>
-                    <th colspan="2">{{$project->budget()->where('type','=',1)->sum('cost')}} 元</th>
+                    <th colspan="2">{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}} 元</th>
                 </tr>
                 <tr>
                     <th colspan="2">工程采购金额</th>
-                    <th colspan="2">{{$project->budget()->where('type','=',2)->sum('cost')}} 元</th>
+                    <th colspan="2">{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}} 元</th>
                 </tr>
                 <tr>
                     <th colspan="2">其他</th>
-                    <th colspan="2">{{$project->budget()->where('type','=',3)->sum('cost')}} 元</th>
+                    <th colspan="2">{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}} 元</th>
                 </tr>
                 </tfoot>
             </table>

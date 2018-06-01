@@ -21,7 +21,7 @@
                 <th>借款申请日期</th>
                 <th class="fake-td">{{$loan->apply_date}}</th>
                 <th>借款金额</th>
-                <th class="fake-td">{{$loan->price}}￥</th>
+                <th class="fake-td">{{number_format($loan->price,2)}}￥</th>
                 <th>借款编号</th>
                 <th class="fake-td">{{$loan->number}}</th>
             </tr>

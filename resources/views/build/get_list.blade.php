@@ -67,11 +67,11 @@
                     <td>{{$list->project_number}}</td>
                     <td class="table-content">{{$list->project_content}}</td>
                     <td>{{$list->project_number}}</td>
-                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price'))}}￥</td>
-                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'))}}￥</td>
-                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'))}}￥</td>
-                    <td>{{number_format($list->invoices()->sum('with_tax'))}}￥</td>
-                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->invoices()->sum('with_tax'))}}￥</td>
+                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price'),2)}}￥</td>
+                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'),2)}}￥</td>
+                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'),2)}}￥</td>
+                    <td>{{number_format($list->invoices()->sum('with_tax'),2)}}￥</td>
+                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->invoices()->sum('with_tax'),2)}}￥</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/get/single')}}?id={{$list->id}}')">查看</a>
                     </td>

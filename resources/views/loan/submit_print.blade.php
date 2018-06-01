@@ -29,7 +29,7 @@
                 <th>报销日期</th>
                 <th class="fake-td">{{$submit->date}}</th>
                 <th>报销金额</th>
-                <th class="fake-td">{{$submit->price}}￥</th>
+                <th class="fake-td">{{number_format($submit->price,2)}}￥</th>
             </tr>
             <tr>
                 <th>项目编号</th>
@@ -62,14 +62,14 @@
                 <td>{{$list->kind_id==0?'':\App\Models\Detail::find($list->kind_id)->title}}</td>
                 <td>{{$list->remark}}</td>
                 <td>{{$list->number}}</td>
-                <td>{{$list->price}}￥</td>
+                <td>{{number_format($list->price,2)}}￥</td>
             </tr>
             @endforeach
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="5">合计</th>
-                <th>{{$submit->lists()->sum('price')}}￥</th>
+                <th>{{number_format($submit->lists()->sum('price'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

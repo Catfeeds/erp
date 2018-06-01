@@ -63,10 +63,10 @@
                         <a href="javascript:_helper.fullWindow('{{url('loan/pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->applier}}</td>
-                    <td>{{number_format($list->price)}}￥</td>
-                    <td>{{number_format($list->deduction)}}￥</td>
-                    <td>{{number_format($list->cash)}}￥</td>
-                    <td>{{number_format($list->transfer)}}￥</td>
+                    <td>{{number_format($list->price,2)}}￥</td>
+                    <td>{{number_format($list->deduction,2)}}￥</td>
+                    <td>{{number_format($list->cash,2)}}￥</td>
+                    <td>{{number_format($list->transfer,2)}}￥</td>
                     <td>{{$list->bank}} {{$list->account}}</td>
                     <td>{{$list->BXNumber}}</td>
                     <td>{{\App\User::find($list->worker)->username}}</td>

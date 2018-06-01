@@ -41,7 +41,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">借款金额</label>
                             <div class="eleven wide field">
-                                <div class="fake-input">{{$loan->price}}￥</div>
+                                <div class="fake-input">{{number_format($loan->price,2)}}￥</div>
                             </div>
                         </div>
                     </div>
