@@ -232,6 +232,7 @@ class PurchaseController extends Controller
             $payment->state = 2;
             $payment->check = Auth::id();
             $payment->save();
+            Task::where('content','=',$id)->where('type','=','buy_pay_pass')->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
