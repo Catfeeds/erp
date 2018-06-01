@@ -27,7 +27,7 @@
         <h1 class="ui red header blue center aligned">收票信息修改</h1>
         <div class="invisible" id="buyInvoiceEdit">
 
-            <form method="post">
+            <form method="post" novalidate="false">
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">

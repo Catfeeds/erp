@@ -892,7 +892,7 @@ class PayController extends Controller
             ]);
         }catch (\Exception $exception){
             DB::rollback();
-//            dd($exception);
+            dd($exception);
             return response()->json([
                 'code'=>'400',
                 'msg'=>'数据错误！'
