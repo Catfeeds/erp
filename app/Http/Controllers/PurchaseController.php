@@ -372,16 +372,22 @@ class PurchaseController extends Controller
         $name = Input::get('name');
         $purchase_id = Input::get('purchase_id');
         $warehouse_id = Input::get('warehouse_id');
-        $list = StockRecord::where('purchase_id','=',$purchase_id)->where('warehouse_id','=',$warehouse_id)->pluck('id')->toArray();
-        $db = StockRecordList::whereIn('record_id',$list);
+//        $list = StockRecord::where('purchase_id','=',$purchase_id)->where('warehouse_id','=',$warehouse_id)->pluck('id')->toArray();
+//        $db = StockRecordList::whereIn('record_id',$list);
         if ($name){
             $idArr = Material::where('name','like','%'.$name.'%')->where('state','=',1)->pluck('id')->toArray();
-            $db = $db->whereIn('material_id',$idArr);
+            $data = Stock::where('warehouse_id','=',$warehouse_id)->whereIn('material_id',$idArr)->where('number','!=',0)->get();
+//            $idArr = Material::where('name','like','%'.$name.'%')->where('state','=',1)->pluck('id')->toArray();
+//            $db = $db->whereIn('material_id',$idArr);
+        }else{
+            $data = Stock::where('warehouse_id','=',$warehouse_id)->where('number','!=',0)->get();
         }
-        $data = $db->get();
-        foreach ($data as $datum){
-            $datum->material = $datum->material()->first();
-            $datum->number = Stock::where('warehouse_id','=',$warehouse_id)->where('material_id','=',$datum->material_id)->pluck('number')->first();
+//        $data = $db->get();
+        if ($data){
+            foreach ($data as $datum){
+                $datum->material = $datum->material();
+//                $datum->number = Stock::where('warehouse_id','=',$warehouse_id)->where('material_id','=',$datum->material_id)->pluck('number')->first();
+            }
         }
         return response()->json([
             'code'=>'200',

@@ -180,39 +180,39 @@
         <h4 class="ui header center aligned">退货出库清单</h4>
         <div class="ui form form-item">
             <div class="ui five column doubling stackable grid font-size-13">
-                <div class="two wide column form-thead">物料名称</div>
-                <div class="two wide column form-thead">品牌型号</div>
+                <div class="four wide column form-thead">物料名称</div>
+                <div class="four wide column form-thead">品牌型号</div>
                 <div class="two wide column form-thead">单位</div>
-                <div class="one wide column form-thead">单价</div>
-                <div class="one wide column form-thead">库存数量</div>
-                <div class="two wide column form-thead">收货数量</div>
-                <div class="two wide column form-thead">收货金额</div>
+                {{--<div class="one wide column form-thead">单价</div>--}}
+                <div class="two wide column form-thead">库存数量</div>
+                {{--<div class="two wide column form-thead">收货数量</div>--}}
+                {{--<div class="two wide column form-thead">收货金额</div>--}}
                 <div class="two wide column form-thead">出库数量</div>
                 <div class="two wide column form-thead">操作</div>
             </div>
             <transition-group name="slide-down" tag="div" class="form-wrap special-form">
                 <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in stockOutAdd.lists" :key="item.id">
-                    <div class="two wide column">
+                    <div class="four wide column">
                         <div class="fake-input">@{{ item.material && item.material.name || '无'}}</div>
                     </div>
-                    <div class="two wide column">
+                    <div class="four wide column">
                         <div class="fake-input">@{{ item.material && item.material.model || '无'}}</div>
                     </div>
                     <div class="two wide column">
                         <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                     </div>
-                    <div class="one wide column">
-                        <div class="fake-input">@{{ item.price && item.price.toLocaleString('en-US') || 0}} ￥</div>
-                    </div>
-                    <div class="one wide column">
+                    {{--<div class="one wide column">--}}
+                        {{--<div class="fake-input">@{{ item.price && item.price.toLocaleString('en-US') || 0}} ￥</div>--}}
+                    {{--</div>--}}
+                    <div class="two wide column">
                         <div class="fake-input">@{{ item.stock_number && item.stock_number.toLocaleString('en-US') || 0}} </div>
                     </div>
-                    <div class="two wide column">
-                        <div class="fake-input">@{{ item.sum && item.sum.toLocaleString('en-US') || 0}}</div>
-                    </div>
-                    <div class="two wide column">
-                        <div class="fake-input">@{{ item.cost && item.cost.toLocaleString('en-US') || 0}} ￥</div>
-                    </div>
+                    {{--<div class="two wide column">--}}
+                        {{--<div class="fake-input">@{{ item.sum && item.sum.toLocaleString('en-US') || 0}}</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="two wide column">--}}
+                        {{--<div class="fake-input">@{{ item.cost && item.cost.toLocaleString('en-US') || 0}} ￥</div>--}}
+                    {{--</div>--}}
                     <div class="two wide column">
                         <input type="number" v-model="item.number" placeholder="出货数量">
                     </div>

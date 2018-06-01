@@ -445,35 +445,35 @@ class StockController extends Controller
             $record->worker = Auth::user()->username;
             $record->worker_id = Auth::id();
             $record->purchase_number =$purchase->number;
+            $record->purchase_id =$purchase->id;
             $record->type = 4;
             $record->save();
             $recordPrice = 0;
             foreach ($lists as $list){
-                $swap = StockRecordList::find($list['id']);
+//                $swap = StockRecordList::find($list['id']);
 //                dd($swap);
-                if ($swap->sum<$list['number']){
-                    throw new \Exception('超出收货数量！');
-                }
-                $stock = Stock::where('warehouse_id', '=', $post->warehouse_id)
-                    ->where('material_id', '=', $swap->material_id)->first();
-                $price = $swap->price;
+//                if ($swap->sum<$list['number']){
+//                    throw new \Exception('超出收货数量！');
+//                }
+                $stock = Stock::find($list['id']);
                 if ($list['number']>$stock->number){
                     throw new \Exception('数量不足！');
                 }
+                $price = $stock->cost/$stock->number;
                 $stock->number -= $list['number'];
                 $stock->cost -= $price*$list['number'];
                 $stock->save();
                 $Rlist = new StockRecordList();
                 $Rlist->record_id = $record->id;
-                $Rlist->material_id = $swap->material_id;
+                $Rlist->material_id = $stock->material_id;
                 $Rlist->sum = $list['number'];
                 $Rlist->price = $price;
                 $Rlist->cost = $Rlist->sum*$Rlist->price;
                 $Rlist->stock_cost = $stock->cost;
                 $Rlist->stock_number = $stock->number;
-                $count = $swap->number;
+                $count = $stock->number;
                 $count = $count==0?1:$count;
-                $Rlist->stock_price = $swap->cost/$count;
+                $Rlist->stock_price = $stock->cost/$count;
 //                $price += $list->cost;
                 $Rlist->save();
                 $recordPrice += $Rlist->cost;
@@ -814,6 +814,7 @@ class StockController extends Controller
 //        dd($list);
         $purchase_need = 0;
         $purchase_need_cost=0;
+
         if (!empty($list)){
             foreach ($list as $item){
                 $item->material = $item->material()->first();
@@ -826,6 +827,7 @@ class StockController extends Controller
                 $purchase_need_cost+=$item->purchase_need_cost;
             }
         }
+//        dd($list);
         return view('stock.out_single',['record'=>$record,'list'=>$list,'purchase'=>$purchase,'purchase_need'=>$purchase_need,'purchase_need_cost'=>$purchase_need_cost]);
     }
     public function printBuy()
