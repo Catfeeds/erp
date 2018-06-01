@@ -352,13 +352,15 @@ class PurchaseController extends Controller
     public function searchPurchaseWarehouse()
     {
         $name = Input::get('name');
-        $id = Input::get('purchase_id');
-        $idArr = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->pluck('warehouse_id')->toArray();
-        $db = Warehouse::whereIn('id',$idArr);
+//        $id = Input::get('purchase_id');
+//        $idArr = StockRecord::where('purchase_id','=',$id)->where('type','=',1)->pluck('warehouse_id')->toArray();
+//        $db = Warehouse::whereIn('id',$idArr);
         if ($name){
-            $db->where('name','like','%'.$name.'%');
+            $data = Warehouse::where('name','like','%'.$name.'%')->get();
+        }else{
+            $data = Warehouse::all();
         }
-        $data = $db->get();
+//        $data = $db->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

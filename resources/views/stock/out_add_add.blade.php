@@ -46,7 +46,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目编号</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->number}}</div>
+                            <div class="fake-input">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目内容</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->name}}</div>
+                            <div class="fake-input">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</div>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     <div class="inline fields">
                         <label class="four wide field flex-center">项目经理</label>
                         <div class="twelve wide field">
-                            <div class="fake-input">{{\App\Models\Project::find($purchase->project_id)->pm}}</div>
+                            <div class="fake-input">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</div>
                         </div>
                     </div>
                 </div>
