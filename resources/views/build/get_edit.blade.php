@@ -67,7 +67,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">不含税金额</label>
                                 <div class="twelve wide field">
-                                    <input type="number" name="amount_without_tax" placeholder="请输入不含税金额" value="{{$invoice->without_tax}}">
+                                    <input id="without_tax" type="number" name="amount_without_tax" placeholder="请输入不含税金额" value="{{$invoice->without_tax}}">
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">税额</label>
                                 <div class="twelve wide field">
-                                    <input type="number" name="tax" placeholder="请输入税额" value="{{$invoice->tax}}">
+                                    <input id="tax" type="number" name="tax" placeholder="请输入税额" value="{{$invoice->tax}}">
                                 </div>
                             </div>
                         </div>
@@ -83,6 +83,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">含税金额</label>
                                 <div class="twelve wide field">
+                                    {{--<div class="fake-input">@{{ parseFloat($('#tax').val())+parseFloat($('#without_tax').val()) }}</div>--}}
                                     <input type="number" name="amount" placeholder="请输入含税金额" value="{{$invoice->with_tax}}">
                                 </div>
                             </div>

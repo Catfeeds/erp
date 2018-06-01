@@ -96,14 +96,14 @@
             <tfoot>
             <tr>
                 <th colspan="7">合计</th>
-                <th>{{$purchase->lists()->sum('number')}} ￥</th>
+                <th>{{$purchase->lists()->sum('number')}} </th>
                 <th>{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
                 <th>{{$buy_num}}</th>
-                <th>{{number_format($buy_cost,2)}}</th>
+                <th>{{number_format($buy_cost,2)}}￥</th>
                 <th>{{$get_num}}</th>
-                <th>{{number_format($get_count,2)}}</th>
+                <th>{{number_format($get_count,2)}}￥</th>
                 <th>{{$need_num}}</th>
-                <th>{{number_format($need_count,2)}}</th>
+                <th>{{number_format($need_count,2)}}￥</th>
             </tr>
             </tfoot>
         </table>

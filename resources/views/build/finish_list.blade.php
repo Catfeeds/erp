@@ -98,6 +98,7 @@
                 <span>请款单标准格式导出</span>
             </a>
         </div>
+        {{$applies->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

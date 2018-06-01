@@ -69,7 +69,7 @@
             <tfoot>
             <tr>
                 <th colspan="6">合计</th>
-                <th>{{$apply->lists()->sum('total'),2}} ￥</th>
+                <th>{{number_format($apply->lists()->sum('total'),2)}} ￥</th>
                 <th></th>
             </tr>
             </tfoot>

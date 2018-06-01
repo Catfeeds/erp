@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">库存管理</a>
             <div class="divider"> / </div>
-            <div class="active section">退料入货清单</div>
+            <div class="active section">退料入库清单</div>
         </div>
 
         <!-- 操作区域 -->

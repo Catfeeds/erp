@@ -550,7 +550,7 @@ class ExcelController extends Controller
     {
         $value = Input::get('search');
 
-        $tr = [['采购日期	','采购编号','预算内/外','供货商','物料名称','性能及技术','品牌型号','生产厂家','单位','单价','数量','保修截止日期']];
+        $tr = [['采购日期	','采购编号','预算内/外','供货商','物料名称','性能及技术','品牌型号','生产厂家','单位','单价','数量','金额','保修截止日期']];
         if ($value){
             $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
             $pTr = [['项目编号',$project->number,'项目内容',$project->name,'项目保修截止日期',$project->deadline]];
@@ -577,6 +577,7 @@ class ExcelController extends Controller
                 $swap['material_unit'] = $material->unit;
                 $swap['price'] = $lists[$i]->price;
                 $swap['sum'] = $lists[$i]->number;
+                $swap['cost'] = $lists[$i]->cost;
                 $swap['warranty_date'] = $lists[$i]->warranty_date;
                 $data[$i] = $swap;
             }
@@ -1133,7 +1134,7 @@ class ExcelController extends Controller
             '退料编号	','物料名称','型号','生产厂家','单位','退料数量','退料单价','退料金额','项目编号',
             '项目内容	','项目经理','退料人','入库仓库	','收货人'
         ]];
-        if (empty($lists)){
+        if (!empty($lists)){
             foreach ($lists as $list){
                 $list->material = $list->material()->first();
                 $list->record = $list->record()->first();
@@ -1157,7 +1158,7 @@ class ExcelController extends Controller
         }
 //        dd($data);
         $data = array_merge($tr,$data);
-        $this->excel->create('退料入货清单',function ($excel) use ($tr,$data){
+        $this->excel->create('退料入库清单',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
                 for ($j=0;$j<$count;$j++){
@@ -1179,7 +1180,7 @@ class ExcelController extends Controller
             $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
         }
         $tr = [[
-            '领料编号	','出库仓库','物料名称	','型号','单位','库存均价','领料数量','领料金额','项目编号',
+            '领料编号	','出库仓库','物料名称	','性能与技术参数','型号','厂家','单位','库存均价','领料数量','领料金额','项目编号',
             '项目内容','项目经理','领料人'
         ]];
         if (!empty($lists)){
@@ -1190,7 +1191,9 @@ class ExcelController extends Controller
                 $swap['number'] = $list->record->number;
                 $swap['warehouse'] = $list->record->warehouse;
                 $swap['name'] = $list->material->name;
+                $swap['param'] = $list->material->param;
                 $swap['model'] = $list->material->model;
+                $swap['factory'] = $list->material->factory;
                 $swap['unit'] = $list->material->unit;
                 $swap['price'] = $list->price;
                 $swap['sum'] = $list->sum;
