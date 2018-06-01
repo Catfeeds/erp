@@ -19,7 +19,7 @@
         <div class="invisible" id="buildGetEdit">
             <h4 class="ui dividing header blue">收票信息</h4>
 
-            <form method="post">
+            <form method="post" novalidate="false">
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
