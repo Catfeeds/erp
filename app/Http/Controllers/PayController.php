@@ -269,7 +269,7 @@ class PayController extends Controller
     {
         $id = Input::get('id');
         $loan = LoanList::find($id);
-        if ($loan->state!=1){
+        if ($loan->state==3){
             return response()->json([
                 'code'=>'400',
                 'msg'=>'当前状态不允许撤销！'

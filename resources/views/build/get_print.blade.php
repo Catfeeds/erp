@@ -77,7 +77,7 @@
             </tr>
             <tr>
                 <th colspan="8">未收票金额</th>
-                <th>{{$projectTeam->pay_price-$projectTeam->invoices()->sum('with_tax'),2}}￥</th>
+                <th>{{number_format($projectTeam->pay_price-$projectTeam->invoices()->sum('with_tax'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

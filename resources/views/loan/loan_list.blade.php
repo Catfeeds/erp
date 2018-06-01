@@ -61,17 +61,20 @@
                         <td>{{$lists[$i]->manager}}</td>
                         @endif
                     <td style="white-space:nowrap;">
-                        @if($lists[$i]->state==1)
-                        <button class="ui mini button negative loanLoanListCancel">撤销</button>
-                        @if(checkRole('loan_loan_pass',$lists[$i]->id))
+                        {{--@if($lists[$i]->state==1)--}}
+                        @if($lists[$i]->state!=3)
+                            <button class="ui mini button negative loanLoanListCancel">撤销</button>
+                        @else
+                            @endif
+                        @if(checkRole('loan_loan_pass',$lists[$i]->id)&&$lists[$i]->state==1)
                         <button class="ui mini button positive loanLoanListCheck">审批</button>
                             @else
                             @endif
-                            @elseif($lists[$i]->state==2)
+                            @if($lists[$i]->state==2)
                             <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('loan/pay')}}?id={{$lists[$i]->id}}')">录入/修改</a>
-                            <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$lists[$i]->id}}')">凭证</a>
                             @else
                         @endif
+                        <a class="ui mini button positive" href="javascript:_helper.fullWindow('{{url('loan/print')}}?id={{$lists[$i]->id}}')">凭证</a>
                     </td>
                 </tr>
                 @endfor
