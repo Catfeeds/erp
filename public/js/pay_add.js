@@ -160,6 +160,9 @@
                     type: 'success'
                   })
                   $('.ui.dimmer').removeClass('active')
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
