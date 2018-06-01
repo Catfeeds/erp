@@ -44,7 +44,7 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
-                            <label class="four wide field">收款银行账号</label>
+                            <label class="four wide field">付款银行账号</label>
                             <div class="twelve wide field icon input">
                                 <el-select v-model="form.bank_id" placeholder="请选择银行账号">
                                     <el-option v-for="(item, index) in banks" :key="item.id" :label="item.name + ' ' +  item.account" :value="item.id"></el-option>

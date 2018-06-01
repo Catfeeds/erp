@@ -31,11 +31,6 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        if ($purchase->type==1){
-            $check = 'buy_bugetary_check';
-        }else{
-            $check = 'buy_extrabugetary_check';
-        }
         if ($purchase->state!=1){
             return response()->json([
                 'code'=>'400',
@@ -45,7 +40,8 @@ class PurchaseController extends Controller
             $purchase->state = 2;
             $purchase->check = Auth::id();
             $purchase->save();
-            Task::where('type','=',$check)->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','buy_bugetary_check')->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','buy_extrabugetary_check')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS',
@@ -60,11 +56,7 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $purchase = Purchase::find($id);
-        if ($purchase->type==1){
-            $pass = 'buy_bugetary_pass';
-        }else{
-            $pass = 'buy_extrabugetary_pass';
-        }
+
         if ($purchase->state!=2){
             return response()->json([
                 'code'=>'400',
@@ -74,7 +66,8 @@ class PurchaseController extends Controller
             $purchase->state = 3;
             $purchase->pass = Auth::id();
             $purchase->save();
-            Task::where('type','=',$pass)->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','buy_bugetary_pass')->where('content','=',$id)->update(['state'=>0]);
+            Task::where('type','=','buy_extrabugetary_pass')->where('content','=',$id)->update(['state'=>0]);
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'

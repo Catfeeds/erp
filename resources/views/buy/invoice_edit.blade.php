@@ -96,7 +96,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">含税金额</label>
                                 <div class="twelve wide field">
-                                    <div class="fake-input">@{{ parseInt(form.tax)+parseInt(form.without_tax) }}</div>
+                                    <div class="fake-input">@{{ parseFloat(form.tax)+parseFloat(form.without_tax) }}</div>
                                     {{--<input type="number" v-model="form.with_tax" name="amount" placeholder="请输入含税金额" value="">--}}
                                 </div>
                             </div>
