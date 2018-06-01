@@ -843,8 +843,8 @@ class StockController extends Controller
         if (!empty($lists)){
             foreach ($lists as $list){
                 $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->id)->pluck('id')->toArray();
-                $list->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('sum');
-                $list->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('cost');
+                $list->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('sum')-$list->sum;
+                $list->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('cost')-$list->cost;
                 $buy_num+=$list->old_sum;
                 $buy_cost+=$list->old_cost;
                 $get_num += $list->sum;
