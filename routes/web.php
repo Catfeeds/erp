@@ -10,23 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('test',function (){
-    $a=[['date'=>'2018-3-2','price'=>2],['date'=>'2018-3-5','price'=>2]];
-    $c=[['date'=>'2018-3-4','count'=>2],['date'=>'2018-3-2','count'=>2]];
-    $d = array_merge($a,$c);
-    array_multisort(array_column($d,'date'),SORT_ASC,$d);
-    dd($d);
-    $count =0;
-    for ($i=0;$i<count($a);$i++){
-        if($a[$i]==$b[$i-$count]){
-            $c[$i]=$b[$i-$count];
-        }else{
-            $count+=1;
-            $c[$i]=0;
-        }
-    }
-    dd($c);
-});
+Route::get('test','UserController@fix');
 Route::get('/','UserController@index');
 Route::post('login','UserController@login');
 Route::any('upload','SystemController@upload');

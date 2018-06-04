@@ -203,7 +203,7 @@ class UserController extends Controller
     {
         $budgets = Budget::where('type','=',1)->get();
         foreach ($budgets as $budget){
-            $material = Material::find($budget->material_id);
+            $materail = Material::find($budget->material_id);
             $budget->name = $materail->name;
             $budget->param = $materail->param;
             $budget->model = $materail->model;
