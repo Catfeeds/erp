@@ -770,7 +770,7 @@ class ExcelController extends Controller
 
                     $sheet->ignoreEmpty()->each(function ($data) use ($project_id){
                         $origin = $data->toArray();
-                        var_dump($origin);
+//                        var_dump($origin);
 //                        dd($origin);
 //                        $origin = array_values($origin);
 //                        dd($origin);

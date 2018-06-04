@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Login;
+use App\Models\Budget;
+use App\Models\Material;
 use App\Models\ProjectRole;
 use App\Models\Role;
 use App\Models\RoleDetail;
@@ -196,6 +198,20 @@ class UserController extends Controller
         $task->save();
         return redirect()->back()->with('status','操作成功！');
 
+    }
+    public function fix()
+    {
+        $budgets = Budget::where('type','=',1)->get();
+        foreach ($budgets as $budget){
+            $material = Material::find($budget->material_id);
+            $budget->name = $materail->name;
+            $budget->param = $materail->param;
+            $budget->model = $materail->model;
+            $budget->factory = $materail->factory;
+            $budget->unit = $materail->unit;
+            $budget->save();
+        }
+        return 'SUCCESS';
     }
 
 

@@ -536,6 +536,12 @@ class ProjectController extends Controller
                         $budget = new Budget();
                         $budget->project_id = $project_id;
                         $budget->material_id = $item['material_id'];
+                        $materail = Material::find($item['material_id']);
+                        $budget->name = $materail->name;
+                        $budget->param = $materail->param;
+                        $budget->model = $materail->model;
+                        $budget->factory = $materail->factory;
+                        $budget->unit = $materail->unit;
                         $budget->price = $item['price'];
                         $budget->number = $item['number'];
                         $budget->cost = $item['price']*$item['number'];
@@ -553,6 +559,11 @@ class ProjectController extends Controller
                         $budget = new Budget();
                         $budget->project_id = $project_id;
                         $budget->material_id = $materail->id;
+                        $budget->name = $materail->name;
+                        $budget->param = $materail->param;
+                        $budget->model = $materail->model;
+                        $budget->factory = $materail->factory;
+                        $budget->unit = $materail->unit;
                         $budget->price = $item['price'];
                         $budget->number = $item['number'];
                         $budget->cost = $item['price']*$item['number'];
