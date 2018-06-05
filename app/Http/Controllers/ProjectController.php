@@ -1588,6 +1588,21 @@ class ProjectController extends Controller
                 'msg'=>'确认过的项目不能删除！'
             ]);
         }
+        $project->bail()->delete();
+        $project->mainContract()->delete();
+        $project->outContract()->delete();
+        $project->budget()->delete();
+        $project->situation()->delete();
+        $project->receipt()->delete();
+        $project->purchases()->delete();
+        $project->collects()->delete();
+        $project->invoices()->delete();
+        $project->tips()->delete();
+        $project->stockRecords()->delete();
+        $project->requestPayments()->delete();
+        $project->loanSubmits()->delete();
+        $project->payApplies()->delete();
+        $project->picture()->delete();
         $project->delete();
         return response()->json([
             'code'=>'200',
