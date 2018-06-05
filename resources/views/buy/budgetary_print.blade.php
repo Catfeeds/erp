@@ -20,34 +20,34 @@
         <table class="ui celled structured table" id="budgetaryPrint">
             <thead>
             <tr>
-                <th>采购编号</th>
-                <th class="font-normal bg-white" colspan="2">{{$purchase->number}}</th>
-                <th>采购日期</th>
+                <th colspan="2">采购编号</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->number}}</th>
+                <th colspan="2" >采购日期</th>
                 <th class="font-normal bg-white" colspan="3">{{$purchase->date}}</th>
-                <th>采购金额</th>
-                <th class="font-normal bg-white" colspan="7">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
+                <th colspan="2">采购金额</th>
+                <th class="font-normal bg-white" colspan="3">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
             </tr>
             <tr>
-                <th>项目编号</th>
-                <th class="font-normal bg-white" colspan="2">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
-                <th>项目内容</th>
+                <th colspan="2">项目编号</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</th>
+                <th colspan="2">项目内容</th>
                 <th class="font-normal bg-white" colspan="3">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</th>
-                <th>供货商</th>
-                <th class="font-normal bg-white" colspan="7">{{$purchase->supplier}}</th>
+                <th colspan="2">供货商</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->supplier}}</th>
             </tr>
             <tr>
-                <th>发票条件</th>
-                <th class="font-normal bg-white" colspan="6">{{$purchase->content}}</th>
-                <th>付款条件</th>
-                <th class="font-normal bg-white" colspan="7">{{$purchase->condition}}</th>
+                <th colspan="2">发票条件</th>
+                <th class="font-normal bg-white" colspan="5">{{$purchase->content}}</th>
+                <th colspan="2">付款条件</th>
+                <th class="font-normal bg-white" colspan="6">{{$purchase->condition}}</th>
             </tr>
             <tr>
-                <th >经办人</th>
-                <th class="font-normal bg-white" colspan="2">{{$purchase->worker}}</th>
-                <th >复核人</th>
+                <th colspan="2">经办人</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->worker}}</th>
+                <th colspan="2">复核人</th>
                 <th class="font-normal bg-white" colspan="3">{{$purchase->check==0?"":\App\User::find($purchase->check)->username}}</th>
-                <th >审批人</th>
-                <th class="font-normal bg-white" colspan="7">{{$purchase->pass==0?'':\App\User::find($purchase->pass)->username}}</th>
+                <th colspan="2">审批人</th>
+                <th class="font-normal bg-white" colspan="3">{{$purchase->pass==0?'':\App\User::find($purchase->pass)->username}}</th>
             </tr>
             <tr>
                 <th colspan="15" class="inline-center">采购物料清单</th>
