@@ -556,7 +556,7 @@ class ExcelController extends Controller
             $project = Project::where('name','=',$value)->orWhere('number','=',$value)->first();
             $pTr = [['项目编号',$project->number,'项目内容',$project->name,'项目保修截止日期',$project->deadline]];
             $tr = array_merge($pTr,$tr);
-            $idArr = $project->purchases()->pluck('id')->toArray();
+            $idArr = $project->purchases()->where('state','=',3)->pluck('id')->toArray();
             $lists = PurchaseList::whereIn('purchase_id',$idArr)->get();
         }else{
             $lists = [];

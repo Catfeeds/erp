@@ -100,7 +100,7 @@
                     <td >{{$i+1}}</td>
                     <td >{{$purchase->date}}</td>
                     <td >{{$purchase->number}}</td>
-                    <td >内</td>
+                    <td >{{$purchase->type=='1'?'内':'外'}}</td>
 
                     <td >{{$purchase->supplier}}</td>
 
