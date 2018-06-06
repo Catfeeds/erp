@@ -19,9 +19,9 @@
         </div>
         <div class="flex-row flex-end">
             <p class="print-title">
-                <b>入库日期：</b>{{$record->date}}</p>
+                <b>出库日期：</b>{{$record->date}}</p>
             <p class="print-title">
-                <b>入库仓库：</b>{{$record->warehouse}}</p>
+                <b>出库仓库：</b>{{$record->warehouse}}</p>
         </div>
         <table class="ui celled center aligned table unstackable">
             <thead>

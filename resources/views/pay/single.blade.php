@@ -91,7 +91,7 @@
             @else
             @endif
             @if(checkRole('pay_pass',$apply->id)&&$apply->state==1)
-            <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
+            <button class="ui  icon button primary" id="paySingleCheck" style="margin:0 20px;">
                 <i class="icon edit"></i>
                 <span>审批</span>
             </button>

@@ -37,7 +37,7 @@
                   })
                   this.selectData.id = res.data.data.id
                   _http.UserManager.searchAuthUsers({
-                      role: 'build_pay_pass'
+                      role: 'build_pay_check'
                     })
                     .then(resp => {
                       if (resp.data.code === '200') {
