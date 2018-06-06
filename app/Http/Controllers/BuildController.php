@@ -283,7 +283,7 @@ class BuildController extends Controller
         $pay->checker = Auth::user()->username;
         $pay->checker_id = Auth::id();
         $pay->save();
-        Task::where('type','=','build_pay_pass')->where('content','=',$id)->update(['state'=>0]);
+        Task::where('type','=','build_pay_check')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
@@ -299,14 +299,14 @@ class BuildController extends Controller
         if ($pay->state!=2){
             return response()->json([
                 'code'=>'400',
-                'msg'=>'当前状态不允许复核！'
+                'msg'=>'当前状态不允许审批！'
             ]);
         }
         $pay->state = 3;
         $pay->passer = Auth::user()->username;
         $pay->passer_id = Auth::id();
         $pay->save();
-        Task::where('type','=','build_finish_pass')->where('content','=',$id)->update(['state'=>0]);
+        Task::where('type','=','build_pay_pass')->where('content','=',$id)->update(['state'=>0]);
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS'
