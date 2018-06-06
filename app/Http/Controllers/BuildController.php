@@ -234,7 +234,7 @@ class BuildController extends Controller
             foreach ($users as $user){
                 $task = new Task();
                 $task->user_id = $user;
-                $task->type = 'build_pay_pass';
+                $task->type = 'build_pay_check';
                 $task->title = '施工付款申请复核';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
@@ -256,7 +256,7 @@ class BuildController extends Controller
             foreach ($users as $user){
                 $task = new Task();
                 $task->user_id = $user;
-                $task->type = 'build_finish_pass';
+                $task->type = 'build_pay_pass';
                 $task->title = '施工付款申请审批';
                 $task->url = 'build/pay/single?id='.$pay->project_team;
                 $task->number = $pay->number;
