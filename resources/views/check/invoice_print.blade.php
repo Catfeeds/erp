@@ -29,7 +29,7 @@
                 <th>开票日期</th>
                 <th class="fake-td" colspan="2">{{$invoice->date}}</th>
                 <th>税率</th>
-                <th class="fake-td" colspan="2">{{$invoice->rate}}%</th>
+                <th class="fake-td" colspan="2">{{\App\Models\Invoice::find($invoice->rate)->rate}}%</th>
             </tr>
             <tr>
                 <th>付款单位</th>

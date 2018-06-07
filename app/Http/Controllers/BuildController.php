@@ -422,7 +422,7 @@ class BuildController extends Controller
         $id = Input::get('id');
         $team = ProjectTeam::find($id);
         $payments = $team->payments()->where('state','=',3)->get();
-        $applies = $team->applies()->get();
+        $applies = $team->applies()->where('state','=',3)->get();
         return view('build.pay_print',['team'=>$team,'payments'=>$payments,'applies'=>$applies]);
     }
     public function printBuildGet()

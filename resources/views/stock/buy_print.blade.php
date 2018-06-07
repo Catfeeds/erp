@@ -28,24 +28,27 @@
         <table class="ui celled center aligned table selectable">
             <thead>
             <tr>
-                <th>采购编号</th>
-                <th class="fake-td">{{$record->purchase_number}}</th>
-                <th>采购日期</th>
-                <th class="fake-td" colspan="2">{{$purchase->date}}</th>
-                <th>采购金额</th>
-                <th class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
-                <th>项目编号</th>
-                <th class="fake-td">{{$record->project_number}}</th>
-                <th>项目内容</th>
-                <th class="fake-td" colspan="3">{{$record->project_content}}</th>
-                <th>项目经理</th>
-                <th class="fake-td">{{$record->project_manager}}</th>
+                <th colspan="2">采购编号</th>
+                <th class="fake-td" colspan="3" >{{$record->purchase_number}}</th>
+                <th colspan="2">采购日期</th>
+                <th class="fake-td" colspan="3" >{{$purchase->date}}</th>
+                <th colspan="2">采购金额</th>
+                <th class="fake-td" colspan="3" >{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
+
             </tr>
             <tr>
-                <th>供货商名称</th>
-                <th class="fake-td" colspan="8">{{$record->supplier}}</th>
-                <th>收货人</th>
-                <th class="fake-td" colspan="5">{{$record->worker}}</th>
+                <th colspan="2">项目编号</th>
+                <th class="fake-td" colspan="3">{{$record->project_number}}</th>
+                <th  colspan="2">项目内容</th>
+                <th class="fake-td" colspan="3">{{$record->project_content}}</th>
+                <th colspan="2">项目经理</th>
+                <th class="fake-td" colspan="3">{{$record->project_manager}}</th>
+            </tr>
+            <tr>
+                <th colspan="2">供货商名称</th>
+                <th class="fake-td" colspan="6">{{$record->supplier}}</th>
+                <th colspan="2">收货人</th>
+                <th class="fake-td" colspan="7">{{$record->worker}}</th>
             </tr>
             <tr>
                 <th colspan="9">采购物料清单</th>

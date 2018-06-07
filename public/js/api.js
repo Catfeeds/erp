@@ -5,8 +5,8 @@
 
   // const url = 'http://119.23.202.220:8080'
   // const url = 'http://192.168.1.78/erp/public'
-  // const url = 'http://localhost/erp/public'
-  const url = 'http://193.112.181.116:8080'
+  const url = 'http://localhost/erp/public'
+  // const url = 'http://193.112.181.116:8080'
   // const url = 'http://192.168.100.70'
 
   class ProjectManager {

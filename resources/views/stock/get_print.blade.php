@@ -16,22 +16,22 @@
         <table class="ui celled center aligned table selectable">
             <thead>
             <tr>
-                <th>领料日期</th>
-                <th class="fake-td" colspan="3">{{$record->date}}</th>
-                <th>领料编号</th>
-                <th class="fake-td" colspan="4">{{$record->number}}</th>
+                <th colspan="2">领料日期</th>
+                <th class="fake-td" colspan="2">{{$record->date}}</th>
+                <th colspan="2">领料编号</th>
+                <th class="fake-td" colspan="2">{{$record->number}}</th>
             </tr>
             <tr>
-                <th>领料项目编号</th>
-                <th class="fake-td" colspan="3">{{$record->project_number}}</th>
-                <th>领料项目内容</th>
-                <th class="fake-td" colspan="4">{{$record->project_content}}</th>
+                <th colspan="2">领料项目编号</th>
+                <th class="fake-td" colspan="2">{{$record->project_number}}</th>
+                <th colspan="2">领料项目内容</th>
+                <th class="fake-td" colspan="3">{{$record->project_content}}</th>
             </tr>
             <tr>
-                <th>领料人</th>
-                <th class="fake-td" colspan="3">{{$record->worker}}</th>
-                <th>出货仓库</th>
-                <th class="fake-td" colspan="4">{{$record->warehouse}}</th>
+                <th colspan="2">领料人</th>
+                <th class="fake-td" colspan="2">{{$record->worker}}</th>
+                <th colspan="2">出货仓库</th>
+                <th class="fake-td" colspan="3">{{$record->warehouse}}</th>
             </tr>
             <tr>
                 <th></th>

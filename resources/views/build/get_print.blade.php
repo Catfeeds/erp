@@ -36,7 +36,7 @@
                 <th>项目内容</th>
                 <th colspan="4" class="fake-td">{{$projectTeam->project_content}}</th>
                 <th>已付款金额</th>
-                <th class="fake-td">{{number_format($projectTeam->applies()->where('state','=',3)->sum('pay_price'),2)}} ￥</th>
+                <th class="fake-td">{{number_format($projectTeam->applies()->where('state','=',4)->sum('apply_price'),2)}} ￥</th>
             </tr>
             <tr>
                 <th colspan="10">收票记录</th>
@@ -77,7 +77,7 @@
             </tr>
             <tr>
                 <th colspan="8">未收票金额</th>
-                <th>{{number_format($projectTeam->pay_price-$projectTeam->invoices()->sum('with_tax'),2)}}￥</th>
+                <th>{{number_format($projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->invoices()->sum('with_tax'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

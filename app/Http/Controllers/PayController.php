@@ -65,7 +65,8 @@ class PayController extends Controller
     {
         $id = Input::get('id');
         $apply = PayApply::find($id);
-        return view('pay.pay',['apply'=>$apply]);
+        $bankList = BankAccount::where('state','=',1)->get();
+        return view('pay.pay',['apply'=>$apply,'bankList'=>$bankList]);
     }
     public function finishPayApply(Request $post)
     {
@@ -78,8 +79,10 @@ class PayController extends Controller
         }
         $apply->pay_date = $post->get('pay_date');
         $apply->cash = $post->get('cash');
-        $apply->transfer = $post->get('transfer');
+        $apply->transfer = $post->get('amount');
         $apply->other = $post->get('other');
+//        dd($apply->price);
+//        dd($apply->cash+$apply->transfer+$apply->other);
         if ($apply->price!=$apply->cash+$apply->transfer+$apply->other){
             return response()->json([
                 'code'=>'400',

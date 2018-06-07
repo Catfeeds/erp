@@ -15,6 +15,7 @@
         </div>
         <input type="hidden" id="payId" value="{{$apply->id}}">
         <input type="hidden" id="manager" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+        <div style="display: none;" id="bankList">{{json_encode($bankList)}}</div>
         <h1 class="ui header blue aligned center">付款</h1>
         <div id="payPay">
             <h4 class="ui dividing header blue">信息录入</h4>
@@ -49,7 +50,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">其他金额</label>
                             <div class="eleven wide field">
-                                <input type="number" v-model.number="payForm.others" placeholder="请输入其他金额">
+                                <input type="number" v-model.number="payForm.other" placeholder="请输入其他金额">
                             </div>
                         </div>
                     </div>
@@ -57,7 +58,10 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">转账银行</label>
                             <div class="eleven wide field">
-                                <input type="text" v-model="payForm.bank" placeholder="请输入转账银行">
+                                <el-select v-model="payForm.bankIndex" placeholder="请选择转账银行" @change="selectBank">
+                                    <el-option v-for="(item, index) in bankList" :key="item.id" :label="item.name + item.account" :value="index">
+                                    </el-option>
+                                </el-select>
                             </div>
                         </div>
                     </div>
@@ -65,7 +69,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">转账账户</label>
                             <div class="eleven wide field">
-                                <input type="number" v-model.number="payForm.account" placeholder="请输入转账账户">
+                                <div class="fake-input">@{{ payForm.account || '无' }}</div>
                             </div>
                         </div>
                     </div>
