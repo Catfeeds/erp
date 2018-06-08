@@ -1325,7 +1325,7 @@ class ProjectController extends Controller
                 }
             }
             $purchase->supplier_name = $purchase->supplier;
-            $purchase->content = $purchase->content_id;
+//            $purchase->content = $purchase->content_id;
             $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
 //            $content =
             $data = [];
