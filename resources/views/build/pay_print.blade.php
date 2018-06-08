@@ -124,7 +124,7 @@
             </tr>
             <tr>
                 <th colspan="12">剩余应付账款</th>
-                <th>{{number_format($team->payments()->sum('price')-$team->applies()->sum('pay_price'),2)}}￥</th>
+                <th>{{number_format($team->payments()->where('state','=',3)->sum('price')-$team->applies()->where('state','=',4)->sum('pay_price'),2)}}￥</th>
             </tr>
             </tfoot>
             @else
