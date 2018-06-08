@@ -88,8 +88,8 @@
             <tfoot>
             <tr>
                 <th colspan="7">合计</th>
-                <th>{{$purchase->lists()->sum('number')}}</th>
-                <th>{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
+                <th>{{$purchase_num}}</th>
+                <th>{{number_format($purchase_cost,2)}}￥</th>
                 <th>{{$purchase_need}}</th>
                 <th>{{number_format($purchase_need_cost,2)}}￥</th>
                 <th>{{$record->lists()->sum('sum')}}</th>

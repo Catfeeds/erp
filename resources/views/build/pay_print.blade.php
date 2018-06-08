@@ -73,7 +73,7 @@
                 <th></th>
                 <th></th>
                 <th colspan="6">合计</th>
-                <th>{{number_format($team->payments()->sum('price'),2)}} ￥</th>
+                <th>{{number_format($team->payments()->where('state','=',3)->sum('price'),2)}} ￥</th>
             </tr>
             @else
                 @endif

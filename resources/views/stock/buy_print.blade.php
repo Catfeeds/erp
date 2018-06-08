@@ -84,8 +84,8 @@
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->factory}}</td>
                 <td>{{\App\Models\Material::find($lists[$i]->material_id)->unit}}</td>
                 <td>{{number_format($lists[$i]->price,2)}} ￥</td>
-                <td>{{\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('number')}}</td>
-                <td>{{number_format(\App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$lists[$i]->material_id)->sum('cost'),2)}}￥</td>
+                <td>{{$lists[$i]->purchase_num}}</td>
+                <td>{{number_format($lists[$i]->purchase_cost,2)}}￥</td>
                 <td>{{$lists[$i]->old_sum}}</td>
                 <td>{{number_format($lists[$i]->old_cost,2)}}￥</td>
                 <td>{{$lists[$i]->sum}}</td>
@@ -99,8 +99,8 @@
             <tfoot>
             <tr>
                 <th colspan="7">合计</th>
-                <th>{{$purchase->lists()->sum('number')}} </th>
-                <th>{{number_format($purchase->lists()->sum('cost'),2)}} ￥</th>
+                <th>{{$purchase_num}} </th>
+                <th>{{number_format($purchase_cost,2)}} ￥</th>
                 <th>{{$buy_num}}</th>
                 <th>{{number_format($buy_cost,2)}}￥</th>
                 <th>{{$get_num}}</th>

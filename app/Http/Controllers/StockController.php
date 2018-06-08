@@ -818,13 +818,16 @@ class StockController extends Controller
 //        dd($list);
         $purchase_need = 0;
         $purchase_need_cost=0;
-
+        $purchase_sum = 0;
+        $purchase_cost = 0;
         if (!empty($list)){
             foreach ($list as $item){
                 $item->material = $item->material()->first();
                 $item->purchase_price = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->pluck('price')->first();
                 $item->purchase_sum = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('number');
                 $item->purchase_cost = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('cost');
+                $purchase_cost+=$item->purchase_cost;
+                $purchase_sum+=$item->purchase_sum;
                 $item->purchase_need = PurchaseList::where('material_id','=',$item->material_id)->where('purchase_id','=',$record->purchase_id)->sum('received');
                 $item->purchase_need_cost = $item->purchase_price*$item->purchase_need;
                 $purchase_need+=$item->purchase_need;
@@ -832,7 +835,8 @@ class StockController extends Controller
             }
         }
 //        dd($list);
-        return view('stock.out_single',['record'=>$record,'list'=>$list,'purchase'=>$purchase,'purchase_need'=>$purchase_need,'purchase_need_cost'=>$purchase_need_cost]);
+        return view('stock.out_single',['record'=>$record,'list'=>$list,'purchase'=>$purchase,'purchase_need'=>$purchase_need,'purchase_need_cost'=>$purchase_need_cost,
+            'purchase_num'=>$purchase_sum,'purchase_cost'=>$purchase_cost]);
     }
     public function printBuy()
     {
@@ -846,11 +850,17 @@ class StockController extends Controller
         $get_count = 0;
         $need_num = 0;
         $need_count = 0;
+        $purchase_num = 0;
+        $purchase_cost = 0;
         if (!empty($lists)){
             foreach ($lists as $list){
                 $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->id)->pluck('id')->toArray();
                 $list->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('sum')-$list->sum;
                 $list->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('cost')-$list->cost;
+                $list->purchase_num = \App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$list->material_id)->sum('number');
+                $list->purchase_cost = \App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$list->material_id)->sum('cost');
+                $purchase_num += $list->purchase_num;
+                $purchase_cost += $list->purchase_cost;
                 $buy_num+=$list->old_sum;
                 $buy_cost+=$list->old_cost;
                 $get_num += $list->sum;
@@ -862,7 +872,7 @@ class StockController extends Controller
 
 
         return view('stock.buy_print',['record'=>$record,'lists'=>$lists,'purchase'=>$purchase,'buy_num'=>$buy_num,'buy_cost'=>$buy_cost,'get_num'=>$get_num
-        ,'get_count'=>$get_count,'need_num'=>$need_num,'need_count'=>$need_count]);
+        ,'get_count'=>$get_count,'need_num'=>$need_num,'need_count'=>$need_count,'purchase_num'=>$purchase_num,'purchase_cost'=>$purchase_cost]);
     }
     public function searchStockGet()
     {
