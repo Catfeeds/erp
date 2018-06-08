@@ -62,19 +62,19 @@
             </tr>
             <tr>
                 <th>初始数据</th>
-                <th class="fake-td">{{number_format($loan->deduction,2)}}￥</th>
-                <th class="fake-td">{{number_format($loan->cash,2)}}￥</th>
-                <th class="fake-td">{{number_format($loan->transfer,2)}}￥</th>
                 <th class="fake-td"></th>
                 <th class="fake-td"></th>
+                <th class="fake-td"></th>
+                <th class="fake-td">{{number_format($loan->submitBalance+$loan->price,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->loanBalance+$loan->deduction,2)}}￥</th>
             </tr>
             <tr>
                 <th>本次支付</th>
                 <th class="fake-td">{{number_format($loan->deduction,2)}}￥</th>
                 <th class="fake-td">{{number_format($loan->cash,2)}}￥</th>
                 <th class="fake-td">{{number_format($loan->transfer,2)}}￥</th>
-                <th class="fake-td"></th>
-                <th class="fake-td"></th>
+                <th class="fake-td">{{number_format($loan->submitBalance,2)}}￥</th>
+                <th class="fake-td">{{number_format($loan->loanBalance,2)}}￥</th>
             </tr>
             <tr>
                 <th>付款银行及账号</th>

@@ -66,6 +66,7 @@ Route::get('export/stock/return/list','ExcelController@exportStockReturnList');
 Route::get('export/stock/get/list','ExcelController@exportStockGetList');
 Route::get('export/stock/out/list','ExcelController@exportStockOutList');
 Route::get('export/build/get/list','ExcelController@exportBuildGetList');
+Route::get('export/stock/check','ExcelController@exportStockCheck');
 //Route::get('export/stock/out/list','ExcelController@exportStockOutList');
 Route::post('import/budget','ExcelController@importBudget');
 Route::post('import/payment','ExcelController@importPayment');

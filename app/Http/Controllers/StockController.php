@@ -520,7 +520,7 @@ class StockController extends Controller
             }
 //            dd($lists);
             $purchase->supplier_name = $purchase->supplier;
-            $purchase->content = $purchase->content_id;
+//            $purchase->content = $purchase->content_id;
             $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
 //            $content =
             $data = [];
@@ -757,6 +757,7 @@ class StockController extends Controller
         $end = '';
         $s = Input::get('s');
         $e = Input::get('e');
+
         if($s){
             $start = $s;
             $end = $e;
@@ -796,8 +797,11 @@ class StockController extends Controller
                 }
             }
         }
-//        dd($lists);
-        return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end,'startData'=>$startData]);
+//        foreach ($lists as $list){
+//
+//        }
+////        dd($lists);
+        return view('stock.check',['stock'=>$stock,'lists'=>$lists,'start'=>$start,'end'=>$end,'startData'=>$startData,'id'=>$id]);
     }
     public function addOutAddPage()
     {

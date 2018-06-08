@@ -1311,4 +1311,115 @@ class ExcelController extends Controller
             });
         })->export('xls');
     }
+    public function exportStockCheck()
+    {
+        $id = Input::get('id');
+        $stock = Stock::find($id);
+        $stock->material = $stock->material();
+        $stock->warehouse = $stock->warehouse();
+        $start = '';
+        $end = '';
+        $s = Input::get('s');
+        $e = Input::get('e');
+        $tr = [[
+            '日期','数量','单价','金额','供货商','收货/退料编号','收货人','数量',
+            '单价','金额','项目号','项目内容','领料/退货出库编号','领料人','类型','库存数量','库存金额',
+            '库存平均单价'
+        ]];
+//        dd($e);
+        $data = [];
+        if($s){
+            $start = $s;
+            $end = $e;
+//            dd($s)
+//            $start =
+            $startData = StockRecord::where('date','<',$start)->where('warehouse_id','=',$stock->warehouse_id)->orderBy('id','DESC')->first();
+            if (!empty($startData)){
+//                dd($startData);
+                $startData = StockRecordList::where('record_id','=',$startData->id)->where('material_id','=',$stock->material_id)->orderBy('id','DESC')->first();
+                $startData = empty($startData)?new StockRecordList():$startData->toArray();
+//                dd($startData);
+                //                ->toArray();
+            }else{
+                $startData = new StockRecordList();
+            }
+
+//            dd($startData);
+            $idArr = StockRecord::whereBetween('date',[$s,$e])
+                ->where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
+            $lists = StockRecordList::whereIn('record_id',$idArr)->where('material_id','=',$stock->material_id)->get();
+
+        }else{
+            $idArr = StockRecord::where('warehouse_id','=',$stock->warehouse_id)->pluck('id')->toArray();
+//            dd($idArr);
+            $lists = StockRecordList::whereIn('record_id',$idArr)->where('material_id','=',$stock->material_id)->get();
+//            dd($lists);
+            $startData = [];
+            $startData['stock_number'] = 0;
+            $startData['stock_price'] = 0;
+            $startData['stock_cost'] = 0;
+//            if (!empty($lists)){
+//                foreach ($lists as $list){
+//                    $list->record = $list->record()->first();
+//                }
+//            }
+        }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->record = $list->record()->first();
+                $swap = [];
+                $swap['a'] = $list->record->date;
+                if ($list->record->type==1||$list->record->type==2){
+                    $swap['b'] = $list->sum;
+                    $swap['c'] = number_format($list->price,2);
+                    $swap['d'] = number_format($list->cost,2);
+                    $swap['e'] = $list->record->supplier;
+                    $swap['f'] = $list->record->number;
+                    $swap['g'] = $list->record->worker;
+                    $swap['h'] = '';
+                    $swap['i'] = '';
+                    $swap['j'] = '';
+                    $swap['k'] = $list->record->project_number;
+                    $swap['l'] = $list->record->project_content;
+                    $swap['m'] = '';
+                }else{
+                    $swap['b'] = '';
+                    $swap['c'] = '';
+                    $swap['d'] = '';
+                    $swap['e'] = '';
+                    $swap['f'] = '';
+                    $swap['g'] = $list->record->worker;
+                    $swap['h'] = $list->sum;
+                    $swap['i'] = number_format($list->price,2);
+                    $swap['j'] = number_format($list->cost,2);
+                    $swap['k'] = $list->record->project_number;
+                    $swap['l'] = $list->record->project_content;
+                    $swap['m'] = $list->record->number;
+                }
+                $swap['n'] = empty($list->record->returnee)?'':$list->record->returnee;
+                if ($list->record->type==1||$list->record->type==2){
+                $swap['o'] = '入库';
+                }else{
+                    $swap['o'] = '出库';
+                }
+
+                $swap['p'] = $list->stock_number;
+                $swap['q'] = number_format($list->stock_cost,2);
+                $swap['r'] = number_format($list->stock_price,2);
+                array_push($data,$swap);
+            }
+        }
+        $data = array_merge($tr,$data);
+        $this->excel->create(' 出入库记录',function ($excel) use ($tr,$data){
+            $excel->sheet('sheet1',function ($sheet) use ($data){
+                $count = count($data);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$data[$j]);
+                }
+            });
+        })->export('xls');
+
+//        dd($data);
+//        dd($lists);
+    }
 }

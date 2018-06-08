@@ -923,8 +923,11 @@ class ProjectController extends Controller
                 $purchase->account = $supplier->account;
                 $purchase->condition = $basic['condition'];
                 $purchase->type = $basic['type'];
-                $purchase->content = Invoice::find($basic['content'])->name;
-                $purchase->content_id = $basic['content'];
+                if (is_numeric($basic['content'])){
+                    $purchase->content = Invoice::find($basic['content'])->name;
+                    $purchase->content_id = $basic['content'];
+                }
+
                 if ($purchase->save()){
                     Task::where('content','=',$purchase->id)->where('type','=','buy_extrabugetary_check')->delete();
                     Task::where('content','=',$purchase->id)->where('type','=','buy_bugetary_check')->delete();
@@ -1325,7 +1328,7 @@ class ProjectController extends Controller
                 }
             }
             $purchase->supplier_name = $purchase->supplier;
-            $purchase->content = $purchase->content_id;
+//            $purchase->content = $purchase->content_id;
             $project = $purchase->project_id==0?null:Project::find($purchase->project_id);
 //            $content =
             $data = [];

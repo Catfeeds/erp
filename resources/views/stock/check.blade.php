@@ -71,7 +71,7 @@
                 </div>
                 <div class="margin-top-20 flex-row flex-between">
                     <div>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/stock/check')}}?id={{$id}}&&s={{$start}}&&e={{$end}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>
