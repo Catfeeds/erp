@@ -104,7 +104,7 @@
                         <div class="inline fields">
                             <label class="four wide field">发票条件</label>
                             <div class="twelve wide field">
-                                <el-select v-model="budgetary_buy.info.content" placeholder="请选择内容">
+                                <el-select v-model="budgetary_buy.info.content_id" placeholder="请选择内容">
                                     <el-option v-for="item in invoiceType" :key="item.id" :label="item.name" :value="item.id">
                                     </el-option>
                                 </el-select>
