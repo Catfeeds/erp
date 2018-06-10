@@ -228,6 +228,10 @@ class StockController extends Controller
                 $Rlist->stock_price = $stock->cost / $stock->number;
                 $Rlist->need_sum = $purchase->need;
                 $Rlist->need_cost = $purchase->price * $purchase->need;
+                $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->purchase_id)->pluck('id')->toArray();
+//                dd($records);
+                $Rlist->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$Rlist->material_id)->sum('sum');
+                $Rlist->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$Rlist->material_id)->sum('cost');
                 $Rlist->save();
                 $record->save();
 
@@ -854,9 +858,9 @@ class StockController extends Controller
         $purchase_cost = 0;
         if (!empty($lists)){
             foreach ($lists as $list){
-                $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->id)->pluck('id')->toArray();
-                $list->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('sum')-$list->sum;
-                $list->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('cost')-$list->cost;
+//                $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->id)->pluck('id')->toArray();
+//                $list->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('sum')-$list->sum;
+//                $list->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$list->material_id)->sum('cost')-$list->cost;
                 $list->purchase_num = \App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$list->material_id)->sum('number');
                 $list->purchase_cost = \App\Models\PurchaseList::where('purchase_id','=',$record->purchase_id)->where('material_id','=',$list->material_id)->sum('cost');
                 $purchase_num += $list->purchase_num;

@@ -51,6 +51,9 @@ class PayController extends Controller
         }
         $apply->proposer = $post->get('apply_user');
         $apply->proposer_id = Auth::id();
+        if ($post->get('remark')){
+            $apply->remark = $post->get('remark');
+        }
         if ($apply->save()){
             return response()->json([
                 'code'=>'200',

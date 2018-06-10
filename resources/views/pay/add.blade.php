@@ -83,6 +83,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">备注</label>
+                            <div class="eleven wide field">
+                                <input type="text" v-model="payForm.remark" placeholder="请输入备注">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

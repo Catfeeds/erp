@@ -26,18 +26,20 @@
         <table class="ui celled center aligned table unstackable">
             <thead>
             <tr>
-                <th>采购编号</th>
-                <th class="fake-td">{{$purchase->number}}</th>
-                <th>采购日期</th>
-                <th class="fake-td">{{$purchase->date}}</th>
-                <th>采购金额</th>
-                <th class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
-                <th>项目编号</th>
-                <th class="fake-td">{{$record->project_number}}</th>
-                <th>项目内容</th>
-                <th class="fake-td" colspan="2">{{$record->project_content}}</th>
-                <th>项目经理</th>
-                <th class="fake-td">{{$record->project_manager}}</th>
+                <th colspan="2">采购编号</th>
+                <th colspan="2" class="fake-td">{{$purchase->number}}</th>
+                <th colspan="2">采购日期</th>
+                <th colspan="3" class="fake-td">{{$purchase->date}}</th>
+                <th colspan="2">采购金额</th>
+                <th colspan="2" class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
+            </tr>
+            <tr>
+                <th colspan="2">项目编号</th>
+                <th colspan="2" class="fake-td">{{$record->project_number}}</th>
+                <th colspan="2">项目内容</th>
+                <th class="fake-td" colspan="3">{{$record->project_content}}</th>
+                <th colspan="2">项目经理</th>
+                <th colspan="2" class="fake-td">{{$record->project_manager}}</th>
             </tr>
             <tr>
                 <th>供货商名称</th>

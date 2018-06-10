@@ -57,13 +57,14 @@
                     <th>项目编号</th>
                     <th>项目内容</th>
                     <th>申请人</th>
+                    <th style="min-width:200px;">备注</th>
                     <th>审批人</th>
                     <th style="min-width:100px;">付款日期</th>
                     <th>现金</th>
                     <th>转账</th>
                     <th>银行及账号</th>
                     <th style="min-width:100px;">其他</th>
-                    <th style="min-width:200px;">备注</th>
+
                     <th>付款经办人</th>
                 </tr>
                 </thead>
@@ -78,6 +79,7 @@
                         <td>{{$list->project_number}}</td>
                         <td class="table-content">{{$list->project_content}}</td>
                         <td>{{$list->proposer}}</td>
+                        <td style="max-width: 250px;">{{$list->remark}}</td>
 
                         <td>{{empty($list->approver)?'未审核':$list->approver}}</td>
                         @if($list->state!=3)
@@ -89,7 +91,6 @@
                             <td>{{number_format($list->transfer,2)}}￥</td>
                             <td>{{$list->bank}} {{$list->account}}</td>
                             <td>{{number_format($list->other,2)}}￥</td>
-                            <td style="max-width: 250px;">{{$list->remark}}</td>
                             <td>{{$list->manager}}</td>
                         @endif
                     </tr>

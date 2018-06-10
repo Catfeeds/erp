@@ -49,9 +49,9 @@
                 <th>报销单据</th>
                 <th>费用类别</th>
                 <th>具体事项</th>
-                <th>备注</th>
                 <th>单据张数</th>
                 <th>金额</th>
+                <th>备注</th>
             </tr>
             </thead>
             <tbody>
@@ -60,9 +60,9 @@
                 <td>{{$list->id}}</td>
                 <td>{{\App\Models\Category::find($list->category_id)->title}}</td>
                 <td>{{$list->kind_id==0?'':\App\Models\Detail::find($list->kind_id)->title}}</td>
-                <td>{{$list->remark}}</td>
                 <td>{{$list->number}}</td>
                 <td>{{number_format($list->price,2)}}￥</td>
+                <td>{{$list->remark}}</td>
             </tr>
             @endforeach
             </tbody>

@@ -1321,11 +1321,24 @@ class ExcelController extends Controller
         $end = '';
         $s = Input::get('s');
         $e = Input::get('e');
+//        $material = Material::find($id);
+        $mTr = [['物料名称','性能及技术参数','型号','生产商家','单位','开始时间','结束时间']];
+        $mData = [[
+            'name'=>$stock->material->name,
+            'param'=>$stock->material->param,
+            'model'=>$stock->material->model,
+            'factory'=>$stock->material->factory,
+            'unit'=>$stock->material->unit,
+            'start'=>$s,
+            'end'=>$e
+        ]];
+        $mTr  = array_merge($mTr,$mData);
         $tr = [[
             '日期','数量','单价','金额','供货商','收货/退料编号','收货人','数量',
             '单价','金额','项目号','项目内容','领料/退货出库编号','领料人','类型','库存数量','库存金额',
             '库存平均单价'
         ]];
+        $tr = array_merge($mTr,$tr);
 //        dd($e);
         $data = [];
         if($s){
