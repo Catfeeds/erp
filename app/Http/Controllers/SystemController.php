@@ -259,8 +259,9 @@ class SystemController extends Controller
         return view('material.list',['materials'=>$data]);
     }
 
-    public function delMaterial($id)
+    public function delMaterial()
     {
+        $id = Input::get('id');
         $material = Material::find($id);
         if (empty($material)){
             return response()->json([
