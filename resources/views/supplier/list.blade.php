@@ -71,7 +71,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$suppliers->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
