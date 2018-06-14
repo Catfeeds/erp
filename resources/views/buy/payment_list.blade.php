@@ -86,8 +86,8 @@
                     @else
                         <td>{{$lists[$i]->pay_date}}</td>
                         <td>{{number_format($lists[$i]->pay_price,2)}} ￥</td>
-                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->name}}</td>
-                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->account}}</td>
+{{--                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->name}}</td>--}}
+{{--                        <td>{{\App\Models\BankAccount::find($lists[$i]->bank_id)->account}}</td>--}}
                         <td class="table-content">{{$lists[$i]->remark}}</td>
                         <td>{{$lists[$i]->worker}}</td>
                     @endif
