@@ -152,7 +152,7 @@
                         </div>
                         <div class="two wide column flex-row">
                             <div class="fake-input">
-                                <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('list', item, index)"></i>
+                                <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('lists', item, index)"></i>
                             </div>
                         </div>
                     </div>
