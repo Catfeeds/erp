@@ -26,12 +26,12 @@ class BuildController extends Controller
         $role = getRole('build_list');
         if ($role=='all'){
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
         }else{
             $idArr = getRoleProject('build_list');
             $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
             $id = RequestPayment::where('state','=',3)->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
         }
         if (!empty($lists)){
             foreach ($lists as $list){
