@@ -16,8 +16,8 @@
 
         <input type="hidden" id="askId" value="{{$payment->id}}">
         <input id="hiddenDate" type="hidden" value="{{date('Y-m-d')}}">
-        <input type="hidden" id="bankAccount" value="">
-        <input type="hidden" id="remark" value="">
+        <input type="hidden" id="bankAccount" value="{{$bank}}">
+        <input type="hidden" id="remark" value="{{$payment->remark}}">
 
         <h1 class="ui red header blue center aligned">实际付款</h1>
         <div id="paymentFinish" class="invisible">

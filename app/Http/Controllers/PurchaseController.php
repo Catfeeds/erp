@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccount;
 use App\Models\Budget;
 use App\Models\Invoice;
 use App\Models\Material;
@@ -243,7 +244,12 @@ class PurchaseController extends Controller
     {
         $id = Input::get('id');
         $payment = PurchasePayment::find($id);
-        return view('buy.payment_finish',['payment'=>$payment]);
+        $bankAccount = '';
+        if ($payment->bank_id!=0){
+            $bank = BankAccount::find($payment->bank_id);
+            $bankAccount = $bank->name.' '.$bank->account;
+        }
+        return view('buy.payment_finish',['payment'=>$payment,'bank'=>$bankAccount]);
     }
     public function finishPaymentDelete()
     {
@@ -268,6 +274,13 @@ class PurchaseController extends Controller
         if ($payment->state == 3){
             $payment->remark = $post->get('remark');
         }else{
+            $bank_id = $post->get('bank_id');
+            if (!$bank_id){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'请先选择付款银行！'
+                ]);
+            }
             $payment->pay_price = $payment->price;
             $payment->pay_date = $post->get('pay_date');
             $payment->bank_id = $post->get('bank_id');
