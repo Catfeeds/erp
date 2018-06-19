@@ -32,6 +32,10 @@
             <i class="user icon"></i>
             <span>{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
         </a>
+        <a class="item" href="{{url('modify/password')}}">
+            <i class="user icon"></i>
+            <span>修改密码</span>
+        </a>
         <a class="item" href="{{url('logout')}}">
             <i class="power icon"></i>
             <span>退出</span>

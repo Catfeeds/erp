@@ -73,6 +73,8 @@ Route::post('import/payment','ExcelController@importPayment');
 Route::group(['middleware'=>'auth'],function (){
    Route::get('project/list','ProjectController@listProject')->middleware('role:project_list');
    Route::get('index','UserController@index');
+   Route::get('modify/password','UserController@updatePasswordPage');
+   Route::post('modify/password','UserController@updatePassword');
    Route::get('project/create','ProjectController@createProjectPage')->middleware('role:project_edit');
    Route::post('project/create','ProjectController@createProject')->middleware('role:project_edit');
    Route::get('project/detail','ProjectController@listProjectsDetail')->middleware('role:project_detail');

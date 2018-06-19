@@ -213,6 +213,19 @@ class UserController extends Controller
         }
         return 'SUCCESS';
     }
+    public function updatePasswordPage()
+    {
+        $user = Auth::user();
+        return view('auth.password',['user'=>$user]);
+    }
+    public function updatePassword()
+    {
+        $user = Auth::user();
+        $password = $user->password;
+
+        dd($password);
+        dd(Input::all());
+    }
 
 
     

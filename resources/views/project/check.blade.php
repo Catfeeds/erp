@@ -293,6 +293,21 @@
 
             <!-- 合同 -->
             <h4 class="ui dividing header blue margin-top-50">合同</h4>
+            <table class="ui center aligned table selectable unstackable">
+                <tbody>
+                @foreach($pictures as $picture)
+                    <tr>
+                        {{--<td>{{$i+1}}</td>--}}
+                        <td>{{$picture->name}}</td>
+                        {{--<td>{{$types[$i]->rate}}%</td>--}}
+                        <td>
+                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('project/type/create')}}?id={{$picture->id}}')">查看</a>
+                            {{--<button class="ui mini button negative dataTypeDelete" data-id="{{$types[$i]->id}}">删除</button>--}}
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
             <div class="check-item">
                 <div class="ui three column doubling stackable grid">
                     @foreach($pictures as $picture)
