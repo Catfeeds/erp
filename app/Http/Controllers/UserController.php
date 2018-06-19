@@ -229,6 +229,9 @@ class UserController extends Controller
         if (!Hash::check($old,$password)){
             return redirect()->back()->with('status','原密码不正确！');
         }
+        if (strlen($new)<6){
+            return redirect()->back()->with('status','密码不得短于6位！');
+        }
         if ($new!=$confirm){
             return redirect()->back()->with('status','两次输入的密码不一致！');
         }
