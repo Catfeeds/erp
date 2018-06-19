@@ -65,7 +65,7 @@
                     <td>{{$list->supplier}}</td>
                     <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
-                    <td class="table-content" title="这是一大段内容这是一大段内容这是一大段内容这是一大段内容这是一大段内容">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
+                    <td class="table-content" title="{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
                     <td>{{$list->condition}}</td>
                     <td>{{$list->worker}}</td>

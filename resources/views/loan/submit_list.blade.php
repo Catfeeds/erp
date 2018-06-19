@@ -119,7 +119,7 @@
                             @else
                         @endif
                     </td>
-                    <td>
+                    <td title="{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}">
                         @if($list->project_id!=0)
                             {{\App\Models\Project::find($list->project_id)->name}}
                         @else

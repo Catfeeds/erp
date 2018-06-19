@@ -301,24 +301,24 @@
                         <td>{{$picture->name}}</td>
                         {{--<td>{{$types[$i]->rate}}%</td>--}}
                         <td>
-                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('project/type/create')}}?id={{$picture->id}}')">查看</a>
+                            <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url($picture->url)}}')">查看</a>
                             {{--<button class="ui mini button negative dataTypeDelete" data-id="{{$types[$i]->id}}">删除</button>--}}
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-            <div class="check-item">
-                <div class="ui three column doubling stackable grid">
-                    @foreach($pictures as $picture)
-                    <div class="column">
-                        <a class="check-link" href="{{$picture->url}}" target="_blank">
-                            <img class="check-img" src="{{$picture->url}}" alt="合同一">
-                        </a>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
+            {{--<div class="check-item">--}}
+                {{--<div class="ui three column doubling stackable grid">--}}
+                    {{--@foreach($pictures as $picture)--}}
+                    {{--<div class="column">--}}
+                        {{--<a class="check-link" href="{{$picture->url}}" target="_blank">--}}
+                            {{--<img class="check-img" src="{{$picture->url}}" alt="合同一">--}}
+                        {{--</a>--}}
+                    {{--</div>--}}
+                    {{--@endforeach--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <!-- / 合同 -->
             <div class="inline-center margin-top-50">
                 <a class="ui button primary large" href="javascript:_helper.fullWindow('{{url('project/create')}}?id={{$project->id}}')">

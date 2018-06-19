@@ -65,10 +65,10 @@
                     <td>{{$lists[$i]->team}}</td>
                     <td>{{$lists[$i]->manager}}</td>
                     <td>{{$lists[$i]->project_number}}</td>
-                    <td>{{$lists[$i]->project_content}}</td>
+                    <td title="{{$lists[$i]->project_content}}">{{$lists[$i]->project_content}}</td>
                     <td>{{$lists[$i]->project_manager}}</td>
                     <td>
-                        <a class="ui mini button primary" href="{{url('build/deal/detail')}}?id={{$lists[$i]->id}}" target="_blank">查看合同</a>
+                        <a class="ui mini button primary" href="{{url('build/deal/pictures')}}?id={{$lists[$i]->id}}" target="_blank">查看合同</a>
                     </td>
                 </tr>
                 @endfor

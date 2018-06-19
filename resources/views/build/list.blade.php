@@ -79,7 +79,7 @@
                     <td>{{$list->team}}</td>
                     <td>{{$list->manager}}</td>
                     <td>{{$list->project_number}}</td>
-                    <td>{{$list->project_content}}</td>
+                    <td title="{{$list->project_content}}">{{$list->project_content}}</td>
                     <td>{{$list->project_manager}}</td>
                     <td>{{number_format($list->payments()->where('state','>=',3)->sum('price'),2)}} ￥</td>
                     <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'),2)}} ￥</td>

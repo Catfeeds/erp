@@ -235,6 +235,7 @@ Route::group(['middleware'=>'auth'],function (){
     //施工管理
     Route::get('build/list','BuildController@listBuildPage')->middleware('role:build_list');
     Route::get('build/deal/list','BuildController@listDealPage')->middleware('role:build_contract_list');
+    Route::get('build/deal/pictures','BuildController@listDealPicturesPage')->middleware('role:build_contract_list');
     Route::get('build/deal/create','BuildController@addDealPage')->middleware('role:build_contract_edit');
     Route::post('create/contract','ConstructionController@addContract');
     Route::post('finish/add','PayController@addRequestPayment');

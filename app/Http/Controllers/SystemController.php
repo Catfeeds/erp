@@ -118,7 +118,7 @@ class SystemController extends Controller
         'bmp',
         'gif',
         'jpeg',
-        'pem',
+        'pdf',
         'mp4',
     ];
         if (!in_array(strtolower($name[1]),$allow)){

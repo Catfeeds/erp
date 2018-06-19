@@ -26,6 +26,9 @@ class ConstructionController extends Controller
         $contract->save();
         foreach ($lists as $item){
             $list = new ConstructionContractList();
+            if (isset($item['name'])){
+                $list->name = $item['name'];
+            }
             $list->href = $item;
             $list->contract_id = $contract->id;
             $list->save();

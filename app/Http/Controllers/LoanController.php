@@ -251,9 +251,9 @@ class LoanController extends Controller
             if (!empty($swap4)){
                 array_multisort(array_column($swap4,'created_at'),SORT_ASC,$swap4);
             }
-
-            $start = !empty($swap4)?$swap4[0]->loanBalance:0;
-            $loanStart = !empty($swap4)?$swap4[0]->submitBalance:0;
+//            dd($swap4);
+            $start = !empty($swap4)?$swap4[0]['loanBalance']:0;
+            $loanStart = !empty($swap4)?$swap4[0]['submitBalance']:0;
             array_multisort(array_column($lists,'created_at'),SORT_ASC,$lists);
         }
         return view('loan.detail_list',['lists'=>$lists,'name'=>$name,'s'=>$s,'e'=>$e,'start'=>$start,'loanStart'=>$loanStart]);

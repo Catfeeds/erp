@@ -77,7 +77,7 @@
                         <td>{{number_format($list->price,2)}}￥</td>
                         <td style="max-width:350px;">{{$list->use}}</td>
                         <td>{{$list->project_number}}</td>
-                        <td class="table-content">{{$list->project_content}}</td>
+                        <td class="table-content" title="{{$list->project_content}}">{{$list->project_content}}</td>
                         <td>{{$list->proposer}}</td>
                         <td style="max-width: 250px;">{{$list->remark}}</td>
 

@@ -19,9 +19,9 @@
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
                             <div class="inline fields">
-                                <label class="six wide field flex-center">人员名称</label>
+                                <label class="six wide field flex-center">人员名称：{{$name}}</label>
                                 <div class="ten wide field">
-                                    <input type="hidden" id="userName" name="name" placeholder="请输入人员名称">
+                                    <input type="hidden" id="userName" name="name" value="{{$name}}" placeholder="请输入人员名称">
                                     <el-autocomplete popper-class="my-autocomplete" v-model="search.name" :fetch-suggestions="querySearchMen" placeholder="请输入报销人"
                                                      @select="handleSelectMen">
                                         <i class="el-icon-edit el-input__icon" slot="suffix">

@@ -62,7 +62,7 @@
                     <div class="column">
                         <div class="inline fields">
                             <label class="six wide field flex-center">项目内容</label>
-                            <div class="eleven wide field">
+                            <div class="eleven wide field" >
                                 <el-autocomplete popper-class="my-autocomplete" v-model="payForm.project_content" :fetch-suggestions="querySearchProjectContent"
                                                  placeholder="请输入项目内容" @select="handleSelectProjectContent">
                                     <i class="el-icon-edit el-input__icon" slot="suffix">

@@ -484,5 +484,13 @@ class BuildController extends Controller
 //        $lists = $apply->lists()->get();
         return view('build.finish_edit',['apply'=>$apply]);
     }
+    public function listDealPicturesPage()
+    {
+        $id = Input::get('id');
+        $contract = ConstructionContract::find($id);
+        $pictures = $contract->lists()->get();
+//        dd($pictures);
+        return view('build.pictures',['contract'=>$contract,'pictures'=>$pictures]);
+    }
 
 }

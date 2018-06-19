@@ -58,7 +58,7 @@
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('check/detail')}}?id={{$project->id}}');">{{$project->number}}</a>
                     </td>
-                    <td>{{$project->name}}</td>
+                    <td title="{{$project->name}}">{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
                     <td>{{number_format($project->price,2)}}</td>
                     <td>{{number_format($project->situation()->sum('price'),2)}}</td>

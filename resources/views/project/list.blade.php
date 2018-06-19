@@ -65,7 +65,7 @@
                 <a href="{{url('project/check')}}?id={{$project->id}}">{{$project->number}}</a>
             </td>
             <td>{{date('Y-m-d',$project->createTime)}}</td>
-            <td >{{$project->name}}</td>
+            <td title="{{$project->name}}">{{$project->name}}</td>
             <td>{{$project->pm}}</td>
             <td>{{number_format($project->price,2)}}</td>
             <td>{{number_format(\App\Models\ProjectSituations::where('project_id','=',$project->id)->sum('price'),2)}}</td>

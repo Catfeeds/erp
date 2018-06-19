@@ -167,7 +167,7 @@
                 @foreach($projects as $project)
                 <tr>
                     <td>{{$project->number}}</td>
-                    <td>{{$project->name}}</td>
+                    <td title="{{$project->name}}">{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
                     <td>{{date('Y-m-d',$project->finishTime)}}</td>
                     <td>{{$project->acceptance_date}}</td>

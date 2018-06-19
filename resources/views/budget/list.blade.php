@@ -195,7 +195,7 @@
                 @foreach($projects as $project)
                 <tr>
                     <td>{{$project->number}}</td>
-                    <td>{{$project->name}}</td>
+                    <td title="{{$project->name}}">{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
                     <td>{{number_format($project->situation()->sum('price'),2)}}￥</td>
                     <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}￥</td>

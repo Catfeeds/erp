@@ -13,6 +13,7 @@ use App\Providers\AuthServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
@@ -218,13 +219,24 @@ class UserController extends Controller
         $user = Auth::user();
         return view('auth.password',['user'=>$user]);
     }
-    public function updatePassword()
+    public function updatePassword(Request $post)
     {
         $user = Auth::user();
         $password = $user->password;
-
-        dd($password);
-        dd(Input::all());
+        $old = $post->old;
+        $new = $post->new;
+        $confirm = $post->confirm;
+        if (!Hash::check($old,$password)){
+            return redirect()->back()->with('status','原密码不正确！');
+        }
+        if ($new!=$confirm){
+            return redirect()->back()->with('status','两次输入的密码不一致！');
+        }
+        $user->password = bcrypt($new);
+        if ($user->save()){
+            return redirect('index')->with('status','修改成功！');
+        }
+//        dd($password);
     }
 
 
