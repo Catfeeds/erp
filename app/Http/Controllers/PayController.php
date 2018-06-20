@@ -934,8 +934,8 @@ class PayController extends Controller
             $submit = LoanSubmit::find($id);
             $lists = $submit->lists()->get();
             foreach ($lists as $list){
-                $list->type = Category::find($list->category_id)->title;
-                $list->detailType = Detail::find($list->kind_id)->title;
+                $list->type = $list->category_id==0?'':Category::find($list->category_id)->title;
+                $list->detailType = $list->kind_id==0?'':Detail::find($list->kind_id)->title;
             }
             return view('loan.submit_other',['submit'=>$submit,'lists'=>$lists]);
         }
