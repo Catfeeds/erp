@@ -137,7 +137,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">收款账号</label>
                             <div class="eleven wide field">
-                                <input type="number" v-model.number="applyForm.account" placeholder="请输入收款账号">
+                                <input type="text" v-model.number="applyForm.account" placeholder="请输入收款账号">
                             </div>
                         </div>
                     </div>
