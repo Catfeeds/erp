@@ -590,11 +590,21 @@ class SystemController extends Controller
     }
     public function addCategory(Request $post)
     {
-        $category = new Category();
-        $category->title = $post->get('title');
-        $category->save();
+//        dd($post->all());
+        $id = $post->id;
+        if ($id){
+            $category = Category::find($id);
+//            Detail::where('')
+        }else{
+            $category = new Category();
+            $category->title = $post->get('title');
+            $category->save();
+        }
+
         $kinds = $post->get('kinds');
+        Detail::where('category_id','=',$category->id)->delete();
         foreach ($kinds as $item){
+
             $kind = new Detail();
             $kind->category_id = $category->id;
             $kind->title = $item;
