@@ -94,8 +94,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{$start}}￥</td>
                     <td>{{$loanStart}}￥</td>
+                    <td>{{$start}}￥</td>
                 </tr>
                 @foreach($lists as $list)
                     @if(strstr($list['number'],'BXFK'))
