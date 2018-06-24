@@ -565,7 +565,13 @@ class PayController extends Controller
     }
     public function listLoanPayPage()
     {
-        $lists = LoanPay::orderBy('id','DESC')->paginate(10);
+        $search = Input::get('search');
+        if ($search){
+            $lists = LoanPay::where('applier','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        }else{
+            $lists = LoanPay::orderBy('id','DESC')->paginate(10);
+        }
+
         foreach ($lists as $list){
             $idArr = LoanPayList::where('pay_id','=',$list->id)->pluck('loan_id')->toArray();
             $list->BXNumber = LoanSubmit::whereIn('id',$idArr)->pluck('number')->toArray();

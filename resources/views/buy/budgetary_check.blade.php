@@ -105,6 +105,28 @@
                 </tbody>
             </table>
         </div>
+        <h4 class="ui dividing header blue">合同清单</h4>
+        <div class="table-head-nowrap">
+            <table class="ui celled center aligned table selectable unstackable">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($contracts as $list)
+                    {{--{{dd($purchase->lists)}}--}}
+                    <tr>
+                        <td>{{$list->name}}</td>
+                        <td>
+                            <a href="javascript:_helper.fullWindow('{{url($list->href)}}')">查看</a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <div class="flex-row flex-center margin-top-50">
             <a class="ui icon button primary" href="{{$purchase->type==1?url("buy/budgetary_buy").'?buy_id='.$purchase->id:url('buy/extrabudgetary').'?id='.$purchase->id}}" style="margin:0 10px;">

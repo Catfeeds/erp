@@ -22,7 +22,7 @@
                     <span>导出</span>
                 </a>
             </div>
-            <form action="/views/buy/project_list.html" class="ui form flex-fluid">
+            <form  class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
                         <input name="seartch-type" type="hidden">
@@ -33,7 +33,7 @@
                             <div class="item" data-value="2">报销人</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>

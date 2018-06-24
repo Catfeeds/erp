@@ -633,6 +633,7 @@ class StockController extends Controller
         $id = Input::get('id');
         $purchase = Purchase::find($id);
         $lists = $purchase->lists()->get();
+        $contracts = $purchase->contracts()->get();
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->material = Material::find($list->material_id);
@@ -647,7 +648,7 @@ class StockController extends Controller
             $checkRole = 'buy_extrabugetary_check';
             $passRole = 'buy_extrabugetary_pass';
         }
-        return view('buy.budgetary_check',['purchase'=>$purchase,'check'=>$checkRole,'pass'=>$passRole]);
+        return view('buy.budgetary_check',['purchase'=>$purchase,'check'=>$checkRole,'pass'=>$passRole,'contracts'=>$contracts]);
     }
     public function addReturnPage()
     {

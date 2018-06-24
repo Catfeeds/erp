@@ -93,18 +93,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lists as $list)
+                @for($i=0;$i<count($lists);$i++)
+                {{--@foreach($lists as $list)--}}
                 <tr>
-                    <td>{{$list->id}}</td>
-                    <td>{{$list->name}}</td>
-                    <td>{{$list->param}}</td>
-                    <td>{{$list->number}}</td>
-                    <td>{{$list->unit}}</td>
-                    <td>{{number_format($list->price,2)}}</td>
-                    <td>{{number_format($list->total,2)}} ￥</td>
-                    <td>{{$list->remark}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$lists[$i]->name}}</td>
+                    <td>{{$lists[$i]->param}}</td>
+                    <td>{{$lists[$i]->number}}</td>
+                    <td>{{$lists[$i]->unit}}</td>
+                    <td>{{number_format($lists[$i]->price,2)}}</td>
+                    <td>{{number_format($lists[$i]->total,2)}} ￥</td>
+                    <td>{{$lists[$i]->remark}}</td>
                 </tr>
-                @endforeach
+                @endfor
+                {{--@endforeach--}}
                 </tbody>
                 <tfoot>
                 <tr>

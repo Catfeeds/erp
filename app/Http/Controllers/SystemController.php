@@ -167,7 +167,7 @@ class SystemController extends Controller
         if ($account){
             $DbObj->where('account','like','%'.$account.'%');
         }
-        $data = $DbObj->where('state','=',1)->paginate(10);
+        $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('supplier.list',['suppliers'=>$data]);
     }
     //创建供应商
@@ -255,7 +255,7 @@ class SystemController extends Controller
         if ($factory){
             $DbObj->where('factory','like','%'.$model.'%');
         }
-        $data = $DbObj->where('state','=',1)->paginate(10);
+        $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('material.list',['materials'=>$data]);
     }
 
@@ -363,7 +363,7 @@ class SystemController extends Controller
         if ($admin){
             $DbObj->where('admin','like','%'.$admin.'%');
         }
-        $data = $DbObj->where('state','=',1)->paginate(10);
+        $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('warehouse.list',['warehouses'=>$data]);
     }
     //银行账号
@@ -506,7 +506,7 @@ class SystemController extends Controller
         if ($name){
             $dbObj->where('name','like','%'.$name.'%');
         }
-        $data = $dbObj->where('state','=',1)->get();
+        $data = $dbObj->where('state','=',1)->orderBy('id','DESC')->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
