@@ -172,60 +172,29 @@ class PayController extends Controller
     }
     public function listPayApply()
     {
-        $number = Input::get('number');
-        $project_number = Input::get('project_number');
-        $project_content = Input::get('project_content');
-        $proposer = Input::get('proposer');
-        $approver = Input::get('approver');
+        $search = Input::get('value');
         $role = getRole('pay_list');
         $DbObj = DB::table('pay_applies');
         if ($role=='all'){
-            if ($number){
-                $DbObj->where('number','like','%'.$number.'%');
+            if ($search){
+                $DbObj->where('number','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')
+                ->orWhere('project_content','like','%'.$search.'%')->orWhere('proposer','like','%'.$search.'%')
+                ->orWhere('approver','like','%'.$search.'%');
             }
-            if ($project_number){
-                $DbObj->where('project_number','like','%'.$project_number.'%');
-            }
-            if ($project_content){
-                $DbObj->where('project_content','like','%'.$project_content.'%');
-            }
-            if ($proposer){
-                $DbObj->where('proposer','like','%'.$proposer.'%');
-            }
-            if ($approver){
-                $DbObj->where('approver','like','%'.$approver.'%');
-            }
+
         }elseif($role=='only'){
             $DbObj->where('proposer','=',Auth::user()->username);
-            if ($number){
-                $DbObj->where('number','like','%'.$number.'%');
-            }
-            if ($project_number){
-                $DbObj->where('project_number','like','%'.$project_number.'%');
-            }
-            if ($project_content){
-                $DbObj->where('project_content','like','%'.$project_content.'%');
-            }
-            if ($approver){
-                $DbObj->where('approver','like','%'.$approver.'%');
+            if ($search){
+                $DbObj->where('number','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')
+                    ->orWhere('project_content','like','%'.$search.'%')->orWhere('approver','like','%'.$search.'%');
             }
         }else{
             $idArr = getRoleProject('pay_list');
             $DbObj->whereIn('project_id',$idArr);
-            if ($number){
-                $DbObj->where('number','like','%'.$number.'%');
-            }
-            if ($project_number){
-                $DbObj->where('project_number','like','%'.$project_number.'%');
-            }
-            if ($project_content){
-                $DbObj->where('project_content','like','%'.$project_content.'%');
-            }
-            if ($proposer){
-                $DbObj->where('proposer','like','%'.$proposer.'%');
-            }
-            if ($approver){
-                $DbObj->where('approver','like','%'.$approver.'%');
+            if ($search){
+                $DbObj->where('number','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')
+                    ->orWhere('project_content','like','%'.$search.'%')->orWhere('proposer','like','%'.$search.'%')
+                    ->orWhere('approver','like','%'.$search.'%');
             }
 
         }
