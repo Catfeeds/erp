@@ -26,7 +26,7 @@ class StockController extends Controller
     public function searchWarehouse()
     {
         $name = Input::get('name');
-        $db = DB::table('warehouses');
+        $db = DB::table('warehouses')->where('state','=',1);
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
