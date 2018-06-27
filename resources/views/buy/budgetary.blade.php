@@ -28,7 +28,7 @@
                                     </i>
                                     <template slot-scope="props">
                                         <div class="name" :title="props.item.name">@{{ props.item.number }}</div>
-                                        <span class="addr" title="@{{ props.item.name }}">@{{ props.item.name }}</span>
+                                        <span class="addr" :title="props.item.name">@{{ props.item.name }}</span>
                                     </template>
                                 </el-autocomplete>
                             </div>
@@ -43,8 +43,8 @@
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>
                                     <template slot-scope="props">
-                                        <div class="name" title='@{{ props.item.name }}'>@{{ props.item.name }}</div>
-                                        <span class="addr" title='@{{  props.item.name }}'>@{{ props.item.number }}</span>
+                                        <div class="name" :title="props.item.name">@{{ props.item.name }}</div>
+                                        <span class="addr" :title="props.item.name">@{{ props.item.number }}</span>
                                     </template>
                                 </el-autocomplete>
                             </div>
