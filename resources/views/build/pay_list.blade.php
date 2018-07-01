@@ -75,7 +75,7 @@
                 </thead>
                 <tbody>
                 @foreach($lists as $list)
-                <tr>
+                <tr @if($list->applies()->where('state','=',4)->sum('apply_price')<$list->applies()->where('state','>=',3)->sum('apply_price'))style="background-color:#CACBCD"@else @endif>
                     <td>{{$list->team}}</td>
                     <td>{{$list->manager}}</td>
                     <td>{{$list->project_number}}</td>

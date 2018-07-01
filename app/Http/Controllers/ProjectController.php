@@ -697,6 +697,22 @@ class ProjectController extends Controller
         ]);
 
     }
+    public function delCheckBailTip()
+    {
+        $id = Input::get('id');
+        $tip = Tip::find($id);
+        if ($tip->delete()){
+            return redirect()->back()->with('status','删除成功！');
+        }
+    }
+    public function delCheckTip()
+    {
+        $id = Input::get('id');
+        $tip = Tip::find($id);
+        if ($tip->delete()){
+            return redirect()->back()->with('status','删除成功！');
+        }
+    }
     public function checkInvoicePage()
     {
         $id = Input::get('id');
@@ -1183,7 +1199,7 @@ class ProjectController extends Controller
         }
         if ($search){
 
-            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
 //            dd($idArray);
             if (!empty($idArray)){
                 $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;

@@ -18,6 +18,7 @@
         mounted() {
           this.addForm.bank_id = $('#bankAccount').val() || ''
           this.addForm.apply_id = $('#applyId').val() || ''
+          this.addForm.worker = $('#worker').val() || ''
           $('.ui.dropdown').dropdown()
 
           _http.BankManager.searchBank()

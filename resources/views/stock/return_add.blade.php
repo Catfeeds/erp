@@ -12,7 +12,7 @@
             <div class="active section">新增退料入库录入</div>
         </div>
 
-        <input type="hidden" id="returneeVal" value="">
+        <input type="hidden" id="returneeVal" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
 
         <h1 class="ui red header blue center aligned">新增退料入库录入</h1>
         <div class="invisible" id="returnAdd">

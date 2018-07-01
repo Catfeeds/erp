@@ -393,6 +393,7 @@
                                 <td>{{$bailReturn[$i]->remark}}</td>
                                 <td>
                                 <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/tip/edit')}}?id={{$bailReturn[$i]->id}}')">修改</button>
+                                <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/bail/tip/del')}}?id={{$bailReturn[$i]->id}}')">删除</button>
                                 </td>
                             @else
                                 <td></td>
@@ -467,6 +468,7 @@
                                 <td>{{ $tip->remark }}</td>
                                 <td>
                                     <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('edit/check/tip')}}?id={{$tip->id}}')">修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('del/check/tip')}}?id={{$tip->id}}')">删除</button>
                                 </td>
                             {{--</template>--}}
                         </tr>

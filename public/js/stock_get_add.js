@@ -21,6 +21,7 @@
           }
         },
         mounted() {
+          this.stockGetAdd.worker = $('#worker').val() || ''
           $('.ui.checkbox').checkbox()
           $('#stockGetAdd').removeClass('invisible')
         },

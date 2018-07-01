@@ -14,7 +14,7 @@
             <div class="active section">付款</div>
         </div>
         <input type="hidden" id="payId" value="{{$apply->id}}">
-        <input type="hidden" id="manager" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+        <input type="hidden" id="manager" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
         <div style="display: none;" id="bankList">{{json_encode($bankList)}}</div>
         <h1 class="ui header blue aligned center">付款</h1>
         <div id="payPay">

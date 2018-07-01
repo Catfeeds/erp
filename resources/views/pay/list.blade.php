@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
                 @foreach($lists as $list)
-                    <tr>
+                    <tr @if($list->state==2)style="background-color:#CACBCD"@else @endif>
                         <td>
                             <a href="javascript:_helper.fullWindow('{{url('pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                         </td>

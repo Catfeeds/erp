@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">新增领料出库</div>
         </div>
-
+        <input type="hidden" id="worker" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
         <h1 class="ui red header blue center aligned">新增领料出库</h1>
         <div class="invisible" id="stockGetAdd">
             <h4 class="ui dividing header blue">基本信息</h4>

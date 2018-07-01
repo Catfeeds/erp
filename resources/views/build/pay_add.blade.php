@@ -16,6 +16,7 @@
 
         <input type="hidden" id="bankAccount" value="">
         <input type="hidden" id="applyId" value="{{$pay->id}}">
+        <input type="hidden" id="worker" value="{{\Illuminate\Support\Facades\Auth::user()->username}}">
 
         <h1 class="ui header blue aligned center">实际付款录入 - {{$pay->number}}</h1>
         <div id="buildPayAdd">

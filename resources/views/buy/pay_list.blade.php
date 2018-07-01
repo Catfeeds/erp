@@ -90,7 +90,7 @@
                 </thead>
                 <tbody>
                 @foreach($lists as $list)
-                <tr>
+                <tr @if($list->count!=0)style="background-color:#CACBCD"@else @endif>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('buy/payment/list')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>

@@ -390,7 +390,19 @@ class PayController extends Controller
     }
     public function listSubmitListPage()
     {
-        $lists = LoanSubmit::orderBy('id','DESC')->paginate(10);
+        $search = Input::get('search');
+        if ($search){
+            $project_id = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->pluck('id')->toArray();
+            if (!empty($project_id)){
+                $lists = LoanSubmit::whereIn('project_id',$project_id)->orWhere('loan_user','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }else{
+                $lists = LoanSubmit::where('loan_user','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            }
+
+        }else{
+            $lists = LoanSubmit::orderBy('id','DESC')->paginate(10);
+        }
+
         return view('loan.submit_list',['lists'=>$lists]);
     }
     public function createSubmitList(Request $post)
