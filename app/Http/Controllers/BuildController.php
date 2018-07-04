@@ -103,11 +103,11 @@ class BuildController extends Controller
         $role = getRole('build_pay_list');
         if ($role=='all'){
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->get();
+            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('build_pay_list');
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 
         return view('build.pay_list',['lists'=>$lists]);

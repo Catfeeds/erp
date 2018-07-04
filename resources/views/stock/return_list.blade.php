@@ -91,8 +91,7 @@
                 </tbody>
             </table>
         </div>
-
-
+        {{$lists->links()}}
     </div>
 @endsection
 @section('pageJs')

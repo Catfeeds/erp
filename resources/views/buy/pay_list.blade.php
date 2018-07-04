@@ -109,7 +109,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$lists->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
