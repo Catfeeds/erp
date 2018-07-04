@@ -28,9 +28,9 @@
             @if($loan->project_id!=0)
             <tr>
                 <th>项目编号</th>
-                <th class="fake-td">{{\App\Models\Project::find($loan->project_id)->number}}</th>
+                <th class="fake-td">{{$loan->project_id==0?'':\App\Models\Project::find($loan->project_id)->number}}</th>
                 <th>项目内容</th>
-                <th colspan="3" class="fake-td">{{\App\Models\Project::find($loan->project_id)->name}}</th>
+                <th colspan="3" class="fake-td">{{$loan->project_id==0?'':\App\Models\Project::find($loan->project_id)->name}}</th>
             </tr>
             @else
                 @endif
