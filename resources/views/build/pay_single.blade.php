@@ -25,6 +25,22 @@
                 </div>
                 <div class="column">
                     <div class="inline fields">
+                        <label class="six wide field flex-center">开户银行</label>
+                        <div class="eleven wide field">
+                            <div class="fake-input">{{$team->bank}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="inline fields">
+                        <label class="six wide field flex-center">账号</label>
+                        <div class="eleven wide field">
+                            <div class="fake-input">{{$team->account}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="inline fields">
                         <label class="six wide field flex-center">施工经理</label>
                         <div class="eleven wide field">
                             <div class="fake-input">{{$projectTeam->manager}}</div>

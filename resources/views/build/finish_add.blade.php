@@ -43,6 +43,22 @@
                     </div>
                     <div class="column">
                         <div class="inline fields">
+                            <label class="six wide field flex-center">开户银行</label>
+                            <div class="eleven wide field">
+                                <div class="fake-input">@{{ buildFinishAdd.build_bank || '暂无' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">账号</label>
+                            <div class="eleven wide field">
+                                <div class="fake-input">@{{ buildFinishAdd.build_account || '暂无' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
                             <label class="six wide field flex-center">项目编号</label>
                             <div class="eleven wide field">
                                 <el-autocomplete popper-class="my-autocomplete" v-model="buildFinishAdd.project_id" :fetch-suggestions="querySearchProjectId"

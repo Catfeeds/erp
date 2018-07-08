@@ -36,6 +36,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">开户银行</label>
+                            <div class="eleven wide field">
+                                <input type="hidden" id="teamBank" value="{{$team->bank}}">
+                                <input type="text" v-model="teamForm.bank" placeholder="请输入开户银行">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">账号</label>
+                            <div class="eleven wide field">
+                                <input type="hidden" id="teamAccount" value="{{$team->account}}">
+                                <input type="text" v-model="teamForm.account" placeholder="请输入账号">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -24,7 +24,13 @@
                 <th colspan="2">{{$team->team}}</th>
                 <th >施工经理</th>
                 <th colspan="2">{{$team->manager}}</th>
-                <th colspan="7">完工请款</th>
+                <th >开户银行</th>
+                <th colspan="2">{{$info->bank}}</th>
+                <th >账号</th>
+                <th colspan="3">{{$info->account}}</th>
+            </tr>
+            <tr>
+                <th colspan="13">完工请款</th>
             </tr>
             <tr>
                 <th colspan="2">项目编号</th>

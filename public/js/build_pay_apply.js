@@ -21,8 +21,15 @@
           }
         },
         mounted() {
+          let teamInfo = $('#teamInfo').text().trim()
+            teamInfo = JSON.parse(teamInfo)
+            console.log(teamInfo.name)
           this.applyForm.project_id = $('#projectId').val()
           this.applyForm.team_id = $('#teamId').val()
+          this.applyForm.bank = teamInfo.bank
+          this.applyForm.account = teamInfo.account
+          this.applyForm.payee = teamInfo.name
+
         },
         methods: {
 

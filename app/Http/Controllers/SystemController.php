@@ -481,6 +481,8 @@ class SystemController extends Controller
         }
         $team->name = $post->get('name');
         $team->manager = $post->get('manager');
+        $team->bank = $post->get('bank');
+        $team->account = $post->get('account');
         if ($team->save()){
             return response()->json([
                 'code'=>'200',
@@ -502,7 +504,7 @@ class SystemController extends Controller
     public function getTeams()
     {
         $name = Input::get('name');
-        $dbObj = DB::table('teams')->select(['id','name','manager']);
+        $dbObj = DB::table('teams')->select(['id','name','manager','bank','account']);
         if ($name){
             $dbObj->where('name','like','%'.$name.'%');
         }

@@ -15,6 +15,8 @@
           this.teamForm.id = $('#teamId').val() || ''
           this.teamForm.name = $('#teamName').val() || ''
           this.teamForm.manager = $('#teamManager').val() || ''
+          this.teamForm.bank = $('#teamBank').val() || ''
+          this.teamForm.account = $('#teamAccount').val() || ''
         },
         methods: {
           //提交

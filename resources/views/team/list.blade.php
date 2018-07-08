@@ -51,6 +51,8 @@
                     <th>序号</th>
                     <th>施工队名称</th>
                     <th>施工队经理</th>
+                    <th>开户银行</th>
+                    <th>账号</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -60,6 +62,8 @@
                     <td>{{$team->id}}</td>
                     <td>{{$team->name}}</td>
                     <td>{{$team->manager}}</td>
+                    <td>{{$team->bank}}</td>
+                    <td>{{$team->account}}</td>
                     <td style="white-space:nowrap">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('team/create')}}?id={{$team->id}}')">修改</a>
                         <button class="ui mini button negative dataTeamDelete" data-id="{{$team->id}}">删除</button>

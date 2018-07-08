@@ -249,6 +249,8 @@
     team: '', //施工队,id
     build_name: '', //施工队, name
     build_manager: '', //施工队, manager
+    build_bank: '', //施工队, manager
+    build_account: '', //施工队, manager
     project_id: '', //项目id
     project_content: '', //项目内容
     project_manger: '', //项目经理

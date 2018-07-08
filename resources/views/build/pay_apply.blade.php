@@ -16,6 +16,7 @@
 
         <input type="hidden" id="projectId" value="{{$projectTeam->id}}">
         <input type="hidden" id="teamId" value="{{$pay->id}}">
+        <div id="teamInfo" style="display: none">{{json_encode($team)}}</div>
 
         <h1 class="ui header blue aligned center">付款申请录入</h1>
         <div id="buildPayApply">
@@ -27,6 +28,22 @@
                             <label class="six wide field flex-center">施工队</label>
                             <div class="eleven wide field">
                                 <div class="fake-input">{{$projectTeam->team}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">开户银行</label>
+                            <div class="eleven wide field">
+                                <div class="fake-input">{{$team->bank}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="six wide field flex-center">账号</label>
+                            <div class="eleven wide field">
+                                <div class="fake-input">{{$team->account}}</div>
                             </div>
                         </div>
                     </div>

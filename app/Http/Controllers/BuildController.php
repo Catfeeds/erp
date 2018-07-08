@@ -149,9 +149,10 @@ class BuildController extends Controller
     {
         $id = Input::get('id');
         $projectTeam = ProjectTeam::find($id);
+        $team = Team::find($projectTeam->team_id);
         $lists = $projectTeam->payments()->where('state','=',3)->get();
         $applies = $projectTeam->applies()->get();
-        return view('build.pay_single',['projectTeam'=>$projectTeam,'lists'=>$lists,'applies'=>$applies]);
+        return view('build.pay_single',['projectTeam'=>$projectTeam,'lists'=>$lists,'applies'=>$applies,'team'=>$team]);
     }
     public function finishBuildPayPage()
     {
@@ -164,7 +165,8 @@ class BuildController extends Controller
             $projectTeam = ProjectTeam::find($project_id);
             $pay = new BuildPayFinish();
         }
-        return view('build.pay_apply',['projectTeam'=>$projectTeam,'pay'=>$pay]);
+        $team = Team::find($projectTeam->team_id);
+        return view('build.pay_apply',['projectTeam'=>$projectTeam,'pay'=>$pay,'team'=>$team]);
     }
     public function finishBuildPayApply(Request $post)
     {
@@ -185,13 +187,13 @@ class BuildController extends Controller
                 $projectTeam->save();
             }
             $pay->apply_date = $post->get('date');
-            $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price');
-            if ($price<$post->get('price')){
-                return response()->json([
-                    'code'=>'400',
-                    'msg'=>'不能超过剩余应付帐款！'
-                ]);
-            }
+//            $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price');
+//            if ($price<$post->get('price')){
+//                return response()->json([
+//                    'code'=>'400',
+//                    'msg'=>'不能超过剩余应付帐款！'
+//                ]);
+//            }
             $price = $projectTeam->payments()->where('state','=',3)->sum('price')-$projectTeam->applies()->where('state','=',3)->sum('apply_price');
             if ($price<$post->get('price')){
                 return response()->json([
@@ -421,9 +423,10 @@ class BuildController extends Controller
     {
         $id = Input::get('id');
         $team = ProjectTeam::find($id);
+        $info = Team::find($team->team_id);
         $payments = $team->payments()->where('state','=',3)->get();
         $applies = $team->applies()->where('state','=',4)->get();
-        return view('build.pay_print',['team'=>$team,'payments'=>$payments,'applies'=>$applies]);
+        return view('build.pay_print',['team'=>$team,'payments'=>$payments,'applies'=>$applies,'info'=>$info]);
     }
     public function printBuildGet()
     {
