@@ -583,7 +583,7 @@
                                 <td id="price">{{ number_format($company->price,2) }} ￥</td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
-                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/company/edit')}}?id={{$item->id}}')" >修改</button>
+                                    <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/company/edit')}}?id={{$company->id}}')" >修改</button>
                                 </td>
                             {{--</template>--}}
                         </tr>
