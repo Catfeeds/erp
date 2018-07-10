@@ -56,18 +56,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($warehouses as $warehouse)
+                @for($i=0;$i<count($warehouses);$i++)
+                {{--@foreach($warehouses as $warehouse)--}}
                 <tr>
-                    <td>{{$warehouse->id}}</td>
-                    <td>{{$warehouse->name}}</td>
-                    <td>{{$warehouse->address}}</td>
-                    <td>{{$warehouse->admin}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$warehouses[$i]->name}}</td>
+                    <td>{{$warehouses[$i]->address}}</td>
+                    <td>{{$warehouses[$i]->admin}}</td>
                     <td style="white-space:nowrap;">
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('warehouse/create?id=')}}{{$warehouse->id}}')">修改</a>
-                        <button class="ui mini button negative dataWarehouseDelete" data-id="{{$warehouse->id}}">删除</button>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('warehouse/create?id=')}}{{$warehouses[$i]->id}}')">修改</a>
+                        <button class="ui mini button negative dataWarehouseDelete" data-id="{{$warehouses[$i]->id}}">删除</button>
                     </td>
                 </tr>
-                @endforeach
+                @endfor
+                {{--@endforeach--}}
                 </tbody>
             </table>
         </div>

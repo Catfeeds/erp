@@ -503,6 +503,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @if(!empty($invoiceList))
                                 @foreach($invoiceList as $item)
                             <tr >
                                 {{--<template >--}}
@@ -517,6 +518,9 @@
                                 {{--</template>--}}
                             </tr>
                                 @endforeach
+                                @else
+                            @endif
+
                             </tbody>
                             <tfoot>
                             <tr>
