@@ -220,14 +220,14 @@
                             <div class="fake-input">@{{ item.unit }}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item.price.toLocaleString('en-US') }} ￥</div>
+                            <div class="fake-input">￥@{{ item.price.toLocaleString('en-US') }} </div>
                         </div>
                         <div class="two wide column">
                             <div class="fake-input">@{{ item.number.toLocaleString('en-US')}}</div>
                         </div>
                         <div class="two wide column">
                             {{--<div class="fake-input">@{{item.cost.toLocaleString('en-US')}} ￥</div>--}}
-                            <div class="fake-input">@{{(item.price * item.number).toLocaleString('en-US')}} ￥</div>
+                            <div class="fake-input"> ￥@{{(item.price * item.number).toLocaleString('en-US')}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{budgetType[item.type * 1 - 1].name}}</div>

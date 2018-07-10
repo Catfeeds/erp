@@ -25,7 +25,7 @@
                 <th>请款编号</th>
                 <th class="fake-td"> {{$apply->number}}</th>
                 <th>请款金额</th>
-                <th class="fake-td" colspan="3">{{number_format($apply->price,2)}} ￥</th>
+                <th class="fake-td" colspan="3">￥{{number_format($apply->price,2)}} </th>
             </tr>
             <tr>
                 <th>施工队</th>
@@ -60,8 +60,8 @@
                 <td>{{$lists[$i]->param}}</td>
                 <td>{{$lists[$i]->number}}</td>
                 <td>{{$lists[$i]->unit}}</td>
-                <td>{{number_format($lists[$i]->price,2)}} ￥</td>
-                <td>{{number_format($lists[$i]->total,2)}} ￥</td>
+                <td>￥{{number_format($lists[$i]->price,2)}} </td>
+                <td>￥{{number_format($lists[$i]->total,2)}} </td>
                 <td style="max-width:400px">{{$lists[$i]->remark}}</td>
             </tr>
             @endfor
@@ -69,7 +69,7 @@
             <tfoot>
             <tr>
                 <th colspan="6">合计</th>
-                <th>{{number_format($apply->lists()->sum('total'),2)}} ￥</th>
+                <th>￥{{number_format($apply->lists()->sum('total'),2)}} </th>
                 <th></th>
             </tr>
             </tfoot>

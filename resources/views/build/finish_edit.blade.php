@@ -108,7 +108,7 @@
             <div class="ui mini button positive">Excel 导入</div>
             <div class="ui mini button positive" @click="addItem('lists')">手工添加</div>
         </div>
-        <h5 class="ui header right aligned">合计总额：@{{ sumAmount.toLocaleString('en-US') }} ￥</h5>
+        <h5 class="ui header right aligned">合计总额：￥@{{ sumAmount.toLocaleString('en-US') }} </h5>
         <div class="ui form form-item">
             <div class="ui five column doubling stackable grid font-size-13">
                 <div class="two wide column form-thead">设备名称</div>
