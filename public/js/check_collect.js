@@ -183,6 +183,9 @@
                     title: '成功',
                     message: '提交成功！'
                   })
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
@@ -214,6 +217,9 @@
                     title: '成功',
                     message: '提交成功！'
                   })
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
@@ -245,6 +251,9 @@
                     title: '成功',
                     message: '提交成功！'
                   })
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
@@ -276,6 +285,9 @@
                     title: '成功',
                     message: '提交成功！'
                   })
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
