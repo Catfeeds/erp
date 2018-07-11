@@ -781,7 +781,7 @@ class ProjectController extends Controller
                         $price+=$list->tax_include;
                     }
                 }
-                if ($price!=$invoice->price){
+                if ($post->get('price')-strval($price)!=0){
                     throw new \Exception('金额不等！');
                 }
             }else{
@@ -810,7 +810,7 @@ class ProjectController extends Controller
                         $price+=$list->tax_include;
                     }
                 }
-                if ($price!=$invoice->price){
+                if ($post->get('price')-strval($price)!=0){
                     throw new \Exception('金额不等！');
                 }
             }

@@ -56,16 +56,16 @@
                 <td>{{$lists[$i]->material->model}}</td>
                 <td>{{$lists[$i]->material->factory}}</td>
                 <td>{{$lists[$i]->material->unit}}</td>
-                <td>{{number_format($lists[$i]->price,2)}} ￥</td>
+                <td>￥{{number_format($lists[$i]->price,2)}} </td>
                 <td>{{$lists[$i]->sum}}</td>
-                <td>{{number_format($lists[$i]->cost,2)}} ￥</td>
+                <td>￥{{number_format($lists[$i]->cost,2)}} </td>
             </tr>
             @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="8">合计</th>
-                <th>{{number_format($record->lists->sum('cost'),2)}} ￥</th>
+                <th>￥{{number_format($record->lists->sum('cost'),2)}} </th>
             </tr>
             </tfoot>
         </table>

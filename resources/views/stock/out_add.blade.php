@@ -75,7 +75,7 @@
                         <a class="stockOutItem" data-id="{{$list->id}}">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
+                    <td>￥{{number_format($list->lists()->sum('cost'),2)}} </td>
                     @if($list->project_id!=0)
                     <td>{{\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content">{{\App\Models\Project::find($list->project_id)->name}}</td>
@@ -163,9 +163,9 @@
                                     <td>@{{ item.material.model }}</td>
                                     <td>@{{ item.material.factory }}</td>
                                     <td>@{{ item.material.unit }}</td>
-                                    <td>@{{ item.price.toLocaleString('en-US') }} ￥</td>
+                                    <td>￥ @{{ item.price.toLocaleString('en-US') }} </td>
                                     <td>@{{ item.number.toLocaleString('en-US') }}</td>
-                                    <td>@{{ item.cost.toLocaleString('en-US') }} ￥</td>
+                                    <td>￥ @{{ item.cost.toLocaleString('en-US') }} </td>
                                 </tr>
                             </template>
                             <template v-else>
@@ -177,7 +177,7 @@
                             <tfoot>
                             <tr>
                                 <th colspan="8">合计</th>
-                                <th>@{{ singleData.purchase.price.toLocaleString('en-US') || 0 }}￥ </th>
+                                <th>￥ @{{ singleData.purchase.price.toLocaleString('en-US') || 0 }} </th>
                             </tr>
                             </tfoot>
                         </table>
@@ -214,9 +214,9 @@
                                         <template v-if="item.list && item.list.length" v-for="(subItem, subIndex) in item.list" :key="subItem.id">
                                             <tr v-if="subItem.id">
                                                 <td>@{{ subItem.sum.toLocaleString('en-US') || 0 }}</td>
-                                                <td>@{{ subItem.cost.toLocaleString('en-US') || 0 }} ￥</td>
+                                                <td> ￥ @{{ subItem.cost.toLocaleString('en-US') || 0 }} </td>
                                                 <td>@{{ subItem.need_sum.toLocaleString('en-US') || 0 }}</td>
-                                                <td>@{{ subItem.need_cost.toLocaleString('en-US') || 0 }} ￥</td>
+                                                <td> ￥ @{{ subItem.need_cost.toLocaleString('en-US') || 0 }} </td>
                                             </tr>
                                             <tr v-else>
                                                 <td colspan="4">暂无记录</td>
@@ -226,9 +226,9 @@
                                         <tfoot>
                                         <tr>
                                             <th></th>
-                                            <th>@{{ item.get_cost.toLocaleString('en-US') || 0 }}￥</th>
+                                            <th>￥ @{{ item.get_cost.toLocaleString('en-US') || 0 }}</th>
                                             <th></th>
-                                            <th>@{{ item.need_cost.toLocaleString('en-US') || 0 }} ￥</th>
+                                            <th>￥ @{{ item.need_cost.toLocaleString('en-US') || 0 }} </th>
                                         </tr>
                                         <tr>
                                             <td colspan="4">

@@ -745,7 +745,7 @@
                                     <tr >
                             {{--<template >--}}
                                 <td>{{ $item->date }}</td>
-                                <td>{{ number_format($item->price,2)}} ￥</td>
+                                <td>￥{{ number_format($item->price,2)}} </td>
                                 <td>{{ $item->bank }}</td>
                                 <td>{{ $item->account }}</td>
 
@@ -763,7 +763,7 @@
                         <tfoot>
                         <tr>
                             <th>合计</th>
-                            <th colspan="5">{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}} ￥</th>
+                            <th colspan="5">￥{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}} </th>
                         </tr>
                         </tfoot>
                     </table>

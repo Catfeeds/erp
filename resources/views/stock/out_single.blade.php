@@ -31,7 +31,7 @@
                 <th colspan="2">采购日期</th>
                 <th colspan="3" class="fake-td">{{$purchase->date}}</th>
                 <th colspan="2">采购金额</th>
-                <th colspan="2" class="fake-td">{{number_format($purchase->lists()->sum('cost'),2)}}￥</th>
+                <th colspan="2" class="fake-td">￥{{number_format($purchase->lists()->sum('cost'),2)}}</th>
             </tr>
             <tr>
                 <th colspan="2">项目编号</th>
@@ -77,13 +77,13 @@
                 <td>{{$list[$i]->material->model}}</td>
                 <td>{{$list[$i]->material->factory}}</td>
                 <td>{{$list[$i]->material->unit}}</td>
-                <td>{{$list[$i]->price}}￥</td>
+                <td>￥{{$list[$i]->price}}</td>
                 <td>{{$list[$i]->purchase_sum}}</td>
-                <td>{{number_format($list[$i]->purchase_cost,2)}}￥</td>
+                <td>￥{{number_format($list[$i]->purchase_cost,2)}}</td>
                 <td>{{$list[$i]->purchase_need}}</td>
-                <td>{{number_format($list[$i]->purchase_need_cost,2)}}￥</td>
+                <td>￥{{number_format($list[$i]->purchase_need_cost,2)}}</td>
                 <td>{{$list[$i]->sum}}</td>
-                <td>{{number_format($list[$i]->cost,2)}}￥</td>
+                <td>￥{{number_format($list[$i]->cost,2)}}</td>
             </tr>
             @endfor
             </tbody>
@@ -91,11 +91,11 @@
             <tr>
                 <th colspan="7">合计</th>
                 <th>{{$purchase_num}}</th>
-                <th>{{number_format($purchase_cost,2)}}￥</th>
+                <th>￥{{number_format($purchase_cost,2)}}</th>
                 <th>{{$purchase_need}}</th>
-                <th>{{number_format($purchase_need_cost,2)}}￥</th>
+                <th>￥{{number_format($purchase_need_cost,2)}}</th>
                 <th>{{$record->lists()->sum('sum')}}</th>
-                <th>{{number_format($record->lists()->sum('cost'),2)}}￥</th>
+                <th>￥{{number_format($record->lists()->sum('cost'),2)}}</th>
             </tr>
             </tfoot>
         </table>
