@@ -32,7 +32,8 @@
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                name: queryString,
+                  type:'buy_whole_list'
               }
               _http.MaterialManager.searchPurchaseProject(searchKey)
                 .then(res => {

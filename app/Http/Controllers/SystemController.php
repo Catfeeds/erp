@@ -112,14 +112,19 @@ class SystemController extends Controller
             ]);
         }
         $allow =  [
-        'jpg',
-        'png',
-        'txt',
-        'bmp',
-        'gif',
-        'jpeg',
-        'pdf',
-        'mp4',
+            'jpg',
+            'png',
+            'txt',
+            'bmp',
+            'gif',
+            'jpeg',
+            'pdf',
+            'mp4',
+            'doc',
+            'docx',
+            'xls',
+            'xlsx'
+
     ];
         if (!in_array(strtolower($name[1]),$allow)){
             return response()->json([

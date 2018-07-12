@@ -78,7 +78,7 @@
         <table class="ui center aligned table unstackable">
             <thead>
             <tr>
-                <th></th>
+                {{--<th></th>--}}
                 <th>开放人员</th>
                 <th>操作</th>
             </tr>
@@ -86,11 +86,12 @@
             <tbody>
             @foreach($lists1 as $item)
             <tr>
-                <td>{{$item->id}}</td>
+                {{--<td>{{$item->id}}</td>--}}
                 <td>{{\App\User::find($item->user_id)->name}}</td>
                 <td>
                     <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=1&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
-                    <button class="ui negative mini button auth-delete" data-id="{{$item->id}}">删除</button>
+                    <a href="javascript:_helper.fullWindow('{{url('project/auth/del')}}?user_id={{$item->user_id}}&&type=1&&project_id={{$project->id}}')" class="ui primary mini button">删除</a>
+                    {{--<button class="ui negative mini button auth-delete" data-id="{{$item->id}}">删除</button>--}}
                 </td>
             </tr>
             @endforeach
@@ -115,10 +116,11 @@
             <tbody>
             @foreach($lists2 as $item)
             <tr>
-                <td>{{$item->id}}</td>
+                {{--<td>{{$item->id}}</td>--}}
                 <td>{{\App\User::find($item->user_id)->name}}</td>
                 <td>
                     <a href="javascript:_helper.fullWindow('{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=2&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
+                    <a href="javascript:_helper.fullWindow('{{url('project/auth/del')}}?user_id={{$item->user_id}}&&type=2&&project_id={{$project->id}}')" class="ui primary mini button">删除</a>
                     <button class="ui negative mini button auth-delete" data-id="{{$item->id}}">删除</button>
                 </td>
             </tr>
@@ -143,10 +145,11 @@
             <tbody>
             @foreach($lists3 as $item)
             <tr>
-                <td>1</td>
-                <td>张某某</td>
+                {{--<td>1</td>--}}
+                <td>{{\App\User::find($item->user_id)->name}}</td>
                 <td>
                     <a href="javascript:_helper.fullWindow('.{{url('project/auth/edit')}}?user_id={{$item->user_id}}&&type=3&&project_id={{$project->id}}')" class="ui primary mini button">查询权限设置</a>
+                    <a href="javascript:_helper.fullWindow('.{{url('project/auth/del')}}?user_id={{$item->user_id}}&&type=3&&project_id={{$project->id}}')" class="ui primary mini button">删除</a>
                     <button class="ui negative mini button auth-delete " data-id="{{$item->id}}">删除</button>
                 </td>
             </tr>

@@ -81,6 +81,7 @@ Route::group(['middleware'=>'auth'],function (){
    Route::get('project/check','ProjectController@showProjectsDetail');
    Route::get('project/auth','ProjectController@showProjectsAuth');
    Route::get('project/auth_edit','ProjectController@createProjectAuthPage');
+   Route::get('project/auth/del','ProjectController@delProjectAuth');
    Route::post('project/auth_edit','ProjectController@createProjectAuth');
    Route::get('project/auth/edit','ProjectController@showAuthPage');
    Route::get('confirm/project','ProjectController@confirmProject');
@@ -199,11 +200,11 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('purchase/payment/finish','PurchaseController@finishPaymentPage');
     Route::get('purchase/payment/delete','PurchaseController@finishPaymentDelete');
     Route::post('purchase/invoice/create','PurchaseController@createInvoices');
-    Route::get('buy/budgetary','ProjectController@createBudgetaryPage');
-    Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage');
-    Route::get('buy/budgetary_buy','StockController@buyBudgetary');
+    Route::get('buy/budgetary','ProjectController@createBudgetaryPage')->middleware('role:buy_bugetary_edit');
+    Route::get('buy/extrabudgetary','ProjectController@createExtraBudgetaryPage')->middleware('role:buy_extrabugetary_edit');
+    Route::get('buy/budgetary_buy','StockController@buyBudgetary')->middleware('role:buy_bugetary_edit');
     Route::get('buy/payment/list','PurchaseController@listBuyPayment');
-    Route::get('buy/payment/create','PurchaseController@createBuyPayment');
+    Route::get('buy/payment/create','PurchaseController@createBuyPayment')->middleware('role:buy_pay_edit');
     Route::get('stock/check/budgetary','StockController@budgetaryCheckPage');
     Route::get('buy/create/invoice','PurchaseController@createInvoicePage');
     Route::get('buy/print/budgetary','PurchaseController@printBuyBudgetary');

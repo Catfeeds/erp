@@ -1382,6 +1382,14 @@ class ProjectController extends Controller
             'lists3'=>$list3
         ]);
     }
+    public function delProjectAuth()
+    {
+        $user_id = Input::get('user_id');
+        $project_id = Input::get('project_id');
+        $type = Input::get('type');
+        ProjectRole::where('user_id','=',$user_id)->where('project_id','=',$project_id)->where('type','=',$type)->delete();
+        return redirect()->back()->with('status','操作成功!');
+    }
     public function createProjectAuthPage()
     {
 //        dd(Input::all());
