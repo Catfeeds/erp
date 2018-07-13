@@ -89,6 +89,7 @@ class BuildController extends Controller
     public function listFinishPage()
     {
         $role = getRole('build_finish_list');
+//        $db = DB::table();
         if ($role=='all') {
             $applies = RequestPayment::orderBy('id','DESC')->paginate(10);
         }else{
@@ -425,7 +426,8 @@ class BuildController extends Controller
         $team = ProjectTeam::find($id);
         $info = Team::find($team->team_id);
         $payments = $team->payments()->where('state','=',3)->get();
-        $applies = $team->applies()->where('state','=',4)->get();
+        $applies = $team->applies()->where('passer_id','!=',0)->get();
+//        $count = count($applies)>count($payments)?count($applies):count($payments);
         return view('build.pay_print',['team'=>$team,'payments'=>$payments,'applies'=>$applies,'info'=>$info]);
     }
     public function printBuildGet()

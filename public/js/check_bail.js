@@ -37,8 +37,8 @@
                 $('.tabular.menu .item').tab()
                 this.project_id = $('#projectId').val()
                 $('#checkCollect').removeClass('invisible')
-                this.collectForm.subContract.account = $('#account').val()
-                this.collectForm.subContract.bank = $('#bank').val()
+                this.collectForm.margins.account = $('#account').val()
+                this.collectForm.margins.bank = $('#bank').val()
             },
             methods: {
 

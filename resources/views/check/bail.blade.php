@@ -90,16 +90,16 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款银行</label>
                                 <div class="twelve wide field icon input">
-                                    <input type="text" name="bank" value="{{$collect->bank}}">
-                                    {{--<el-autocomplete popper-class="my-autocomplete" v-model="collectForm.margins.bank" :fetch-suggestions="querySearchBank" placeholder="请输入收款银行"--}}
-                                                     {{--@select="handleSelectBankA">--}}
-                                        {{--<i class="el-icon-edit el-input__icon" slot="suffix">--}}
-                                        {{--</i>--}}
-                                        {{--<template slot-scope="props">--}}
-                                            {{--<div class="name">@{{ props.item.name }}</div>--}}
-                                            {{--<div class="addr">@{{ props.item.account }}</div>--}}
-                                        {{--</template>--}}
-                                    {{--</el-autocomplete>--}}
+                                    <input type="hidden" id="bank" name="bank" value="{{$collect->bank}}">
+                                    <el-autocomplete popper-class="my-autocomplete" v-model="collectForm.margins.bank" :fetch-suggestions="querySearchBank" placeholder="请输入收款银行"
+                                                     @select="handleSelectBankA">
+                                        <i class="el-icon-edit el-input__icon" slot="suffix">
+                                        </i>
+                                        <template slot-scope="props">
+                                            <div class="name">@{{ props.item.name }}</div>
+                                            <div class="addr">@{{ props.item.account }}</div>
+                                        </template>
+                                    </el-autocomplete>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +107,8 @@
                             <div class="inline fields">
                                 <label class="four wide field">银行账号</label>
                                 <div class="twelve wide field icon input">
-                                    <input type="text" name="account" value="{{$collect->account}}">
-                                    {{--<div class="fake-input">@{{ collectForm.margins.account || '暂无' }}</div>--}}
+                                    <input type="hidden" id="account" name="account" value="{{$collect->account}}">
+                                    <div class="fake-input">@{{ collectForm.margins.account || '暂无' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -130,5 +130,5 @@
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
-    <script src="{{url('js/check_collect.js')}}"></script>
+    <script src="{{url('js/check_bail.js')}}"></script>
 @endsection
