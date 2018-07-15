@@ -86,6 +86,8 @@
                     <th>应付账款</th>
                     <th>系统状态</th>
                     <th>操作状态</th>
+                    <th>支票</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -103,6 +105,8 @@
                     <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'),2)}} ￥</td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                     <td>{{$list->count==0?'':'待处理'}}</td>
+                    <td title="{{$list->cheque}}">{{$list->cheque}}</td>
+                    <td class="pay-operation" data-id="{{$list->id}}">修改支票</td>
                 </tr>
                 @endforeach
 

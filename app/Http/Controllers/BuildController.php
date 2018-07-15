@@ -24,13 +24,52 @@ class BuildController extends Controller
     public function listBuildPage()
     {
         $role = getRole('build_list');
+        $key = Input::get('searchType');
+        $search = Input::get('search');
         if ($role=='all'){
-            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+//            dd($key);
+            $db = RequestPayment::where('state','=',3);
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->pluck('project_team')->toArray();
             $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
         }else{
             $idArr = getRoleProject('build_list');
             $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
-            $id = RequestPayment::where('state','=',3)->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
+            $db = RequestPayment::where('state','=',3);
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
             $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
         }
         if (!empty($lists)){
@@ -89,25 +128,107 @@ class BuildController extends Controller
     public function listFinishPage()
     {
         $role = getRole('build_finish_list');
-//        $db = DB::table();
+        $key = Input::get('searchType');
+        $search = Input::get('search');
+        $db = DB::table('request_payments');
         if ($role=='all') {
-            $applies = RequestPayment::orderBy('id','DESC')->paginate(10);
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('manager','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $applies = $db->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('build_finish_list');
             $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
-            $applies = RequestPayment::whereIn('project_number',$numberArr)->orderBy('id','DESC')->paginate(10);
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('manager','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $applies = $db->whereIn('project_number',$numberArr)->orderBy('id','DESC')->paginate(10);
         }
         return view('build.finish_list',['applies'=>$applies]);
     }
     public function listPayPage()
     {
         $role = getRole('build_pay_list');
+        $key = Input::get('searchType');
+        $search = Input::get('search');
+//        dd($search);
         if ($role=='all'){
-            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $db = RequestPayment::where('state','=',3);
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->pluck('project_team')->toArray();
+//            dd($id);
             $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('build_pay_list');
-            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $db = RequestPayment::where('state','=',3);
+//            $DB =
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->pluck('project_team')->toArray();
             $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 
@@ -116,12 +237,52 @@ class BuildController extends Controller
     public function listGetPage()
     {
         $role = getRole('build_invoice_list');
+        $key = Input::get('searchType');
+        $search = Input::get('search');
         if ($role == 'all'){
-            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $db = RequestPayment::where('state','=',3);
+//            $DB =
+            if ($key){
+                switch ($key){
+                    case 1:
+//                        $team_id = Team::where('state','=',1)->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->pluck('project_team')->toArray();
+//            dd($id);
             $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('build_invoice_list');
-            $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
+            $db = RequestPayment::where('state','=',3);
+//            $DB =
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('team','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 3:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                }
+            }
+            $id = $db->pluck('project_team')->toArray();
             $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 

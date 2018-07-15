@@ -178,6 +178,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
 //    Route::get('purchase/pay/list','ProjectController@listProjectPurchasesPage');
     Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage');
+    Route::post('purchase/cheque','ProjectController@addPurchaseCheque');
     Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage');
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage')->middleware('role:buy_parity');

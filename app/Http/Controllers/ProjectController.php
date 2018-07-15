@@ -206,7 +206,9 @@ class ProjectController extends Controller
             $projectDb->whereIn('id',$idArr);
         }
         if ($name){
-            $projectDb->where('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
+            $id_arr = OutContract::where('unit','like','%'.$name.'%')->pluck('project_id')->toArray();
+//            dd($id_arr);
+            $projectDb->whereIn('id',$id_arr)->orwhere('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
         }
         $projects = $projectDb->orderBy('id','DESC')->paginate(10);
         foreach ($projects as $project){
@@ -1215,6 +1217,16 @@ class ProjectController extends Controller
             }
         }
         return view('buy.pay_list',['lists'=>$lists]);
+    }
+    public function addPurchaseCheque()
+    {
+        $id = Input::get('id');
+        $pruchase = Purchase::find($id);
+        $pruchase->cheque = Input::get('content');
+        $pruchase->save();
+        return response()->json([
+            'code'=>'200'
+        ]);
     }
     public function listPurchasesChargePage()
     {

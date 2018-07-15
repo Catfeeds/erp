@@ -20,6 +20,7 @@ use App\Models\RequestPayment;
 use App\Models\RequestPaymentList;
 use App\Models\Task;
 use App\Models\Team;
+use App\RequestPaymentPicture;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -772,6 +773,7 @@ class PayController extends Controller
                 $projectTeam->save();
             }
             $lists = $post->get('lists');
+            $pictures = $post->get('pictures');
             $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
             $payment = new RequestPayment();
             $payment->project_team = $projectTeam->id;
@@ -809,6 +811,14 @@ class PayController extends Controller
                 }
 
             }
+            if (!empty($pictures)){
+                foreach ($pictures as $picture) {
+                    $paymentPicture = new RequestPaymentPicture();
+                    $paymentPicture->name = $picture['name'];
+                    $paymentPicture->url = $picture['url'];
+                    $paymentPicture->save();
+                }
+            }
             if ($cost!=$payment->price){
                 throw new \Exception('金额不等！');
             }
@@ -843,6 +853,7 @@ class PayController extends Controller
             $payment->save();
             $cost = 0;
             $lists = $post->get('lists');
+            $pictures = $post->get('pictures');
             if (!empty($lists)){
                 $payment->lists()->delete();
 //                dd($lists);
@@ -867,6 +878,16 @@ class PayController extends Controller
                 }
 
 
+            }
+            if (!empty($pictures)){
+                $payment->pictures()->delete();
+                foreach ($pictures as $picture) {
+                    $paymentPicture = new RequestPaymentPicture();
+                    $paymentPicture->payment_id = $payment->id;
+                    $paymentPicture->name = $picture['name'];
+                    $paymentPicture->url = $picture['url'];
+                    $paymentPicture->save();
+                }
             }
             Task::where('type','=','build_finish_check')->where('content','=',$payment->id)->delete();
             if ($cost!=$payment->price){

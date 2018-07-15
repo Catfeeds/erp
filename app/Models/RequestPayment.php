@@ -11,4 +11,8 @@ class RequestPayment extends Model
     {
         return $this->hasMany('App\Models\RequestPaymentList','payment_id','id');
     }
+    public function pictures()
+    {
+        return  $this->hasMany('App\RequestPaymentPicture','payment_id','id');
+    }
 }

@@ -714,6 +714,10 @@
         params: data
       })
     }
+
+      createPaySingle(data = {}) {
+          return this._http.post(`/purchase/cheque`, data, this.dataMethodDefaults)
+      }
   }
 
 

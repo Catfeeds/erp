@@ -104,18 +104,84 @@ class StockController extends Controller
     public function listGetList()
     {
         $role = getRole('stock_get_list');
+        $search = Input::get('search');
+        $key = Input::get('searchType');
         if ($role =='all'){
-            $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',3);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','=',$search);
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_get_list');
-            $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',3)->whereIn('project_id',$idArr);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','=',$search);
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }
         if (!empty($lists)){
             foreach ($lists as $list){
-                $list->material = $list->material()->first();
-                $list->record = $list->record()->first();
+                $list->material = Material::find($list->material_id);
+                $list->record = StockRecord::find($list->record_id);
             }
         }
         return view('stock.get_list',['lists'=>$lists]);
