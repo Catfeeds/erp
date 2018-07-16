@@ -435,7 +435,7 @@ class ProjectController extends Controller
         $role = getRole('project_detail');
         if ($role=='all'){
             if ($search){
-                $project = Project::where('name','like',$search)->orWhere('number','=',$search)->orderBy('id','DESC')->paginate(10);
+                $project = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
             }else{
                 $project = Project::orderBy('id','DESC')->paginate(10);
             }
@@ -444,7 +444,7 @@ class ProjectController extends Controller
 //            dd($idArr);
             $projectDB = Project::whereIn('id',$idArr);
             if ($search){
-                $projectDB->where('name','like',$search)->orWhere('number','=',$search);
+                $projectDB->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
             }
             $project = $projectDB->orderBy('id','DESC')->paginate(10);
 //            dd($project);
