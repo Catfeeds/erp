@@ -132,13 +132,13 @@
             </table>
         </div>
         <div class="flex-row flex-center margin-top-50">
-            @if(checkRole('buy_pay_edit',\Illuminate\Support\Facades\Auth::id()))
+            {{--@if(checkRole('buy_pay_edit',\Illuminate\Support\Facades\Auth::id()))--}}
             <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('buy/payment/create')}}?purchase_id={{$purchase->id}}')" style="margin:0 10px;">
                 <i class="icon yen"></i>
                 <span>付款申请</span>
             </a>
-            @else
-                @endif
+            {{--@else--}}
+                {{--@endif--}}
             <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('buy/print/payment')}}?id={{$purchase->id}}')" style="margin:0 10px;">
                 <i class="icon print"></i>
                 <span>凭证</span>
