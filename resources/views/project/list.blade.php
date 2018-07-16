@@ -30,6 +30,7 @@
                     <div class="item" data-value="1">项目号</div>
                     <div class="item" data-value="2">项目内容</div>
                     <div class="item" data-value="3">甲方</div>
+                    <div class="item" data-value="4">发包单位</div>
                 </div>
             </div>
             <input name="search" type="text" placeholder="搜索内容" value="">
