@@ -106,7 +106,7 @@
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                     <td>{{$list->count==0?'':'待处理'}}</td>
                     <td title="{{$list->cheque}}">{{$list->cheque}}</td>
-                    <td class="pay-operation" data-id="{{$list->id}}">修改支票</td>
+                    <td class="pay-operation" data-id="{{$list->id}}"><span style="color: #1e5fc2">修改支票</span></td>
                 </tr>
                 @endforeach
 
