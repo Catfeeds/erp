@@ -247,18 +247,10 @@ class SystemController extends Controller
     //物料列表
     public function listMaterialPage()
     {
-        $name = Input::get('name');
-        $model = Input::get('model');
-        $factory = Input::get('factory');
+        $name = Input::get('value');
         $DbObj = DB::table('materials');
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
-        }
-        if ($model){
-            $DbObj->where('model','like','%'.$model.'%');
-        }
-        if ($factory){
-            $DbObj->where('factory','like','%'.$model.'%');
+            $DbObj->where('name','like','%'.$name.'%')->orWhere('model','like','%'.$name.'%')->orWhere('factory','like','%'.$name.'%');
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('material.list',['materials'=>$data]);
