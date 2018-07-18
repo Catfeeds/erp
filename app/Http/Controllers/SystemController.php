@@ -248,11 +248,17 @@ class SystemController extends Controller
     public function listMaterialPage()
     {
         $name = Input::get('value');
-        $DbObj = DB::table('materials');
+        $DbObj = DB::table('materials')->where('state','=',1);
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%')->orWhere('model','like','%'.$name.'%')->orWhere('factory','like','%'.$name.'%');
+            $DbObj->where(function($q1) use($name){
+                $q1->orWhere('model','like','%'.$name.'%')
+                    ->orWhere('factory','like','%'.$name.'%')
+                    ->orWhere('name','like','%'.$name.'%')
+                ;
+            });
         }
-        $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
+        $data = $DbObj->orderBy('id','DESC')->paginate(10);
+//        dd($data);
         return view('material.list',['materials'=>$data]);
     }
 
