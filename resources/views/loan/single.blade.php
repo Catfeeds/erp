@@ -56,9 +56,9 @@
             @for($i=0;$i<count($loan->lists);$i++)
             <tr>
                 <td>{{$i+1}}</td>
-                <td>{{\App\Models\Category::find($loan->lists[$i]->category_id)->title}}</td>
+                <td>{{$loan->lists[$i]->category_id==0?'':\App\Models\Category::find($loan->lists[$i]->category_id)->title}}</td>
                 @if($loan->lists[$i]->kind_id!=0)
-                <td>{{\App\Models\Detail::find($loan->lists[$i]->kind_id)->title}}</td>
+                <td>{{$loan->lists[$i]->kind_id==0?'':\App\Models\Detail::find($loan->lists[$i]->kind_id)->title}}</td>
                 @else
                     <td></td>
                     @endif
