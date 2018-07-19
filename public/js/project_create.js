@@ -288,6 +288,9 @@
                   //       })
                   //     }
                   //   })
+                  setTimeout(() => {
+                      window.close()
+              }, 300)
                 } else {
                   this.$notify({
                     title: '错误',
