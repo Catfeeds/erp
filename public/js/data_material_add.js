@@ -11,7 +11,10 @@
             model: '',
             factory: '',
             unit: ''
-          }
+          },
+            throttle:{
+                material_timer:''
+            }
         },
         mounted() {
           this.materialForm.id = $('#materialId').val() || ''
@@ -22,6 +25,43 @@
           this.materialForm.unit = $('#materialUnit').val() || ''
         },
         methods: {
+
+
+          //物料
+          querySearchMaterial(queryString, cb) {
+            if (this.throttle.material_timer) {
+              clearTimeout(this.throttle.material_timer)
+            }
+            this.throttle.material_timer = setTimeout(() => {
+              const searchKey = {
+                name: queryString
+              }
+              _http.MaterialManager.searchMaterial(searchKey)
+                .then(res => {
+                  if (res.data.code === '200') {
+                    cb(res.data.data)
+                  } else {
+                    this.$notify({
+                      title: '错误',
+                      message: res.data.msg || '未知错误',
+                      type: 'error'
+                    })
+                  }
+                })
+                .catch(err => {
+                  this.$notify({
+                    title: '错误',
+                    message: '服务器出错',
+                    type: 'error'
+                  })
+                })
+            }, 500)
+          },
+          handleSelectMaterial(item) {
+            return false
+          },
+
+
           //提交
           submit() {
             _http.MaterialManager.createMaterial(this.materialForm)
@@ -32,9 +72,6 @@
                     message: '提交成功',
                     type: 'success'
                   })
-                  setTimeout(() => {
-                      window.close()
-              }, 300)
                 } else {
                   this.$notify({
                     title: '错误',

@@ -259,7 +259,7 @@ class SystemController extends Controller
         }
         $data = $DbObj->orderBy('id','DESC')->paginate(10);
 //        dd($data);
-        return view('material.list',['materials'=>$data]);
+        return view('material.list',['materials'=>$data,'name'=>$name]);
     }
 
     public function delMaterial()
@@ -292,7 +292,7 @@ class SystemController extends Controller
         $material->name = $post->get('name');
         $material->param = $post->get('param');
         $material->model = $post->get('model');
-        $material->factory = $post->get('factor');
+        $material->factory = $post->get('factory');
         $material->unit = $post->get('unit');
         if ($material->save()){
             return response()->json([
