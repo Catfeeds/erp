@@ -607,7 +607,7 @@ class SystemController extends Controller
         }
 
         $kinds = $post->get('kinds');
-        Detail::where('category_id','=',$category->id)->delete();
+        Detail::where('category_id','=',$category->id)->update(['state'=>0]);
         foreach ($kinds as $item){
 
             $kind = new Detail();
