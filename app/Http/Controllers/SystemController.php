@@ -697,7 +697,8 @@ class SystemController extends Controller
     {
         $id = Input::get('id');
         $name = Input::get('name');
-        $db = Material::where('state','=',1);
+        $materialId = Stock::where('warehouse_id','=',$id)->where('number','!=',0)->pluck('material_id')->toArray();
+        $db = Material::whereIn('id',$materialId);
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
