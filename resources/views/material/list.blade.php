@@ -36,7 +36,7 @@
                                 <div class="item" data-value="4">生产厂家</div>
                             </div>
                         </div>
-                        <input name="value" type="text" placeholder="搜索内容" value="">
+                        <input name="value" type="text" placeholder="搜索内容" value="{{$name}}">
                         <button class="ui button">搜索</button>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {{ $materials->links() }}
+            {{ $materials->appends(['value' => $name])->links() }}
         </div>
 
     </div>

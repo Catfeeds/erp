@@ -138,13 +138,23 @@
             <div class="flex-row flex-end margin-top-20">
                 <div style="width:40%;">
                     <div class="ui action input" style="width:100%;">
+                        {{--<el-autocomplete popper-class="my-autocomplete" v-model="newMaterial.name" @input="materialInput" :fetch-suggestions="querySearchMaterial"--}}
+                                         {{--placeholder="请输入物料名称" @select="handleSelectMaterial">--}}
+                            {{--<i class="el-icon-edit el-input__icon" slot="suffix">--}}
+                            {{--</i>--}}
+                            {{--<template slot-scope="props">--}}
+                                {{--<div class="name">@{{ props.item.name }}</div>--}}
+                                {{--<span class="addr">@{{ props.item.model }}</span>--}}
+                            {{--</template>--}}
+                        {{--</el-autocomplete>--}}
                         <el-autocomplete popper-class="my-autocomplete" v-model="newMaterial.name" @input="materialInput" :fetch-suggestions="querySearchMaterial"
                                          placeholder="请输入物料名称" @select="handleSelectMaterial">
                             <i class="el-icon-edit el-input__icon" slot="suffix">
                             </i>
-                            <template slot-scope="props">
+                            <template slot-scope="props" style="cursor: not-allowed;">
                                 <div class="name">@{{ props.item.name }}</div>
-                                <span class="addr">@{{ props.item.model }}</span>
+                                <span class="addr">@{{ props.item.model }} @{{ props.item.factory }}</span>
+                                <div class="addr name" :title="props.item.param">@{{ props.item.param }}</div>
                             </template>
                         </el-autocomplete>
                         <button class="ui mini button positive" @click="addMaterial">添加物料</button>
