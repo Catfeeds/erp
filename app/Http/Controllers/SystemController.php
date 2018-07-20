@@ -639,7 +639,7 @@ class SystemController extends Controller
     {
         $id = Input::get('id');
         $category = Category::find($id);
-        $details = Detail::where('category_id','=',$category->id)->select(['id','title as name'])->get();
+        $details = Detail::where('category_id','=',$category->id)->where('state','=',1)->select(['id','title as name'])->get();
         return view('data.payment_edit',['category'=>$category,'details'=>$details]);
     }
     public function addKinds(Request $post)
@@ -671,7 +671,7 @@ class SystemController extends Controller
     {
         $categories = Category::where('state','=',1)->get();
         for($i=0;$i<count($categories);$i++){
-            $categories[$i]->kinds = $categories[$i]->kinds()->get();
+            $categories[$i]->kinds = $categories[$i]->kinds()->where('state','=',1)->get();
         }
         return response()->json([
             'code'=>'200',
