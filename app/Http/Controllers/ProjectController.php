@@ -1238,7 +1238,7 @@ class ProjectController extends Controller
             $purchases = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
         if ($search){
-            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
+            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
 //            dd($idArray);
             if (!empty($idArray)){
                 $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
@@ -1330,7 +1330,8 @@ class ProjectController extends Controller
                 $list->purchase = Purchase::find($list->purchase_id);
             }
         }
-        return view('buy.parity',['lists'=>$lists,'s'=>$start,'e'=>$end,'id'=>$id]);
+        $material = Material::find($id);
+        return view('buy.parity',['lists'=>$lists,'s'=>$start,'e'=>$end,'id'=>$id,'material'=>$material]);
     }
     public function createBudgetaryPage()
     {

@@ -5,10 +5,13 @@
       new Vue({
         el: '#navbar',
         data: {
-          navActive: 'buyParity'
+          navActive: 'buyParity',
+            materail:[]
         },
         mounted() {
           $('#navbar').removeClass('invisible')
+            let materail = $('#material').text().trim()
+            this.materail = materail === '' ? [] : JSON.parse(materail)
         },
         methods: {}
       })

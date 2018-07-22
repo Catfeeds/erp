@@ -35,7 +35,7 @@
                                 <div class="item" data-value="3">施工队经理</div>
                             </div>
                         </div>
-                        <input name="value" type="text" placeholder="搜索内容" value="">
+                        <input name="name" type="text" placeholder="搜索内容" value="">
                         <button class="ui button">搜索</button>
                     </div>
                 </div>

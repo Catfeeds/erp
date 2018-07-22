@@ -434,7 +434,7 @@
                         </tr>
                         <tr>
                             <th colspan="3">剩余未回收保证金</th>
-                            <th colspan="7"> {{number_format($project->tips()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',1)->sum('price'),2)}}￥</th>
+                            <th colspan="7"> {{number_format($project->bail()->sum('pay_price')-$project->collects()->where('type','=',1)->sum('price'),2)}}￥</th>
                         </tr>
                         </tfoot>
                     </table>

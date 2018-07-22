@@ -59,6 +59,30 @@ class StockController extends Controller
     {
         $role = getRole('stock_buy_list');
         $db = Purchase::where('state','=',3);
+        $key = Input::get('searchType');
+        $search = Input::get('search');
+        if ($key){
+            switch ($key){
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $db->where('supplier','like','%'.$search.'%');
+                    break;
+                case 3:
+                    $projectId = Project::where('number','like','%'.$search.'%');
+                    $db->whereIn('project_id',$projectId);
+                    break;
+                case 4:
+                    $projectId = Project::where('name','like','%'.$search.'%');
+                    $db->whereIn('project_id',$projectId);
+                    break;
+                case 5:
+                    $projectId = Project::where('pm','like','%'.$search.'%');
+                    $db->whereIn('project_id',$projectId);
+                    break;
+            }
+        }
         if ($role=='any'){
             $idArr = getRoleProject('stock_buy_list');
             $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
@@ -83,19 +107,87 @@ class StockController extends Controller
     public function listReturnList()
     {
         $role = getRole('stock_return_list');
+        $search = Input::get('search');
+        $key = Input::get('searchType');
         if ($role=='all'){
-            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',2);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_return_list');
-            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',2);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+//            $id_arr = StockRecord::where('type','=',2)->pluck('id')->toArray();
+//            $lists = StockRecordList::whereIn('record_id',$id_arr)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
 
-        if (empty($lists)){
+        if (!empty($lists)){
             foreach ($lists as $list){
-                $list->material = $list->material()->first();
-                $list->record = $list->record()->first();
+                $list->material = Material::find($list->material_id);
+                $list->record = StockRecord::find($list->record_id);
             }
         }
 //        dd($lists);
@@ -112,7 +204,7 @@ class StockController extends Controller
             if ($key){
                 switch ($key){
                     case 1:
-                        $db->where('number','=',$search);
+                        $db->where('number','like','%'.$search.'%');
                         break;
                     case 2:
                         $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
@@ -148,7 +240,7 @@ class StockController extends Controller
             if ($key){
                 switch ($key){
                     case 1:
-                        $db->where('number','=',$search);
+                        $db->where('number','like','%'.$search.'%');
                         break;
                     case 2:
                         $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
@@ -189,18 +281,88 @@ class StockController extends Controller
     public function listOutList()
     {
         $role = getRole('stock_out_list');
+        $search = Input::get('search');
+        $key = Input::get('searchType');
         if ($role =='all'){
-            $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',4);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+//            $id_arr = StockRecord::where('type','=',4)->pluck('id')->toArray();
+//            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_get_list');
-            $id_arr = StockRecord::where('type','=',4)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $db = StockRecord::where('type','=',4)->whereIn('project_id',$idArr);
+            $DB = DB::table('stock_record_lists');
+            if ($key){
+                switch ($key){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $materail_id = Material::where('state','=',1)->where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                        if (!empty($materail_id)){
+                            $DB->whereIn('material_id',$materail_id);
+                        }
+                        break;
+                    case 3:
+                        $db->where('project_number','like','%'.$search.'%');
+                        break;
+                    case 4:
+                        $db->where('project_content','like','%'.$search.'%');
+                        break;
+                    case 5:
+//                        $project_id = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                        $db->where('project_manager','like','%'.$search.'%');
+                        break;
+                    case 6:
+                        $db->where('worker','like','%'.$search.'%');
+                        break;
+                    case 7:
+                        $db->where('warehouse','like','%'.$search.'%');
+                        break;
+                }
+
+            }
+            $id_arr = $db->pluck('id')->toArray();
+            $lists = $DB->WhereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+//            $id_arr = StockRecord::where('type','=',4)->whereIn('project_id',$idArr)->pluck('id')->toArray();
+//            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }
         if (!empty($lists)){
             foreach ($lists as $list){
-                $list->material = $list->material()->first();
-                $list->record = $list->record()->first();
+                $list->material = Material::find($list->material_id);
+                $list->record = StockRecord::find($list->record_id);
             }
         }
 

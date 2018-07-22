@@ -125,6 +125,11 @@
                                         <div class="name">@{{ props.item.material.name }}</div>
                                         <span class="addr">@{{ props.item.material.model }}</span>
                                     </template>
+                                    <template slot-scope="props" style="cursor: not-allowed;">
+                                        <div class="name">@{{ props.item.material.name }}</div>
+                                        <span class="addr">@{{ props.item.material.model }} @{{ props.item.material.factory }}</span>
+                                        <div class="addr name" :title="props.item.material.param">@{{ props.item.material.param }}</div>
+                                    </template>
                                 </el-autocomplete>
                             </div>
                         </div>

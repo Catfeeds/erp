@@ -13,6 +13,7 @@ use App\Providers\AuthServiceProvider;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 
@@ -127,7 +128,12 @@ class UserController extends Controller
     }
     public function listUsers()
     {
-        $users = User::where('state','=',1)->paginate(10);
+        $db = DB::table('users')->where('state','=',1);
+        $search = Input::get('search');
+        if ($search){
+            $db->where('name','like','%'.$search.'%');
+        }
+        $users = $db->paginate(10);
         return view('auth.list',['users'=>$users]);
     }
     public function createUserPage()

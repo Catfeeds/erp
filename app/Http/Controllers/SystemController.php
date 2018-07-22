@@ -160,17 +160,9 @@ class SystemController extends Controller
     public function listSupplierPage()
     {
         $name = Input::get('name');
-        $bank = Input::get('bank');
-        $account = Input::get('account');
         $DbObj = DB::table('suppliers');
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
-        }
-        if ($bank){
-            $DbObj->where('bank','like','%'.$bank.'%');
-        }
-        if ($account){
-            $DbObj->where('account','like','%'.$account.'%');
+            $DbObj->where('name','like','%'.$name.'%')->orWhere('bank','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('supplier.list',['suppliers'=>$data]);
@@ -358,13 +350,9 @@ class SystemController extends Controller
     public function listWarehousesPage()
     {
         $name = Input::get('name');
-        $admin = Input::get('admin');
         $DbObj = DB::table('warehouses');
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
-        }
-        if ($admin){
-            $DbObj->where('admin','like','%'.$admin.'%');
+            $DbObj->where('name','like','%'.$name.'%')->orWhere('admin','like','%'.$name.'%');
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
         return view('warehouse.list',['warehouses'=>$data]);
@@ -402,13 +390,9 @@ class SystemController extends Controller
     public function listBankAccountsPage()
     {
         $name = Input::get('name');
-        $account = Input::get('account');
         $DbObj = DB::table('bank_accounts');
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
-        }
-        if ($account){
-            $DbObj->where('account','like','%'.$account.'%');
+            $DbObj->where('name','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
         }
         $DbObj->where('state','=',1);
         $accounts = $DbObj->paginate(10);

@@ -9,6 +9,7 @@
             <div class="divider"> / </div>
             <div class="active section">物料采购比价</div>
         </div>
+        <div style="display: none" id="material">{{json_encode($material)}}</div>
 
         <!-- 操作 -->
         <h4 class="ui dividing header blue">录入基本信息</h4>

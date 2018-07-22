@@ -104,9 +104,10 @@
                                                  @select="handleSelectMaterial">
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>
-                                    <template slot-scope="props">
+                                    <template slot-scope="props" style="cursor: not-allowed;">
                                         <div class="name">@{{ props.item.name }}</div>
-                                        <span class="addr">@{{ props.item.model }}</span>
+                                        <span class="addr">@{{ props.item.model }} @{{ props.item.factory }}</span>
+                                        <div class="addr name" :title="props.item.param">@{{ props.item.param }}</div>
                                     </template>
                                 </el-autocomplete>
                             </div>

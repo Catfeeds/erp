@@ -25,7 +25,7 @@
             <form method="get" class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
-                        <input name="seartch-type" type="hidden">
+                        <input name="searchType" type="hidden">
                         <div class="text">请选中搜索内容</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
@@ -38,7 +38,7 @@
                             <div class="item" data-value="7">仓库</div>
                         </div>
                     </div>
-                    <input name="value" type="text" placeholder="搜索内容" value="">
+                    <input name="search" type="text" placeholder="搜索内容" value="">
                     <button class="ui button">搜索</button>
                 </div>
             </form>
