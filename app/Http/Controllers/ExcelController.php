@@ -847,6 +847,81 @@ class ExcelController extends Controller
         }
 
     }
+
+    public function importPurchase(Request $post)
+    {
+//        dd($post);
+//        return redirect()->back()->with('status','dadf');
+//        $project_id = $post->project_id;
+        $file = $post->file('file');
+        if ($file) {
+//            $this->excel->load($file,function ($reader){
+//               dd($reader->ignoreEmpty()->all());
+//            });
+//            DB::beginTransaction();
+
+            $purchaseData = [];
+
+            $this->excel->selectSheetsByIndex(0)->load($file,function ($sheet) use (&$purchaseData){
+//               dd($sheet);
+
+                $sheet->ignoreEmpty()->each(function ($data) use (&$purchaseData) {
+                    $origin = $data->toArray();
+//                        var_dump($origin);
+//                        dd($origin);
+//                        $origin = array_values($origin);
+//                        dd($origin);
+                    $item = [];
+                    if (!empty($origin)){
+                        if ($origin['物料名称']){
+//                            dd($origin);
+                            $material = Material::where('state','=',1)->
+                            where('name','=',$origin['物料名称'])->where('param','=',$origin['性能及技术参数'])->
+                            where('model','=',$origin['品牌型号'])->where('factory','=',$origin['生产厂家'])
+                                ->where('unit','=',$origin['单位'])->first();
+                            if (empty($material)){
+                                $material = new Material();
+                                $material->name = $origin['物料名称'];
+                                $material->param = $origin['性能及技术参数'];
+                                $material->model = $origin['品牌型号'];
+                                $material->factory = $origin['生产厂家'];
+                                $material->unit = $origin['单位'];
+                                $material->save();
+                            }
+                            $item['material_id'] = $material->id;
+                            $item['name'] = $material->name;
+                            $item['param'] = $material->param;
+                            $item['model'] = $material->model;
+                            $item['factory'] = $material->factory;
+                            $item['unit'] = $material->unit;
+                            $item['price'] = $origin['单价'];
+                            $item['number'] = $origin['数量'];
+                            $item['cost'] = $origin['金额'];
+//                            dd($item);
+                            array_push($purchaseData,$item);
+//                            dd($purchaseData);
+                        }
+
+                    }
+
+//                   var_dump($origin);
+                });
+
+            });
+//            dd($purchaseData);
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS',
+                'data'=>$purchaseData
+            ]);
+        }
+        return response()->json([
+            'code'=>'400',
+            'msg'=>'空文件!'
+        ]);
+
+    }
+
     public function exportBudget()
     {
         $id = Input::get('id');
