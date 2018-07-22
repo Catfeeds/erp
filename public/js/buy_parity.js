@@ -10,8 +10,6 @@
         },
         mounted() {
           $('#navbar').removeClass('invisible')
-            let materail = $('#material').text().trim()
-            this.materail = materail === '' ? [] : JSON.parse(materail)
         },
         methods: {}
       })
@@ -22,13 +20,7 @@
           dateOption: _schemas.datePickerOption,
           date: '',
           commodities: [],
-          currentMaterial: {
-            name: '',
-            parameter: '暂无数据',
-            model: '暂无数据',
-            unit: '暂无数据',
-            address: '暂无数据'
-          },
+          currentMaterial: {},
           currentMaterialName: "",
           throttle: {
             material_timer: null
@@ -37,6 +29,10 @@
         },
         mounted() {
           $('#buyParityForm').removeClass('invisible')
+            let materail = $('#material').text().trim()
+            this.materail = materail === '' ? [] : JSON.parse(materail)
+            this.currentMaterial = this.materail
+            this.currentMaterialName = this.materail.name
         },
         methods: {
 
