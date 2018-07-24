@@ -574,7 +574,7 @@ class PayController extends Controller
             $check = 'loan_project_submit_check';
             $pass = 'loan_project_submit_pass';
         }
-        dd($loan);
+//        dd($loan);
         return view('loan.single',['loan'=>$loan,'check'=>$check,'pass'=>$pass]);
     }
     public function createLoanPay(Request $post)
