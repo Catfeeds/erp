@@ -50,7 +50,7 @@ class StockController extends Controller
                 $stocks = Stock::whereIn('warehouse_id',$idArr)->orderBy('cost','DESC')->paginate(10);
             }
         }else{
-            $stocks = Stock::orderBy('cost','DESC')->paginate(3);
+            $stocks = Stock::orderBy('cost','DESC')->paginate(10);
         }
 
         return view('stock.list',['stocks'=>$stocks]);
