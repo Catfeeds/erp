@@ -323,6 +323,13 @@ class SystemController extends Controller
         if ($id){
             $warehouse = Warehouse::find($id);
         }else{
+            $count = Warehouse::where('name','=', $post->get('name'))->where('state','=',1)->count();
+            if ($count!=0){
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>'该仓库已存在！'
+                ]);
+            }
             $warehouse = new Warehouse();
         }
         $warehouse->name = $post->get('name');
