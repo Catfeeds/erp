@@ -30,7 +30,7 @@
             <!-- 分包合同收款 -->
             <div class="ui tab attached segment active collect-item" data-tab="tab-1">
                 <h3 class="ui header center aligned">分包合同收款</h3>
-                <form method="post">
+                <form method="post" novalidate="true">
                 <div class="ui form form-item">
                     <div class="ui three column doubling stackable grid">
                         <div class="column">
@@ -79,7 +79,7 @@
                             <div class="inline fields">
                                 <label class="four wide field">收款金额</label>
                                 <div class="twelve wide field icon input">
-                                    <input name="price" value="{{$collect->price}}" type="number" placeholder="请输入收款金额">
+                                    <input name="price" value="{{$collect->price}}"  type="number" placeholder="请输入收款金额">
                                     <i class="yen icon"></i>
                                 </div>
                             </div>

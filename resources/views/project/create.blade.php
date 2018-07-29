@@ -151,7 +151,7 @@
             <div class="ui form form-item">
                 <div class="ui five column doubling stackable grid">
                     <div class="one wide column form-thead">序号</div>
-                    <div class="four wide column form-thead">分包单位</div>
+                    <div class="four wide column form-thead">发包单位</div>
                     <div class="four wide column form-thead">分包金额</div>
                     <div class="six wide column form-thead">备注</div>
                     <div class="one wide column form-thead">操作</div>

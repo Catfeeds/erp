@@ -59,8 +59,8 @@
                                     <i class="el-icon-edit el-input__icon" slot="suffix">
                                     </i>
                                     <template slot-scope="props">
-                                        <div class="name" >@{{ props.item.number }}</div>
-                                        <span class="addr">@{{ props.item.pm }}</span>
+                                        <div class="name" :title="props.item.name">@{{ props.item.number }}</div>
+                                        <span class="addr" :title="props.item.name">@{{ props.item.pm }}</span>
                                     </template>
                                 </el-autocomplete>
                             </div>
