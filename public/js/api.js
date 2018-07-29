@@ -5,7 +5,7 @@
 
   // const url = 'http://119.23.202.220:8080'
   // const url = 'http://192.168.1.78/erp/public'
-  // const url = 'http://localhost/erp/public'
+  // const url = 'http://localhost/erp/public/'
   const url = 'http://'+window.location.host
    // const url = 'http://192.168.100.70'
 
@@ -203,6 +203,9 @@
         params: search
       })
     }
+      uploadMaterialBuy(data = {}) {
+          return this._http.post('/import/purchase', data)
+      }
   }
 
   class WarehouseManager {

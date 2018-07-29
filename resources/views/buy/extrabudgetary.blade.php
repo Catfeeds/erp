@@ -135,7 +135,13 @@
                 <div class="font-bold" style="white-space:nowrap;align-self:flex-end;margin-right:20px;">采购金额</div>
                 <div class="fake-input inline-center">@{{ amount.toLocaleString('en-US') || 0 }} ￥</div>
             </div>
-            <div class="flex-row flex-end margin-top-20">
+            <div class="flex-row flex-end margin-top-20 clearfix" style="justify-content: space-between">
+                <div style="width:30%;">
+                    <a class="ui button blue" href="#">导出物料清单标准格式</a>
+                    <label class="ui button positive">批量导入物料
+                        <input style="display:none;" type="file" @change="uploadMaterials($event)">
+                    </label>
+                </div>
                 <div style="width:40%;">
                     <div class="ui action input" style="width:100%;">
                         {{--<el-autocomplete popper-class="my-autocomplete" v-model="newMaterial.name" @input="materialInput" :fetch-suggestions="querySearchMaterial"--}}

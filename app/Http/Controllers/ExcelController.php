@@ -888,7 +888,7 @@ class ExcelController extends Controller
                                 $material->unit = $origin['单位'];
                                 $material->save();
                             }
-                            $item['material_id'] = $material->id;
+                            $item['id'] = $material->id;
                             $item['name'] = $material->name;
                             $item['param'] = $material->param;
                             $item['model'] = $material->model;
