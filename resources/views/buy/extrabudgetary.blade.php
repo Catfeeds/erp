@@ -137,7 +137,7 @@
             </div>
             <div class="flex-row flex-end margin-top-20 clearfix" style="justify-content: space-between">
                 <div style="width:30%;">
-                    <a class="ui button blue" href="{{url('excel/wuliao.xlsx')}}">导出物料清单标准格式</a>
+                    <a class="ui button blue" href="{{url('excel/wuliao.xlsxgit')}}">导出物料清单标准格式</a>
                     <label class="ui button positive">批量导入物料
                         <input style="display:none;" type="file" @change="uploadMaterials($event)">
                     </label>
