@@ -994,8 +994,8 @@ class ProjectController extends Controller
                             $list->number = $item['number'];
                             $list->need = $item['number'];
                             $list->cost = $item['number']*$item['price'];
-                            $list->warranty_date = $item['warranty_date'];
-                            $list->warranty_time = $item['warranty_time'];
+                            $list->warranty_date = isset($item['warranty_date'])?$item['warranty_date']:'';
+                            $list->warranty_time = isset($item['warranty_time'])?$item['warranty_time']:'';
                             $list->save();
                         }
 
@@ -1057,8 +1057,8 @@ class ProjectController extends Controller
                             $list->number = $item['number'];
                             $list->need = $item['number'];
                             $list->cost = $item['number']*$item['price'];
-                            $list->warranty_date = $item['warranty_date'];
-                            $list->warranty_time = $item['warranty_time'];
+                            $list->warranty_date = isset($item['warranty_date'])?$item['warranty_date']:'';
+                            $list->warranty_time = isset($item['warranty_time'])?$item['warranty_time']:'';
                             $list->save();
                         }
 

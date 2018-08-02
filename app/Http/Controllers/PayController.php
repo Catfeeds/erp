@@ -81,7 +81,7 @@ class PayController extends Controller
                 'msg'=>'当前状态不能付款！'
             ]);
         }
-        $apply->pay_date = $post->get('pay_date');
+        $apply->pay_date = $post->get('date');
         $apply->cash = $post->get('cash');
         $apply->transfer = $post->get('amount');
         $apply->other = $post->get('other');

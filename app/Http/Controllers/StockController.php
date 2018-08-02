@@ -854,6 +854,7 @@ class StockController extends Controller
         foreach ($lists as $list){
             $list->material = Material::find($list->material_id);
         }
+//        dd($lists);
         return view('stock.buy_add',['purchase'=>$purchase,'lists'=>$lists]);
     }
     public function budgetaryCheckPage()

@@ -431,27 +431,28 @@ class ExcelController extends Controller
                 $swap['d'] = date('Y-m-d',$data[$i]->finishTime);
                 $swap['e'] = $data[$i]->acceptance_date;
                 $swap['f'] = $data[$i]->deadline;
-                $swap['g'] = $data[$i]->situation()->sum('price');
-                $swap['h'] = $data[$i]->situation()->where('type','=',1)->sum('price');
-                $swap['i'] = $data[$i]->situation()->where('type','=',2)->sum('price');
-                $swap['j'] = $data[$i]->situation()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price');
-                $swap['k'] = number_format($data[$i]->situation()->where('type','=',1)->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price'));
-                $swap['l'] = number_format($data[$i]->situation()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price'));
-                $swap['m'] = $data[$i]->invoices()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price');
-                $swap['n'] = number_format($data[$i]->invoices()->sum('price'));
-                $swap['o'] = number_format($data[$i]->collects()->where('type','=',2)->sum('price'));
-                $swap['p'] = number_format($data[$i]->collects()->where('type','=',3)->sum('price'));
-                $swap['q'] = $data[$i]->stockRecords()->where('type','=',3)->sum('cost')+$data[$i]->requestPayments()->where('state','=',3)->sum('price')+$data[$i]->loanSubmits()->where('state','>',3)->sum('price')+$data[$i]->payApplies()->sum('price')-$data[$i]->stockRecords()->where('type','=',2)->sum('cost');
-                $swap['r'] = $data[$i]->stockRecords()->where('type','=',3)->sum('cost');
-                $swap['s'] = $data[$i]->requestPayments()->where('state','=',3)->sum('price');
-                $swap['t'] = $data[$i]->loanSubmits()->where('state','>',3)->sum('price');
-                $swap['u'] = $data[$i]->payApplies()->sum('price');
-                $swap['v'] = $data[$i]->stockRecords()->where('type','=',2)->sum('cost');
+                $swap['g'] = number_format($data[$i]->price,2);
+                $swap['h'] = number_format($data[$i]->situation()->sum('price'),2);
+                $swap['i'] = number_format($data[$i]->situation()->where('type','=',1)->sum('price'),2);
+                $swap['j'] = number_format($data[$i]->situation()->where('type','=',2)->sum('price'),2);
+                $swap['k'] = number_format($data[$i]->situation()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price'),2);
+                $swap['l'] = number_format($data[$i]->situation()->where('type','=',1)->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price'),2);
+                $swap['m'] = number_format($data[$i]->situation()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price'),2);
+                $swap['n'] = number_format($data[$i]->invoices()->sum('price')-$data[$i]->collects()->where('type','=',2)->sum('price')-$data[$i]->collects()->where('type','=',3)->sum('price'),2);
+                $swap['o'] = number_format($data[$i]->invoices()->sum('price'),2);
+                $swap['p'] = number_format($data[$i]->collects()->where('type','=',2)->sum('price'),2);
+                $swap['q'] = number_format($data[$i]->collects()->where('type','=',3)->sum('price'),2);
+                $swap['r'] = number_format($data[$i]->stockRecords()->where('type','=',3)->sum('cost')+$data[$i]->requestPayments()->where('state','=',3)->sum('price')+$data[$i]->loanSubmits()->where('state','>',3)->sum('price')+$data[$i]->payApplies()->sum('price')-$data[$i]->stockRecords()->where('type','=',2)->sum('cost'),2);
+                $swap['s'] = number_format($data[$i]->stockRecords()->where('type','=',3)->sum('cost'),2);
+                $swap['t'] = number_format($data[$i]->requestPayments()->where('state','=',3)->sum('price'),2);
+                $swap['u'] = number_format($data[$i]->loanSubmits()->where('state','>',3)->sum('price'),2);
+                $swap['v'] = number_format($data[$i]->payApplies()->sum('price'),2);
+                $swap['w'] = number_format($data[$i]->stockRecords()->where('type','=',2)->sum('cost'),2);
                 $all[$i] = $swap;
             }
         }
         $tr = [[
-            '项目号','项目内容','项目经理','约定完工日期','验收日期','保修截至日期','项目实际金额',
+            '项目号','项目内容','项目经理','约定完工日期','验收日期','保修截至日期','合同金额','项目实际金额',
             '主合同金额','分包合同金额','项目剩余未收款','主合同未收款','分包合同未收款','应收账款','已开票请款','主合同收款',
             '分包合同收款','已发生成本','领料成本','施工成本','报销项目成本	','费用其他成本','退料成本'
         ]];
