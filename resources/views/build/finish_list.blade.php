@@ -72,8 +72,8 @@
                     <td>{{$apply->team}}</td>
                     <td>{{$apply->manager}}</td>
                     <td>{{$apply->project_number}}</td>
-                    <td class="table-content" title="{{$apply->project_content}}">{{$apply->project_content}}</td>
-                    <td>{{$apply->project_manager}}</td>
+                    <td class="table-content" title="{{$apply->project_content}}">{{$apply->project->name}}</td>
+                    <td>{{$apply->project->pm}}</td>
                     <td>￥{{number_format($apply->price,2)}} </td>
                     <td>{{$apply->applier}}</td>
                     @if($apply->state<2)

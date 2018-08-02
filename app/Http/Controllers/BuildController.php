@@ -178,6 +178,11 @@ class BuildController extends Controller
             }
             $applies = $db->whereIn('project_number',$numberArr)->orderBy('id','DESC')->paginate(10);
         }
+        if (!empty($applies)){
+            foreach ($applies as $apply){
+                $apply->project = Project::where('number','=',$apply->project_number)->first();
+            }
+        }
         return view('build.finish_list',['applies'=>$applies]);
     }
     public function listPayPage()
