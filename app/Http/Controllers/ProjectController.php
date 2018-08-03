@@ -1000,12 +1000,14 @@ class ProjectController extends Controller
                         }
 
                     }
-                    foreach ($contracts as $item) {
-                        $contract = new PurchaseContract();
-                        $contract->purchase_id = $purchase->id;
-                        $contract->name = $item['name'];
-                        $contract->href = $item['href'];
-                        $contract->save();
+                    if ($contracts&&!empty($contracts)){
+                        foreach ($contracts as $item) {
+                            $contract = new PurchaseContract();
+                            $contract->purchase_id = $purchase->id;
+                            $contract->name = $item['name'];
+                            $contract->href = $item['href'];
+                            $contract->save();
+                        }
                     }
                     DB::commit();
                     return response()->json([
@@ -1063,12 +1065,14 @@ class ProjectController extends Controller
                         }
 
                     }
-                    foreach ($contracts as $item) {
-                        $contract = new PurchaseContract();
-                        $contract->purchase_id = $purchase->id;
-                        $contract->name = $item['name'];
-                        $contract->href = $item['href'];
-                        $contract->save();
+                    if ($contracts&&!empty($contracts)){
+                        foreach ($contracts as $item) {
+                            $contract = new PurchaseContract();
+                            $contract->purchase_id = $purchase->id;
+                            $contract->name = $item['name'];
+                            $contract->href = $item['href'];
+                            $contract->save();
+                        }
                     }
                     DB::commit();
                     return response()->json([
