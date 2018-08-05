@@ -853,6 +853,7 @@ class StockController extends Controller
         $lists = $purchase->lists()->get();
         foreach ($lists as $list){
             $list->material = Material::find($list->material_id);
+            $list->need_number = $list->need;
         }
 //        dd($lists);
         return view('stock.buy_add',['purchase'=>$purchase,'lists'=>$lists]);

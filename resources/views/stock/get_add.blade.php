@@ -124,6 +124,8 @@
                     </div>
                     <div class="column">
                         <button class="ui button positive" @click="addItem">添加</button>
+
+                        <button class="ui button blue" @click="addAll">全部添加</button>
                     </div>
                 </div>
                 <div class="ui three column doubling stackable grid">
@@ -214,7 +216,7 @@
                             <div class="fake-input">@{{ item.material && item.material.unit || '无'}}</div>
                         </div>
                         <div class="one wide column">
-                            <div class="fake-input">@{{ item && item.stock_number  || 0}}</div>
+                            <div class="fake-input">@{{  item.stock_number  || 0}}</div>
                         </div>
                         <div class="one wide column">
                             <div class="fake-input">@{{ item && item.price.toLocaleString('en-US') + ' ￥' || '无'}}</div>

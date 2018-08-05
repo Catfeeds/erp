@@ -56,7 +56,7 @@ class ExcelController extends Controller
     }
     public function exportSupplier()
     {
-        $data = Supplier::select(['name','bank','account'])->where('state','=',1)->get()->toArray();
+        $data = Supplier::select(['name','bank','account'])->where('state','=',1)->orderBy('id','DESC')->get()->toArray();
         //供应商名称	收款银行	收款账号
         $tr = [['供应商名称','收款银行','收款账号']];
         $data = array_merge($tr,$data);
@@ -71,7 +71,7 @@ class ExcelController extends Controller
     }
     public function exportMaterial()
     {
-        $data = Material::select(['name','param','model','factory','unit'])->where('state','=',1)->get()->toArray();
+        $data = Material::select(['name','param','model','factory','unit'])->where('state','=',1)->orderBy('id','DESC')->get()->toArray();
         //物料名称		品牌型号	生产厂家
         $tr = [['物料名称','性能与技术参数','品牌型号','生产厂家','单位']];
         $data = array_merge($tr,$data);
@@ -191,7 +191,7 @@ class ExcelController extends Controller
             'passer',
             'state',
             'FKNumber'
-        ])->get()->toArray();
+        ])->orderBy('id','DESC')->get()->toArray();
         for ($i=0;$i<count($lists);$i++){
             $lists[$i]['type'] = $lists[$i]['type']==2?'项目报销':'期间报销';
             if ($lists[$i]['project_id']!=0){
@@ -331,7 +331,7 @@ class ExcelController extends Controller
     }
     public function exportStockList()
     {
-        $stock = Stock::orderBy('cost','DESC')->get();
+        $stock = Stock::orderBy('cost','DESC')->orderBy('id','DESC')->get();
         $tr = [['物料名称','性能与技术参数','品牌型号','生产厂家','单位','库存数量','库存金额','平均单价','仓库']];
         $data = [];
         if (!empty($stock)){
@@ -472,9 +472,9 @@ class ExcelController extends Controller
         $role = getRole('budget_list');
         if ($role=='all'){
             if ($search){
-                $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->get();
             }else{
-                $projects = Project::orderBy('id','DESC')->paginate(10);
+                $projects = Project::orderBy('id','DESC')->get();
             }
         }else{
             $idArr = getRoleProject('budget_list');
@@ -482,7 +482,7 @@ class ExcelController extends Controller
             if ($search){
                 $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
             }
-            $projects = $db->orderBy('id','DESC')->paginate(10);
+            $projects = $db->orderBy('id','DESC')->get();
         }
         $data = [];
         if (!empty($projects)){
@@ -698,7 +698,7 @@ class ExcelController extends Controller
                 $swap['payments'] = $lists[$i]->price;
                 $swap['apply'] = $lists[$i]->applies()->where('state','>=',3)->sum('apply_price');
                 $swap['pay'] = $lists[$i]->applies()->where('state','=',4)->sum('apply_price');
-                $swap['need'] = $lists[$i]->applies()->where('state','>=',3)->sum('apply_price')-$lists[$i]->applies()->where('state','=',4)->sum('apply_price');
+                $swap['need'] = number_format($lists[$i]->payments()->where('state','>=',3)->sum('price')-$lists[$i]->applies()->where('state','=',4)->sum('apply_price'),2);
                 $data[$i] = $swap;
             }
         }
@@ -970,7 +970,7 @@ class ExcelController extends Controller
             $idArr = getRoleProject('buy_list');
             $db->whereIn('project_id',$idArr);
         }
-        $list = $db->get();
+        $list = $db->orderBy('id','DESC')->get();
         $tr = [[
             '采购编号','供货商','采购金额','项目编号','项目内容','项目经理','预算内/外','已收货','未收货',
             '已付款','应付账款','发票条件','已收票','未收票','项目状态'
@@ -1034,8 +1034,9 @@ class ExcelController extends Controller
                 $swap['project_manager'] = $project?$project->pm:'';
                 $swap['pay'] = number_format($list->payments()->sum('pay_price'));
                 $swap['need'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price');
+                $count = $list->payments()->where('state','=',2)->count();
                 $swap['payState'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清';
-                $swap['handle'] = $list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已处理':'待处理';
+                $swap['handle'] = $count==0?'':'待处理';
                 array_push($data,$swap);
             }
         }
@@ -1251,11 +1252,11 @@ class ExcelController extends Controller
         $role = getRole('stock_get_list');
         if ($role =='all'){
             $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }else{
             $idArr = getRoleProject('stock_get_list');
             $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
         }
         $tr = [[
             '领料编号	','出库仓库','物料名称	','性能与技术参数','型号','厂家','单位','库存均价','领料数量','领料金额','项目编号',
@@ -1349,11 +1350,11 @@ class ExcelController extends Controller
         $role = getRole('build_invoice_list');
         if ($role == 'all'){
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->get();
         }else{
             $idArr = getRoleProject('build_invoice_list');
             $id = RequestPayment::where('state','=',3)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->get();
+            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->get();
         }
 
         if (!empty($lists)){
@@ -1368,8 +1369,9 @@ class ExcelController extends Controller
                 $swap['request'] = $list->price;
                 $swap['pay'] = $list->pay_price;
                 $swap['need'] = $list->need_price;
-                $swap['invoice'] = $list->invoice_price;
-                $swap['need_invoice'] = $list->price-$list->invoice_price;
+                $swap['invoice'] = number_format($list->invoice_price,2);
+                $swap['need_invoice'] = number_format($list->payments()->where('state','>=',3)->sum('price')-$list->invoice_price,2);
+
                 array_push($data,$swap);
             }
         }

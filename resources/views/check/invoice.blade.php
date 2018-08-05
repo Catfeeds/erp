@@ -125,7 +125,7 @@
                         </div>
                         <div class="two wide column">
                             <div class="block ui icon input">
-                                <input v-model.number="item.without_tax" type="number" placeholder="请输入含税销售额">
+                                <input v-model.number="item.without_tax" type="number" placeholder="请输入不含税销售额">
                                 <i class="yen icon"></i>
                             </div>
                         </div>

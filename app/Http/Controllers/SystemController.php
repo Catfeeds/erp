@@ -707,6 +707,7 @@ class SystemController extends Controller
             $item->material = $item->material();
             $price = $item->number==0?0:$item->cost/$item->number;
             $item->price = sprintf('%.2f',$price);
+            $item->stock_number = $item->number;
         }
         return response()->json([
             'code'=>'200',

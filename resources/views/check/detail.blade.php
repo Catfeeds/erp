@@ -90,6 +90,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="column">
+                        <div class="inline fields">
+                            <label class="four wide field">备注</label>
+                            <div class="twelve wide field">
+                                <div class="fake-input">{{$project->remark}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /基本信息 -->

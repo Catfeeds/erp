@@ -137,6 +137,7 @@
                     </div>
                     <div class="column">
                         <button class="ui button positive" @click="addItem">添加</button>
+                        <button class="ui button blue" @click="addAll">全部添加</button>
                     </div>
                 </div>
             </div>
