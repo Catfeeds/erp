@@ -199,9 +199,13 @@ class PayController extends Controller
             }
 
         }
-
-
         $data = $DbObj->orderBy('id','DESC')->paginate(10);
+        if (!empty($data)){
+            foreach ($data as $datum){
+                $datum->project = Project::where('number','=',$datum->project_number)->first();
+            }
+        }
+//        dd($data);
         return view('pay.list',['lists'=>$data]);
     }
     //借款

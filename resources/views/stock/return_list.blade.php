@@ -81,8 +81,8 @@
                     <td>￥{{number_format($list->price,2)}} </td>
                     <td>￥{{number_format($list->cost,2)}} </td>
                     <td>{{$list->record->project_number}}</td>
-                    <td title="{{$list->record->project_content}}">{{$list->record->project_content}}</td>
-                    <td>{{$list->record->project_manager}}</td>
+                    <td title="{{$list->project->name}}">{{$list->project->name}}</td>
+                    <td>{{$list->project->pm}}</td>
                     <td>{{$list->record->worker}}</td>
                     <td>{{$list->record->warehouse}}</td>
                     <td>{{$list->record->returnee}}</td>

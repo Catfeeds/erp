@@ -58,6 +58,9 @@ class ExcelController extends Controller
     {
         $data = Supplier::select(['name','bank','account'])->where('state','=',1)->orderBy('id','DESC')->get()->toArray();
         //供应商名称	收款银行	收款账号
+        for ($i=0;$i<count($data);$i++){
+            $data[$i]['account'] = ' '.$data[$i]['account'];
+        }
         $tr = [['供应商名称','收款银行','收款账号']];
         $data = array_merge($tr,$data);
         $this->excel->create('supplier',function ($excel) use ($tr,$data){
@@ -104,8 +107,12 @@ class ExcelController extends Controller
     {
         $data = BankAccount::select(['name','account'])->where('state','=',1)->get()->toArray();
         //银行名称	收款账号
+        for ($i=0;$i<count($data);$i++){
+            $data[$i]['account'] = ' '.$data[$i]['account'];
+        }
         $tr = [['银行名称','收款账号']];
         $data = array_merge($tr,$data);
+//        dd($data);
         $this->excel->create('bank',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
@@ -1252,11 +1259,11 @@ class ExcelController extends Controller
         $role = getRole('stock_get_list');
         if ($role =='all'){
             $id_arr = StockRecord::where('type','=',3)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->get();
         }else{
             $idArr = getRoleProject('stock_get_list');
             $id_arr = StockRecord::where('type','=',3)->whereIn('project_id',$idArr)->pluck('id')->toArray();
-            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->paginate(10);
+            $lists = StockRecordList::whereIn('record_id',$id_arr)->orderBy('id','DESC')->get();
         }
         $tr = [[
             '领料编号	','出库仓库','物料名称	','性能与技术参数','型号','厂家','单位','库存均价','领料数量','领料金额','项目编号',
@@ -1367,8 +1374,8 @@ class ExcelController extends Controller
                 $swap['project_content'] = $list->project_content;
                 $swap['project_manager'] = $list->project_number;
                 $swap['request'] = $list->price;
-                $swap['pay'] = $list->pay_price;
-                $swap['need'] = $list->need_price;
+                $swap['pay'] = number_format($list->applies()->where('state','=',4)->sum('apply_price'),2);
+                $swap['need'] = number_format($list->payments()->where('state','>=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'),2);
                 $swap['invoice'] = number_format($list->invoice_price,2);
                 $swap['need_invoice'] = number_format($list->payments()->where('state','>=',3)->sum('price')-$list->invoice_price,2);
 

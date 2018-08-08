@@ -75,6 +75,7 @@ class BuildController extends Controller
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->invoice_price = $list->invoices()->sum('with_tax');
+                $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
         return view('build.list',['lists'=>$lists]);
@@ -101,6 +102,11 @@ class BuildController extends Controller
                     ->orWhere('manager','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
             }else{
                 $lists = ConstructionContract::orderBy('id','DESC')->paginate(10);
+            }
+        }
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
         return view('build.deal_list',['lists'=>$lists,'search'=>$search]);
@@ -236,7 +242,11 @@ class BuildController extends Controller
             $id = $db->pluck('project_team')->toArray();
             $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
         }
-
+        if (!empty($lists)){
+            foreach ($lists as $list){
+                $list->project = Project::where('number','=',$list->project_number)->first();
+            }
+        }
         return view('build.pay_list',['lists'=>$lists]);
     }
     public function listGetPage()
@@ -294,6 +304,7 @@ class BuildController extends Controller
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->invoice_price = $list->invoices()->sum('with_tax');
+                $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
         return view('build.get_list',['lists'=>$lists]);

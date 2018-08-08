@@ -188,6 +188,7 @@ class StockController extends Controller
             foreach ($lists as $list){
                 $list->material = Material::find($list->material_id);
                 $list->record = StockRecord::find($list->record_id);
+                $list->project = Project::where('number','=',$list->record->project_number)->first();
             }
         }
 //        dd($lists);
@@ -274,6 +275,7 @@ class StockController extends Controller
             foreach ($lists as $list){
                 $list->material = Material::find($list->material_id);
                 $list->record = StockRecord::find($list->record_id);
+                $list->project = Project::where('number','=',$list->record->project_number)->first();
             }
         }
         return view('stock.get_list',['lists'=>$lists]);
