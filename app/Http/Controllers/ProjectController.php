@@ -317,9 +317,9 @@ class ProjectController extends Controller
                             $lis->situation_id = $situ->id;
 //                        }
 //                        $type = ProjectType::find($list['name']);
-                        $type =ProjectType::find($list['tax']);
+//                        $types =ProjectType::find($list['name']);
                         $lis->name = $list['name'];
-                        $lis->tax = $type->rate;
+                        $lis->tax = $list['tax'];
                         $lis->price = $list['price'];
                         if (isset($list['remark'])){
                             $lis->remark = $list['remark'];
@@ -968,7 +968,9 @@ class ProjectController extends Controller
                     }
                     $purchase->lists()->delete();
                     $purchase->contracts()->delete();
+                    $i = 0;
                     foreach ($lists as $item){
+                        $i = $i+1;
 //                        if ($item['id']){
 //                            $list = PurchaseList::find($item['id']);
 ////                            if ($list)
@@ -1016,7 +1018,8 @@ class ProjectController extends Controller
                         'msg'=>'SUCCESS',
                         'data'=>[
                             'id'=>$purchase->id,
-                            'type'=>$purchase->type
+                            'type'=>$purchase->type,
+                            'd'=>$i
                         ]
                     ]);
                 }
