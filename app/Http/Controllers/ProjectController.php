@@ -969,6 +969,7 @@ class ProjectController extends Controller
                     $purchase->lists()->delete();
                     $purchase->contracts()->delete();
                     $i = 0;
+                    dd($lists);
                     foreach ($lists as $item){
                         $i = $i+1;
 //                        if ($item['id']){
