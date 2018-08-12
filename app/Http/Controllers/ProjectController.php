@@ -926,6 +926,7 @@ class ProjectController extends Controller
 //        dd($project_id);
         $basic = $post->get('info');
         $lists = $post->get('lists');
+        dd($lists);
         $contracts = $post->get('contracts');
         DB::beginTransaction();
         try{
