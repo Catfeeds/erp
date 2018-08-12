@@ -926,7 +926,7 @@ class ProjectController extends Controller
 //        dd($project_id);
         $basic = $post->get('info');
         $lists = $post->get('lists');
-        dd($lists);
+//        dd($lists);
         $contracts = $post->get('contracts');
         DB::beginTransaction();
         try{
@@ -969,10 +969,8 @@ class ProjectController extends Controller
                     }
                     $purchase->lists()->delete();
                     $purchase->contracts()->delete();
-                    $i = 0;
-                    dd($lists);
+//                    dd($lists);
                     foreach ($lists as $item){
-                        $i = $i+1;
 //                        if ($item['id']){
 //                            $list = PurchaseList::find($item['id']);
 ////                            if ($list)
@@ -1020,8 +1018,7 @@ class ProjectController extends Controller
                         'msg'=>'SUCCESS',
                         'data'=>[
                             'id'=>$purchase->id,
-                            'type'=>$purchase->type,
-                            'd'=>$i
+                            'type'=>$purchase->type
                         ]
                     ]);
                 }
