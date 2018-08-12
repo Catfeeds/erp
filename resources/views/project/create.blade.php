@@ -237,7 +237,7 @@
                                     {{--</el-select>--}}
                                 {{--</div>--}}
                                 <div class="two wide column">
-                                    <div class="fake-input">@{{ TaxIDMap[subItem.id]?TaxIDMap[subItem.id] + '%':'暂无'}}</div>
+                                    <div class="fake-input">@{{ TaxIDMap[subItem.name]?TaxIDMap[subItem.name] + '%':'暂无'}}</div>
                                 </div>
                                 <div class="two wide column">
                                     <div class="block ui icon input">
