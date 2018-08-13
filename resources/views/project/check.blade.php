@@ -176,7 +176,7 @@
                             <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} ￥</td>
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
-                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{\App\Models\ProjectType::find($situations[$i]->lists[$j]->tax)->rate}}%</td>
                                     <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                             </tr>
@@ -186,7 +186,7 @@
 
                                 <tr>
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
-                                    <td>{{$situations[$i]->lists[$j]->tax}}%</td>
+                                    <td>{{\App\Models\ProjectType::find($situations[$i]->lists[$j]->tax)->rate}}%</td>
                                     <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
