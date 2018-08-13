@@ -317,10 +317,10 @@ class ProjectController extends Controller
                             $lis->situation_id = $situ->id;
 //                        }
 //                        $type = ProjectType::find($list['name']);
-                        $type =ProjectType::find($list['tax']);
+//                        $type =ProjectType::find($list['tax']);
                         $lis->name = $list['name'];
-//                        $lis->tax = $list['tax'];
-                        $lis->tax = $type->rate;
+                        $lis->tax = $list['tax'];
+//                      /  $lis->tax = $type->rate;
                         $lis->price = $list['price'];
                         if (isset($list['remark'])){
                             $lis->remark = $list['remark'];
