@@ -77,7 +77,7 @@
                 <tr>
                     <td>{{$i+1}}</td>
                     <td>{{$lists[$i]->date}}</td>
-                    <td>{{number_format($lists[$i]->price)}} ￥</td>
+                    <td>{{number_format($lists[$i]->price,2)}} ￥</td>
                     <td>{{\App\User::find($lists[$i]->apply_id)->username}}</td>
                     <td>{{$lists[$i]->check==0?'':\App\User::find($lists[$i]->check)->name}}</td>
                     @if($lists[$i]->worker_id==0)
