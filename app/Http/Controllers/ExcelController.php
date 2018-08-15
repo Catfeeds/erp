@@ -272,12 +272,48 @@ class ExcelController extends Controller
             $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
+            $swap4 = [];
+            $swap1 = LoanList::where('borrower','=',$name)->where('state','=',3)->where('apply_date','<',$s)->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
+            if (!empty($swap1)){
+                array_push($swap4,$swap1[0]);
+            }
+            $swap2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
+            if (!empty($swap2)){
+                array_push($swap4,$swap2[0]);
+            }
+            $swap3 = LoanPay::where('applier','=',$name)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->orderBy('id','DESC')->get()->toArray();
+            if (!empty($swap3)){
+                array_push($swap4,$swap3[0]);
+            }
+//            $swap4 = [$swap1,$swap2,$swap3];
+//            dd($swap4);
+            if (!empty($swap4)){
+                array_multisort(array_column($swap4,'created_at'),SORT_ASC,$swap4);
+            }
+//            dd($swap4);
+            $startK = !empty($swap4)?$swap4[0]['loanBalance']:0;
+            $loanStart = !empty($swap4)?$swap4[0]['submitBalance']:0;
             array_multisort(array_column($lists,'created_at'),SORT_ASC,$lists);
 //            dd($lists);
         }
         $nTr = [['人员名称',$name,'开始日期',$s,'结束日期',$e]];
         $tr = [['日期','借款编号','借款金额','报销编号','报销金额	','付款编号','付款金额','其中：抵扣借款','其中：现金付款','其中：银行转账','未支付报销余额','借款余额']];
         $tr = array_merge($nTr,$tr);
+        $start = [[
+            'date'=>'期初',
+            'JKNumber'=>'',
+            'JKPrice'=>'',
+            'BXNumber'=>'',
+            'BXPrice'=>'',
+            'FKNumber'=>'',
+            'FKPrice'=>'',
+            'deduction'=>'',
+            'cash'=>'',
+            'transfer'=>'',
+            'submitBalance'=>number_format($loanStart,2),
+            'loanBalance'=>number_format($startK,2)
+        ]];
+        $tr = array_merge($tr,$start);
         if (!empty($lists)){
             for ($i=0;$i<count($lists);$i++){
                 if (strstr($lists[$i]['number'],'BXFK')){
@@ -288,17 +324,17 @@ class ExcelController extends Controller
                     $swap['BXNumber'] = '';
                     $swap['BXPrice'] = '';
                     $swap['FKNumber'] = $lists[$i]['number'];
-                    $swap['FKPrice'] = $lists[$i]['price'];
-                    $swap['deduction'] = $lists[$i]['deduction'];
-                    $swap['cash'] = $lists[$i]['cash'];
-                    $swap['transfer'] = $lists[$i]['transfer'];
-                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
-                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                    $swap['FKPrice'] = number_format($lists[$i]['price'],2);
+                    $swap['deduction'] = number_format($lists[$i]['deduction'],2);
+                    $swap['cash'] = number_format($lists[$i]['cash'],2);
+                    $swap['transfer'] = number_format($lists[$i]['transfer'],2);
+                    $swap['submitBalance'] = number_format($lists[$i]['submitBalance'],2);
+                    $swap['loanBalance'] = number_format($lists[$i]['loanBalance'],2);
                 }elseif (strstr($lists[$i]['number'],'JK')) {
                     $swap = [];
                     $swap['date'] = $lists[$i]['date'];
                     $swap['JKNumber'] = $lists[$i]['number'];
-                    $swap['JKPrice'] = $lists[$i]['price'];
+                    $swap['JKPrice'] = number_format($lists[$i]['price'],2);
                     $swap['BXNumber'] = '';
                     $swap['BXPrice'] = '';
                     $swap['FKNumber'] = '';
@@ -306,30 +342,32 @@ class ExcelController extends Controller
                     $swap['deduction'] = '';
                     $swap['cash'] = '';
                     $swap['transfer'] = '';
-                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
-                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                    $swap['submitBalance'] = number_format($lists[$i]['submitBalance'],2);
+                    $swap['loanBalance'] = number_format($lists[$i]['loanBalance'],2);
                 }else{
                     $swap = [];
                     $swap['date'] = $lists[$i]['date'];
                     $swap['JKNumber'] = '';
                     $swap['JKPrice'] = '';
                     $swap['BXNumber'] = $lists[$i]['number'];
-                    $swap['BXPrice'] = $lists[$i]['price'];
+                    $swap['BXPrice'] = number_format($lists[$i]['price'],2);
                     $swap['FKNumber'] = '';
                     $swap['FKPrice'] = '';
                     $swap['deduction'] = '';
                     $swap['cash'] = '';
                     $swap['transfer'] = '';
-                    $swap['submitBalance'] = $lists[$i]['submitBalance'];
-                    $swap['loanBalance'] = $lists[$i]['loanBalance'];
+                    $swap['submitBalance'] = number_format($lists[$i]['submitBalance'],2);
+                    $swap['loanBalance'] = number_format($lists[$i]['loanBalance'],2);
                 }
                 $lists[$i] = $swap;
             }
         }
         $data = array_merge($tr,$lists);
+       // dd($data);
         $this->excel->create('报销明细清单',function ($excel) use ($tr,$data){
             $excel->sheet('sheet1',function ($sheet) use ($data){
                 $count = count($data);
+                //dd($count);
                 for ($j=0;$j<$count;$j++){
                     $sheet->row($j+1,$data[$j]);
                 }

@@ -228,9 +228,9 @@ class LoanController extends Controller
             $start = 0;
             $loanStart = 0;
         }else{
-            $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
+            $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('created_at',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('created_at',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list3 = LoanPay::where('applier','=',$name)->whereBetween('created_at',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
             $swap4 = [];
