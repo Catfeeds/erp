@@ -267,21 +267,21 @@ class ExcelController extends Controller
         if (!$name||!$s){
             $lists = [];
         }else{
-            $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('apply_date',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
-            $list3 = LoanPay::where('applier','=',$name)->whereBetween('date',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
+            $list1 = LoanList::where('borrower','=',$name)->where('state','=',3)->whereBetween('created_at',[$s,$e])->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->whereBetween('created_at',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','created_at'])->get()->toArray();
+            $list3 = LoanPay::where('applier','=',$name)->whereBetween('created_at',[$s,$e])->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->get()->toArray();
             $swap = array_merge($list1,$list2);
             $lists = array_merge($swap,$list3);
             $swap4 = [];
-            $swap1 = LoanList::where('borrower','=',$name)->where('state','=',3)->where('apply_date','<',$s)->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
+            $swap1 = LoanList::where('borrower','=',$name)->where('state','=',3)->where('created_at','<',$s)->select(['number','price','apply_date as date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
             if (!empty($swap1)){
                 array_push($swap4,$swap1[0]);
             }
-            $swap2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
+            $swap2 = LoanSubmit::where('loan_user','=',$name)->where('state','>=',3)->where('created_at','<',$s)->select(['number','price','date','loanBalance','submitBalance','created_at'])->orderBy('id','DESC')->get()->toArray();
             if (!empty($swap2)){
                 array_push($swap4,$swap2[0]);
             }
-            $swap3 = LoanPay::where('applier','=',$name)->where('date','<',$s)->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->orderBy('id','DESC')->get()->toArray();
+            $swap3 = LoanPay::where('applier','=',$name)->where('created_at','<',$s)->select(['number','price','date','loanBalance','submitBalance','cash','transfer','deduction','created_at'])->orderBy('id','DESC')->get()->toArray();
             if (!empty($swap3)){
                 array_push($swap4,$swap3[0]);
             }
