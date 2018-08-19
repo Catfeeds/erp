@@ -3,10 +3,7 @@
     typeof define === 'function' && define.amd ? define(factory) : (global._http = factory())
 }(window, function () {
 
-  // const url = 'http://119.23.202.220:8080'
-  // const url = 'http://192.168.1.78/erp/public'
-  // const url = 'http://localhost/erp/public/'
-  const url = 'http://'+window.location.host
+  const url = 'http://localhost/erp/public/'
 
   class ProjectManager {
     constructor() {
@@ -202,9 +199,10 @@
         params: search
       })
     }
-      uploadMaterialBuy(data = {}) {
-          return this._http.post('/import/purchase', data)
-      }
+
+    uploadMaterialBuy(data = {}) {
+      return this._http.post('/import/purchase', data)
+    }
   }
 
   class WarehouseManager {
@@ -522,6 +520,11 @@
       return this._http.post(`/pay/add`, data, this.dataMethodDefaults)
     }
 
+    //申请付款
+    createNewPayAdd(data = {}) {
+      return this._http.post(`/new/pay/add`, data, this.dataMethodDefaults)
+    }
+
     //撤销申请
     calcelPay(data) {
       return this._http.get(`/pay/cancel`, {
@@ -541,6 +544,12 @@
       return this._http.post(`/pay/pay`, data, this.dataMethodDefaults)
     }
 
+    
+    // 付款
+    createNewPayPay(data = {}) {
+      return this._http.post(`/new/pay/pay`, data, this.dataMethodDefaults)
+    }
+
     //选择审批人
     selectPay(data = {}) {
       return this._http.post(`/pay/select`, data, this.dataMethodDefaults)
@@ -549,6 +558,29 @@
     //删除付费类型
     deleteCategory(data = {}) {
       return this._http.get(`/del/category`, {
+        params: data
+      })
+    }
+
+    //删除费用付款
+    deleteFeePay(data = {}) {
+      return this._http.get(`/del/pay/type`, {
+        params: data
+      })
+    }
+
+    createFeePay(data = {}) {
+      return this._http.post(`/add/pay/type`, data, this.dataMethodDefaults)
+    }
+
+    searchFeePay(data = {}){
+      return this._http.get(`/pay/types`, {
+        params: data
+      })
+    }
+
+    searchFeePayDetail(data = {}){
+      return this._http.get(`/pay/types/detail`, {
         params: data
       })
     }
@@ -711,15 +743,15 @@
       })
     }
 
-    deleteBuy(data = {}){
+    deleteBuy(data = {}) {
       return this._http.get(`/del/purchase`, {
         params: data
       })
     }
 
-      createPaySingle(data = {}) {
-          return this._http.post(`/purchase/cheque`, data, this.dataMethodDefaults)
-      }
+    createPaySingle(data = {}) {
+      return this._http.post(`/purchase/cheque`, data, this.dataMethodDefaults)
+    }
   }
 
 

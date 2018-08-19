@@ -320,5 +320,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/confirm','PayController@confirmApply');
     Route::post('pay/select','PayController@selectApprover');
 //    Route::get('pay/print','PayController@printPay');
-
+    Route::post('add/pay/type','CostController@addPayType');
+    Route::get('add/pay/type','CostController@addPayTypePage');
+    Route::get('pay/type/list','CostController@listPayTypePage');
+    Route::get('del/pay/type','CostController@delPayType');
 });
