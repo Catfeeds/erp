@@ -67,4 +67,14 @@ class CostController extends Controller
         ]);
     }
 
+    public function addPayPage()
+    {
+        $id = Input::get('id');
+        if ($id){
+
+        }else{
+            return view('cost.add');
+        }
+    }
+
 }

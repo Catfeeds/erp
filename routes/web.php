@@ -324,4 +324,5 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('add/pay/type','CostController@addPayTypePage');
     Route::get('pay/type/list','CostController@listPayTypePage');
     Route::get('del/pay/type','CostController@delPayType');
+    Route::get('new/pay/add','CostController@addPayPage');
 });
