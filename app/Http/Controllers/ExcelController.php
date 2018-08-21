@@ -288,7 +288,7 @@ class ExcelController extends Controller
 //            $swap4 = [$swap1,$swap2,$swap3];
 //            dd($swap4);
             if (!empty($swap4)){
-                array_multisort(array_column($swap4,'created_at'),SORT_ASC,$swap4);
+                array_multisort(array_column($swap4,'created_at'),SORT_DESC,$swap4);
             }
 //            dd($swap4);
             $startK = !empty($swap4)?$swap4[0]['loanBalance']:0;

@@ -161,7 +161,7 @@
               const searchKey = {
                 name: queryString,
               }
-              _http.ProjectManager.searchProject(searchKey)
+              _http.SupplierManager.searchSuppliers(searchKey)
                 .then(res => {
                   if (res.data.code === '200') {
                     cb(res.data.data)
@@ -185,6 +185,7 @@
           handleSelectPayee(item) {
             this.currentSupplier = item
             this.payForm.supplier_id = item.id
+            this.payForm.payee = item.name 
           },
 
           

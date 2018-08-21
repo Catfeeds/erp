@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <div class="active section">编辑费用付款类型</div>
         </div>
-        <div style="display: none" id="editData"></div>
+        <div id="editData" style="display:none">{{empty($editData)?'':json_encode($editData)}}</div>
         <h1 class="ui header blue aligned center">编辑费用付款类型</h1>
         <div id="dataPaymentAdd" class="invisible">
             <h4 class="ui dividing header blue">信息录入</h4>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\PayType;
 use App\PayTypeDetail;
 use Illuminate\Http\Request;
@@ -15,9 +16,15 @@ class CostController extends Controller
         $id = Input::get('id');
         if ($id){
             $type = PayType::find($id);
-            $details = PayTypeDetail::where('type_id','=',$type->id)->where('state','=',1)->get();
+            $details = PayTypeDetail::where('type_id','=',$type->id)->where('state','=',1)->pluck('title')->toArray();
+            $data = [
+                'id'=>$type->id,
+                'title'=>$type->title,
+                'details'=>$details
+            ];
+            return view('cost.type_add',['editData'=>$data]);
         }else{
-            return view('cost.type_add');
+            return view('cost.type_add',['editData'=>[]]);
         }
     }
     public function addPayType(Request $post)
@@ -63,18 +70,48 @@ class CostController extends Controller
         $type->save();
         return response()->json([
             'code'=>'200',
-            'msg'=>'SICCESS'
+            'msg'=>'SUCCESS'
         ]);
     }
 
     public function addPayPage()
     {
         $id = Input::get('id');
+        $types = Invoice::where('state','=',1)->get();
         if ($id){
-
         }else{
-            return view('cost.add');
+            return view('cost.add',['types'=>$types]);
         }
     }
-
+    public function addPay(Request $post)
+    {
+        $id = $post->id?$post->id:0;
+    }
+    public function searchPayTypes()
+    {
+        $title = Input::get('title');
+        $types = PayType::where('title','like','%'.$title.'%')->where('state','=',1)->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$types
+        ]);
+    }
+    public function searchPayDetails()
+    {
+        $id = Input::get('id');
+        if (!$id){
+            return response()->json([
+                'msg'=>'ID不能为空！',
+                'code'=>'400'
+            ]);
+        }
+        $title = Input::get('title');
+        $details = PayTypeDetail::where('type_id','=',$id)->where('title','like','%'.$title.'%')->select(['id','title'])->get();
+        return response()->json([
+            'code'=>'200',
+            'msg'=>'SUCCESS',
+            'data'=>$details
+        ]);
+    }
 }
