@@ -15,6 +15,7 @@ class CreateCostsTable extends Migration
     {
         Schema::create('costs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number');
             $table->unsignedInteger('project_id')->default(0);
             $table->string('apply_date')->nullable();
             $table->string('apply_price',18,2)->default(0);
@@ -25,6 +26,10 @@ class CreateCostsTable extends Migration
             $table->string('remark')->nullable();
             $table->tinyInteger('type')->default(1);
             $table->unsignedInteger('invoice_type')->default(0);
+            $table->string('proposer')->nullable();
+            $table->unsignedInteger('proposer_id')->default(0);
+            $table->string('approver')->nullable();
+            $table->unsignedInteger('approver_id')->default(0);
             $table->timestamps();
         });
     }

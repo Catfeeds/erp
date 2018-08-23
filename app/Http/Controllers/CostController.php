@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Cost;
+use App\CostPicture;
 use App\Models\Invoice;
+use App\Models\Project;
 use App\PayType;
 use App\PayTypeDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class CostController extends Controller
@@ -86,6 +91,45 @@ class CostController extends Controller
     public function addPay(Request $post)
     {
         $id = $post->id?$post->id:0;
+        $count = Cost::whereDate('created_at', date('Y-m-d',time()))->count();
+        if($id){
+            $cost = Cost::find($id);
+        }else{
+            $cost = new Cost();
+            $cost->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
+        }
+        $cost->project_id = $post->project_id?$post->project_id:0;
+        $cost->apply_date = $post->apply_date?$post->apply_date:'';
+        $cost->apply_price = $post->apply_price?$post->apply_price:0;
+        $cost->supplier_id = $post->supplier_id?$post->supplier_id:0;
+        $cost->pay_type = $post->pay_type?$post->pay_type:0;
+        $cost->pay_detail = $post->pay_detail?$post->pay_detail:0;
+        $cost->application = $post->application?$post->application:'';
+        $cost->remark = $post->remark?$post->remark:'';
+        $cost->type = $post->type?$post->type:0;
+        $cost->invoice_type = $post->invoice_type?$post->invoice_type:0;
+        $cost->proposer_id = Auth::id();
+        $cost->proposer = Auth::user()->name;
+        if ($cost->save()){
+            $pictures = $post->pictures;
+            if (!empty($pictures)){
+                CostPicture::where('request_id','=',$cost->id)->delete();
+                foreach ($pictures as $picture){
+                    $costPicture = new CostPicture();
+                    $costPicture->request_id = $cost->id;
+                    $costPicture->name = $picture['name'];
+                    $costPicture->url = $picture['url'];
+                    $costPicture->save();
+                }
+            }
+            return response()->json([
+                'msg'=>'SUCCESS',
+                'code'=>'200',
+                'data'=>[
+                    'id'=>$cost->id
+                ]
+            ]);
+        }
     }
     public function searchPayTypes()
     {
@@ -113,5 +157,35 @@ class CostController extends Controller
             'msg'=>'SUCCESS',
             'data'=>$details
         ]);
+    }
+    public function listPayPage()
+    {
+        $searchType = Input::get('search-type');
+        $searchValue = Input::get('value');
+        $db = DB::table('costs');
+        if ($searchType){
+            switch ($searchType){
+                case 1:
+                    $db->where('number','like','%'.$searchValue.'%');
+                    break;
+                case 2:
+                    $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$projectId);
+                    break;
+                case 3:
+                    $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$projectId);
+                    break;
+                case 4:
+                    $db->where('proposer','like','%'.$searchValue.'%');
+                    break;
+                case 5:
+                    $db->where('approver','like','%'.$searchValue.'%');
+                    break;
+            }
+        }
+        $data = $db->orderBy('id','DESC')->paginate(10);
+//        dd($data);
+        return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data]);
     }
 }

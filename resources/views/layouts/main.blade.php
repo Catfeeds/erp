@@ -225,6 +225,9 @@
             <el-menu-item index="dataPayment">
                 <a href="{{url('category/list')}}">报销费用类型</a>
             </el-menu-item>
+            <el-menu-item index="dataFeePayment">
+                <a href="{{url('pay/type/list')}}">费用类型</a>
+            </el-menu-item>
         </el-submenu>
     </el-menu>
 </div>

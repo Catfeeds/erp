@@ -12,7 +12,7 @@
 
         <!-- 操作区域 -->
         <div class="content-operation">
-            <a class="ui primary button" href="javascript:_helper.fullWindow('../data/fee_payment_add.html')">
+            <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('add/pay/type')}}')">
                 <i class="icon plus"></i>
                 <span>新增类别</span>
             </a>
@@ -37,7 +37,7 @@
                     <td>{{$types[$i]->title}}</td>
                     <td style="max-width:600px;">{{$types[$i]->details}}</td>
                     <td style="white-space:nowrap">
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('../data/fee_payment_add.html?id=1')">录入事项</a>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('add/pay/type')}}?id={{$types[$i]->id}}')">录入事项</a>
                         <button class="ui mini button negative dataPaymentDelete" data-id="{{$types[$i]->id}}">删除</button>
                     </td>
                 </tr>
