@@ -223,7 +223,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{$projects->links()}}
+            {{$projects->appends(['search'=>$search])->links()}}
         </div>
         <!-- / 表格循环 -->
 

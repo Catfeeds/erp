@@ -78,7 +78,7 @@ class BuildController extends Controller
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.list',['lists'=>$lists]);
+        return view('build.list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function addDealPage()
     {
@@ -189,7 +189,7 @@ class BuildController extends Controller
                 $apply->project = Project::where('number','=',$apply->project_number)->first();
             }
         }
-        return view('build.finish_list',['applies'=>$applies]);
+        return view('build.finish_list',['applies'=>$applies,'searchType'=>$key,'search'=>$search]);
     }
     public function listPayPage()
     {
@@ -247,7 +247,7 @@ class BuildController extends Controller
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.pay_list',['lists'=>$lists]);
+        return view('build.pay_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function listGetPage()
     {
@@ -307,7 +307,7 @@ class BuildController extends Controller
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.get_list',['lists'=>$lists]);
+        return view('build.get_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function finishSinglePage()
     {

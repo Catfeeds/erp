@@ -206,7 +206,7 @@ class PayController extends Controller
             }
         }
 //        dd($data);
-        return view('pay.list',['lists'=>$data]);
+        return view('pay.list',['lists'=>$data,'search'=>$search]);
     }
     //借款
     public function createLoanApply(Request $post)
@@ -408,7 +408,7 @@ class PayController extends Controller
             $lists = LoanSubmit::orderBy('id','DESC')->paginate(10);
         }
 
-        return view('loan.submit_list',['lists'=>$lists]);
+        return view('loan.submit_list',['lists'=>$lists,'search'=>$search]);
     }
     public function createSubmitList(Request $post)
     {
@@ -564,7 +564,7 @@ class PayController extends Controller
             $list->BXNumber = implode(',',$list->BXNumber);
         }
 //        dd($lists);
-        return view('loan.pay_list',['lists'=>$lists]);
+        return view('loan.pay_list',['lists'=>$lists,'search'=>$search]);
     }
     public function loanSubmitSingle()
     {

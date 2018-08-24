@@ -77,7 +77,7 @@
                 </tbody>
             </table>
         </div>
-        {{$projects->links()}}
+        {{$projects->appends(['search'=>$search])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

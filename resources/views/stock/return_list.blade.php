@@ -91,7 +91,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->links()}}
+        {{$lists->appends(['searchType'=>$searchType,'search'=>$search])->links()}}
     </div>
 @endsection
 @section('pageJs')

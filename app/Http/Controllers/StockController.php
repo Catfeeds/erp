@@ -53,7 +53,7 @@ class StockController extends Controller
             $stocks = Stock::orderBy('cost','DESC')->orderBy('id','DESC')->paginate(10);
         }
 
-        return view('stock.list',['stocks'=>$stocks]);
+        return view('stock.list',['stocks'=>$stocks,'seartch-type'=>$seartch_type,'value'=>$search]);
     }
     public function listBuyList()
     {
@@ -102,7 +102,7 @@ class StockController extends Controller
                 $list->need = $need;
             }
         }
-        return view('stock.buy_list',['lists'=>$lists]);
+        return view('stock.buy_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function listReturnList()
     {
@@ -192,7 +192,7 @@ class StockController extends Controller
             }
         }
 //        dd($lists);
-        return view('stock.return_list',['lists'=>$lists]);
+        return view('stock.return_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function listGetList()
     {
@@ -278,7 +278,7 @@ class StockController extends Controller
                 $list->project = Project::where('number','=',$list->record->project_number)->first();
             }
         }
-        return view('stock.get_list',['lists'=>$lists]);
+        return view('stock.get_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function listOutList()
     {
@@ -369,7 +369,7 @@ class StockController extends Controller
         }
 
 
-        return view('stock.out_list',['lists'=>$lists]);
+        return view('stock.out_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function checkBuy()
     {

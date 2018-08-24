@@ -82,7 +82,7 @@
     </table>
 
 </div>
-        {{$projects->links()}}
+        {{$projects->appends(['search'=>$search])->links()}}
 @endsection
 @section('pageJs')
     <script src="{{url('js/project_list.js')}}"></script>

@@ -94,7 +94,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->links()}}
+        {{$lists->appends(['searchType'=>$searchType,'search'=>$search])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 

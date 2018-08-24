@@ -488,7 +488,7 @@ class ProjectController extends Controller
             }
         }
 
-        return view('budget.list',['projects'=>$projects]);
+        return view('budget.list',['projects'=>$projects,'search'=>$search]);
     }
     public function showBudgetPage()
     {
@@ -656,7 +656,7 @@ class ProjectController extends Controller
             }
             $projects = $db->paginate(10);
         }
-        return view('check.list',['projects'=>$projects]);
+        return view('check.list',['projects'=>$projects,'search'=>$search]);
     }
     public function checkDetailPage()
     {
@@ -1160,7 +1160,7 @@ class ProjectController extends Controller
                 $list->need = $need;
             }
         }
-        return view('buy.list',['lists'=>$lists]);
+        return view('buy.list',['lists'=>$lists,'search'=>$search]);
     }
     public function listProjectPurchasesPage()
     {
@@ -1197,7 +1197,7 @@ class ProjectController extends Controller
             }
 
         }
-        return view('buy.project_list',['lists'=>$lists]);
+        return view('buy.project_list',['lists'=>$lists,'search'=>$search]);
     }
     public function listPurchasesPayPage()
     {
@@ -1225,7 +1225,7 @@ class ProjectController extends Controller
                 $list->count = $count;
             }
         }
-        return view('buy.pay_list',['lists'=>$lists]);
+        return view('buy.pay_list',['lists'=>$lists,'search'=>$search]);
     }
     public function addPurchaseCheque()
     {
@@ -1258,7 +1258,7 @@ class ProjectController extends Controller
             $purchases = $db->orderBy('id','DESC')->paginate(10);
 
 //        $purchases = Purchase::paginate(10);
-        return view('buy.charge_list',['purchases'=>$purchases]);
+        return view('buy.charge_list',['purchases'=>$purchases,'search'=>$search]);
     }
     public function purchaseCollectPage()
     {

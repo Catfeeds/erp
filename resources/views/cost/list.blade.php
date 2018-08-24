@@ -78,8 +78,8 @@
                         <a href="javascript:_helper.fullWindow('../pay/single.html?id=1')">{{$cost->number}}</a>
                     </td>
                     <td>{{$cost->project_id==0?'':\App\Models\Project::find($cost->project_id)->number}}</td>
-                    <td class="function-one">付款方式</td>
-                    <td class="function-one">中国银行 602321235232123523</td>
+                    <td class="function-one">{{$cost->type==1?'现金':'付款'}}</td>
+                    <td class="function-one">{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->bank}} 602321235232123523</td>
                     <td class="table-content">这是项目内容</td>
                     <td>123,232￥</td>
                     <td>刘琦斐</td>

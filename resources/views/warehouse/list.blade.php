@@ -73,7 +73,7 @@
                 </tbody>
             </table>
         </div>
-        {{$warehouses->links()}}
+        {{$warehouses->appends(['name'=>$name])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 

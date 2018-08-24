@@ -362,7 +362,7 @@ class SystemController extends Controller
             $DbObj->where('name','like','%'.$name.'%')->orWhere('admin','like','%'.$name.'%');
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
-        return view('warehouse.list',['warehouses'=>$data]);
+        return view('warehouse.list',['warehouses'=>$data,'name'=>$name]);
     }
     //银行账号
     public function createBankAccount(Request $post)

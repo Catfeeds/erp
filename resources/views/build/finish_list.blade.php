@@ -98,7 +98,7 @@
                 <span>请款单标准格式导出</span>
             </a>
         </div>
-        {{$applies->links()}}
+        {{$applies->appends(['searchType'=>$searchType,'search'=>$search])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
