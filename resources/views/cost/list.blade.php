@@ -75,21 +75,21 @@
                 @foreach($costs as $cost)
                 <tr>
                     <td>
-                        <a href="javascript:_helper.fullWindow('../pay/single.html?id=1')">{{$cost->number}}</a>
+                        <a href="javascript:_helper.fullWindow('{{url('new/pay/single')}}?id={{$cost->id}}')">{{$cost->number}}</a>
                     </td>
                     <td>{{$cost->project_id==0?'':\App\Models\Project::find($cost->project_id)->number}}</td>
                     <td class="function-one">{{$cost->type==1?'现金':'付款'}}</td>
-                    <td class="function-one">{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->bank}} 602321235232123523</td>
-                    <td class="table-content">这是项目内容</td>
-                    <td>123,232￥</td>
-                    <td>刘琦斐</td>
-                    <td>这是类型</td>
-                    <td>具体事项</td>
-                    <td>这是一些用途</td>
-                    <td>发票类型</td>
-                    <td>这是一些备注之类的</td>
-                    <td>申请人</td>
-                    <td>审批人</td>
+                    <td class="function-one">{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->bank}}</td>
+                    <td class="table-content">{{$cost->project_id==0?'':\App\Models\Project::find($cost->project_id)->name}}</td>
+                    <td>{{number_format($cost->apply_price,2)}}￥</td>
+                    <td>{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->name}}</td>
+                    <td>{{$cost->pay_type==0?'':\App\PayType::find($cost->pay_type)->title}}</td>
+                    <td>{{$cost->pay_detail==0?'':\App\PayTypeDetail::find($cost->pay_detail)->title}}</td>
+                    <td>{{$cost->application}}</td>
+                    <td>{{$cost->invoice_type==0?'':\App\Models\Invoice::find($cost->invoice_type)->name}}</td>
+                    <td>{{$cost->remark}}</td>
+                    <td>{{$cost->proposer}}</td>
+                    <td>{{$cost->approver}}</td>
                     <td>123,232￥</td>
                     <td>123,232￥</td>
                     <td>123,232￥</td>

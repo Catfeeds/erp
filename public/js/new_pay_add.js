@@ -287,7 +287,7 @@
           //提交审批人
           confirmRecheck() {
             this.selectData.users = this.checkedMen
-            _http.PaymentManager.selectPay(this.selectData)
+            _http.PaymentManager.newSelectPay(this.selectData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Cost;
 use App\CostPicture;
+use App\Models\CostAllow;
 use App\Models\Invoice;
 use App\Models\Project;
+use App\Models\Task;
 use App\PayType;
 use App\PayTypeDetail;
 use Illuminate\Http\Request;
@@ -98,6 +100,12 @@ class CostController extends Controller
             $cost = new Cost();
             $cost->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
         }
+        if (empty($post->apply_price)){
+            return response()->json([
+                'msg'=>'请先录入数据',
+                'code'=>'404'
+            ]);
+        }
         $cost->project_id = $post->project_id?$post->project_id:0;
         $cost->apply_date = $post->apply_date?$post->apply_date:'';
         $cost->apply_price = $post->apply_price?$post->apply_price:0;
@@ -187,5 +195,37 @@ class CostController extends Controller
         $data = $db->orderBy('id','DESC')->paginate(10);
 //        dd($data);
         return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data]);
+    }
+    public function selectApprover()
+    {
+        $id = Input::get('id');
+        $users = Input::get('users');
+        if (!empty($users)){
+            foreach ($users as $user){
+                $task = new Task();
+                $task->user_id = $user;
+                $task->content = $id;
+                $task->type = 'pay_pass';
+                $task->title = '付款审批';
+                $task->number = Cost::find($id)->number;
+                $task->url = 'pay/single?id='.$id;
+                $task->content = $id;
+                $task->save();
+                $allow = new CostAllow();
+                $allow->apply_id = $id;
+                $allow->user_id = $user;
+                $allow->save();
+            }
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function paySingle()
+    {
+        $id = Input::get('id');
+        $cost = Cost::find($id);
+        return view('cost.single',['cost'=>$cost]);
     }
 }

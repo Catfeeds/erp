@@ -36,9 +36,9 @@
             </tr>
             <tr>
                 <th>项目编号</th>
-                <th class="fake-td">{{$apply->project_number}}</th>
+                <th class="fake-td">{{$apply->project_id==0?'':\App\Models\Project::find($apply->project_id)->number}}</th>
                 <th>项目内容</th>
-                <th colspan="2" class="fake-td">{{$apply->project_content}}</th>
+                <th colspan="2" class="fake-td">{{$apply->project_id==0?'':\App\Models\Project::find($apply->project_id)->name}}</th>
             </tr>
             <tr>
                 <th>申请人</th>
