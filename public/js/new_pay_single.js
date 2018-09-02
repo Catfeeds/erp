@@ -9,7 +9,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          _http.PaymentManager.calcelPay({
+          _http.PaymentManager.newCancelPay({
               id: payId
             })
             .then(res => {
@@ -51,7 +51,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          _http.PaymentManager.confirmPay({
+          _http.PaymentManager.newConfirmPay({
               id: payId
             })
             .then(res => {

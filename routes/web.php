@@ -331,4 +331,10 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('pay/types/detail','CostController@searchPayDetails');
     Route::post('new/pay/select','CostController@selectApprover');
     Route::get('new/pay/single','CostController@paySingle');
+    Route::get('new/pay/cancel','CostController@delCost');
+    Route::get('new/pay/confirm','CostController@confirmCost');
+    Route::get('new/pay/pay','CostController@costPayPage');
+    Route::post('new/pay/pay','CostController@costPay');
+    Route::get('new/pay/invoice','CostController@costInvoicePage');
+    Route::post('pay/invoice','CostController@costInvoicePage');
 });

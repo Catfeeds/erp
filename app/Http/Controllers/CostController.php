@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Cost;
 use App\CostPicture;
+use App\Models\BankAccount;
 use App\Models\CostAllow;
+use App\Models\CostInvoice;
+use App\Models\CostPay;
 use App\Models\Invoice;
 use App\Models\Project;
+use App\Models\ProjectType;
 use App\Models\Task;
 use App\PayType;
 use App\PayTypeDetail;
@@ -14,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Mockery\Exception;
 
 class CostController extends Controller
 {
@@ -170,28 +175,82 @@ class CostController extends Controller
     {
         $searchType = Input::get('search-type');
         $searchValue = Input::get('value');
+        $role = getRole('pay_list');
         $db = DB::table('costs');
-        if ($searchType){
-            switch ($searchType){
-                case 1:
-                    $db->where('number','like','%'.$searchValue.'%');
-                    break;
-                case 2:
-                    $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
-                    $db->whereIn('project_id',$projectId);
-                    break;
-                case 3:
-                    $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
-                    $db->whereIn('project_id',$projectId);
-                    break;
-                case 4:
-                    $db->where('proposer','like','%'.$searchValue.'%');
-                    break;
-                case 5:
-                    $db->where('approver','like','%'.$searchValue.'%');
-                    break;
+        if ($role=='all'){
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                }
             }
+
+        }elseif($role=='only'){
+            $db->where('proposer','=',Auth::user()->username);
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                }
+            }
+        }else{
+            $idArr = getRoleProject('pay_list');
+            $db->whereIn('project_id',$idArr);
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                }
+            }
+
         }
+
+
         $data = $db->orderBy('id','DESC')->paginate(10);
 //        dd($data);
         return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data]);
@@ -226,6 +285,132 @@ class CostController extends Controller
     {
         $id = Input::get('id');
         $cost = Cost::find($id);
-        return view('cost.single',['cost'=>$cost]);
+        $pictures = CostPicture::where('request_id','=',$id)->get();
+        $pays = CostPay::where('cost_id','=',$id)->get();
+        $invoices = CostInvoice::where('cost_id','=',$id)->get();
+        return view('cost.single',['cost'=>$cost,'pictures'=>$pictures,'pays'=>$pays,'invoices'=>$invoices]);
+    }
+    public function delCost()
+    {
+        $id = Input::get('id');
+        $cost = Cost::find($id);
+        if ($cost->delete()){
+            CostPicture::where('request_id','=',$id)->delete();
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function confirmCost()
+    {
+        $id = Input::get('id');
+        $apply = Cost::find($id);
+        if ($apply->state !=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许审核！'
+            ]);
+        }else{
+            $apply->state = 2;
+            $apply->approver_id = Auth::id();
+            $apply->approver = Auth::user()->name;
+            $apply->save();
+            Task::where('type','=','pay_pass')->where('content','=',$id)->update(['state'=>0]);
+            return response()->json([
+                'code'=>'200',
+                'msg'=>'SUCCESS'
+            ]);
+        }
+    }
+    public function costPayPage()
+    {
+        $id = Input::get('id');
+        $cost = Cost::find($id);
+        $pays = CostPay::where('cost_id','=',$id)->get();
+        $banks = BankAccount::where('state','=',1)->get();
+        return view('cost.pay',['cost'=>$cost,'banks'=>$banks,'pays'=>$pays]);
+    }
+    public function costPay(Request $post)
+    {
+        $request_id = $post->request_id;
+        $lists = $post->lists;
+        $cost =  Cost::find($request_id);
+        DB::beginTransaction();
+        try{
+            CostPay::where('cost_id','=',$request_id)->delete();
+            foreach ($lists as $list){
+                if (!isset($list['bank'])){
+                    throw new Exception('请先选择付款银行！');
+                }
+                $pay = new CostPay();
+                $pay->cost_id = $request_id;
+                $pay->project_id = $cost->project_id;
+                $pay->pay_date = $list['pay_date'];
+                $pay->cash = isset($list['cash'])?$list['cash']:0;
+                $pay->transfer = isset($list['transfer'])?$list['transfer']:0;
+                $pay->other = isset($list['other'])?$list['other']:0;
+                $pay->cost = $pay->cash+$pay->other+$pay->transfer;
+                $pay->bank = $list['bank'];
+                $pay->worker_id = Auth::id();
+                $pay->worker = Auth::user()->username;
+                $pay->save();
+            }
+            $sum = CostPay::where('cost_id','=',$request_id)->sum('cost');
+            if ($sum>$cost->apply_price){
+                throw new Exception('不能超过申请金额！');
+            }
+            DB::commit();
+            return response()->json([
+                'msg'=>'SUCCESS',
+                'code'=>'200'
+            ]);
+        }catch (Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'msg'=>$exception->getMessage(),
+                'code'=>'400'
+            ]);
+        }
+    }
+    public function costInvoicePage()
+    {
+        $cost = Cost::find(Input::get('id'));
+        $invoices = Invoice::select(['id','name'])->where('state','=',1)->get();
+        return view('cost.invoice',['invoices'=>$invoices,'cost'=>$cost]);
+    }
+    public function costInvoice(Request $post)
+    {
+        $lists = $post->lists;
+        $cost_id = $post->purchase_id;
+        $date = $post->date;
+        DB::beginTransaction();
+        try{
+            foreach ($lists as $list){
+                $invoice = new CostInvoice();
+                $invoice->cost_id = $cost_id;
+                $invoice->date = $date;
+                $invoice->invoice_date = $list['date'];
+                $invoice->number = $list['number'];
+                $invoice->type = $list['type'];
+                $invoice->without_tax = $list['without_tax'];
+                $invoice->tax = $list['tax'];
+                $invoice->with_tax = $invoice->tax+$invoice->without_tax;
+                $invoice->worker_id = Auth::id();
+                $invoice->worker = Auth::user()->username;
+                $invoice->save();
+            }
+            DB::commit();
+            return response()->json([
+                'msg'=>'SUCCESS',
+                'code'=>'200'
+            ]);
+        }catch (Exception $exception){
+            DB::rollback();
+            return response()->json([
+                'msg'=>$exception->getMessage(),
+                'code'=>'400'
+            ]);
+        }
     }
 }

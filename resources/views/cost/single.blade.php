@@ -12,7 +12,7 @@
             <div class="active section">付款审批查询 - {{$cost->number}}</div>
         </div>
 
-        <input type="hidden" id="payId" value="">
+        <input type="hidden" id="payId" value="{{$cost->id}}">
 
         <h3 class="ui header center aligned">付款审批查询 - {{$cost->number}}</h3>
         <table class="ui celled center aligned table unstackable">
@@ -53,9 +53,13 @@
             </tr>
             <tr>
                 <th>申请人</th>
-                <th class="fake-td" colspan="2">瑞茜</th>
+                <th class="fake-td" colspan="2">{{$cost->proposer}}</th>
                 <th>审批人</th>
-                <th class="fake-td" colspan="2">何福清</th>
+                <th class="fake-td" colspan="2">{{$cost->approver}}</th>
+            </tr>
+            <tr>
+                <th>备注</th>
+                <th class="fake-td" colspan="2">{{$cost->remark}}</th>
             </tr>
             <!-- <tr>
               <th colspan="5">付款信息</th>
@@ -103,7 +107,7 @@
 
         <h4 class="ui header center aligned">付款信息</h4>
         <div class="flex-row flex-end">
-            <a class="ui icon button" href="javascript:_helper.fullWindow('../pay/pay.html?id=1')" style="margin:0 20px;">
+            <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('new/pay/pay')}}?id={{$cost->id}}')" style="margin:0 20px;">
                 <i class="icon yen"></i>
                 <span>修改付款信息</span>
             </a>
@@ -114,31 +118,35 @@
                 <th>序号</th>
                 <th>付款日期</th>
                 <th>付款金额</th>
-                <th>付款方式</th>
+                <th>现金</th>
+                <th>转账金额</th>
+                <th>其他金额</th>
                 <th>银行账号</th>
-                <th>备注</th>
                 <th>付款经办人</th>
             </tr>
             </thead>
             <tbody>
+            @for($i=0;$i<count($pays);$i++)
             <tr>
-                <td>1</td>
-                <td>2018-02-11</td>
-                <td>1,222,222￥</td>
-                <td>现金</td>
-                <td>中国银行 634341354233423423</td>
-                <td>这是备注</td>
-                <td>黄晓明</td>
+                <td>{{$i+1}}</td>
+                <td>{{$pays[$i]->pay_date}}</td>
+                <td>{{number_format($pays[$i]->cost,2)}}￥</td>
+                <td>{{number_format($pays[$i]->cash,2)}}￥</td>
+                <td>{{number_format($pays[$i]->transfer,2)}}</td>
+                <td>{{number_format($pays[$i]->other,2)}}</td>
+                <td>{{$pays[$i]->bank==0?'':\App\Models\BankAccount::find($pays[$i]->bank)->name.' '.\App\Models\BankAccount::find($pays[$i]->bank)->account}}</td>
+                <td>{{$pays[$i]->worker}}</td>
             </tr>
+                @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th>合计</th>
-                <th colspan="6">1,222,222￥</th>
+                <th colspan="7">{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</th>
             </tr>
             <tr>
                 <th>应收账款余额</th>
-                <th colspan="6">1,222,222￥</th>
+                <th colspan="7">{{number_format($cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>
@@ -146,7 +154,7 @@
 
         <h4 class="ui header center aligned">收票记录</h4>
         <div class="flex-row flex-end">
-            <a class="ui icon button" href="javascript:_helper.fullWindow('../pay/invoice_create.html?id=1')" style="margin:0 20px;">
+            <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('new/pay/invoice')}}?id={{$cost->id}}')" style="margin:0 20px;">
                 <i class="icon yen"></i>
                 <span>修改收票记录</span>
             </a>
@@ -166,26 +174,28 @@
             </tr>
             </thead>
             <tbody>
+            @for($i=0;$i<count($invoices);$i++)
             <tr>
-                <td>1</td>
-                <td>2018-02-11</td>
-                <td>2018-02-11</td>
-                <td>122512312322</td>
-                <td>发票类型</td>
-                <td>1,222,222￥</td>
-                <td>1,222,222￥</td>
-                <td>1,222,222￥</td>
-                <td>黄晓明</td>
+                <td>{{$i+1}}</td>
+                <td>{{$invoices[$i]->date}}</td>
+                <td>{{$invoices[$i]->invoice_date}}</td>
+                <td>{{$invoices[$i]->number}}</td>
+                <td>{{$invoices[$i]->type==0?'':\App\Models\Invoice::find($invoices[$i]->type)->name}}</td>
+                <td>{{number_format($invoices[$i]->without_tax,2)}}￥</td>
+                <td>{{number_format($invoices[$i]->tax,2)}}￥</td>
+                <td>{{number_format($invoices[$i]->with_tax,2)}}￥</td>
+                <td>{{$invoices[$i]->worker}}</td>
             </tr>
+                @endfor
             </tbody>
             <tfoot>
             <tr>
                 <th>合计</th>
-                <th colspan="8">1,222,222￥</th>
+                <th colspan="8">{{number_format(\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
             </tr>
             <tr>
                 <th>应收账款余额</th>
-                <th colspan="8">1,222,222￥</th>
+                <th colspan="8">{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost')-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>
@@ -200,37 +210,50 @@
             </tr>
             </thead>
             <tbody>
+            @for($i=0;$i<count($pictures);$i++)
             <tr>
-                <td>1</td>
-                <td>xxx</td>
+                <td>{{$i+1}}</td>
+                <td>{{$pictures[$i]->name}}</td>
                 <td>
-                    <a href="aaa" target="_blank">aaa</a>
+                    <a href="{{$pictures[$i]->url}}" target="_blank">{{$pictures[$i]->url}}</a>
                 </td>
             </tr>
+                @endfor
             </tbody>
         </table>
 
         <div class="flex-row flex-center margin-top-50" id="paySingleBtn">
+            @if($cost->state!=3)
             <button class="ui icon button negative" id="paySingleCancel" style="margin:0 20px;">
                 <i class="icon delete"></i>
                 <span>撤销</span>
             </button>
-            <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
-                <i class="icon edit"></i>
-                <span>审批</span>
-            </button>
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('../pay/pay.html')" style="margin:0 20px;">
-                <i class="icon yen"></i>
-                <span>付款</span>
-            </a>
-            <a class="ui icon button primary" href="javascript:_helper.fullWindow('../pay/invoice_create.html')" style="margin:0 20px;">
-                <i class="icon yen"></i>
-                <span>收票</span>
-            </a>
-            <a class="ui icon button positive" href="javascript:_helper.fullWindow('../pay/print.html?id=1')" style="margin:0 20px;">
-                <i class="icon print"></i>
-                <span>凭证</span>
-            </a>
+            @endif
+
+
+
+                @if(checkRole('pay_pass',$cost->id)&&$cost->state==1)
+                    <button class="ui icon button primary" id="paySingleCheck" style="margin:0 20px;">
+                        <i class="icon edit"></i>
+                        <span>审批</span>
+                    </button>
+                @else
+                @endif
+                @if($cost->state==2)
+                    <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('new/pay/pay')}}?id={{$cost->id}}')" style="margin:0 20px;">
+                        <i class="icon yen"></i>
+                        <span>付款</span>
+                    </a>
+                    <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('new/pay/invoice')}}?id={{$cost->id}}')" style="margin:0 20px;">
+                        <i class="icon yen"></i>
+                        <span>收票</span>
+                    </a>
+                @else
+                @endif
+                <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('new/pay/single')}}?id={{$cost->id}}')" style="margin:0 20px;">
+                    <i class="icon print"></i>
+                    <span>凭证</span>
+                </a>
         </div>
 
 

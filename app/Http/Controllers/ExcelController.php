@@ -487,11 +487,11 @@ class ExcelController extends Controller
                 $swap['o'] = number_format($data[$i]->invoices()->sum('price'),2);
                 $swap['p'] = number_format($data[$i]->collects()->where('type','=',2)->sum('price'),2);
                 $swap['q'] = number_format($data[$i]->collects()->where('type','=',3)->sum('price'),2);
-                $swap['r'] = number_format($data[$i]->stockRecords()->where('type','=',3)->sum('cost')+$data[$i]->requestPayments()->where('state','=',3)->sum('price')+$data[$i]->loanSubmits()->where('state','>',3)->sum('price')+$data[$i]->payApplies()->sum('price')-$data[$i]->stockRecords()->where('type','=',2)->sum('cost'),2);
+                $swap['r'] = number_format($data[$i]->stockRecords()->where('type','=',3)->sum('cost')+$data[$i]->requestPayments()->where('state','=',3)->sum('price')+$data[$i]->loanSubmits()->where('state','>',3)->sum('price')+$data[$i]->payApplies()->sum('price')-$data[$i]->costs()->where('state','>=',2)->sum('apply_price')-$data[$i]->stockRecords()->where('type','=',2)->sum('cost'),2);
                 $swap['s'] = number_format($data[$i]->stockRecords()->where('type','=',3)->sum('cost'),2);
                 $swap['t'] = number_format($data[$i]->requestPayments()->where('state','=',3)->sum('price'),2);
                 $swap['u'] = number_format($data[$i]->loanSubmits()->where('state','>',3)->sum('price'),2);
-                $swap['v'] = number_format($data[$i]->payApplies()->sum('price'),2);
+                $swap['v'] = number_format($data[$i]->payApplies()->sum('price')+$data[$i]->costs()->where('state','>=',2)->sum('apply_price'),2);
                 $swap['w'] = number_format($data[$i]->stockRecords()->where('type','=',2)->sum('cost'),2);
                 $all[$i] = $swap;
             }
@@ -553,18 +553,18 @@ class ExcelController extends Controller
                 $swap['h'] = $project->budget()->where('type','=',1)->sum('cost');
                 $swap['i'] = $project->budget()->where('type','=',2)->sum('cost');
                 $swap['j'] = $project->budget()->where('type','=',3)->sum('cost');
-                $swap['k'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost');
+                $swap['k'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost');
                 $swap['l'] = $project->stockRecords()->where('type','=',3)->sum('cost');
                 $swap['m'] = $project->requestPayments()->where('state','=',3)->sum('price');
                 $swap['n'] = $project->materialCount;
                 $swap['o'] = $project->engineCount;
                 $swap['p'] = $project->otherCount;
-                $swap['q'] = $project->payApplies()->sum('price');
+                $swap['q'] = $project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price');
                 $swap['r'] = $project->stockRecords()->where('type','=',2)->sum('cost');
-                $swap['s'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')-$project->stockRecords()->where('type','=',2)->sum('cost').'/'.$project->budget()->sum('cost');
+                $swap['s'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost').'/'.$project->budget()->sum('cost');
                 $swap['t'] = $project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost').'/'.$project->budget()->where('type','=',1)->sum('cost');
                 $swap['u'] = $project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount.'/'.$project->budget()->where('type','=',2)->sum('cost');
-                $swap['v'] = $project->otherCount+$project->payApplies()->sum('price').'/'.$project->budget()->where('type','=',3)->sum('cost');
+                $swap['v'] = $project->otherCount+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price').'/'.$project->budget()->where('type','=',3)->sum('cost');
                 array_push($data,$swap);
             }
         }

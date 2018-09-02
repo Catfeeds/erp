@@ -534,6 +534,11 @@
         params: data
       })
     }
+      newCancelPay(data) {
+          return this._http.get(`new/pay/cancel`, {
+              params: data
+          })
+      }
 
     //审批
     confirmPay(data) {
@@ -541,6 +546,11 @@
         params: data
       })
     }
+      newConfirmPay(data) {
+          return this._http.get(`new/pay/confirm`, {
+              params: data
+          })
+      }
 
     // 付款
     createPayPay(data = {}) {
@@ -689,6 +699,9 @@
     createInvoice(data = {}) {
       return this._http.post(`/purchase/invoice/create`, data, this.dataMethodDefaults)
     }
+      createCostInvoice(data = {}) {
+          return this._http.post(`/pay/invoice`, data, this.dataMethodDefaults)
+      }
 
     //修改收票
     editInvoice(data = {}) {

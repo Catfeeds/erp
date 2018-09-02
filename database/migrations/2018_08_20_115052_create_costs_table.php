@@ -30,6 +30,7 @@ class CreateCostsTable extends Migration
             $table->unsignedInteger('proposer_id')->default(0);
             $table->string('approver')->nullable();
             $table->unsignedInteger('approver_id')->default(0);
+            $table->tinyInteger('state')->default(1);
             $table->timestamps();
         });
     }

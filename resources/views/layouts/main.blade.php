@@ -192,6 +192,9 @@
             <el-menu-item index="payList">
                 <a href="{{url('pay/list')}}">付款审批清单</a>
             </el-menu-item>
+            <el-menu-item index="payList">
+                <a href="{{url('new/pay/list')}}">付款审批清单(新)</a>
+            </el-menu-item>
         </el-submenu>
         <el-submenu index="data">
             <template slot="title">

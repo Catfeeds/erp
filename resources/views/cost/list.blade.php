@@ -16,11 +16,11 @@
             <form action="" class="ui form">
                 <div class="flex-row flex-between flex-wrap">
                     <div>
-                        <a class="ui primary button" href="javascript:_helper.fullWindow('../pay/add.html')">
+                        <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('new/pay/add')}}')">
                             <i class="icon plus"></i>
                             <span>新增费用申请</span>
                         </a>
-                        <a class="ui green button" href="#">
+                        <a class="ui green button" href="{{url('export/pay/list')}}">
                             <i class="icon download"></i>
                             <span>Excel 导出</span>
                         </a>
@@ -90,10 +90,10 @@
                     <td>{{$cost->remark}}</td>
                     <td>{{$cost->proposer}}</td>
                     <td>{{$cost->approver}}</td>
-                    <td>123,232￥</td>
-                    <td>123,232￥</td>
-                    <td>123,232￥</td>
-                    <td>123,232￥</td>
+                    <td>{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format(\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</td>
+                    <td>{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost')-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</td>
                 </tr>
                     @endforeach
                 </tbody>

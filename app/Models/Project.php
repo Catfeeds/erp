@@ -73,4 +73,8 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\PayApply','project_id','id');
     }
+    public function costs()
+    {
+        return $this->hasMany('App\Cost','project_id','id');
+    }
 }
