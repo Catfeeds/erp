@@ -898,7 +898,7 @@ class PayController extends Controller
             Task::where('type','=','build_finish_check')->where('content','=',$payment->id)->delete();
             if ($cost!=$payment->price){
 //                dd($cost);
-                throw new \Exception('金额不等！');
+                throw new \Exception('金额不等！原始数据'.$payment->price.'计算数据'.$cost);
             }
 //            $projectTeam = ProjectTeam::find($post->project_team);
         }
