@@ -253,7 +253,7 @@
                     </a>
                 @else
                 @endif
-                <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('new/pay/single')}}?id={{$cost->id}}')" style="margin:0 20px;">
+                <a class="ui icon button positive" href="javascript:_helper.fullWindow('{{url('new/pay/print')}}?id={{$cost->id}}')" style="margin:0 20px;">
                     <i class="icon print"></i>
                     <span>凭证</span>
                 </a>
