@@ -757,6 +757,7 @@ class PayController extends Controller
     {
         $id = $post->id;
         DB::beginTransaction();
+        $epsilon = 0.00001;
         try{
         if (!$id){
 //            dd($id);
@@ -825,7 +826,7 @@ class PayController extends Controller
                     $paymentPicture->save();
                 }
             }
-            if ($cost!=$payment->price){
+            if (abs($cost-$payment->price) < $epsilon){
                 throw new \Exception('金额不等！原始数据'.$payment->price.'计算数据'.$cost);
             }
         }else{
@@ -896,7 +897,7 @@ class PayController extends Controller
                 }
             }
             Task::where('type','=','build_finish_check')->where('content','=',$payment->id)->delete();
-            if ($cost!=$payment->price){
+            if (abs($cost-$payment->price) < $epsilon){
 //                dd($cost);
                 throw new \Exception('金额不等！原始数据'.$payment->price.'计算数据'.$cost);
             }
