@@ -36,6 +36,10 @@
                                 <div class="item" data-value="3">项目内容</div>
                                 <div class="item" data-value="4">申请人</div>
                                 <div class="item" data-value="5">审批人</div>
+                                <div class="item" data-value="6">收款人</div>
+                                <div class="item" data-value="7">费用类型</div>
+                                <div class="item" data-value="8">具体事项</div>
+                                <div class="item" data-value="9">用途</div>
                             </div>
                         </div>
                         <input name="value" type="text" placeholder="搜索内容" value="">
@@ -93,7 +97,7 @@
                     <td>{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</td>
                     <td>{{number_format($cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</td>
                     <td>{{number_format(\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</td>
-                    <td>{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost')-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</td>
+                    <td>{{number_format($cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</td>
                 </tr>
                     @endforeach
                 </tbody>

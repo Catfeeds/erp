@@ -107,10 +107,13 @@
 
         <h4 class="ui header center aligned">付款信息</h4>
         <div class="flex-row flex-end">
+            @if($cost->state==2)
             <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('new/pay/pay')}}?id={{$cost->id}}')" style="margin:0 20px;">
                 <i class="icon yen"></i>
                 <span>修改付款信息</span>
             </a>
+                @else
+            @endif
         </div>
         <table class="ui celled center aligned table unstackable">
             <thead>
@@ -194,7 +197,7 @@
                 <th colspan="8">{{number_format(\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
             </tr>
             <tr>
-                <th>应收账款余额</th>
+                <th>应收票余额</th>
                 <th colspan="8">{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost')-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
             </tr>
             </tfoot>

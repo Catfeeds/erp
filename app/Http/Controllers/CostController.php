@@ -11,6 +11,7 @@ use App\Models\CostPay;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\ProjectType;
+use App\Models\Supplier;
 use App\Models\Task;
 use App\PayType;
 use App\PayTypeDetail;
@@ -197,6 +198,21 @@ class CostController extends Controller
                     case 5:
                         $db->where('approver','like','%'.$searchValue.'%');
                         break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
+                        break;
                 }
             }
 
@@ -221,6 +237,21 @@ class CostController extends Controller
                     case 5:
                         $db->where('approver','like','%'.$searchValue.'%');
                         break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
+                        break;
                 }
             }
         }else{
@@ -244,6 +275,21 @@ class CostController extends Controller
                         break;
                     case 5:
                         $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
                         break;
                 }
             }
@@ -352,8 +398,8 @@ class CostController extends Controller
                 $pay->other = isset($list['other'])?$list['other']:0;
                 $pay->cost = $pay->cash+$pay->other+$pay->transfer;
                 $pay->bank = $list['bank'];
-                $pay->worker_id = Auth::id();
-                $pay->worker = Auth::user()->username;
+                $pay->worker_id = isset($list['worker_id'])?$list['worker_id']:Auth::id();
+                $pay->worker = isset($list['worker'])?$list['worker']:Auth::user()->username;
                 $pay->save();
             }
             $sum = CostPay::where('cost_id','=',$request_id)->sum('cost');
@@ -412,5 +458,14 @@ class CostController extends Controller
                 'code'=>'400'
             ]);
         }
+    }
+    public function printCost()
+    {
+        $id = Input::get('id');
+        $cost = Cost::find($id);
+        $pictures = CostPicture::where('request_id','=',$id)->get();
+        $pays = CostPay::where('cost_id','=',$id)->get();
+        $invoices = CostInvoice::where('cost_id','=',$id)->get();
+        return view('cost.print',['cost'=>$cost,'pictures'=>$pictures,'pays'=>$pays,'invoices'=>$invoices]);
     }
 }

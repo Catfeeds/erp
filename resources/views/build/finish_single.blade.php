@@ -117,6 +117,28 @@
                 </tfoot>
             </table>
 
+            <h4 class="ui header center aligned">确认单</h4>
+            <table class="ui celled center aligned table unstackable">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>链接</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for($i=0;$i<count($pictures);$i++)
+                    <tr>
+                        <td>{{$i+1}}</td>
+                        <td>{{$pictures[$i]->name}}</td>
+                        <td>
+                            <a href="{{$pictures[$i]->url}}" target="_blank">{{$pictures[$i]->url}}</a>
+                        </td>
+                    </tr>
+                @endfor
+                </tbody>
+            </table>
+
             <div class="flex-row flex-center margin-top-50" id="btnGroup">
                 @if($apply->state<3)
                 <a class="ui icon button" href="{{url('build/finish/edit')}}?id={{$apply->id}}" style="margin:0 10px;">

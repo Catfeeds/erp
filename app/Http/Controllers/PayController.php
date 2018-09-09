@@ -819,13 +819,14 @@ class PayController extends Controller
             if (!empty($pictures)){
                 foreach ($pictures as $picture) {
                     $paymentPicture = new RequestPaymentPicture();
+                    $paymentPicture->payment_id = $payment->id;
                     $paymentPicture->name = $picture['name'];
                     $paymentPicture->url = $picture['url'];
                     $paymentPicture->save();
                 }
             }
             if ($cost!=$payment->price){
-                throw new \Exception('金额不等！');
+                throw new \Exception('金额不等！原始数据'.$payment->price.'计算数据'.$cost);
             }
         }else{
 

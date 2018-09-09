@@ -336,5 +336,6 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('new/pay/pay','CostController@costPayPage');
     Route::post('new/pay/pay','CostController@costPay');
     Route::get('new/pay/invoice','CostController@costInvoicePage');
-    Route::post('pay/invoice','CostController@costInvoicePage');
+    Route::post('pay/invoice','CostController@costInvoice');
+    Route::get('new/pay/print','CostController@printCost');
 });

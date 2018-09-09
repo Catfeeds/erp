@@ -13,6 +13,7 @@ use App\Models\ProjectTeam;
 use App\Models\RequestPayment;
 use App\Models\Task;
 use App\Models\Team;
+use App\RequestPaymentPicture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -314,7 +315,8 @@ class BuildController extends Controller
         $id = Input::get('id');
         $apply = RequestPayment::find($id);
         $lists = $apply->lists()->get();
-        return view('build.finish_single',['apply'=>$apply,'lists'=>$lists]);
+        $picture = RequestPaymentPicture::where('payment_id','=',$id)->get();
+        return view('build.finish_single',['apply'=>$apply,'lists'=>$lists,'pictures'=>$picture]);
     }
     public function printBuildFinish()
     {
