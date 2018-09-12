@@ -313,7 +313,7 @@ class CostController extends Controller
                 $task->type = 'pay_pass';
                 $task->title = '付款审批';
                 $task->number = Cost::find($id)->number;
-                $task->url = 'pay/single?id='.$id;
+                $task->url = 'new/pay/single?id='.$id;
                 $task->content = $id;
                 $task->save();
                 $allow = new CostAllow();
