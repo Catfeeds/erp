@@ -88,7 +88,7 @@
         </div>
 
     </div>
-    {{$lists->appends(['search'=>$search])->links()}}
+    {{$lists->appends(['search'=>$search,'seartch-type'=>$type])->links()}}
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')

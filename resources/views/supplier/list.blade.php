@@ -71,7 +71,7 @@
                 </tbody>
             </table>
         </div>
-        {{$suppliers->links()}}
+        {{$suppliers->appends(['name'=>$name])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

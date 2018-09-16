@@ -103,7 +103,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$costs->appends(['search-type'=>$type,'value'=>$value])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

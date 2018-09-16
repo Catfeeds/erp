@@ -165,7 +165,7 @@ class SystemController extends Controller
             $DbObj->where('name','like','%'.$name.'%')->orWhere('bank','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
-        return view('supplier.list',['suppliers'=>$data]);
+        return view('supplier.list',['suppliers'=>$data,'name'=>$name]);
     }
     //创建供应商
     public function createSupplier(Request $post)

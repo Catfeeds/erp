@@ -286,7 +286,7 @@ class PurchaseController extends Controller
             $payment->bank_id = $post->get('bank_id');
             $payment->worker = Auth::user()->name;
             $payment->worker_id = Auth::id();
-
+            $payment->remark = $post->get('remark');
             $payment->state = 3;
         }
         if ($payment->save()){

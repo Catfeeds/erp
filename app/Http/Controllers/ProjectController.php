@@ -1197,7 +1197,7 @@ class ProjectController extends Controller
             }
 
         }
-        return view('buy.project_list',['lists'=>$lists,'search'=>$search]);
+        return view('buy.project_list',['lists'=>$lists,'search'=>$search,'type'=>$type]);
     }
     public function listPurchasesPayPage()
     {
