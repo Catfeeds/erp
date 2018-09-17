@@ -53,7 +53,7 @@ class StockController extends Controller
             $stocks = Stock::orderBy('cost','DESC')->orderBy('id','DESC')->paginate(10);
         }
 
-        return view('stock.list',['stocks'=>$stocks,'seartch-type'=>$seartch_type,'value'=>$search]);
+        return view('stock.list',['stocks'=>$stocks,'seartch_type'=>$seartch_type,'value'=>$search]);
     }
     public function listBuyList()
     {
