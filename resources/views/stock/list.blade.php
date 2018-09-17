@@ -78,7 +78,7 @@
         </div>
 
     </div>
-    {{$stocks->appends(['seartch-type'=>$seartch_type,'value'=>$search])->links()}}
+    {{$stocks->appends(['seartch-type'=>$seartch_type,'value'=>$value])->links()}}
     <!-- /主体内容 === 不可复用 -->
 @endsection
 @section('pageJs')
