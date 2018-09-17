@@ -664,6 +664,7 @@ class BuildController extends Controller
         $apply->build_manager = $apply->manager;
         $apply->date = $apply->request_date;
         $apply->project_id = Project::where('number','=',$apply->project_number)->pluck('id')->first();
+        $apply->pictures = $apply->pictures();
 //        dd($apply);
 //        $lists = $apply->lists()->get();
         return view('build.finish_edit',['apply'=>$apply]);
