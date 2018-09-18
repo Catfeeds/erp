@@ -195,7 +195,18 @@ class LoanController extends Controller
     {
         $id = Input::get('id');
         $loan = LoanList::find($id);
-        return view('loan.print',['loan'=>$loan]);
+        switch ($loan->pay_type){
+            case 0:
+                $type = '';
+                break;
+            case 1:
+                $type = '现金';
+                break;
+            case 2:
+                $type = '转账';
+                break;
+        }
+        return view('loan.print',['loan'=>$loan,'type'=>$type]);
     }
     public function printLoanSubmit()
     {

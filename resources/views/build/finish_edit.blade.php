@@ -153,6 +153,44 @@
             </transition-group>
         </div>
 
+        <h4 class="ui dividing header blue">确认单录入</h4>
+        <div class="flex-row flex-end">
+            <label class="ui icon button positive">
+                <i class="icon upload"></i>
+                <span>添加确认单</span>
+                <input style="display:none;" type="file" multiple @change="uploadContract($event)">
+            </label>
+        </div>
+        <h4 class="inline-center">确认单清单</h4>
+        <div class="ui form form-item">
+            <div class="ui five column doubling stackable grid font-size-13">
+                <div class="two wide column form-thead">序号</div>
+                <div class="six wide column form-thead">确认单名称</div>
+                <div class="six wide column form-thead">访问地址</div>
+                <div class="two wide column form-thead">操作</div>
+            </div>
+            <transition-group name="slide-down" tag="div" class="form-wrap special-form">
+                <div class="ui column doubling stackable grid center aligned" v-for="(item, index) in buildFinishAdd.pictures" :key="index">
+                    <div class="two wide column">
+                        <div class="fake-input">@{{ index + 1 }}</div>
+                    </div>
+                    <div class="six wide column">
+                        <div class="fake-input">@{{ item.name }}</div>
+                    </div>
+                    <div class="six wide column">
+                        <div class="fake-input">
+                            <a :href="item.url" target="_blank">@{{ item.url }}</a>
+                        </div>
+                    </div>
+                    <div class="two wide column flex-row">
+                        <div class="fake-input">
+                            <i class="icon minus red" style="cursor:pointer;" @click="deleteItem('pictures', item, index)"></i>
+                        </div>
+                    </div>
+                </div>
+            </transition-group>
+        </div>
+
         <div class="inline-center margin-top-20">
             <button class="ui button primary large" @click="submit">
                 <i class="icon hand pointer"></i>

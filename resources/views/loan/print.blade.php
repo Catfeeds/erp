@@ -40,7 +40,7 @@
                 <th>付款日期</th>
                 <th colspan="2" class="fake-td">{{$loan->pay_date}}</th>
                 <th>付款方式</th>
-                <th colspan="2" class="fake-td">{{$loan->pay_type==1?'现金':'转账'}}</th>
+                <th colspan="2" class="fake-td">{{$type}}</th>
             </tr>
             <tr>
                 <th>银行及账户</th>

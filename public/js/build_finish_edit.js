@@ -169,12 +169,13 @@
                         .then(res => {
                         if (res.data.code === '200') {
                         const resData = res.data.data
-                        this.buildDealAdd.list.push({
-                            id: resData.size,
+                        console.log(resData)
+                        this.buildFinishAdd.pictures.push({
                             name: resData.name,
                             url: resData.url
                         })
-                        this.buildDealAdd.lists.push(resData.url)
+                        // this.buildFinishAdd.lists.push(resData.url)
+                        console.log(this.buildFinishAdd.pictures)
                         this.$notify({
                             title: '成功',
                             message: `${resData.name} 上传成功`,

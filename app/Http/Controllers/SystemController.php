@@ -525,13 +525,13 @@ class SystemController extends Controller
         $manager = Input::get('manager');
         $DbObj = DB::table('teams');
         if ($name){
-            $DbObj->where('name','like','%'.$name.'%');
+            $DbObj->where('name','like','%'.$name.'%')->orWhere('manager','like','%'.$name.'%');
         }
         if ($manager){
             $DbObj->where('manager','like','%'.$manager.'%');
         }
         $teams = $DbObj->where('state','=',1)->paginate(10);
-        return view('team.list',['teams'=>$teams]);
+        return view('team.list',['teams'=>$teams,'name'=>$name]);
     }
     public function createProjectType(Request $post)
     {
