@@ -129,10 +129,13 @@
         </div>
 
         <div class="flex-row flex-center margin-top-50">
+            @if($purchase->state<3)
             <a class="ui icon button primary" href="{{$purchase->type==1?url("buy/budgetary_buy").'?buy_id='.$purchase->id:url('buy/extrabudgetary').'?id='.$purchase->id}}" style="margin:0 10px;">
                 <i class="icon edit"></i>
                 <span>修改</span>
             </a>
+            @else
+            @endif
             @if($purchase->state<3)
                 <button class="ui icon button primary" data-id="{{$purchase->id}}" id="budgetaryCheckDelete" style="margin:0 10px;">
                     <i class="icon cancel"></i>
