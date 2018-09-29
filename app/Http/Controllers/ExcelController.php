@@ -1032,8 +1032,19 @@ class ExcelController extends Controller
                 $swap['project_content'] = $project?$project->name:'';
                 $swap['project_manager'] = $project?$project->pm:'';
                 $swap['type'] = $item->type==1?'内':'外';
-                $swap['buy'] = $item->lists()->sum('received');
-                $swap['need'] = $item->lists()->sum('need');
+                $received = 0;
+                $need = 0;
+                $data  = $item->lists()->get();
+                if (!empty($data)){
+                    foreach ($data as $datum){
+                        $received+= $datum->price*$datum->received;
+                        $need+= $datum->price*$datum->need;
+                    }
+                }
+//                $list->received = $received;
+//                $list->need = $need;
+                $swap['buy'] = $received;
+                $swap['need'] = $need;
                 $swap['pay'] = number_format($item->payments()->sum('pay_price'));
                 $swap['need_pay'] = $item->lists()->sum('cost')-$item->payments()->sum('pay_price');
                 $swap['content'] = $item->content;
