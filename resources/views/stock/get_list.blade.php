@@ -81,8 +81,8 @@
                     <td>{{$list->sum}}</td>
                     <td>￥{{number_format($list->cost,2)}} </td>
                     <td>{{$list->record->project_number}}</td>
-                    <td class="table-content" title="{{$list->project->name}}">{{$list->project->name}}</td>
-                    <td>{{$list->project->pm}}</td>
+                    <td class="table-content" title="{{empty($list->project)?'':$list->project->name}}">{{empty($list->project)?'':$list->project->name}}</td>
+                    <td>{{empty($list->project)?'':$list->project->pm}}</td>
                     <td>{{$list->record->worker}}</td>
                 </tr>
                 @endforeach

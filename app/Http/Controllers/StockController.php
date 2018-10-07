@@ -98,10 +98,12 @@ class StockController extends Controller
                     $received += $swap[$i]->price * $swap[$i]->received;
                     $need += $swap[$i]->price * $swap[$i]->need;
                 }
+//                $list->record = $swap;
                 $list->received = $received;
                 $list->need = $need;
             }
         }
+//        dd($lists);
         return view('stock.buy_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
     }
     public function listReturnList()
@@ -408,6 +410,9 @@ class StockController extends Controller
                 if($purchase->need<$list['number']){
                     throw new \Exception('收货数量不能超过剩余收货数量！');
                 }
+                $swapNumber = $purchase->number;
+                $swapReceive = $purchase->received;
+                $swapNeed = $purchase->need;
                 $record->purchase_number = Purchase::find($purchase->purchase_id)->number;
                 $record->purchase_id = $purchase->purchase_id;
                 $info = Purchase::find($purchase->purchase_id);
@@ -431,8 +436,8 @@ class StockController extends Controller
                 //            $record->price = $purchase->price;
                 $record->cost = $purchase->price * $list['number'];
                 //            $record->sum = $list['number'];
-                $purchase->received += $list['number'];
-                $purchase->need = $purchase->number - $purchase->received;
+                $purchase->received = $list['number'] + $swapReceive;
+                $purchase->need = $swapNumber - $swapReceive;
                 $purchase->save();
                 $stock = Stock::where('warehouse_id', '=', $warehouse_id)
                     ->where('material_id', '=', $purchase->material_id)->first();
@@ -571,6 +576,12 @@ class StockController extends Controller
         }
         $warehouse_id = $post->warehouse_id;
         $project_id = $post->project_id;
+        if (!$project_id){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'必须选择项目！'
+            ]);
+        }
         $number = array_column($lists,'number');
         if (in_array(0,$number)){
             return response()->json([
