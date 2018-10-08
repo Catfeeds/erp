@@ -17,6 +17,7 @@
         <div style="display: none" id="invoiceType">{{json_encode($invoices)}}</div>
         <input type="hidden" id="purchaseId" value="{{$cost->id}}">
 
+        <div style="display: none" id="invoiceEdit">{{json_encode($data)}}</div>
         <h1 class="ui red header blue center aligned">收票信息录入</h1>
         <div class="invisible" id="payInvoiceCreate">
 

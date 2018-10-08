@@ -92,8 +92,61 @@ class CostController extends Controller
         $id = Input::get('id');
         $types = Invoice::where('state','=',1)->get();
         if ($id){
+            $cost = Cost::find($id);
+            $pictures = CostPicture::where('request_id','=',$id)->get();
+            $project = Project::find($cost->project_id);
+            $supplier = Supplier::find($cost->supplier_id);
+            $data = [
+                'id'=>$id,
+                'apply_date'=>$cost->apply_date,
+                'apply_price'=>$cost->apply_price,
+                'application'=>$cost->application,
+                'project_id'=>$cost->project_id,
+                'project_number'=>empty($project)?'':$project->number,
+                'project_content'=>empty($project)?'':$project->name,
+                'pay_detail'=>$cost->pay_detail,
+                'remark'=>$cost->remark,
+                'invoice_type'=>$cost->invoice_type,
+                'type'=>$cost->type,
+                'supplier_id'=>$cost->supplier_id,
+                'payee'=>$supplier->name,
+                'pay_type'=>$cost->pay_type,
+                'currentSupplier'=>$supplier,
+                'pictures'=>$pictures
+            ];
+//            dd($data);
+            // const addEdit = {
+            //   apply_date: '2018-02-11',
+            //   apply_price: 22222,
+            //   application: 'zheshiyongtu',
+            //   project_id: 1,
+            //   project_number: 'XM1232132100123',
+            //   project_content: 'name',
+            //   pay_detail: 1,
+            //   remark: 'beizhu',
+            //   invoice_type: 1,
+            //   type: 1,
+            //   supplier_id: 1,
+            //   payee: 'gongyingshang',
+            //   pay_type: 1,
+
+            //   // 记得加这个结构，把当前的 payee 顺便塞到这个对象
+            //   currentSupplier: {
+            //     id: 1,
+            //     name: 'name',
+            //     bank: 'bank',
+            //     account: 'account'
+            //   },
+
+            //   pictures: [{
+            //     id: 1,
+            //     name: 'tupian',
+            //     url: 'http://www.baidu.jpg'
+            //   }]
+            // }
+            return view('cost.add',['types'=>$types,'data'=>$data]);
         }else{
-            return view('cost.add',['types'=>$types]);
+            return view('cost.add',['types'=>$types,'data'=>[]]);
         }
     }
     public function addPay(Request $post)
@@ -423,15 +476,45 @@ class CostController extends Controller
     {
         $cost = Cost::find(Input::get('id'));
         $invoices = Invoice::select(['id','name'])->where('state','=',1)->get();
-        return view('cost.invoice',['invoices'=>$invoices,'cost'=>$cost]);
+        $lists = CostInvoice::where('cost_id','=',$cost->id)->get();
+        $data = [];
+        if (!empty($lists)){
+            $date = $lists[0]->date;
+            foreach ($lists as $list){
+                $list->date = $list->invoice_date;
+            }
+            $data = [
+                'date'=>$date,
+                'pay_id'=>0,
+                'purchase_id'=>$lists[0]->cost_id,
+                'lists'=>$lists
+            ];
+        }
+        // const invoiceEdit = {
+        //   date: '2018-01-11', //收票日期
+        //   pay_id: '',
+        //   purchase_id: 1,
+        //   lists: [{
+        //     id: 1,
+        //     date: '2018-01-11',
+        //     number: '123123123',
+        //     type: 1,
+        //     without_tax: 123,
+        //     tax: 21,
+        //     with_tax: 12
+        //   }]
+        // }
+        return view('cost.invoice',['invoices'=>$invoices,'cost'=>$cost,'data'=>$data]);
     }
     public function costInvoice(Request $post)
     {
         $lists = $post->lists;
+//        dd($lists);
         $cost_id = $post->purchase_id;
         $date = $post->date;
         DB::beginTransaction();
         try{
+            CostInvoice::where('cost_id','=',$cost_id)->delete();
             foreach ($lists as $list){
                 $invoice = new CostInvoice();
                 $invoice->cost_id = $cost_id;

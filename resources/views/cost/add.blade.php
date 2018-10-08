@@ -14,6 +14,7 @@
 
         <input type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->username}}" id="applyUser">
         <div id="invoiceType" style="display: none">{{json_encode($types)}}</div>
+        <div id="addEdit" style="display: none">{{json_encode($data)}}</div>
         <h1 class="ui header blue aligned center">费用申请</h1>
         <div id="payAdd">
             <h4 class="ui dividing header blue">信息录入</h4>

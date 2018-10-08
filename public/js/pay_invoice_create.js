@@ -14,7 +14,30 @@
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)
           this.invoiceCreate.purchase_id = $('#purchaseId').val()
           this.invoiceCreate.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+
+          const invoiceEdit = $('#invoiceEdit').text().trim()
+          // 数据结构
+          // const invoiceEdit = {
+          //   date: '2018-01-11', //收票日期
+          //   pay_id: '',
+          //   purchase_id: 1,
+          //   lists: [{ 
+          //     id: 1,
+          //     date: '2018-01-11',
+          //     number: '123123123',
+          //     type: 1,
+          //     without_tax: 123,
+          //     tax: 21,
+          //     with_tax: 12
+          //   }]
+          // }
+
+          if (invoiceEdit) {
+            this.invoiceCreate = invoiceEdit === '' ? [] : JSON.parse(invoiceEdit)
+            // this.invoiceCreate = invoiceEdit
+          }
           $('#payInvoiceCreate').removeClass('invisible')
+
         },
         methods: {
 
@@ -42,9 +65,9 @@
                     message: `提交成功`,
                     type: 'success'
                   })
-                  setTimeout(() => {
-                    window.close();
-                  }, 2000)
+                  // setTimeout(() => {
+                  //   window.close();
+                  // }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',

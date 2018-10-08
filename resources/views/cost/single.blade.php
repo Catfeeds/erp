@@ -232,6 +232,12 @@
                 <span>撤销</span>
             </button>
             @endif
+                @if($cost->state==1)
+                    <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('new/pay/add')}}?id={{$cost->id}}')" style="margin:0 20px;">
+                        <i class="icon yen"></i>
+                        <span>编辑</span>
+                    </a>
+                @endif
 
 
 
