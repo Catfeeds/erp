@@ -22,7 +22,7 @@
                         <div class="inline fields">
                             <label class="six wide field flex-center">申请日期</label>
                             <div class="eleven wide field">
-                                <el-date-picker v-model="payForm.date" type="date" placeholder="请选择申请日期" value-format="yyyy-MM-dd">
+                                <el-date-picker v-model="payForm.date" type="date"  placeholder="请选择申请日期" value-format="yyyy-MM-dd" value="{{date('Y-m-d')}}">
                                 </el-date-picker>
                             </div>
                         </div>

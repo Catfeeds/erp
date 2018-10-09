@@ -30,6 +30,7 @@
 
         mounted() {
           this.extrabudgetary.info.date = _helper.timeFormat(new Date(), 'YYYY-MM-DD')
+            console.log(this.extrabudgetary.info.date)
           const invoiceType = $('#invoiceType').text().trim()
           this.extrabudgetary.buy_id = $('#getId').val()
           this.invoiceType = invoiceType === '' ? [] : JSON.parse(invoiceType)

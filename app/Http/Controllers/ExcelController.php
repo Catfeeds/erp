@@ -154,14 +154,14 @@ class ExcelController extends Controller
         $role = getRole('pay_list');
         if ($role=='all'){
             $data = PayApply::select(['number','price','use','project_number','project_content',
-                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->orderBy('id','DESC')->get()->toArray();
+                'proposer','remark','approver','pay_date','cash','transfer','bank','account','other'])->orderBy('id','DESC')->get()->toArray();
         }elseif ($role=='only'){
             $data = PayApply::select(['number','price','use','project_number','project_content',
-                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->where('proposer','=',Auth::user()->username)->orderBy('id','DESC')->get()->toArray();
+                'proposer','remark','approver','pay_date','cash','transfer','bank','account','other'])->where('proposer','=',Auth::user()->username)->orderBy('id','DESC')->get()->toArray();
         }else{
             $idArr = getRoleProject('pay_list');
             $data = PayApply::select(['number','price','use','project_number','project_content',
-                'proposer','approver','pay_date','cash','transfer','bank','account','other'])->whereIn('project_id',$idArr)->orderBy('id','DESC')->get()->toArray();
+                'proposer','remark','approver','pay_date','cash','transfer','bank','account','other'])->whereIn('project_id',$idArr)->orderBy('id','DESC')->get()->toArray();
         }
 
         //
@@ -169,7 +169,7 @@ class ExcelController extends Controller
             $data[$i]['bank'] = $data[$i]['bank'].' '.$data[$i]['account'];
             unset($data[$i]['account']);
         }
-        $tr = [['业务编号','付款金额','用途','项目编号','项目内容','申请人',
+        $tr = [['业务编号','付款金额','用途','项目编号','项目内容','申请人','备注',
             '审批人','付款日期','现金','转账','银行及账号','其他'
         ]];
         $data = array_merge($tr,$data);

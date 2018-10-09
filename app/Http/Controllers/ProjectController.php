@@ -938,6 +938,7 @@ class ProjectController extends Controller
 //                dd($post->all());
                 $purchase = Purchase::find($id);
                 $supplier = Supplier::find($basic['supplier_id']);
+                $purchase->project_id = $project_id?$project_id:0;
                 $purchase->date = $basic['date'];
                 $purchase->supplier = $supplier->name;
                 $purchase->supplier_id = $basic['supplier_id'];

@@ -69,7 +69,7 @@
                         <div class="inline fields">
                             <label class="four wide field">采购日期</label>
                             <div class="twelve wide field">
-                                <el-date-picker v-model="extrabudgetary.info.date" type="date" placeholder="请选择采购日期" value-format="yyyy-MM-dd">
+                                <el-date-picker  type="date" placeholder="请选择采购日期" v-model="extrabudgetary.info.date" value-format="yyyy-MM-dd">
                                 </el-date-picker>
                             </div>
                         </div>
