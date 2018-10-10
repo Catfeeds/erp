@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">费用付款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../pay/list.html">付款审批清单</a>
+            <a class="section" >付款审批清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../pay/single.html?id=FK20171103001">付款审批查询 - {{$apply->number}}</a>
+            <a class="section" >付款审批查询 - {{$apply->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">凭证</div>
         </div>

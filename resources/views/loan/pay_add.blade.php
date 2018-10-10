@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">报销与借款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../pay/pay_list.html">报销付款清单</a>
+            <a class="section" >报销付款清单</a>
             <div class="divider"> / </div>
             <div class="active section">新增报销付款</div>
         </div>

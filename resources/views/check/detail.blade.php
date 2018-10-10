@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">验收与收款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="{{url('check/list')}}">验收与收款清单</a>
+            <a class="section" >验收与收款清单</a>
             <div class="divider"> / </div>
             <div class="active section">项目明细 - 项目编号 {{$project->number}}</div>
         </div>

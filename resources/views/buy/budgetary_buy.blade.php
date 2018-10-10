@@ -7,9 +7,9 @@
         <div class="ui breadcrumb">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/project_list.html">采购立项清单</a>
+            <a class="section" >采购立项清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/budgetary.html">预算内采购</a>
+            <a class="section" >预算内采购</a>
             <div class="divider"> / </div>
             <div class="active section">采购录入</div>
         </div>

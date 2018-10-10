@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/project_list.html">采购立项清单</a>
+            <a class="section" >采购立项清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/budgetary.html">预算{{$purchase->type==1?'内':'外'}}采购</a>
+            <a class="section" >预算{{$purchase->type==1?'内':'外'}}采购</a>
             <div class="divider"> / </div>
             <div class="active section">凭证</div>
         </div>

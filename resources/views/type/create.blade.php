@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" href="../data/type_list.html">项目类别列表</a>
+            <a class="section" >项目类别列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增项目类别</div>
         </div>

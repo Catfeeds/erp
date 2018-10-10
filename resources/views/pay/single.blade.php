@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">费用付款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../pay/list.html">付款审批清单</a>
+            <a class="section" >付款审批清单</a>
             <div class="divider"> / </div>
             <div class="active section">付款审批查询 - {{$apply->number}}</div>
         </div>

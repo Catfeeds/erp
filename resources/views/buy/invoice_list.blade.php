@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/charge_list.html">采购收票清单</a>
+            <a class="section" >采购收票清单</a>
             <div class="divider"> / </div>
             <div class="active section">采购收票查询 - {{$purchase->number}}</div>
         </div>

@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/pay_list.html">采购付款清单</a>
+            <a class="section" >采购付款清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/payment_list.html?id=}}">采购付款查询 - {{\App\Models\Purchase::find($payment->purchase_id)->number}}</a>
+            <a class="section" >采购付款查询 - {{\App\Models\Purchase::find($payment->purchase_id)->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">实际付款</div>
         </div>

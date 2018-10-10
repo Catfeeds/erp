@@ -7,9 +7,9 @@
         <div class="ui breadcrumb">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../build/get_list.html">施工收票清单</a>
+            <a class="section" >施工收票清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../build/get_single.html?id=CG12512312521">施工收票查询 </a>
+            <a class="section" >施工收票查询 </a>
             <div class="divider"> / </div>
             <div class="active section">收票信息录入</div>
         </div>

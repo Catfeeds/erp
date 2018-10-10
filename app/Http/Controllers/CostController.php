@@ -478,7 +478,7 @@ class CostController extends Controller
         $invoices = Invoice::select(['id','name'])->where('state','=',1)->get();
         $lists = CostInvoice::where('cost_id','=',$cost->id)->get();
         $data = [];
-        if (!empty($lists)){
+        if (count($lists)!=0){
             $date = $lists[0]->date;
             foreach ($lists as $list){
                 $list->date = $list->invoice_date;

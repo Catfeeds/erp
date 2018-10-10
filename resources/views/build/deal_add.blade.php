@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="{{url('build/deal/list')}}">备案合同清单</a>
+            <a class="section" >备案合同清单</a>
             <div class="divider"> / </div>
             <div class="active section">录入合同</div>
         </div>

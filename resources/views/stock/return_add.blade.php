@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">库存管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../stock/return_list.html">退料入货清单</a>
+            <a class="section" >退料入货清单</a>
             <div class="divider"> / </div>
             <div class="active section">新增退料入库录入</div>
         </div>

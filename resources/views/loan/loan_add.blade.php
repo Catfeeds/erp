@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">报销与借款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../loan/loan_list.html">借款清单</a>
+            <a class="section" >借款清单</a>
             <div class="divider"> / </div>
             <div class="active section">新增借款申请</div>
         </div>

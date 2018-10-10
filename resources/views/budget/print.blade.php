@@ -7,7 +7,7 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">预算管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../budget/list.html">预算清单</a>
+            <a class="section">预算清单</a>
             <div class="divider"> / </div>
             <div class="active section">预算清单 - 项目号 {{$project->number}}</div>
         </div>

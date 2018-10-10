@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" href="../data/bank_list.html">人员列表</a>
+            <a class="section">人员列表</a>
             <div class="divider"> / </div>
             <div class="active section">查询权限 - {{$user->name}}</div>
         </div>

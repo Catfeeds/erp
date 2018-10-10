@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" href="../data/invoice_list.html">发票列表</a>
+            <a class="section">发票列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增发票类型</div>
         </div>

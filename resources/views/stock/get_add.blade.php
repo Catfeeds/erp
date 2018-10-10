@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">库存管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../stock/get_list.html">领料出库清单</a>
+            <a class="section" >领料出库清单</a>
             <div class="divider"> / </div>
             <div class="active section">新增领料出库</div>
         </div>

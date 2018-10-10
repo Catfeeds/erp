@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" href="../data/supplier_list.html">供应商列表</a>
+            <a class="section" >供应商列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增供应商</div>
         </div>

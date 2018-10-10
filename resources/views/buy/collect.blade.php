@@ -1,4 +1,4 @@
-@extends('layouts.main')
+ @extends('layouts.main')
 @section('title','已立项清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->

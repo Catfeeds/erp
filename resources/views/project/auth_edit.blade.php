@@ -7,9 +7,9 @@
         <div class="ui breadcrumb">
             <a class="section">项目立项管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../project/detail.html">项目明细</a>
+            <a class="section" >项目明细</a>
             <div class="divider"> / </div>
-            <a class="section" href="../project/auth.html?id=12">权限设置 - {{$project->number}}</a>
+            <a class="section" >权限设置 - {{$project->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">录入权限 - {{$user->name}}</div>
         </div>

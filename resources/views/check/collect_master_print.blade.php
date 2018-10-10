@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">验收与收款管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../check/list.html">验收与收款清单</a>
+            <a class="section" >验收与收款清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../check/detail.html">项目明细 - 项目号 15823910212</a>
+            <a class="section" >项目明细 - 项目号 {{$project->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">主合同收款凭证</div>
         </div>

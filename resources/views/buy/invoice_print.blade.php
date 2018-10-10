@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/charge_list.html">采购收票清单</a>
+            <a class="section" >采购收票清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../buy/invoice_list.html?id=CG12512312521">采购收票查询 - {{$purchase->number}}</a>
+            <a class="section" >采购收票查询 - {{$purchase->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">凭证</div>
         </div>

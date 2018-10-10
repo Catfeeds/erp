@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">库存管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../build/finish_list.html">完工请款清单</a>
+            <a class="section" >完工请款清单</a>
             <div class="divider"> / </div>
-            <a class="section" href="../build/finish_single.html?id=WGQK20171103001">请款查询 - {{$apply->number}}</a>
+            <a class="section">请款查询 - {{$apply->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">查看凭证</div>
         </div>

@@ -7,7 +7,7 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">库存管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="../pay/list.html">退货出库清单</a>
+            <a class="section" >退货出库清单</a>
             <div class="divider"> / </div>
             <div class="active section">退货出库查询 - {{$record->number}}</div>
         </div>
