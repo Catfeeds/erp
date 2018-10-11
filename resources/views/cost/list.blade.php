@@ -77,7 +77,7 @@
                 </thead>
                 <tbody>
                 @foreach($costs as $cost)
-                <tr>
+                <tr @if($cost->state==2)style="background-color:#CACBCD"@else @endif>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('new/pay/single')}}?id={{$cost->id}}')">{{$cost->number}}</a>
                     </td>
