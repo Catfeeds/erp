@@ -24,7 +24,7 @@
 <!-- 通用布局 === 复用 -->
 <div class="index-navbar ui menu blue-background print-hide">
     {{--<a href="{{url('')}}">--}}
-    <span id="sidebarBtn" class="index-navbar-item-left pull-left" onclick="window.location.href='{{url('')}}'">
+    <span id="sidebarBtn" class="index-navbar-item-left pull-left">
       <i class="sidebar icon"></i>
       <span>广东思域</span>
     </span>
