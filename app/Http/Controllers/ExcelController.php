@@ -1034,9 +1034,9 @@ class ExcelController extends Controller
                 $swap['type'] = $item->type==1?'内':'外';
                 $received = 0;
                 $need = 0;
-                $data  = $item->lists()->get();
-                if (!empty($data)){
-                    foreach ($data as $datum){
+                $swapData  = $item->lists()->get();
+                if (count($swapData)!=0){
+                    foreach ($swapData as $datum){
                         $received+= $datum->price*$datum->received;
                         $need+= $datum->price*$datum->need;
                     }
