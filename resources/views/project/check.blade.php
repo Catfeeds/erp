@@ -1,15 +1,15 @@
 @extends('layouts.main_no_nav')
-@section('title','已立项清单')
+@section('title','项目详情')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
 
         <div class="ui breadcrumb">
-            <a class="section">项目立项管理</a>
+            <a class="section" href="{{url('')}}">项目立项管理</a>
             <div class="divider"> / </div>
-            <a class="section" >已立项清单</a>
+            <a class="section" href="{{url('project/list')}}" >已立项清单</a>
             <div class="divider"> / </div>
-            <div class="active section">15823910212</div>
+            <div class="active section">{{$project->number}}</div>
         </div>
         <input type="hidden" value="{{$project->id}}" id="projectId">
         <h1 class="inline-center">项目编号 - {{$project->number}}</h1>

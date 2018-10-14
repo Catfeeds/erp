@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','验收与收款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">

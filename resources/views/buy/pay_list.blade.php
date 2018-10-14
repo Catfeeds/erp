@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','采购付款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -97,12 +97,12 @@
                         <a href="javascript:_helper.fullWindow('{{url('buy/payment/list')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'),2)}} </td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content" title="{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>{{number_format($list->payments()->sum('pay_price'),2)}} ￥</td>
-                    <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'),2)}} ￥</td>
+                    <td>{{number_format($list->payments()->sum('pay_price'),2)}} </td>
+                    <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'),2)}} </td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                     <td>{{$list->count==0?'':'待处理'}}</td>
                     <td title="{{$list->cheque}}">{{$list->cheque}}</td>

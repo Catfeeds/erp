@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','项目明细清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -59,48 +59,48 @@
                     {{--<td rowspan="2">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<p>项目实际金额</p>--}}
-                            {{--<p>{{$project->mainContract()->sum('price')+$project->outContract()->sum('price')}} ￥</p>--}}
+                            {{--<p>{{$project->mainContract()->sum('price')+$project->outContract()->sum('price')}} </p>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>主合同金额</td>--}}
-                    {{--<td>{{$project->mainContract()->sum('price')}} ￥</td>--}}
+                    {{--<td>{{$project->mainContract()->sum('price')}} </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>项目内容</td>--}}
                     {{--<td class="detail__content">{{$project->content}}</td>--}}
                     {{--<td>分包合同金额</td>--}}
-                    {{--<td>{{$project->outContract()->sum('price')}} ￥</td>--}}
+                    {{--<td>{{$project->outContract()->sum('price')}} </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>项目经理</td>--}}
                     {{--<td>{{$project->pm}}</td>--}}
                     {{--<td rowspan="5">其他金额相关</td>--}}
                     {{--<td>项目剩余未收款</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>合同金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                     {{--<td>已开票请款</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>约定完工日期</td>--}}
                     {{--<td>2018-02-11</td>--}}
                     {{--<td>主合同收款</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>验收日期</td>--}}
                     {{--<td>2018-02-11</td>--}}
                     {{--<td>分包合同收款</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>保修截至日期</td>--}}
                     {{--<td>2018-02-11</td>--}}
                     {{--<td>应收账款</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td class="center aligned" style="font-size:40px;" colspan="3" rowspan="5">--}}
@@ -109,27 +109,27 @@
                     {{--<td rowspan="5">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<p>已发生成本</p>--}}
-                            {{--<p>12,423,222 ￥</p>--}}
+                            {{--<p>12,423,222 </p>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>领料成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>施工成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>报销项目成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>费用付款其他成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>退料成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
 
                     {{--@endforeach--}}
@@ -172,22 +172,22 @@
                     <td>{{date('Y-m-d',$project->finishTime)}}</td>
                     <td>{{$project->acceptance_date}}</td>
                     <td>{{$project->deadline}}</td>
-                    <td>{{number_format($project->situation()->sum('price'),2)}}￥</td>
-                    <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}￥</td>
-                    <td class="function-one">{{number_format($project->situation()->where('type','=',2)->sum('price'),2)}}￥</td>
-                    <td>{{number_format($project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}￥</td>
-                    <td class="function-two">{{number_format($project->situation()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',2)->sum('price'),2)}}￥</td>
-                    <td class="function-two">{{number_format($project->situation()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}￥</td>
-                    <td>{{number_format($project->invoices()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}￥</td>
-                    <td class="function-three">{{number_format($project->invoices()->sum('price'),2)}}￥</td>
-                    <td class="function-three">{{number_format($project->collects()->where('type','=',2)->sum('price'),2)}}￥</td>
-                    <td class="function-three">{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}}￥</td>
-                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')-$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}￥</td>
-                    <td class="function-four">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}￥</td>
-                    <td class="function-four">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}￥</td>
-                    <td class="function-four">{{number_format($project->loanSubmits()->where('state','>=',3)->sum('price'),2)}}￥</td>
-                    <td class="function-four">{{number_format($project->payApplies()->where('state','>=',2)->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}￥</td>
-                    <td class="function-four">{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'),2)}}￥</td>
+                    <td>{{number_format($project->situation()->sum('price'),2)}}</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',2)->sum('price'),2)}}</td>
+                    <td>{{number_format($project->situation()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}</td>
+                    <td class="function-two">{{number_format($project->situation()->where('type','=',1)->sum('price')-$project->collects()->where('type','=',2)->sum('price'),2)}}</td>
+                    <td class="function-two">{{number_format($project->situation()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}</td>
+                    <td>{{number_format($project->invoices()->sum('price')-$project->collects()->where('type','=',2)->sum('price')-$project->collects()->where('type','=',3)->sum('price'),2)}}</td>
+                    <td class="function-three">{{number_format($project->invoices()->sum('price'),2)}}</td>
+                    <td class="function-three">{{number_format($project->collects()->where('type','=',2)->sum('price'),2)}}</td>
+                    <td class="function-three">{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}}</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')-$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td class="function-four">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}</td>
+                    <td class="function-four">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}</td>
+                    <td class="function-four">{{number_format($project->loanSubmits()->where('state','>=',3)->sum('price'),2)}}</td>
+                    <td class="function-four">{{number_format($project->payApplies()->where('state','>=',2)->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}</td>
+                    <td class="function-four">{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('project/auth')}}?id={{$project->id}}')">权限设置</a>
                     </td>

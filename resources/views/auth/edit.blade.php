@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','权限编辑')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
@@ -9,7 +9,7 @@
             <div class="divider"> / </div>
             <a class="section">人员列表</a>
             <div class="divider"> / </div>
-            <div class="active section">权限编辑 - 陈巧笑</div>
+            <div class="active section">权限编辑 </div>
         </div>
         <h4 class="ui header">操作人员：
             <span class="font-normal">{{\Illuminate\Support\Facades\Auth::user()->username}}</span>

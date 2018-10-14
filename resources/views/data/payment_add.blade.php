@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','新增费用类型')
 @section('content')
 
     <!-- 没有导航的单独窗口页面 -->

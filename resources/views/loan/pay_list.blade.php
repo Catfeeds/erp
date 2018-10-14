@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','报销付款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -63,10 +63,10 @@
                         <a href="javascript:_helper.fullWindow('{{url('loan/pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->applier}}</td>
-                    <td>{{number_format($list->price,2)}}￥</td>
-                    <td>{{number_format($list->deduction,2)}}￥</td>
-                    <td>{{number_format($list->cash,2)}}￥</td>
-                    <td>{{number_format($list->transfer,2)}}￥</td>
+                    <td>{{number_format($list->price,2)}}</td>
+                    <td>{{number_format($list->deduction,2)}}</td>
+                    <td>{{number_format($list->cash,2)}}</td>
+                    <td>{{number_format($list->transfer,2)}}</td>
                     <td>{{$list->bank}} {{$list->account}}</td>
                     <td>{{$list->BXNumber}}</td>
                     <td>{{\App\User::find($list->worker)->username}}</td>

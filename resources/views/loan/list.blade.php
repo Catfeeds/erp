@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','报销与借款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -25,8 +25,8 @@
                 @foreach($lists as $list)
                 <tr>
                     <td>{{$list['name']}}</td>
-                    <td>{{number_format($list['loan_price'],2)}}￥</td>
-                    <td>{{number_format($list['submit_price'],2)}}￥</td>
+                    <td>{{number_format($list['loan_price'],2)}}</td>
+                    <td>{{number_format($list['submit_price'],2)}}</td>
                 </tr>
                 @endforeach
                     @else

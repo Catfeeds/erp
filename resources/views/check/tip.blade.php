@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','收款提示')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
@@ -9,7 +9,7 @@
             <div class="divider"> / </div>
             <a class="section" >验收与收款清单</a>
             <div class="divider"> / </div>
-            <a class="section" >项目明细 - 项目号 15823910212</a>
+            <a class="section" >项目明细 - 项目号 {{$project->number}}</a>
             <div class="divider"> / </div>
             <div class="active section">收款提示</div>
         </div>

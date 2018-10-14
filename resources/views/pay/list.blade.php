@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','付款审批清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -74,7 +74,7 @@
                         <td>
                             <a href="javascript:_helper.fullWindow('{{url('pay/single')}}?id={{$list->id}}')">{{$list->number}}</a>
                         </td>
-                        <td>{{number_format($list->price,2)}}￥</td>
+                        <td>{{number_format($list->price,2)}}</td>
                         <td style="max-width:350px;">{{$list->use}}</td>
                         <td>{{$list->project_number}}</td>
                         <td class="table-content" title="{{$list->project?$list->project->name:''}}">{{$list->project?$list->project->name:''}}</td>
@@ -87,10 +87,10 @@
                             @else
 
                             <td>{{$list->pay_date}}</td>
-                            <td>{{number_format($list->cash,2)}}￥</td>
-                            <td>{{number_format($list->transfer,2)}}￥</td>
+                            <td>{{number_format($list->cash,2)}}</td>
+                            <td>{{number_format($list->transfer,2)}}</td>
                             <td>{{$list->bank}} {{$list->account}}</td>
-                            <td>{{number_format($list->other,2)}}￥</td>
+                            <td>{{number_format($list->other,2)}}</td>
                             <td>{{$list->manager}}</td>
                         @endif
                     </tr>

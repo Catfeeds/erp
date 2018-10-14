@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','库存清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -67,8 +67,8 @@
                     <td>{{$stocks[$i]->material()->factory}}</td>
                     <td>{{$stocks[$i]->material()->unit}}</td>
                     <td>{{$stocks[$i]->number}} </td>
-                    <td>￥{{number_format($stocks[$i]->cost,2)}}</td>
-                    <td>￥{{$stocks[$i]->number==0?0:number_format($stocks[$i]->cost/$stocks[$i]->number,2),2}} </td>
+                    <td>{{number_format($stocks[$i]->cost,2)}}</td>
+                    <td>{{$stocks[$i]->number==0?0:number_format($stocks[$i]->cost/$stocks[$i]->number,2),2}} </td>
                     <td>{{$stocks[$i]->warehouse()->name}}</td>
                 </tr>
                 {{--@endforeach--}}

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','采购收货入库清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -80,12 +80,12 @@
                         <a href="javascript:_helper.fullWindow('{{url('store/buy_check')}}?id={{$list->id}}')">{{$list->number}}</a>
                     </td>
                     <td>{{$list->supplier}}</td>
-                    <td>{{number_format($list->lists()->sum('cost'),2)}} ￥</td>
+                    <td>{{number_format($list->lists()->sum('cost'),2)}} </td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->number}}</td>
                     <td class="table-content" title="{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}">{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->name}}</td>
                     <td>{{$list->project_id==0?'':\App\Models\Project::find($list->project_id)->pm}}</td>
-                    <td>{{number_format($list->received,2)}} ￥</td>
-                    <td>{{number_format($list->need,2)}} ￥</td>
+                    <td>{{number_format($list->received,2)}} </td>
+                    <td>{{number_format($list->need,2)}} </td>
                     <td>{{$list->need==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach

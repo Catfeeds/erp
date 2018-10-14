@@ -236,8 +236,10 @@ class ProjectController extends Controller
                 $project->situation()->delete();
             }else{
                 $project = new Project();
-                $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();
+//                $count = Project::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('XM');
                 $project->number = 'XM'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('XM',$count+1,getRedisTime());
             }
             $project->name = $projectData['name'];
             $project->PartyA = $projectData['PartyA'];
@@ -1029,8 +1031,10 @@ class ProjectController extends Controller
             }else{
                 $purchase = new Purchase();
                 $purchase->project_id = $project_id?$project_id:0;
-                $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
+//                $count = Purchase::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('CG');
                 $purchase->number = 'CG'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('CG',$count+1,getRedisTime());
                 $supplier = Supplier::find($basic['supplier_id']);
                 $purchase->date = $basic['date'];
                 $purchase->supplier = $supplier->name;
@@ -1131,18 +1135,30 @@ class ProjectController extends Controller
         $role = getRole('buy_list');
         $db = Purchase::where('state','=',3);
         $search = Input::get('search');
+        $type = Input::get('seartch-type');
+        //dd($search);
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
             $db->whereIn('project_id',$idArr);
         }
-        if ($search){
+        if ($type){
+            switch ($type){
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $db->where('supplier','like','%'.$search.'%');
+                    break;
+                case 3:
+                    $idArray = Project::where('number','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+                case 4:
+                    $idArray = Project::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
 
-            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
-//            dd($idArray);
-            if (!empty($idArray)){
-                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
-            }else{
-                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+
             }
         }
         $lists = $db->orderBy('id','DESC')->paginate(10);

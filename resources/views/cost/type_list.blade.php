@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <div class="active section">费用付款</div>
+            <div class="active section">费用类型</div>
         </div>
 
         <!-- 操作区域 -->

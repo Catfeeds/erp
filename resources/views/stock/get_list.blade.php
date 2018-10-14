@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','领料出库清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -77,9 +77,9 @@
                     <td>{{$list->material->model}}</td>
                     <td>{{$list->material->factory}}</td>
                     <td>{{$list->material->unit}}</td>
-                    <td>￥{{number_format($list->price,2)}} </td>
+                    <td>{{number_format($list->price,2)}} </td>
                     <td>{{$list->sum}}</td>
-                    <td>￥{{number_format($list->cost,2)}} </td>
+                    <td>{{number_format($list->cost,2)}} </td>
                     <td>{{$list->record->project_number}}</td>
                     <td class="table-content" title="{{empty($list->project)?'':$list->project->name}}">{{empty($list->project)?'':$list->project->name}}</td>
                     <td>{{empty($list->project)?'':$list->project->pm}}</td>

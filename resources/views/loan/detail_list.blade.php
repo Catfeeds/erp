@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','查询明细')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -12,7 +12,7 @@
 
         <!-- 操作 -->
         <input type="hidden" value="" id="originName">
-        <h4 class="ui dividing header blue">录入基本信息</h4>
+        <h4 class="ui dividing header blue">基本信息</h4>
         <div class="content-operation invisible" id="loanDetailList">
             <form action="">
                 <div class="ui form">

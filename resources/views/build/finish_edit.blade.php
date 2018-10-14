@@ -8,7 +8,7 @@
         <div class="divider"> / </div>
         <a class="section" >完工请款清单</a>
         <div class="divider"> / </div>
-        <div class="active section">请款修改 - WGQK20171103001</div>
+        <div class="active section">请款修改</div>
     </div>
 
     <div style="display: none" id="getData">{{json_encode($apply)}}</div>

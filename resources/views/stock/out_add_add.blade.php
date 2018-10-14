@@ -1,5 +1,5 @@
 @extends('layouts.main_no_nav')
-@section('title','已立项清单')
+@section('title','退货出库')
 @section('content')
     <div class="ui breadcrumb">
         <a class="section">库存管理</a>

@@ -359,8 +359,10 @@ class BuildController extends Controller
             }else{
                 $pay = new BuildPayFinish();
                 $pay->project_team = $post->get('project_id');
-                $count = BuildPayFinish::whereDate('created_at', date('Y-m-d',time()))->count();
-                $pay->number = 'SQFK'.date('Ymd',time()).sprintf("%03d", $count+1);
+//                $count = BuildPayFinish::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('SGFK');
+                $pay->number = 'SGFK'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('SGFK',$count+1,getRedisTime());
                 $projectTeam = ProjectTeam::find($pay->project_team);
                 $projectTeam->pay_price += $post->get('price');
                 $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;

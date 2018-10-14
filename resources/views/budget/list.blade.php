@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','预算清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -58,17 +58,17 @@
                     {{--<td rowspan="2">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>项目实际金额</span>--}}
-                            {{--<span>{{$project->price}} ￥</span>--}}
+                            {{--<span>{{$project->price}} </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>主合同金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>项目内容</td>--}}
                     {{--<td class="detail__content">{{$project->name}}</td>--}}
                     {{--<td>分包合同金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>项目经理</td>--}}
@@ -76,23 +76,23 @@
                     {{--<td rowspan="3">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>预算总金额</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>物料采购金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>合同金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                     {{--<td>工程金额</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>验收日期</td>--}}
                     {{--<td>2018-11-21</td>--}}
                     {{--<td>其他</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td>保修截至日期</td>--}}
@@ -100,16 +100,16 @@
                     {{--<td rowspan="7">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>已发生成本</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>领料成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td colspan="3" class="font-bold">成本 / 预算</td>--}}
                     {{--<td>施工成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td colspan="2">总成本 / 预算</td>--}}
@@ -117,13 +117,13 @@
                     {{--<td rowspan="3">--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>报销项目成本</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                     {{--<td>--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>报销材料款</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                 {{--</tr>--}}
@@ -133,7 +133,7 @@
                     {{--<td>--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>报销材料款</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                 {{--</tr>--}}
@@ -143,7 +143,7 @@
                     {{--<td>--}}
                         {{--<div class="flex-row flex-between">--}}
                             {{--<span>报销工程款</span>--}}
-                            {{--<span>12,423,222 ￥</span>--}}
+                            {{--<span>12,423,222 </span>--}}
                         {{--</div>--}}
                     {{--</td>--}}
                 {{--</tr>--}}
@@ -151,14 +151,14 @@
                     {{--<td colspan="2">其他成本 / 预算</td>--}}
                     {{--<td>123,523 / 123,623 = 0.9</td>--}}
                     {{--<td>费用付款其他成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--<tr>--}}
                     {{--<td class="center aligned" style="font-size: 40px;" colspan="3">--}}
                         {{--<a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>--}}
                     {{--</td>--}}
                     {{--<td>退料成本</td>--}}
-                    {{--<td>12,423,222 ￥</td>--}}
+                    {{--<td>12,423,222 </td>--}}
                 {{--</tr>--}}
                 {{--</tbody>--}}
                 {{--@endforeach--}}
@@ -197,25 +197,25 @@
                     <td>{{$project->number}}</td>
                     <td title="{{$project->name}}">{{$project->name}}</td>
                     <td>{{$project->pm}}</td>
-                    <td>￥{{number_format($project->situation()->sum('price'),2)}}</td>
-                    <td class="function-one">￥{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}</td>
-                    <td class="function-one">￥{{number_format($project->situation()->where('type','=',2)->sum('price'),2)}}</td>
-                    <td>￥{{number_format($project->budget()->sum('cost'),2)}}</td>
-                    <td class="function-two">￥{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}</td>
-                    <td class="function-two">￥{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}</td>
-                    <td class="function-two">￥{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}</td>
-                    <td>￥{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
-                    <td class="function-three">￥{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}</td>
-                    <td class="function-three">￥{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}</td>
-                    <td class="function-three">￥{{number_format($project->materialCount),2}}</td>
-                    <td class="function-three">￥{{number_format($project->engineCount),2}}</td>
-                    <td class="function-three">￥{{number_format($project->otherCount),2}}</td>
-                    <td class="function-three">￥{{number_format($project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}</td>
-                    <td class="function-three">￥{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
-                    <td>￥{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->sum('cost'),2)}}</td>
-                    <td>￥{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}</td>
-                    <td>￥{{number_format($project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount,2)}}/{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}</td>
-                    <td>￥{{number_format($project->otherCount+$project->payApplies()->where('state','>=',2)->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->situation()->sum('price'),2)}}</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',1)->sum('price'),2)}}</td>
+                    <td class="function-one">{{number_format($project->situation()->where('type','=',2)->sum('price'),2)}}</td>
+                    <td>{{number_format($project->budget()->sum('cost'),2)}}</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td class="function-two">{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}</td>
+                    <td class="function-three">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}</td>
+                    <td class="function-three">{{number_format($project->materialCount),2}}</td>
+                    <td class="function-three">{{number_format($project->engineCount),2}}</td>
+                    <td class="function-three">{{number_format($project->otherCount),2}}</td>
+                    <td class="function-three">{{number_format($project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}</td>
+                    <td class="function-three">{{number_format($project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->materialCount-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}/{{number_format($project->budget()->where('type','=',1)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->requestPayments()->where('state','=',3)->sum('price')+$project->engineCount,2)}}/{{number_format($project->budget()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->otherCount+$project->payApplies()->where('state','>=',2)->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price'),2)}}/{{number_format($project->budget()->where('type','=',3)->sum('cost'),2)}}</td>
                     <td>
                         <a href="javascript:_helper.fullWindow('{{url('budget/detail')}}?id={{$project->id}}')">查看</a>
                     </td>

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','采购收票清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -87,13 +87,13 @@
                         <a href="javascript:_helper.fullWindow('{{url('buy/list/invoice')}}?id={{$purchase->id}}')">{{$purchase->number}}</a>
                     </td>
                     <td>{{$purchase->supplier}}</td>
-                    <td>{{number_format($purchase->lists()->sum('cost'),2)}} ￥</td>
+                    <td>{{number_format($purchase->lists()->sum('cost'),2)}} </td>
                     <td>{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->number}}</td>
                     <td class="table-content" title="{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}">{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->name}}</td>
                     <td>{{$purchase->project_id==0?'':\App\Models\Project::find($purchase->project_id)->pm}}</td>
                     <td>{{$purchase->content}}</td>
-                    <td>{{number_format($purchase->invoices()->sum('with_tax'),2)}} ￥</td>
-                    <td>{{number_format($purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax'),2)}} ￥</td>
+                    <td>{{number_format($purchase->invoices()->sum('with_tax'),2)}} </td>
+                    <td>{{number_format($purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax'),2)}} </td>
                     <td>{{$purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')==0?'已':'未'}}结清</td>
                 </tr>
                 @endforeach

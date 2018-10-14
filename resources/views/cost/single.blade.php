@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','凭证')
+@section('title','付款审批查询')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">

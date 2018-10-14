@@ -1,5 +1,5 @@
 @extends('layouts.main_no_nav')
-@section('title','已立项清单')
+@section('title','凭证')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
@@ -11,7 +11,7 @@
             <div class="divider"> / </div>
             <a class="section" >付款查询 </a>
             <div class="divider"> / </div>
-            <div class="active section">查看凭证</div>
+            <div class="active section">凭证</div>
         </div>
 
         <h1 class="ui header center aligned">施工付款记帐凭证</h1>

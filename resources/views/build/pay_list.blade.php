@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','施工付款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -81,10 +81,10 @@
                     <td>{{$list->project_number}}</td>
                     <td title="{{$list->project->name}}">{{$list->project->name}}</td>
                     <td>{{$list->project->pm}}</td>
-                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price'),2)}} ￥</td>
-                    <td>{{number_format($list->applies()->where('state','>=',3)->sum('apply_price'),2)}} ￥</td>
-                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'),2)}} ￥</td>
-                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'),2)}}￥</td>
+                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price'),2)}} </td>
+                    <td>{{number_format($list->applies()->where('state','>=',3)->sum('apply_price'),2)}} </td>
+                    <td>{{number_format($list->applies()->where('state','=',4)->sum('apply_price'),2)}} </td>
+                    <td>{{number_format($list->payments()->where('state','>=',3)->sum('price')-$list->applies()->where('state','=',4)->sum('apply_price'),2)}}</td>
 {{--                    <td>{{$list->need_price==0?'已处理':'待处理'}}</td>--}}
                     <td style="white-space:nowrap;">
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('build/pay/single')}}?id={{$list->id}}')">查看</a>

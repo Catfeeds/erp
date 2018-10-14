@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','借款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -40,7 +40,7 @@
                 {{--@foreach($lists as $list)--}}
                 <tr data-id="{{$lists[$i]->id}}">
                     <td>{{$lists[$i]->number}}</td>
-                    <td>{{number_format($lists[$i]->price,2)}}￥</td>
+                    <td>{{number_format($lists[$i]->price,2)}}</td>
                     <td style="max-width:300px">{{$lists[$i]->reason}}</td>
                     <td>{{$lists[$i]->borrower}}</td>
                     @if($lists[$i]->approver_id==0)

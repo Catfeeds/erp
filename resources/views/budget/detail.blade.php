@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','查看预算 - 项目号 '.$project->number)
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">预算管理</a>
             <div class="divider"> / </div>
-            <a class="section" >预算清单</a>
+            <a class="section" href="{{url('budget/list')}}" >预算清单</a>
             <div class="divider"> / </div>
             <div class="active section">查看预算 - 项目号 {{$project->number}}</div>
         </div>

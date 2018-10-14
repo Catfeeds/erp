@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','人员权限')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <div class="active section">人员列表</div>
+            <div class="active section">人员权限</div>
         </div>
 
         <!-- 操作区域 -->

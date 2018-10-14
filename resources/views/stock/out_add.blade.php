@@ -1,5 +1,5 @@
 @extends('layouts.main_no_nav')
-@section('title','已立项清单')
+@section('title','新增退货出库')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">

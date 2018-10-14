@@ -1,5 +1,5 @@
  @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','采购汇总清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -57,7 +57,7 @@
             </form>
         </div>
         <!-- / 操作区域 -->
-        <h1 class="ui header center aligned">项目采购物料清单</h1>
+        <h1 class="ui header center aligned">采购汇总清单</h1>
 
         <div class="table-head-nowrap">
             @if(!empty($project))

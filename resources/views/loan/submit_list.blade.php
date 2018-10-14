@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','报销申请清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -112,7 +112,7 @@
                     @else
                         <td>项目报销</td>
                     @endif
-                    <td>{{number_format($list->price,2)}}￥</td>
+                    <td>{{number_format($list->price,2)}}</td>
                     <td>
                         @if($list->project_id!=0)
                             {{\App\Models\Project::find($list->project_id)->number}}

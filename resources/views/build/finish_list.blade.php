@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','已立项清单')
+@section('title','完工请款清单')
 @section('content')
     <!-- 主体内容 === 不可复用 -->
     <div class="index-content print-no-padding">
@@ -74,7 +74,7 @@
                     <td>{{$apply->project_number}}</td>
                     <td class="table-content" title="{{$apply->project->name}}">{{$apply->project->name}}</td>
                     <td>{{$apply->project->pm}}</td>
-                    <td>￥{{number_format($apply->price,2)}} </td>
+                    <td>{{number_format($apply->price,2)}} </td>
                     <td>{{$apply->applier}}</td>
                     @if($apply->state<2)
                     <td>未复核</td>

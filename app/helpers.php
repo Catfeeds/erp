@@ -36,4 +36,33 @@ if (!function_exists('getRole')){
         }
         return false;
     }
+    /**
+     * 设置redis缓存数据
+     *
+     */
+    if (!function_exists('setRedisData')){
+        function setRedisData($key,$value,$time=0){
+            \Illuminate\Support\Facades\Redis::set($key,$value);
+            if ($time!=0){
+                \Illuminate\Support\Facades\Redis::expire($key,$time);
+            }
+        }
+    }
+    /**
+     * 获取redis缓存数据
+     */
+    if (!function_exists('getRedisData')){
+        function getRedisData($key,$default=0){
+            $data = \Illuminate\Support\Facades\Redis::get($key);
+            if (!$data){
+                return $default;
+            }
+            return $data;
+        }
+    }
+    if (!function_exists('getRedisTime')){
+        function getRedisTime(){
+            return strtotime(date('Y-m-d').'23:59:59')-time();
+        }
+    }
 }

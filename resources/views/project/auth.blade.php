@@ -1,5 +1,5 @@
 @extends('layouts.main_no_nav')
-@section('title','已立项清单')
+@section('title','项目权限设置')
 @section('content')
     <!-- 没有导航的单独窗口页面 -->
     <div class="normal-content print-no-padding">
@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">项目立项管理</a>
             <div class="divider"> / </div>
-            <a class="section" >项目明细</a>
+            <a class="section" href="{{url('project/check?id=')}}{{$project->id}}" >项目明细</a>
             <div class="divider"> / </div>
             <div class="active section">权限设置 - {{$project->number}}</div>
         </div>

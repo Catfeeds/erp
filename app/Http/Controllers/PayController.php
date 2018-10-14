@@ -37,10 +37,12 @@ class PayController extends Controller
     }
     public function createPayApply(Request $post)
     {
-        $count = PayApply::whereDate('created_at', date('Y-m-d',time()))->count();
+//        $count = PayApply::whereDate('created_at', date('Y-m-d',time()))->count();
+        $count = getRedisData('FK');
         $apply = new PayApply();
         $apply->apply_date = $post->get('date');
         $apply->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
+        setRedisData('FK',$count+1,getRedisTime());
         $apply->price = $post->get('amount');
         $apply->use = $post->get('usage');
         $project_id = $post->get('project_id');
@@ -216,8 +218,10 @@ class PayController extends Controller
             $apply = new LoanList();
             $apply->borrower = $post->get('loan_user');
             $apply->borrower_id = Auth::id();
-            $count = LoanList::whereDate('created_at', date('Y-m-d',time()))->count();
+//            $count = LoanList::whereDate('created_at', date('Y-m-d',time()))->count();
+            $count = getRedisData('JK');
             $apply->number = 'JK'.date('Ymd',time()).sprintf("%03d", $count+1);
+            setRedisData('JK',$count+1,getRedisTime());
             $apply->apply_date = $post->get('date');
             $apply->price = $post->get('preice');
             $apply->reason = $post->get('reason');
@@ -427,8 +431,10 @@ class PayController extends Controller
                 $loan->lists()->delete();
             }else{
                 $loan = new LoanSubmit();
-                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+//                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('BX');
                 $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('BX',$count+1,getRedisTime());
             }
             $loan->user_id = Auth::id();
             $loan->type = 1;
@@ -496,8 +502,10 @@ class PayController extends Controller
                 $loan->checker = '';
             }else{
                 $loan = new LoanSubmit();
-                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+//                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('BX');
                 $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('BX',$count+1,getRedisTime());
             }
             $loan->user_id = Auth::id();
             $loan->type = 2;
@@ -591,8 +599,10 @@ class PayController extends Controller
                 $pay = LoanPay::find($id);
             }else{
                 $pay = new LoanPay();
-                $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
+//                $count = LoanPay::whereDate('created_at', date('Y-m-d',time()))->count();
+                $count = getRedisData('BXFK');
                 $pay->number = 'BXFK'.date('Ymd',time()).sprintf("%03d", $count+1);
+                setRedisData('BXFK',$count+1,getRedisTime());
             }
 //        $pay->user_id = $post->get('user_id');
             $pay->date = $post->get('date');
@@ -780,10 +790,12 @@ class PayController extends Controller
             }
             $lists = $post->get('lists');
             $pictures = $post->get('pictures');
-            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
+//            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
+            $count = getRedisData('QK');
             $payment = new RequestPayment();
             $payment->project_team = $projectTeam->id;
             $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
+            setRedisData('QK',$count+1,getRedisTime());
             $payment->team = $team->name;
             $payment->manager = $team->manager;
 //        $project = Project::where('number','=',$post->get('project_id'))->first();
