@@ -14,6 +14,7 @@
     <!-- <link rel="stylesheet" href="../../plugins/nprogress/nprogress.css"> -->
     <link rel="stylesheet" type="text/css" href="{{url('css/erp.css')}}">
     <script src="{{url('plugins/jquery/jquery.3.2.1.min.js')}}"></script>
+    <script src="{{url('plugins/bignumber/bignumber.min.js')}}"></script>
     <script src="{{url('layer/layer.js')}}"></script>
     <!-- /全局依赖 -->
 

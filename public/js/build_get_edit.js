@@ -9,23 +9,25 @@
             get_date: '',
             invoice_date: '',
             type: '',
-            number: '',
-            tax: '',
-              without_tax:''
+            amount_without_tax: '',
+            tax: ''
           },
-            invoiceType: []
+          invoice_type: []
         },
         mounted() {
           const invoice_type = $("#invoiceTypeList").text().trim()
-          this.invoiceType = invoice_type === ''?[]:JSON.parse(invoice_type)
+          this.invoice_type = invoice_type === '' ? [] : JSON.parse(invoice_type)
           this.form.get_date = $('#getDate').val()
           this.form.invoice_date = $('#invoiceDate').val()
           this.form.type = $('#invoiceType').val()
-          this.form.tax = $('#tax').val()
-          this.form.without_tax = $('#withoutTax').val()
-          this.form.number = $('#number').val()
-            console.log(this.form)
           $('#buildGetEdit').removeClass('invisible')
+        },
+        computed: {
+          withTax() {
+            const amount = this.form.amount_without_tax
+            const tax = this.form.tax
+            return new BigNumber(amount).plus(tax)
+          }
         },
         methods: {}
       })

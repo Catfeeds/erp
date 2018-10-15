@@ -92,7 +92,8 @@
                                 <div class="twelve wide field">
 
                                     <!-- <input type="number" name="amount" placeholder="请输入含税金额" value="200000.00"> -->
-                                    <div class="fake-input">@{{ parseFloat(form.tax)+parseFloat(form.without_tax) }}￥</div>
+                                    {{--<div class="fake-input">@{{ parseFloat(form.tax)+parseFloat(form.without_tax) }}￥</div>--}}
+                                    <div class="fake-input">{{ withTax.toLocaleString('en-US') }}￥</div>
                                 </div>
                             </div>
                         </div>

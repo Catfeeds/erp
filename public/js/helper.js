@@ -41,7 +41,7 @@
           if (key === 'Y+') {
             result = result.replace(RegExp.$1, timeType[key])
           } else {
-            result = result.replace(RegExp.$1, timeType[key] > 10 ? timeType[key] : `0${timeType[key]}`)
+            result = result.replace(RegExp.$1, timeType[key] > 9 ? timeType[key] : `0${timeType[key]}`)
           }
         }
       }
@@ -208,7 +208,7 @@
     },
 
     //项目数据获取重命名
-    projectGetFormat(data, ContentNameMap) {
+    projectGetFormat(data) {
       let result = {
         project: {},
         masterCompany: [],
