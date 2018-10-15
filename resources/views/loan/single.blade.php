@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">报销与借款管理</a>
             <div class="divider"> / </div>
-            <a class="section" >报销申请清单</a>
+            <a class="section" href="{{url('loan/submit/list')}}"  >报销申请清单</a>
             <div class="divider"> / </div>
             <div class="active section">报销申请查询 - {{$loan->number}}</div>
         </div>

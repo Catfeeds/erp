@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section">人员列表</a>
+            <a class="section" href="{{url('user/list')}}">人员权限</a>
             <div class="divider"> / </div>
             <div class="active section">权限编辑 </div>
         </div>

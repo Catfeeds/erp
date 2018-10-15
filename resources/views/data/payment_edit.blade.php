@@ -5,9 +5,9 @@
     <div class="normal-content print-no-padding">
 
         <div class="ui breadcrumb">
-            <a class="section">数据维护</a>
+            <a class="section" href="{{url('')}}">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" >报销费用类别列表</a>
+            <a class="section" href="{{url('category/list')}}" >报销费用类型</a>
             <div class="divider"> / </div>
             <div class="active section">新增费用类型</div>
         </div>

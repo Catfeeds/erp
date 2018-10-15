@@ -7,8 +7,8 @@
         <div class="ui breadcrumb">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" >施工付款清单</a>
-            <div class="divider"> / </div>
+            <a class="section" href="{{url('build/deal/list')}}" > 备案合同清单</a>
+            {{--<div class="divider"> / </div>--}}
             {{--<div class="active section">付款查询 - SGFK20171103001</div>--}}
         </div>
 
@@ -67,7 +67,7 @@
             @foreach($pictures as $picture)
                 <tr>
                     {{--<td>{{$i+1}}</td>--}}
-                    <td>{{$picture->name}}</td>
+                    <td>{{empty($picture->name)?$picture->href:$picture->name}}</td>
                     {{--<td>{{$types[$i]->rate}}%</td>--}}
                     <td>
                         <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url($picture->href)}}')">查看</a>

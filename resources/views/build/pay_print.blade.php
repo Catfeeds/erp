@@ -7,9 +7,9 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" >施工付款款清单</a>
+            <a class="section" href="{{url('build/pay/list')}}" >施工付款款清单</a>
             <div class="divider"> / </div>
-            <a class="section" >付款查询 </a>
+            <a class="section" href="{{url('build/pay/single?id=')}}{{$team->id}}" >付款查询 </a>
             <div class="divider"> / </div>
             <div class="active section">凭证</div>
         </div>

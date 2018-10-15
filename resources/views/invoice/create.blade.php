@@ -5,9 +5,9 @@
     <div class="normal-content print-no-padding">
 
         <div class="ui breadcrumb">
-            <a class="section">数据维护</a>
+            <a class="section" href="{{url('')}}">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section">发票列表</a>
+            <a class="section" href="{{url('invoice/list')}}">发票列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增发票类型</div>
         </div>

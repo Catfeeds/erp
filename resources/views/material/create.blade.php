@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" >物料列表</a>
+            <a class="section" href="{{url('material/list')}}" >物料列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增物料</div>
         </div>

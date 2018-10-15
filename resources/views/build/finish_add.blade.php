@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" >完工请款清单</a>
+            <a class="section" href="{{url('build/finish/list')}}" >完工请款清单</a>
             <div class="divider"> / </div>
             <div class="active section">新增请款</div>
         </div>

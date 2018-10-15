@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">项目立项管理</a>
             <div class="divider"> / </div>
-            <a class="section" href="{{url('project/check?id=')}}{{$project->id}}" >项目明细</a>
+            <a class="section" href="{{url('project/detail')}}" >项目明细清单</a>
             <div class="divider"> / </div>
             <div class="active section">权限设置 - {{$project->number}}</div>
         </div>

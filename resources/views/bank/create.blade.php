@@ -8,7 +8,7 @@
         <div class="ui breadcrumb">
             <a class="section">数据维护</a>
             <div class="divider"> / </div>
-            <a class="section" >银行列表</a>
+            <a class="section" href="{{url('bank/list')}}" >银行列表</a>
             <div class="divider"> / </div>
             <div class="active section">新增银行</div>
         </div>

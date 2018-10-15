@@ -7,7 +7,7 @@
         <div class="ui breadcrumb">
             <a class="section">项目立项管理</a>
             <div class="divider"> / </div>
-            <a class="section" >已立项清单</a>
+            <a class="section" href="{{url('project/list')}}" >已立项清单</a>
             <div class="divider"> / </div>
             <div class="active section">新建立项</div>
         </div>

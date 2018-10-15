@@ -9,6 +9,8 @@
             <div class="divider"> / </div>
             <a class="section" href="{{url('budget/list')}}" >预算清单</a>
             <div class="divider"> / </div>
+            <a class="section" href="{{url('budget/detail?id=')}}{{$project->id}}" >查看预算 - 项目号 {{$project->number}}</a>
+            <div class="divider"> / </div>
             <div class="active section">预算录入 - 项目号 {{$project->number}}</div>
         </div>
 

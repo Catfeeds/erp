@@ -7,8 +7,8 @@
         <div class="ui breadcrumb">
             <a class="section">施工管理</a>
             <div class="divider"> / </div>
-            <a class="section" >施工付款清单</a>
-            <div class="divider"> / </div>
+            <a class="section" href="{{url('build/pay/list')}}" >施工付款清单</a>
+            {{--<div class="divider"> </div>--}}
             {{--<div class="active section">付款查询 - SGFK20171103001</div>--}}
         </div>
 
