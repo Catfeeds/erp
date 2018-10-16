@@ -24,12 +24,14 @@
 <body>
 <!-- 通用布局 === 复用 -->
 <div class="index-navbar ui menu blue-background print-hide">
-    {{--<a href="{{url('')}}">--}}
-    <span id="sidebarBtn" class="index-navbar-item-left pull-left">
+    <a href="{{url('')}}">
+    <span  id="sidebarBtn" class="index-navbar-item-left pull-left">
       <i class="sidebar icon"></i>
-      <span>广东思域</span>
+        <a href="{{url('')}}" class="item">
+      <span >广东思域</span>
+        </a>
     </span>
-    {{--</a>--}}
+        </a>
     <div class="index-navbar-item-show right menu">
         <a class="item">
             <i class="user icon"></i>
