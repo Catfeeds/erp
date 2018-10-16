@@ -149,6 +149,7 @@
           },
 
           querySearchProjectContent(queryString, cb) {
+            console.log(queryString)
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
@@ -315,7 +316,7 @@
           //提交审批人
           confirmRecheck() {
             this.selectData.users = this.checkedMen
-            _http.PaymentManager.selectPay(this.selectData)
+            _http.PaymentManager.newSelectPay(this.selectData)
               .then(res => {
                 if (res.data.code === '200') {
                   this.$notify({

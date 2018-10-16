@@ -104,13 +104,13 @@ class CostController extends Controller
                 'project_id'=>$cost->project_id,
                 'project_number'=>empty($project)?'':$project->number,
                 'project_content'=>empty($project)?'':$project->name,
-                'pay_detail'=>$cost->pay_detail,
+                'pay_detail'=>intval($cost->pay_detail),
                 'remark'=>$cost->remark,
-                'invoice_type'=>$cost->invoice_type,
-                'type'=>$cost->type,
+                'invoice_type'=>intval($cost->invoice_type),
+                'type'=>intval($cost->type),
                 'supplier_id'=>$cost->supplier_id,
                 'payee'=>$supplier->name,
-                'pay_type'=>$cost->pay_type,
+                'pay_type'=>intval($cost->pay_type),
                 'currentSupplier'=>$supplier,
                 'pictures'=>$pictures
             ];

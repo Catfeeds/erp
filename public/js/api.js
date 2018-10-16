@@ -567,6 +567,10 @@
     selectPay(data = {}) {
       return this._http.post(`/pay/select`, data, this.dataMethodDefaults)
     }
+      //选择审批人
+      newSelectPay(data = {}) {
+          return this._http.post(`new/pay/select`, data, this.dataMethodDefaults)
+      }
     //
     newSelectPay(data = {}) {
       return this._http.post(`new/pay/select`, data, this.dataMethodDefaults)
