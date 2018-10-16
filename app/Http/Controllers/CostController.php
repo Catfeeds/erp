@@ -464,8 +464,10 @@ class CostController extends Controller
         $id = Input::get('id');
         $cost = Cost::find($id);
         $pays = CostPay::where('cost_id','=',$id)->get();
-        foreach ($pays as $pay){
-            $pay->bank = intval($pay->bank);
+        if (count($pays)!=0){
+            foreach ($pays as $pay){
+                $pay->bank = intval($pay->bank);
+            }
         }
         $banks = BankAccount::where('state','=',1)->get();
         return view('cost.pay',['cost'=>$cost,'banks'=>$banks,'pays'=>$pays]);
@@ -520,6 +522,11 @@ class CostController extends Controller
     {
         $cost = Cost::find(Input::get('id'));
         $invoices = Invoice::select(['id','name'])->where('state','=',1)->get();
+        if (count($invoices)!=0){
+            foreach ($invoices as $invoice){
+                $invoice->bank = intval($invoice->type);
+            }
+        }
         $lists = CostInvoice::where('cost_id','=',$cost->id)->get();
         $data = [];
         if (count($lists)!=0){
