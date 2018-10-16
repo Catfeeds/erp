@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('test',function (){
-    dd(getRedisTime());
-});
+Route::get('test','SystemController@fixData');
 Route::get('/','UserController@index');
 Route::post('login','UserController@login');
 Route::any('upload','SystemController@upload');

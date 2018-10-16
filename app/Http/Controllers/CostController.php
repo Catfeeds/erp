@@ -230,9 +230,20 @@ class CostController extends Controller
     {
         $searchType = Input::get('search-type');
         $searchValue = Input::get('value');
+        $finish = Input::get('finish',0);
         $role = getRole('pay_list');
         $db = DB::table('costs');
         if ($role=='all'){
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        break;
+                    case 2:
+                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        break;
+                }
+            }
             if ($searchType){
                 switch ($searchType){
                     case 1:
@@ -272,6 +283,16 @@ class CostController extends Controller
 
         }elseif($role=='only'){
             $db->where('proposer','=',Auth::user()->username);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        break;
+                    case 2:
+                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        break;
+                }
+            }
             if ($searchType){
                 switch ($searchType){
                     case 1:
@@ -311,6 +332,16 @@ class CostController extends Controller
         }else{
             $idArr = getRoleProject('pay_list');
             $db->whereIn('project_id',$idArr);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        break;
+                    case 2:
+                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        break;
+                }
+            }
             if ($searchType){
                 switch ($searchType){
                     case 1:
@@ -353,7 +384,7 @@ class CostController extends Controller
 
         $data = $db->orderBy('id','DESC')->paginate(10);
 //        dd($data);
-        return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data]);
+        return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data,'finish'=>$finish]);
     }
     public function selectApprover()
     {
@@ -396,6 +427,8 @@ class CostController extends Controller
         $cost = Cost::find($id);
         if ($cost->delete()){
             CostPicture::where('request_id','=',$id)->delete();
+            CostPay::where('cost_id','=',$id)->delete();
+            CostInvoice::where('cost_id','=',$id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -460,6 +493,10 @@ class CostController extends Controller
             if ($sum>$cost->apply_price){
                 throw new Exception('不能超过申请金额！');
             }
+            if ($sum==$cost->apply_price){
+                $cost->need_pay = 0;
+                $cost->save();
+            }
             DB::commit();
             return response()->json([
                 'msg'=>'SUCCESS',
@@ -512,6 +549,7 @@ class CostController extends Controller
         $lists = $post->lists;
 //        dd($lists);
         $cost_id = $post->purchase_id;
+        $cost =  Cost::find($cost_id);
         $date = $post->date;
         DB::beginTransaction();
         try{
@@ -529,6 +567,11 @@ class CostController extends Controller
                 $invoice->worker_id = Auth::id();
                 $invoice->worker = Auth::user()->username;
                 $invoice->save();
+            }
+            $sum = CostInvoice::where('cost_id','=',$cost_id)->sum('with_tax');
+            if ($sum>=$cost->apply_price){
+                $cost->need_invoice = 0;
+                $cost->save();
             }
             DB::commit();
             return response()->json([

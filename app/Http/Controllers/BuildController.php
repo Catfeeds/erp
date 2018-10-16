@@ -255,6 +255,7 @@ class BuildController extends Controller
         $role = getRole('build_invoice_list');
         $key = Input::get('searchType');
         $search = Input::get('search');
+        $finish = Input::get('finish');
         if ($role == 'all'){
             $db = RequestPayment::where('state','=',3);
 //            $DB =
@@ -277,7 +278,18 @@ class BuildController extends Controller
             }
             $id = $db->pluck('project_team')->toArray();
 //            dd($id);
-            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
+            if ($finish){
+                switch ($finish){
+                    case 1 :
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_invoice','=',0)->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_invoice','!=',0)->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
+            }
         }else{
             $idArr = getRoleProject('build_invoice_list');
             $db = RequestPayment::where('state','=',3);
@@ -299,7 +311,19 @@ class BuildController extends Controller
                 }
             }
             $id = $db->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            if ($finish){
+                switch ($finish){
+                    case 1 :
+                        $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->where('need_invoice','!=',0)->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            }
+
         }
 
         if (!empty($lists)){
@@ -308,7 +332,7 @@ class BuildController extends Controller
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.get_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
+        return view('build.get_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search,'finish'=>$finish]);
     }
     public function finishSinglePage()
     {
@@ -567,8 +591,10 @@ class BuildController extends Controller
     public function getAdd(Request $post)
     {
         $lists = $post->get('lists');
+//        dd($lists);
         if (!empty($lists)){
             foreach ($lists as $list){
+                $tax = isset($list['tax'])?$list['tax']:0;
                 $type = Invoice::find($list['type']);
                 $invoice = new BuildInvoice();
                 $invoice->project_team = $post->get('pay_id');
@@ -579,9 +605,14 @@ class BuildController extends Controller
                 $invoice->number = $list['number'];
                 $invoice->type = $type->name;
                 $invoice->without_tax = $list['without_tax'];
-                $invoice->with_tax = $list['without_tax']+$list['tax'];
-                $invoice->tax = $list['tax'];
+                $invoice->with_tax = $list['without_tax']+$tax;
+                $invoice->tax = $tax;
                 $invoice->save();
+            }
+            $projectTeam = ProjectTeam::find($post->get('pay_id'));
+            if (!empty($projectTeam)){
+                $projectTeam->need_invoice = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->invoices()->sum('with_tax')>0?1:0;
+                $projectTeam->save();
             }
         }
         return response()->json([
@@ -646,6 +677,11 @@ class BuildController extends Controller
         $invoice->tax = $post->tax?$post->tax:$invoice->tax;
         $invoice->with_tax = $invoice->without_tax+$invoice->tax;
         if ($invoice->save()){
+            $projectTeam = ProjectTeam::find($invoice->project_team);
+            if (!empty($projectTeam)){
+                $projectTeam->need_invoice = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->invoices()->sum('with_tax')>0?1:0;
+                $projectTeam->save();
+            }
             return redirect()->back()->with('status','修改成功！');
         }
     }

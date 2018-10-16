@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 use Mockery\Exception;
 
 class PayController extends Controller
@@ -400,19 +401,40 @@ class PayController extends Controller
     public function listSubmitListPage()
     {
         $search = Input::get('search');
-        if ($search){
-            $project_id = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->pluck('id')->toArray();
-            if (!empty($project_id)){
-                $lists = LoanSubmit::whereIn('project_id',$project_id)->orWhere('loan_user','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
-            }else{
-                $lists = LoanSubmit::where('loan_user','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+        $type = Input::get('search-type');
+        $pay = Input::get('pay');
+        $db = DB::table('loan_submits');
+        if ($pay){
+            switch ($pay){
+                case 1:
+                    $db->where('state','=',4);
+                    break;
+                case 2:
+                    $db->where('state','!=',4);
+                    break;
             }
-
-        }else{
-            $lists = LoanSubmit::orderBy('id','DESC')->paginate(10);
         }
-
-        return view('loan.submit_list',['lists'=>$lists,'search'=>$search]);
+        if ($type){
+            switch ($type){
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $project_id = Project::where('number','like','%'.$search.'%')->pluck('id')->toArray();
+                    $project_id = count($project_id)==0?[0]:$project_id;
+                    $db->whereIn('project_id',$project_id);
+                    break;
+                case 3:
+                    $project_id = Project::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $project_id = count($project_id)==0?[0]:$project_id;
+                    $db->whereIn('project_id',$project_id);
+                    break;
+                case 4:
+                    $db->where('loan_user','like','%'.$search.'%');
+            }
+        }
+        $lists = $db->orderBy('id','DESC')->paginate(10);
+        return view('loan.submit_list',['lists'=>$lists,'search'=>$search,'type'=>$type,'pay'=>$pay]);
     }
     public function createSubmitList(Request $post)
     {

@@ -15,21 +15,21 @@
 
             <form action="" class="ui form">
                 <div class="flex-row" style="justify-content: flex-end;">
-                    {{--<div class="inline fields" style="margin-right:50px;">--}}
-                        {{--<label>付款状态：</label>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="system" value="1">--}}
-                                {{--<label>已付款</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="system" value="0">--}}
-                                {{--<label>未付款</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="inline fields" style="margin-right:50px;">
+                        <label>付款状态：</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="pay" value="1">
+                                <label>已付款</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="pay" value="2">
+                                <label>未付款</label>
+                            </div>
+                        </div>
+                    </div>
                     {{--<div class="inline fields">--}}
                         {{--<label>报销类型：</label>--}}
                         {{--<div class="field">--}}
@@ -63,14 +63,14 @@
                     </div>
                     <div class="ui left action right input fluid flex-fluid">
                         <div class="ui button white dropdown ">
-                            <input name="seartch-type" type="hidden">
+                            <input name="search-type" type="hidden">
                             <div class="text">请选中搜索内容</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <div class="item" data-value="2">报销编号</div>
-                                <div class="item" data-value="3">项目编号</div>
-                                <div class="item" data-value="4">项目内容</div>
-                                <div class="item" data-value="5">报销人</div>
+                                <div class="item" data-value="1">报销编号</div>
+                                <div class="item" data-value="2">项目编号</div>
+                                <div class="item" data-value="3">项目内容</div>
+                                <div class="item" data-value="4">报销人</div>
                             </div>
                         </div>
                         <input name="search" type="text" placeholder="搜索内容" value="">
@@ -143,7 +143,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->appends(['search'=>$search])->links()}}
+        {{$lists->appends(['search'=>$search,'search-type'=>$type,'pay'=>$pay])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 

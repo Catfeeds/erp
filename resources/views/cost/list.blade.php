@@ -12,8 +12,22 @@
 
         <!-- 操作区域 -->
         <div class="content-operation">
-
             <form action="" class="ui form">
+                <div class="inline fields" style="justify-content:flex-end;">
+                    <label>系统状态：</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="finish" value="1">
+                            <label>已结清</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="finish" value="2">
+                            <label>未结清</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
                         <a class="ui primary button" href="javascript:_helper.fullWindow('{{url('new/pay/add')}}')">
@@ -26,6 +40,7 @@
                         </a>
                     </div>
                     <div class="ui left action right input fluid flex-fluid">
+
                         <div class="ui button white dropdown ">
                             <input name="search-type" type="hidden">
                             <div class="text">请选中搜索内容</div>
@@ -103,7 +118,7 @@
                 </tbody>
             </table>
         </div>
-        {{$costs->appends(['search-type'=>$type,'value'=>$value])->links()}}
+        {{$costs->appends(['search-type'=>$type,'value'=>$value,'finish'=>$finish])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

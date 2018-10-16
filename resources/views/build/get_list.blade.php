@@ -14,6 +14,21 @@
         <div class="content-operation">
 
             <form action="" class="ui form">
+                <div class="inline fields" style="justify-content:flex-end;">
+                    <label>系统状态：</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="finish" value="1">
+                            <label>已结清</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="finish" value="2">
+                            <label>未结清</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex-row flex-between flex-wrap">
                     <div>
                         <a class="ui green button" href="{{url('export/build/get/list')}}">
@@ -80,7 +95,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->appends(['searchType'=>$searchType,'search'=>$search])->links()}}
+        {{$lists->appends(['searchType'=>$searchType,'search'=>$search,'finish'=>$finish])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

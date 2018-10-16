@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cost;
 use App\Http\Requests\CreateBankAccountPost;
 use App\Http\Requests\CreateInvoicePost;
 use App\Http\Requests\CreateMaterial;
@@ -16,6 +17,7 @@ use App\Models\Detail;
 use App\Models\Invoice;
 use App\Models\Material;
 use App\Models\ProjectPicture;
+use App\Models\ProjectTeam;
 use App\Models\ProjectType;
 use App\Models\Stock;
 use App\Models\Supplier;
@@ -714,6 +716,28 @@ class SystemController extends Controller
             'msg'=>'SUCCESS',
             'data'=>$stockId
         ]);
+    }
+    public function fixData()
+    {
+        $type = Input::get('type');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $costs = Cost::all();
+                    foreach ($costs as $cost){
+                        $cost->need_pay = $cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost')<=0?0:1;
+                        $cost->need_invoice = $cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax')<=0?0:1;
+                        $cost->save();
+                    }
+                    break;
+                case 2:
+                    $projectTeams = ProjectTeam::all();
+                    foreach ($projectTeams as $projectTeam){
+                        $projectTeam->need_invoice = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->invoices()->sum('with_tax')>0?1:0;
+                        $projectTeam->save();
+                    }
+            }
+        }
     }
 
 }
