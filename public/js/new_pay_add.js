@@ -152,7 +152,8 @@
             clearTimeout(this.throttle.name_timer)
             this.throttle.name_timer = setTimeout(() => {
               const searchKey = {
-                name: queryString
+                  name: queryString,
+                  type:'pay_add'
               }
               _http.ProjectManager.searchProject(searchKey)
                 .then(res => {
