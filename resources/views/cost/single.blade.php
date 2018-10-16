@@ -60,9 +60,6 @@
             <tr>
                 <th>付款方式</th>
                 <th class="fake-td" colspan="2">{{$cost->type==1?'现金':'转账'}}</th>
-
-                <th>备注</th>
-                <th class="fake-td" colspan="2">{{$cost->remark}}</th>
             </tr>
             <!-- <tr>
               <th colspan="5">付款信息</th>

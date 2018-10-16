@@ -64,6 +64,10 @@
                 <th>审批人</th>
                 <th class="fake-td" colspan="2">{{$cost->approver}}</th>
             </tr>
+            <tr>
+                <th>付款方式</th>
+                <th class="fake-td" colspan="5">{{$cost->type==1?'现金':'转账'}}</th>
+            </tr>
             <!-- <tr>
                 <th colspan="5">付款信息</th>
               </tr>

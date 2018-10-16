@@ -425,10 +425,13 @@ class CostController extends Controller
     {
         $id = Input::get('id');
         $cost = Cost::find($id);
+        $number = $cost->number;
         if ($cost->delete()){
             CostPicture::where('request_id','=',$id)->delete();
             CostPay::where('cost_id','=',$id)->delete();
             CostInvoice::where('cost_id','=',$id)->delete();
+            Task::where('number','=',$number)->delete();
+            CostAllow::where('apply_id','=',$id)->delete();
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -461,6 +464,9 @@ class CostController extends Controller
         $id = Input::get('id');
         $cost = Cost::find($id);
         $pays = CostPay::where('cost_id','=',$id)->get();
+        foreach ($pays as $pay){
+            $pay->bank = intval($pay->bank);
+        }
         $banks = BankAccount::where('state','=',1)->get();
         return view('cost.pay',['cost'=>$cost,'banks'=>$banks,'pays'=>$pays]);
     }
