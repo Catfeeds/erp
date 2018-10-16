@@ -522,17 +522,13 @@ class CostController extends Controller
     {
         $cost = Cost::find(Input::get('id'));
         $invoices = Invoice::select(['id','name'])->where('state','=',1)->get();
-        if (count($invoices)!=0){
-            foreach ($invoices as $invoice){
-                $invoice->bank = intval($invoice->type);
-            }
-        }
         $lists = CostInvoice::where('cost_id','=',$cost->id)->get();
         $data = [];
         if (count($lists)!=0){
             $date = $lists[0]->date;
             foreach ($lists as $list){
                 $list->date = $list->invoice_date;
+                $list->type = intval($list->type);
             }
             $data = [
                 'date'=>$date,
