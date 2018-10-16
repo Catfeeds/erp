@@ -40,7 +40,14 @@
 
         },
         methods: {
-
+            add() {
+                if (!arguments.length) return 0
+                let start = new BigNumber(arguments[0] || 0)
+                for(let i = 1; i < arguments.length ; i++){
+                    start = start.plus(arguments[i])
+                }
+                return start
+            },
           //添加项目
           addItem() {
             const list = this.invoiceCreate.lists
