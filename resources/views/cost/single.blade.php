@@ -226,7 +226,7 @@
         </table>
 
         <div class="flex-row flex-center margin-top-50" id="paySingleBtn">
-            @if($cost->state!=3)
+            @if($cost->state==1)
             <button class="ui icon button negative" id="paySingleCancel" style="margin:0 20px;">
                 <i class="icon delete"></i>
                 <span>撤销</span>

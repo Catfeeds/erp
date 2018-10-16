@@ -425,6 +425,12 @@ class CostController extends Controller
     {
         $id = Input::get('id');
         $cost = Cost::find($id);
+        if ($cost->state !=1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'当前状态不允许删除！'
+            ]);
+        }
         $number = $cost->number;
         if ($cost->delete()){
             CostPicture::where('request_id','=',$id)->delete();
@@ -477,6 +483,12 @@ class CostController extends Controller
         $request_id = $post->request_id;
         $lists = $post->lists;
         $cost =  Cost::find($request_id);
+        if ($cost->state ==1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'未审批的付款！'
+            ]);
+        }
         DB::beginTransaction();
         try{
             CostPay::where('cost_id','=',$request_id)->delete();
@@ -501,8 +513,12 @@ class CostController extends Controller
             if ($sum>$cost->apply_price){
                 throw new Exception('不能超过申请金额！');
             }
+            $cost->state = 3;
             if ($sum==$cost->apply_price){
                 $cost->need_pay = 0;
+                $cost->save();
+            }else{
+                $cost->need_pay = 1;
                 $cost->save();
             }
             DB::commit();
@@ -559,6 +575,12 @@ class CostController extends Controller
 //        dd($lists);
         $cost_id = $post->purchase_id;
         $cost =  Cost::find($cost_id);
+        if ($cost->state ==1){
+            return response()->json([
+                'code'=>'400',
+                'msg'=>'未审批的付款！'
+            ]);
+        }
         $date = $post->date;
         DB::beginTransaction();
         try{
@@ -580,6 +602,9 @@ class CostController extends Controller
             $sum = CostInvoice::where('cost_id','=',$cost_id)->sum('with_tax');
             if ($sum>=$cost->apply_price){
                 $cost->need_invoice = 0;
+                $cost->save();
+            }else{
+                $cost->need_invoice = 1;
                 $cost->save();
             }
             DB::commit();

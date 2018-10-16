@@ -91,8 +91,8 @@
                             <input type="text" v-model.number="item.tax" placeholder="税额">
                         </div>
                         <div class="two wide column">
-                            <div class="fake-input">@{{ ((item.tax || 0)+(item.without_tax || 0)).toLocaleString('en-US') }}</div>
-                            {{--<input type="text" v-model.number="item.with_tax" placeholder="含税金额">--}}
+                            {{--<div class="fake-input">@{{ ((item.tax || 0)+(item.without_tax || 0)).toLocaleString('en-US') }}</div>--}}
+                            <input type="text" v-model.number="item.with_tax" placeholder="含税金额">
                         </div>
                         <div class="two wide column">
                             <div class="fake-input">
