@@ -29,7 +29,7 @@
         },
         computed: {
           withTax() {
-            const amount = this.form.amount_without_tax
+            const amount = this.form.without_tax
             const tax = this.form.tax
             return new BigNumber(amount).plus(tax)
           }
