@@ -240,7 +240,8 @@ class CostController extends Controller
                         $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
                         break;
                     case 2:
-                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
                         break;
                 }
             }
@@ -286,10 +287,11 @@ class CostController extends Controller
             if ($finish){
                 switch ($finish){
                     case 1:
-                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        $db->where('need_invoice','!=',1)->Where('need_pay','!=',1);
                         break;
                     case 2:
-                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
                         break;
                 }
             }
@@ -335,10 +337,11 @@ class CostController extends Controller
             if ($finish){
                 switch ($finish){
                     case 1:
-                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        $db->where('need_invoice','=',0)->where('need_pay','=',0);
                         break;
                     case 2:
-                        $db->where('need_invoice','=',1)->orWhere('need_pay','=',1);
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
                         break;
                 }
             }
@@ -475,7 +478,15 @@ class CostController extends Controller
                 $pay->bank = intval($pay->bank);
             }
         }
-        $banks = BankAccount::where('state','=',1)->get();
+        $banks = BankAccount::where('state','=',1)->get()->toArray();
+        array_push($banks,[
+            'id'=>0,
+            'name'=>' ',
+            'account'=>'',
+            'state'=>1,
+            'created_at'=>'',
+            'updated_at'=>''
+        ]);
         return view('cost.pay',['cost'=>$cost,'banks'=>$banks,'pays'=>$pays]);
     }
     public function costPay(Request $post)
@@ -493,7 +504,7 @@ class CostController extends Controller
         try{
             CostPay::where('cost_id','=',$request_id)->delete();
             foreach ($lists as $list){
-                if (!isset($list['bank'])){
+                if (!isset($list['bank'])&&$list['transfer']!=0){
                     throw new Exception('请先选择付款银行！');
                 }
                 $pay = new CostPay();
@@ -504,7 +515,7 @@ class CostController extends Controller
                 $pay->transfer = isset($list['transfer'])?$list['transfer']:0;
                 $pay->other = isset($list['other'])?$list['other']:0;
                 $pay->cost = $pay->cash+$pay->other+$pay->transfer;
-                $pay->bank = $list['bank'];
+                $pay->bank = isset($list['bank'])?$list['bank']:0;
                 $pay->worker_id = isset($list['worker_id'])?$list['worker_id']:Auth::id();
                 $pay->worker = isset($list['worker'])?$list['worker']:Auth::user()->username;
                 $pay->save();

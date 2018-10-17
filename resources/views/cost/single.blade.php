@@ -107,7 +107,7 @@
 
         <h4 class="ui header center aligned">付款信息</h4>
         <div class="flex-row flex-end">
-            @if($cost->state==2)
+            @if($cost->state>=2)
             <a class="ui icon button" href="javascript:_helper.fullWindow('{{url('new/pay/pay')}}?id={{$cost->id}}')" style="margin:0 20px;">
                 <i class="icon yen"></i>
                 <span>修改付款信息</span>

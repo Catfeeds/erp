@@ -736,6 +736,14 @@ class SystemController extends Controller
                         $projectTeam->need_invoice = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->invoices()->sum('with_tax')>0?1:0;
                         $projectTeam->save();
                     }
+                    break;
+                case 3:
+                    $projectTeams = ProjectTeam::all();
+                    foreach ($projectTeams as $projectTeam){
+                        $projectTeam->need_pay = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')>0?1:0;
+                        $projectTeam->save();
+                    }
+                    break;
             }
         }
     }

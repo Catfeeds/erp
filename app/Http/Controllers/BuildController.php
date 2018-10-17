@@ -27,6 +27,7 @@ class BuildController extends Controller
         $role = getRole('build_list');
         $key = Input::get('searchType');
         $search = Input::get('search');
+        $finish = Input::get('finish');
         if ($role=='all'){
 //            dd($key);
             $db = RequestPayment::where('state','=',3);
@@ -48,7 +49,19 @@ class BuildController extends Controller
                 }
             }
             $id = $db->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_pay','!=',1)->where('need_invoice','!=',1)->paginate(10);
+                        break;
+                    case 2:
+                        $idArray = ProjectTeam::where('need_pay','!=',1)->where('need_invoice','!=',1)->pluck('id')->toArray();
+                        $lists = ProjectTeam::whereIn('id',$id)->whereNotIn('id',$idArray)->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
+            }
         }else{
             $idArr = getRoleProject('build_list');
             $numberArr = Project::whereIn('id',$idArr)->pluck('number')->toArray();
@@ -71,7 +84,19 @@ class BuildController extends Controller
                 }
             }
             $id = $db->whereIn('project_number',$numberArr)->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_pay','!=',1)->where('need_invoice','!=',1)->paginate(10);
+                        break;
+                    case 2:
+                        $idArray = ProjectTeam::where('need_pay','!=',1)->where('need_invoice','!=',1)->pluck('id')->toArray();
+                        $lists = ProjectTeam::whereIn('id',$id)->whereNotIn('id',$idArray)->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = ProjectTeam::whereIn('id',$id)->paginate(10);
+            }
         }
         if (!empty($lists)){
             foreach ($lists as $list){
@@ -79,7 +104,7 @@ class BuildController extends Controller
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
+        return view('build.list',['lists'=>$lists,'searchType'=>$key,'search'=>$search,'finish'=>$finish]);
     }
     public function addDealPage()
     {
@@ -197,6 +222,7 @@ class BuildController extends Controller
         $role = getRole('build_pay_list');
         $key = Input::get('searchType');
         $search = Input::get('search');
+        $finish = Input::get('finish');
 //        dd($search);
         if ($role=='all'){
             $db = RequestPayment::where('state','=',3);
@@ -219,7 +245,18 @@ class BuildController extends Controller
             }
             $id = $db->pluck('project_team')->toArray();
 //            dd($id);
-            $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_pay','=',0)->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $lists = ProjectTeam::whereIn('id',$id)->where('need_pay','=',1)->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = ProjectTeam::whereIn('id',$id)->orderBy('id','DESC')->paginate(10);
+            }
         }else{
             $idArr = getRoleProject('build_pay_list');
             $db = RequestPayment::where('state','=',3);
@@ -241,14 +278,25 @@ class BuildController extends Controller
                 }
             }
             $id = $db->pluck('project_team')->toArray();
-            $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
-        }
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->where('need_pay','=',0)->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->where('need_pay','=',1)->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
+            }else{
+                $lists = ProjectTeam::whereIn('id',$id)->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            }
+         }
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.pay_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
+        return view('build.pay_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search,'finish'=>$finish]);
     }
     public function listGetPage()
     {
@@ -565,6 +613,7 @@ class BuildController extends Controller
             $pay->save();
             $projectTeam = ProjectTeam::find($pay->project_team);
             $projectTeam->pay_price +=$pay->pay_price;
+            $projectTeam->need_pay = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')>0?1:0;
             $projectTeam->need_price = $projectTeam->price-$projectTeam->pay_price;
             $projectTeam->save();
         }
