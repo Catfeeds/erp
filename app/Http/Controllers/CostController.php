@@ -152,13 +152,14 @@ class CostController extends Controller
     public function addPay(Request $post)
     {
         $id = $post->id?$post->id:0;
-        $count = getRedisData('FK');
+        $count = 1;
+//        $count = getRedisData('FK');
         if($id){
             $cost = Cost::find($id);
         }else{
             $cost = new Cost();
             $cost->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
-            setRedisData('FK',$count+1,getRedisTime());
+//            setRedisData('FK',$count+1,getRedisTime());
         }
         if (empty($post->apply_price)){
             return response()->json([
@@ -178,6 +179,12 @@ class CostController extends Controller
         $cost->invoice_type = $post->invoice_type?$post->invoice_type:0;
         $cost->proposer_id = Auth::id();
         $cost->proposer = Auth::user()->name;
+        $invoice = Invoice::find($cost->invoice_type);
+        if (!empty($invoice)){
+            if ($invoice->name=='无票'){
+                $cost->need_invoice = 0;
+            }
+        }
         if ($cost->save()){
             $pictures = $post->pictures;
             if (!empty($pictures)){
@@ -237,7 +244,7 @@ class CostController extends Controller
             if ($finish){
                 switch ($finish){
                     case 1:
-                        $db->where('need_invoice','!=',1)->orWhere('need_pay','!=',1);
+                        $db->where('need_invoice','!=',1)->where('need_pay','!=',1);
                         break;
                     case 2:
                         $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
@@ -287,7 +294,7 @@ class CostController extends Controller
             if ($finish){
                 switch ($finish){
                     case 1:
-                        $db->where('need_invoice','!=',1)->Where('need_pay','!=',1);
+                        $db->where('need_invoice','!=',1)->where('need_pay','!=',1);
                         break;
                     case 2:
                         $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
@@ -386,7 +393,6 @@ class CostController extends Controller
 
 
         $data = $db->orderBy('id','DESC')->paginate(10);
-//        dd($data);
         return view('cost.list',['type'=>$searchType,'value'=>$searchValue,'costs'=>$data,'finish'=>$finish]);
     }
     public function selectApprover()
@@ -586,6 +592,11 @@ class CostController extends Controller
 //        dd($lists);
         $cost_id = $post->purchase_id;
         $cost =  Cost::find($cost_id);
+        $invoiceBool = 1;
+        $invoiceType = Invoice::find($cost->invoice_type);
+        if (!empty($invoiceType)&&$invoiceType->name == '无票'){
+            $invoiceBool = 0;
+        }
         if ($cost->state ==1){
             return response()->json([
                 'code'=>'400',
@@ -610,13 +621,15 @@ class CostController extends Controller
                 $invoice->worker = Auth::user()->username;
                 $invoice->save();
             }
-            $sum = CostInvoice::where('cost_id','=',$cost_id)->sum('with_tax');
-            if ($sum>=$cost->apply_price){
-                $cost->need_invoice = 0;
-                $cost->save();
-            }else{
-                $cost->need_invoice = 1;
-                $cost->save();
+            if ($invoiceBool){
+                $sum = CostInvoice::where('cost_id','=',$cost_id)->sum('with_tax');
+                if ($sum>=$cost->apply_price){
+                    $cost->need_invoice = 0;
+                    $cost->save();
+                }else{
+                    $cost->need_invoice = 1;
+                    $cost->save();
+                }
             }
             DB::commit();
             return response()->json([

@@ -112,7 +112,7 @@
                     <td>{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}</td>
                     <td>{{number_format($cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}</td>
                     <td>{{number_format(\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}</td>
-                    <td>{{number_format($cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}</td>
+                    <td>{{$cost->need_invoice==0?0:number_format($cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}</td>
                 </tr>
                     @endforeach
                 </tbody>
