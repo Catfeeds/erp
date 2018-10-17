@@ -1569,4 +1569,199 @@ class ExcelController extends Controller
 //        dd($data);
 //        dd($lists);
     }
+    public function exportPayList()
+    {
+        $searchType = Input::get('search-type');
+        $searchValue = Input::get('value');
+        $finish = Input::get('finish',0);
+        $role = getRole('pay_list');
+        $db = DB::table('costs');
+        if ($role=='all'){
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','!=',1)->where('need_pay','!=',1);
+                        break;
+                    case 2:
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
+                        break;
+                }
+            }
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
+                        break;
+                }
+            }
+
+        }elseif($role=='only'){
+            $db->where('proposer','=',Auth::user()->username);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','!=',1)->where('need_pay','!=',1);
+                        break;
+                    case 2:
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
+                        break;
+                }
+            }
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
+                        break;
+                }
+            }
+        }else{
+            $idArr = getRoleProject('pay_list');
+            $db->whereIn('project_id',$idArr);
+            if ($finish){
+                switch ($finish){
+                    case 1:
+                        $db->where('need_invoice','=',0)->where('need_pay','=',0);
+                        break;
+                    case 2:
+                        $idArray = Cost::where('need_invoice','!=',1)->where('need_pay','!=',1)->pluck('id')->toArray();
+                        $db->whereNotIn('id',$idArray);
+                        break;
+                }
+            }
+            if ($searchType){
+                switch ($searchType){
+                    case 1:
+                        $db->where('number','like','%'.$searchValue.'%');
+                        break;
+                    case 2:
+                        $projectId = Project::where('number','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 3:
+                        $projectId = Project::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('project_id',$projectId);
+                        break;
+                    case 4:
+                        $db->where('proposer','like','%'.$searchValue.'%');
+                        break;
+                    case 5:
+                        $db->where('approver','like','%'.$searchValue.'%');
+                        break;
+                    case 6:
+                        $suppliersId = Supplier::where('name','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('supplier_id',$suppliersId);
+                        break;
+                    case 7:
+                        $types = PayType::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_type',$types);
+                        break;
+                    case 8:
+                        $details = PayTypeDetail::where('title','like','%'.$searchValue.'%')->pluck('id')->toArray();
+                        $db->whereIn('pay_detail',$details);
+                        break;
+                    case 9:
+                        $db->where('application','like','%'.$searchValue.'%');
+                        break;
+                }
+            }
+
+        }
+        $data = $db->orderBy('id','DESC')->get();
+        $list = [];
+        $tr = [['业务编号','项目编号','付款方式','收款银行及账号','项目内容','付款金额','收款人','费用类型','具体事项','用途','发票类型','备注','申请人','审批人','已付款金额','应付账款','已收票金额','未收票金额']];
+
+        if (!empty($data)){
+            foreach ($data as $datum){
+                $swap = [];
+                $swap['a'] = $datum->number;
+                $swap['b'] = $datum->project_id==0?'':\App\Models\Project::find($datum->project_id)->number;
+                $swap['c'] = $datum->type==1?'现金':'付款';
+                $swap['d'] = $datum->supplier_id==0?'':\App\Models\Supplier::find($datum->supplier_id)->bank.\App\Models\Supplier::find($datum->supplier_id)->account;
+                $swap['e'] = $datum->project_id==0?'':\App\Models\Project::find($datum->project_id)->name;
+                $swap['f'] = number_format($datum->apply_price,2);
+                $swap['g'] = $datum->supplier_id==0?'':\App\Models\Supplier::find($datum->supplier_id)->name;
+                $swap['h'] = $datum->pay_type==0?'':\App\PayType::find($datum->pay_type)->title;
+                $swap['i'] = $datum->pay_detail==0?'':\App\PayTypeDetail::find($datum->pay_detail)->title;
+                $swap['j'] = $datum->application;
+                $swap['k'] = $datum->invoice_type==0?'':\App\Models\Invoice::find($datum->invoice_type)->name;
+                $swap['l'] = $datum->remark;
+                $swap['m'] = $datum->proposer;
+                $swap['n'] = $datum->approver;
+                $swap['o'] = number_format(\App\Models\CostPay::where('cost_id','=',$datum->id)->sum('cost'),2);
+                $swap['p'] = number_format($datum->apply_price-\App\Models\CostPay::where('cost_id','=',$datum->id)->sum('cost'),2);
+                $swap['q'] = number_format(\App\Models\CostInvoice::where('cost_id','=',$datum->id)->sum('with_tax'),2);
+                $swap['r'] = $datum->need_invoice==0?0:number_format($datum->apply_price-\App\Models\CostInvoice::where('cost_id','=',$datum->id)->sum('with_tax'),2);
+                array_push($list,$swap);
+            }
+        }
+        $list = array_merge($tr,$list);
+        $this->excel->create('付款审批清单',function ($excel) use ($tr,$list){
+            $excel->sheet('sheet1',function ($sheet) use ($list){
+                $count = count($list);
+                for ($j=0;$j<$count;$j++){
+                    $sheet->row($j+1,$list[$j]);
+                }
+            });
+        })->export('xls');
+    }
 }

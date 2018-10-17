@@ -98,7 +98,7 @@
                     </td>
                     <td>{{$cost->project_id==0?'':\App\Models\Project::find($cost->project_id)->number}}</td>
                     <td class="function-one">{{$cost->type==1?'现金':'付款'}}</td>
-                    <td class="function-one">{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->bank}}</td>
+                    <td class="function-one">{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->bank.\App\Models\Supplier::find($cost->supplier_id)->account}}</td>
                     <td class="table-content">{{$cost->project_id==0?'':\App\Models\Project::find($cost->project_id)->name}}</td>
                     <td>{{number_format($cost->apply_price,2)}}</td>
                     <td>{{$cost->supplier_id==0?'':\App\Models\Supplier::find($cost->supplier_id)->name}}</td>
