@@ -7,7 +7,7 @@
         <div class="ui breadcrumb print-hide">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" >采购付款清单</a>
+            <a class="section" href="{{url('purchase/pay/list')}}">采购付款清单</a>
             <div class="divider"> / </div>
             <div class="active section">凭证</div>
         </div>

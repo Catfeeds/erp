@@ -81,6 +81,9 @@
                     message: '提交成功！'
                   })
                   $('.ui.dimmer').addClass('active')
+                  setTimeout(() => {
+                      window.close()
+              }, 300)
                 } else {
                   this.$notify({
                     title: '错误',

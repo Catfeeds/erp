@@ -31,6 +31,7 @@ use App\Models\Task;
 use App\Models\TaxRate;
 use App\Models\Tip;
 use App\User;
+use Faker\Calculator\Inn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -1137,6 +1138,18 @@ class ProjectController extends Controller
         $search = Input::get('search');
         $type = Input::get('seartch-type');
         //dd($search);
+        $finish = Input::get('finish');
+        if ($finish){
+            switch ($finish){
+                case 1:
+                    $db->where('need_pay','=',0)->where('need_invoice','=',0)->where('need_stock','=',0);
+                    break;
+                case 2:
+                    $idArray = Purchase::where('need_pay','=',0)->where('need_invoice','=',0)->where('need_stock','=',0)->pluck('id')->toArray();
+                    $db->whereNotIn('id',$idArray);
+                    break;
+            }
+        }
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
             $db->whereIn('project_id',$idArr);
@@ -1221,18 +1234,42 @@ class ProjectController extends Controller
         $role = getRole('buy_list');
         $search = Input::get('search');
         $db = Purchase::where('state','=',3);
+        $finish = Input::get('finish');
+        $type = Input::get('search-type');
+        if ($finish){
+            switch ($finish){
+                case 1:
+                    $db->where('need_pay','=',0);
+                    break;
+                case 2:
+                    $db->where('need_pay','=',1);
+            }
+        }
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $lists = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $db->whereIn('project_id',$idArr);
         }
-        if ($search){
+        if ($type){
+            switch ($type){
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $db->where('supplier','like','%'.$search.'%');
+                    break;
+                case 3:
+                    $idArray = Project::where('number','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+                case 4:
+                    $idArray = Project::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+                case 5:
+                    $idArray = Project::where('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
 
-            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
-//            dd($idArray);
-            if (!empty($idArray)){
-                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
-            }else{
-                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
             }
         }
         $lists = $db->orderBy('id','DESC')->paginate(10);
@@ -1259,23 +1296,48 @@ class ProjectController extends Controller
         $role = getRole('buy_list');
         $db = Purchase::where('state','=',3);
         $search = Input::get('search');
+        $finish = Input::get('finish');
+        $type = Input::get('search-type');
+        if ($finish){
+            switch ($finish){
+                case 1:
+                    $db->where('need_invoice','=',0);
+                    break;
+                case 2:
+                    $db->where('need_invoice','=',1);
+            }
+        }
         if ($role=='any'){
             $idArr = getRoleProject('buy_list');
-            $purchases = $db->whereIn('project_id',$idArr)->orderBy('id','DESC')->paginate(10);
+            $db->whereIn('project_id',$idArr);
         }
-        if ($search){
-            $idArray = Project::where('number','like','%'.$search.'%')->orWhere('pm','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->pluck('id')->toArray();
-//            dd($idArray);
-            if (!empty($idArray)){
-                $db->whereIn('project_id',$idArray)->orWhere('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');;
-            }else{
-                $db->where('number','like','%'.$search.'%')->orWhere('supplier','like','%'.$search.'%');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $db->where('supplier','like','%'.$search.'%');
+                    break;
+                case 3:
+                    $idArray = Project::where('number','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+                case 4:
+                    $idArray = Project::where('name','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+                case 5:
+                    $idArray = Project::where('pm','like','%'.$search.'%')->pluck('id')->toArray();
+                    $db->whereIn('project_id',$idArray);
+                    break;
+
             }
         }
             $purchases = $db->orderBy('id','DESC')->paginate(10);
 
 //        $purchases = Purchase::paginate(10);
-        return view('buy.charge_list',['purchases'=>$purchases,'search'=>$search]);
+        return view('buy.charge_list',['purchases'=>$purchases,'search'=>$search,'finish'=>$finish,'type'=>$type]);
     }
     public function purchaseCollectPage()
     {

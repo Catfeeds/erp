@@ -7,9 +7,9 @@
         <div class="ui breadcrumb">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" >采购收票清单</a>
-            <div class="divider"> / </div>
-            <a class="section" >采购收票查询 </a>
+            <a class="section" href="{{url('purchase/charge/list')}}" >采购收票清单</a>
+            {{--<div class="divider"> / </div>--}}
+            {{--<a class="section" >采购收票查询 </a>--}}
             <div class="divider"> / </div>
             <div class="active section">收票信息录入</div>
         </div>

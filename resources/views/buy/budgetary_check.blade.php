@@ -7,9 +7,9 @@
         <div class="ui breadcrumb">
             <a class="section">采购管理</a>
             <div class="divider"> / </div>
-            <a class="section" >采购立项清单</a>
+            <a class="section" href="{{url('purchases/list')}}" >采购清单</a>
             <div class="divider"> / </div>
-            <a class="section" >预算{{$purchase->type==1?'内':'外'}}采购</a>
+            <div class="active section" >预算{{$purchase->type==1?'内':'外'}}采购</div>
             <div class="divider"> / </div>
             <div class="active section">查询</div>
         </div>

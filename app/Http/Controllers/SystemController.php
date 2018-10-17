@@ -19,6 +19,7 @@ use App\Models\Material;
 use App\Models\ProjectPicture;
 use App\Models\ProjectTeam;
 use App\Models\ProjectType;
+use App\Models\Purchase;
 use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\TaxRate;
@@ -742,6 +743,32 @@ class SystemController extends Controller
                     foreach ($projectTeams as $projectTeam){
                         $projectTeam->need_pay = $projectTeam->payments()->where('state','>=',3)->sum('price')-$projectTeam->applies()->where('state','=',4)->sum('apply_price')>0?1:0;
                         $projectTeam->save();
+                    }
+                    break;
+                case 4:
+                $purchases = Purchase::all();
+                foreach ($purchases as $purchase){
+                    $need = 0;
+                    $swap = $purchase->lists()->get();
+                    for ($i=0;$i<count($swap);$i++){
+                        $need += $swap[$i]->price * $swap[$i]->need;
+                    }
+                    $purchase->need_stock = $need>0?1:0;
+                    $purchase->save();
+                }
+                break;
+                case 5:
+                $purchases = Purchase::all();
+                foreach ($purchases as $purchase){
+                    $purchase->need_invoice = $purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')>0?1:0;
+                    $purchase->save();
+                }
+                break;
+                case 6:
+                    $purchases = Purchase::all();
+                    foreach ($purchases as $purchase){
+                        $purchase->need_pay = $purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price')>0?1:0;
+                        $purchase->save();
                     }
                     break;
             }

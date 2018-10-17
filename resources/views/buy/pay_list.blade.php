@@ -20,21 +20,21 @@
             </div>
             <form method="get" class="ui form flex-fluid">
                 <div class="flex-row flex-end flex-wrap">
-                    {{--<div class="inline fields" style="margin-right:40px;">--}}
-                        {{--<label>系统状态：</label>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="system" value="1">--}}
-                                {{--<label>已结清</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="system" value="0">--}}
-                                {{--<label>未结清</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="inline fields" style="margin-right:40px;">
+                        <label>系统状态：</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="finish" value="1">
+                                <label>已结清</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="finish" value="2">
+                                <label>未结清</label>
+                            </div>
+                        </div>
+                    </div>
                     {{--<div class="inline fields">--}}
                         {{--<label>操作状态：</label>--}}
                         {{--<div class="field">--}}
@@ -53,7 +53,7 @@
                 </div>
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
-                        <input name="seartch-type" type="hidden">
+                        <input name="search-type" type="hidden">
                         <div class="text">请选中搜索内容</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">

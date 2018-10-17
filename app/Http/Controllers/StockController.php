@@ -61,6 +61,17 @@ class StockController extends Controller
         $db = Purchase::where('state','=',3);
         $key = Input::get('searchType');
         $search = Input::get('search');
+        $finish = Input::get('finish');
+        if ($finish){
+            switch ($finish){
+                case 1:
+                    $db->where('need_stock','=',0);
+                    break;
+                case 2:
+                    $db->where('need_stock','!=',0);
+                    break;
+            }
+        }
         if ($key){
             switch ($key){
                 case 1:
@@ -104,7 +115,7 @@ class StockController extends Controller
             }
         }
 //        dd($lists);
-        return view('stock.buy_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search]);
+        return view('stock.buy_list',['lists'=>$lists,'searchType'=>$key,'search'=>$search,'finish'=>$finish]);
     }
     public function listReturnList()
     {
@@ -404,6 +415,11 @@ class StockController extends Controller
             $record->warehouse = Warehouse::find($warehouse_id)->name;
             $record->save();
             $price = 0;
+//            dd($lists);
+            $swapList =  PurchaseList::find($lists[0]['id']);
+//            dd($swapList);
+            $swapPurchase = Purchase::find($swapList->purchase_id);
+//            dd($swapPurchase);
             foreach ($lists as $list) {
                 //            dd($list);
                 $purchase = PurchaseList::find($list['id']);
@@ -437,7 +453,8 @@ class StockController extends Controller
                 $record->cost = $purchase->price * $list['number'];
                 //            $record->sum = $list['number'];
                 $purchase->received = $list['number'] + $swapReceive;
-                $purchase->need = $swapNumber - $swapReceive;
+                $purchase->need = $swapNumber - $list['number'];
+//                dd($purchase);
                 $purchase->save();
                 $stock = Stock::where('warehouse_id', '=', $warehouse_id)
                     ->where('material_id', '=', $purchase->material_id)->first();
@@ -473,6 +490,19 @@ class StockController extends Controller
             }
             $record->cost = $price;
             $record->save();
+//            $swapPurchase->need_stock =
+//            $received = 0;
+            $need = 0;
+            $swap = $swapPurchase->lists()->get();
+            for ($i=0;$i<count($swap);$i++){
+//                $received += $swap[$i]->price * $swap[$i]->received;
+                $need += $swap[$i]->price * $swap[$i]->need;
+            }
+//                $list->record = $swap;
+//            $list->received = $received;
+            $swapPurchase->need_stock = $need>0?1:0;
+//            dd($need);
+            $swapPurchase->save();
             DB::commit();
             return response()->json([
                 'code' => '200',

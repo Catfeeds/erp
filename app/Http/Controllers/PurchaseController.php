@@ -290,6 +290,11 @@ class PurchaseController extends Controller
             $payment->state = 3;
         }
         if ($payment->save()){
+            $purchase = Purchase::find($payment->purchase_id);
+            if ($purchase){
+                $purchase->need_pay = $purchase->lists()->sum('cost')-$purchase->payments()->sum('pay_price')>0?1:0;
+                $purchase->save();
+            }
             return response()->json([
                 'code'=>'200',
                 'msg'=>'SUCCESS'
@@ -317,6 +322,11 @@ class PurchaseController extends Controller
                     $invoice->worker = Auth::id();
                     $invoice->save();
                 }
+            }
+            $purchase = Purchase::find($id);
+            if (!empty($purchase)){
+                $purchase->need_invoice = $purchase->lists()->sum('cost')-$purchase->invoices()->sum('with_tax')>0?1:0;
+                $purchase->save();
             }
             DB::commit();
             return response()->json([

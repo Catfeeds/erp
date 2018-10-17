@@ -18,8 +18,9 @@
                 </a>
             </div>
             <form method="get" class="ui form flex-fluid">
-                <div class="flex-row flex-around flex-wrap">
-                    {{--<div class="inline fields">
+                <div class="flex-row flex-end flex-wrap">
+
+                {{--<div class="inline fields">
                         <label>收货情况：</label>
                         <div class="field">
                             <div class="ui radio checkbox">
@@ -64,21 +65,21 @@
                             {{--</div>--}}
                         {{--</div>--}}
                     {{--</div>--}}
-                    {{--<div class="inline fields">--}}
-                        {{--<label>项目状态：</label>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="status" value="1">--}}
-                                {{--<label>已结清</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="field">--}}
-                            {{--<div class="ui radio checkbox">--}}
-                                {{--<input type="radio" name="status" value="0">--}}
-                                {{--<label>未结清</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="inline fields">
+                        <label>项目状态：</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="finish" value="1">
+                                <label>已结清</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="finish" value="2">
+                                <label>未结清</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
