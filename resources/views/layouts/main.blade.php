@@ -27,12 +27,16 @@
 
     <span  id="sidebarBtn" class="index-navbar-item-left pull-left">
       <i class="sidebar icon"></i>
-      <a href="{{url('')}}" class="item">
+      {{--<a href="{{url('')}}" class="item">--}}
       <span >广东思域</span>
-        </a>
+        {{--</a>--}}
     </span>
     {{--</a>--}}
     <div class="index-navbar-item-show right menu">
+        <a class="item" href="{{url('')}}">
+            <i class="home icon"></i>
+            <span>首页</span>
+        </a>
         <a class="item">
             <i class="user icon"></i>
             <span>{{\Illuminate\Support\Facades\Auth::user()->name}}</span>

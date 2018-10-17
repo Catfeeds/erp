@@ -219,7 +219,7 @@ class CostController extends Controller
             ]);
         }
         $title = Input::get('title');
-        $details = PayTypeDetail::where('type_id','=',$id)->where('title','like','%'.$title.'%')->select(['id','title'])->get();
+        $details = PayTypeDetail::where('type_id','=',$id)->where('state','=',1)->where('title','like','%'.$title.'%')->select(['id','title'])->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',
