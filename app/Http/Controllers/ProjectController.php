@@ -949,6 +949,7 @@ class ProjectController extends Controller
                 $purchase->account = $supplier->account;
                 $purchase->condition = $basic['condition'];
                 $purchase->type = $basic['type'];
+                $purchase->state = 1;
                 if (is_numeric($basic['content'])){
                     $purchase->content = Invoice::find($basic['content'])->name;
                     $purchase->content_id = $basic['content'];

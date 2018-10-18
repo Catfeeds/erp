@@ -813,11 +813,12 @@ class PayController extends Controller
             $lists = $post->get('lists');
             $pictures = $post->get('pictures');
 //            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
-            $count = getRedisData('QK');
+//            $count = getRedisData('QK');
+            $count = 1;
             $payment = new RequestPayment();
             $payment->project_team = $projectTeam->id;
             $payment->number = 'QK'.date('Ymd',time()).sprintf("%03d", $count+1);
-            setRedisData('QK',$count+1,getRedisTime());
+//            setRedisData('QK',$count+1,getRedisTime());
             $payment->team = $team->name;
             $payment->manager = $team->manager;
 //        $project = Project::where('number','=',$post->get('project_id'))->first();
