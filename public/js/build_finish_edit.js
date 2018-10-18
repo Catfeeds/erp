@@ -4,7 +4,7 @@
       new Vue({
         el: '#buildFinishAdd',
         data: {
-          buildFinishAdd: {},
+          buildFinishAdd: _schemas.buildFinishAdd,
 
           //施工队
           build_teams: [],
@@ -39,12 +39,9 @@
             if (!list.length) {
               return 0
             }
-            let sum = 0
+            let sum = new BigNumber(0)
             list.forEach((it, index) => {
-              const amount = it.total
-              if (amount) {
-                sum += amount * 1
-              }
+              sum = sum.plus(new BigNumber(it.price).times(it.number))
             })
             return sum
           }
@@ -56,7 +53,7 @@
             }
             this.throttle.team_timer = setTimeout(() => {
               const searchKey = {
-                  name: queryString
+                id: queryString
               }
               _http.TeamManager.searchTeam(searchKey)
                 .then(res => {
@@ -155,51 +152,6 @@
             this.buildFinishAdd.project_manager = item.pm
           },
 
-            //合同上传
-            uploadContract(e) {
-                const files = e.target.files
-                if (files.length < 1) {
-                    return
-                }
-                let fileArr = []
-                for (let file of files) {
-                    let formData = new FormData()
-                    formData.append('image', file)
-                    _http.UploadManager.createUpload(formData)
-                        .then(res => {
-                        if (res.data.code === '200') {
-                        const resData = res.data.data
-                        console.log(resData)
-                        this.buildFinishAdd.pictures.push({
-                            name: resData.name,
-                            url: resData.url
-                        })
-                        // this.buildFinishAdd.lists.push(resData.url)
-                        console.log(this.buildFinishAdd.pictures)
-                        this.$notify({
-                            title: '成功',
-                            message: `${resData.name} 上传成功`,
-                            type: 'success'
-                        })
-                    } else {
-                        this.$notify({
-                            title: '错误',
-                            message: res.data.msg,
-                            type: 'error'
-                        })
-                    }
-                })
-                .catch(err => {
-                        console.log(err)
-                    this.$notify({
-                        title: '错误',
-                        message: '服务器出错',
-                        type: 'error'
-                    })
-                })
-                }
-
-            },
           //提交
           submit() {
             console.log(this.buildFinishAdd)
