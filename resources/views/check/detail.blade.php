@@ -121,7 +121,7 @@
                                 <div class="fake-input">{{$mainContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{number_format($mainContracts[$i]->price,2)}}￥</div>
+                                <div class="fake-input">{{number_format($mainContracts[$i]->price,2)}}</div>
                             </div>
                             <div class="six wide column">
                                 <div class="fake-input">{{$mainContracts[$i]->remark}}</div>
@@ -151,7 +151,7 @@
                                 <div class="fake-input">{{$outContracts[$i]->unit}}</div>
                             </div>
                             <div class="four wide column">
-                                <div class="fake-input">{{number_format($outContracts[$i]->price,2)}}￥</div>
+                                <div class="fake-input">{{number_format($outContracts[$i]->price,2)}}</div>
                             </div>
                             <div class="six wide column">
                                 <div class="fake-input">{{$outContracts[$i]->remark}}</div>
@@ -196,11 +196,11 @@
                                     @else
                                         <td rowspan="{{count($situations[$i]->lists)}}">分包合同后期追加或减少</td>
                                     @endif
-                                    <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} ￥</td>
+                                    <td rowspan="{{count($situations[$i]->lists)}}">{{$situations[$i]->price}} </td>
 
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} </td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -210,7 +210,7 @@
                                 <tr>
                                     <td>{{$situations[$i]->lists[$j]->name}}</td>
                                     <td>{{$situations[$i]->lists[$j]->tax}}%</td>
-                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} ￥</td>
+                                    <td>{{number_format($situations[$i]->lists[$j]->price,2)}} </td>
                                     <td>{{$situations[$i]->lists[$j]->remark}}</td>
                                 </tr>
 
@@ -260,7 +260,7 @@
                     @foreach($receipts as $receipt)
                     <tr>
                         <td>{{$receipt->ratio}}%</td>
-                        <td>{{number_format($receipt->price,2)}} ￥</td>
+                        <td>{{number_format($receipt->price,2)}} </td>
                         <td>{{$receipt->condition}}</td>
                     </tr>
                     @endforeach
@@ -332,12 +332,12 @@
                         @foreach($bails as $bail)
                         <tr >
                             <td>{{$bail->unit}}</td>
-                            <td>{{number_format($bail->price,2)}} ￥</td>
+                            <td>{{number_format($bail->price,2)}} </td>
                             <td>{{$bail->term}}</td>
-                            <td>{{$bail->cost}} ￥</td>
+                            <td>{{number_format($bail->cost,2)}} </td>
                             <td>{{$bail->other}}</td>
                             <td>{{$bail->pay_date}}</td>
-                            <td> {{number_format($bail->pay_price,2)}}￥</td>
+                            <td> {{number_format($bail->pay_price,2)}}</td>
                             <td>{{$bail->payee}}</td>
                             <td>{{$bail->bank}}</td>
                             <td>{{$bail->bank_account}}</td>
@@ -516,7 +516,7 @@
                             <tr >
                                 {{--<template >--}}
                                     <td>{{$item->date}}</td>
-                                    <td>{{number_format($item->price,2)}}￥</td>
+                                    <td>{{number_format($item->price,2)}}</td>
                                     <td>{{$item->unit}}</td>
                                     <td>{{\App\Models\Invoice::find($item->rate)?\App\Models\Invoice::find($item->rate)->rate:$item->rate}}%</td>
                                     <td>
@@ -588,7 +588,7 @@
                             {{--<temp late >--}}
                             {{--<input type="hidden" name="id" value="{{{{$company->id}}}}">--}}
                                 <td>{{ $company->date }}</td>
-                                <td id="price">{{ number_format($company->price,2) }} ￥</td>
+                                <td id="price">{{ number_format($company->price,2) }} </td>
                                 {{--<td>@{{ item.remark }}</td>--}}
                                 <td>
                                     <button class="ui mini button primary" onclick="window._helper.fullWindow('{{url('check/company/edit')}}?id={{$company->id}}')" >修改</button>
@@ -670,7 +670,7 @@
                             {{--<template>--}}
 
                                 <td>{{ $item->date }}</td>
-                                <td>{{ number_format($item->price,2) }} ￥</td>
+                                <td>{{ number_format($item->price,2) }} </td>
                                 <td>{{ $item->bank }}</td>
                                 <td>{{ $item->account }}</td>
                                 {{--<td>{{ $item.remark }}</td>--}}
@@ -753,7 +753,7 @@
                                     <tr >
                             {{--<template >--}}
                                 <td>{{ $item->date }}</td>
-                                <td>￥{{ number_format($item->price,2)}} </td>
+                                <td>{{ number_format($item->price,2)}} </td>
                                 <td>{{ $item->bank }}</td>
                                 <td>{{ $item->account }}</td>
 
