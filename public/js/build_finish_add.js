@@ -51,7 +51,7 @@
             }
             this.throttle.team_timer = setTimeout(() => {
               const searchKey = {
-                id: queryString
+                name: queryString
               }
               _http.TeamManager.searchTeam(searchKey)
                 .then(res => {
