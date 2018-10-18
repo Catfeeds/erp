@@ -40,7 +40,7 @@
 </div>
 <!-- / 操作区域 -->
 
-<div class="content-wrap">
+<div class="content-wrap table-head-nowrap">
 
     <table class="ui center aligned table selectable" id="projectDetailTable">
         <thead>
