@@ -89,7 +89,7 @@ class StockController extends Controller
                     $db->whereIn('project_id',$projectId);
                     break;
                 case 5:
-                    $projectId = Project::where('pm','like','%'.$search.'%');
+                    $projectId = Project::where('pm','like','%'.$search.'%')->pluck('id')->toArray();
                     $db->whereIn('project_id',$projectId);
                     break;
             }
@@ -445,16 +445,9 @@ class StockController extends Controller
                 $Rlist->cost = $purchase->price * $list['number'];
                 $Rlist->price = $purchase->price;
                 $price += $Rlist->cost;
-                //            $table->float('stock_cost',18,2);
-                //            $table->float('stock_price',18,2);
-                //            $table->integer('stock_number');
-                //            $record->material_id = $purchase->material_id;
-                //            $record->price = $purchase->price;
                 $record->cost = $purchase->price * $list['number'];
-                //            $record->sum = $list['number'];
                 $purchase->received = $list['number'] + $swapReceive;
-                $purchase->need = $swapNumber - $list['number'];
-//                dd($purchase);
+                $purchase->need = $swapNeed - $list['number'];
                 $purchase->save();
                 $stock = Stock::where('warehouse_id', '=', $warehouse_id)
                     ->where('material_id', '=', $purchase->material_id)->first();
@@ -463,25 +456,20 @@ class StockController extends Controller
                     $stock->warehouse_id = $warehouse_id;
                     $stock->material_id = $purchase->material_id;
                     $stock->number += $list['number'];
-                    //                dd($list);
                     $stock->cost = $list['number'] * $purchase->price;
-                    //                dd($stock);
                 } else {
                     $stock->warehouse_id = $warehouse_id;
                     $stock->material_id = $purchase->material_id;
                     $stock->number += $list['number'];
                     $stock->cost += $list['number'] * $purchase->price;
                 }
-                //            dd($stock);
                 $stock->save();
-                //            dd($stock);
                 $Rlist->stock_number = $stock->number;
                 $Rlist->stock_cost = $stock->cost;
-                $Rlist->stock_price = $stock->cost / $stock->number;
+                $Rlist->stock_price = $stock->number==0?0:$stock->cost / $stock->number;
                 $Rlist->need_sum = $purchase->need;
                 $Rlist->need_cost = $purchase->price * $purchase->need;
                 $records = StockRecord::where('type','=',1)->where('purchase_id','=',$purchase->purchase_id)->pluck('id')->toArray();
-//                dd($records);
                 $Rlist->old_sum = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$Rlist->material_id)->sum('sum');
                 $Rlist->old_cost = StockRecordList::whereIn('record_id',$records)->where('material_id','=',$Rlist->material_id)->sum('cost');
                 $Rlist->save();
@@ -490,18 +478,12 @@ class StockController extends Controller
             }
             $record->cost = $price;
             $record->save();
-//            $swapPurchase->need_stock =
-//            $received = 0;
             $need = 0;
             $swap = $swapPurchase->lists()->get();
             for ($i=0;$i<count($swap);$i++){
-//                $received += $swap[$i]->price * $swap[$i]->received;
                 $need += $swap[$i]->price * $swap[$i]->need;
             }
-//                $list->record = $swap;
-//            $list->received = $received;
             $swapPurchase->need_stock = $need>0?1:0;
-//            dd($need);
             $swapPurchase->save();
             DB::commit();
             return response()->json([
@@ -510,7 +492,6 @@ class StockController extends Controller
             ]);
         }catch (\Exception $exception){
             DB::rollback();
-//            dd($exception);
             return response()->json([
                 'code'=>'400',
                 'msg'=>$exception->getMessage()

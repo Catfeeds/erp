@@ -20,6 +20,7 @@ class ConstructionController extends Controller
         $contract->team = $team->name;
         $contract->manager = $team->manager;
         $project = Project::find($post->get('project_id'));
+        $contract->project_id = $project->id;
         $contract->project_number = $project->number;
         $contract->project_content = $project->name;
         $contract->project_manager = $project->pm;

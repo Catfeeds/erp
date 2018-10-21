@@ -23,7 +23,7 @@
     <form class="ui form flex-fluid">
         <div class="ui left action right input fluid">
             <div class="ui button white dropdown ">
-                <input name="seartch-type" type="hidden">
+                <input name="search-type" type="hidden">
                 <div class="text">请选中搜索内容</div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -82,7 +82,7 @@
     </table>
 
 </div>
-        {{$projects->appends(['search'=>$search])->links()}}
+        {{$projects->appends(['search'=>$search,'search-type'=>$type])->links()}}
 @endsection
 @section('pageJs')
     <script src="{{url('js/project_list.js')}}"></script>

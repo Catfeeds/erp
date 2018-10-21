@@ -100,7 +100,7 @@
                 </tbody>
             </table>
         </div>
-        {{$purchases->appends(['search'=>$search,'type'=>$type,'finish'=>$finish])->links()}}
+        {{$purchases->appends(['search'=>$search,'search-type'=>$type,'finish'=>$finish])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

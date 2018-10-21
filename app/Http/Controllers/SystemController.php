@@ -163,12 +163,23 @@ class SystemController extends Controller
     public function listSupplierPage()
     {
         $name = Input::get('name');
+        $type = Input::get('search-type');
         $DbObj = DB::table('suppliers');
-        if ($name){
-            $DbObj->where('name','like','%'.$name.'%')->orWhere('bank','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $DbObj->where('name','like','%'.$name.'%');
+                    break;
+                case 2:
+                    $DbObj->where('bank','like','%'.$name.'%');
+                    break;
+                case 3:
+                    $DbObj->where('account','like','%'.$name.'%');
+                    break;
+            }
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
-        return view('supplier.list',['suppliers'=>$data,'name'=>$name]);
+        return view('supplier.list',['suppliers'=>$data,'name'=>$name,'type'=>$type]);
     }
     //创建供应商
     public function createSupplier(Request $post)
@@ -244,17 +255,31 @@ class SystemController extends Controller
     {
         $name = Input::get('value');
         $DbObj = DB::table('materials')->where('state','=',1);
-        if ($name){
-            $DbObj->where(function($q1) use($name){
-                $q1->orWhere('model','like','%'.$name.'%')
-                    ->orWhere('factory','like','%'.$name.'%')
-                    ->orWhere('name','like','%'.$name.'%')
-                ;
-            });
+        $type = Input::get('search-type');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $DbObj->where('name','like','%'.$name.'%');
+                    break;
+                case 2:
+                    $DbObj->where('model','like','%'.$name.'%');
+                    break;
+                case 3:
+                    $DbObj->where('factory','like','%'.$name.'%');
+                    break;
+            }
         }
+//        if ($name){
+//            $DbObj->where(function($q1) use($name){
+//                $q1->orWhere('model','like','%'.$name.'%')
+//                    ->orWhere('factory','like','%'.$name.'%')
+//                    ->orWhere('name','like','%'.$name.'%')
+//                ;
+//            });
+//        }
         $data = $DbObj->orderBy('id','DESC')->paginate(10);
 //        dd($data);
-        return view('material.list',['materials'=>$data,'name'=>$name]);
+        return view('material.list',['materials'=>$data,'name'=>$name,'type'=>$type]);
     }
 
     public function delMaterial()
@@ -361,11 +386,19 @@ class SystemController extends Controller
     {
         $name = Input::get('name');
         $DbObj = DB::table('warehouses');
-        if ($name){
-            $DbObj->where('name','like','%'.$name.'%')->orWhere('admin','like','%'.$name.'%');
+        $type = Input::get('search-type');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $DbObj->where('name','like','%'.$name.'%');
+                    break;
+                case 2:
+                    $DbObj->where('admin','like','%'.$name.'%');
+                    break;
+            }
         }
         $data = $DbObj->where('state','=',1)->orderBy('id','DESC')->paginate(10);
-        return view('warehouse.list',['warehouses'=>$data,'name'=>$name]);
+        return view('warehouse.list',['warehouses'=>$data,'name'=>$name,'type'=>$type]);
     }
     //银行账号
     public function createBankAccount(Request $post)
@@ -401,12 +434,20 @@ class SystemController extends Controller
     {
         $name = Input::get('name');
         $DbObj = DB::table('bank_accounts');
-        if ($name){
-            $DbObj->where('name','like','%'.$name.'%')->orWhere('account','like','%'.$name.'%');
+        $type = Input::get('search-type');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $DbObj->where('name','like','%'.$name.'%');
+                    break;
+                case 2:
+                    $DbObj->where('account','like','%'.$name.'%');
+                    break;
+            }
         }
         $DbObj->where('state','=',1);
         $accounts = $DbObj->paginate(10);
-        return view('bank.list',['accounts'=>$accounts]);
+        return view('bank.list',['accounts'=>$accounts,'name'=>$name,'type'=>$type]);
     }
 
     public function createBankAccountPage()
@@ -525,16 +566,26 @@ class SystemController extends Controller
     public function listTeamsPage()
     {
         $name = Input::get('name');
-        $manager = Input::get('manager');
         $DbObj = DB::table('teams');
-        if ($name){
-            $DbObj->where('name','like','%'.$name.'%')->orWhere('manager','like','%'.$name.'%');
+        $type = Input::get('search-type');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $DbObj->where('name','like','%'.$name.'%');
+                    break;
+                case 2:
+                    $DbObj->where('manager','like','%'.$name.'%');
+                    break;
+            }
         }
-        if ($manager){
-            $DbObj->where('manager','like','%'.$manager.'%');
-        }
+//        if ($name){
+//            $DbObj->where('name','like','%'.$name.'%')->orWhere('manager','like','%'.$name.'%');
+//        }
+//        if ($manager){
+//            $DbObj->where('manager','like','%'.$manager.'%');
+//        }
         $teams = $DbObj->where('state','=',1)->paginate(10);
-        return view('team.list',['teams'=>$teams,'name'=>$name]);
+        return view('team.list',['teams'=>$teams,'name'=>$name,'type'=>$type]);
     }
     public function createProjectType(Request $post)
     {

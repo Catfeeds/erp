@@ -114,28 +114,39 @@ class BuildController extends Controller
     {
         $role = getRole('build_contract_list');
         $search = Input::get('search');
-        if ($role=='any'){
-            $idArr = getRoleProject('build_contract_list');
-            $db = ConstructionContract::where('project_id',$idArr);
-            if ($search){
-                $db->where('team','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')->orWhere('project_content','like','%'.$search.'%')->orWhere('project_manager','like','%'.$search.'%')
-                    ->orWhere('manager','like','%'.$search.'%');
-            }
-            $lists = $db->orderBy('id','DESC')->paginate(10);
-        }else{
-            if ($search){
-                $lists = ConstructionContract::where('team','like','%'.$search.'%')->orWhere('project_number','like','%'.$search.'%')->orWhere('project_content','like','%'.$search.'%')->orWhere('project_manager','like','%'.$search.'%')
-                    ->orWhere('manager','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
-            }else{
-                $lists = ConstructionContract::orderBy('id','DESC')->paginate(10);
+        $type = Input::get('search-type');
+        $db = DB::table('construction_contracts');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $db->where('team','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $idArray = Project::where('number','like','%'.$search.'%')->pluck('number')->toArray();
+                    $db->whereIn('project_number',$idArray);
+                    break;
+                case 3:
+                    $idArray = Project::where('name','like','%'.$search.'%')->pluck('number')->toArray();
+                    $db->whereIn('project_number',$idArray);
+                    break;
+                case 4:
+                    $idArray = Project::where('pm','like','%'.$search.'%')->pluck('number')->toArray();
+                    $db->whereIn('project_number',$idArray);
+                    break;
             }
         }
+        if ($role=='any'){
+            $idArr = getRoleProject('build_contract_list');
+
+            $db = $db->where('project_id',$idArr);
+        }
+        $lists = $db->orderBy('id','DESC')->paginate(10);
         if (!empty($lists)){
             foreach ($lists as $list){
                 $list->project = Project::where('number','=',$list->project_number)->first();
             }
         }
-        return view('build.deal_list',['lists'=>$lists,'search'=>$search]);
+        return view('build.deal_list',['lists'=>$lists,'search'=>$search,'type'=>$type]);
     }
     public function createFinishPage()
     {

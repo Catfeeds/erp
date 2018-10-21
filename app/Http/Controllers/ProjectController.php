@@ -198,24 +198,38 @@ class ProjectController extends Controller
     }
     public function listProject()
     {
-        $name = Input::get('search');
+        $search = Input::get('search');
         $projectDb = DB::table('projects');
         $role = getRole('project_list');
-//        dd($role);
+        $type = Input::get('search-type');
         if ($role=='any'){
             $idArr = getRoleProject('project_list');
             $projectDb->whereIn('id',$idArr);
         }
-        if ($name){
-            $id_arr = OutContract::where('unit','like','%'.$name.'%')->pluck('project_id')->toArray();
-//            dd($id_arr);
-            $projectDb->whereIn('id',$id_arr)->orwhere('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
+        if ($type){
+            switch ($type){
+                case 1:
+                    $projectDb->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $projectDb->where('name','like','%'.$search.'%');
+                    break;
+                case 3:
+                    $projectDb->where('PartyA','like','%'.$search.'%');
+                    break;
+                case 4:
+                    $id_arr = OutContract::where('unit','like','%'.$name.'%')->pluck('project_id')->toArray();
+                    $projectDb->whereIn('id',$id_arr);
+                    break;
+            }
+//            $id_arr = OutContract::where('unit','like','%'.$name.'%')->pluck('project_id')->toArray();
+//            $projectDb->whereIn('id',$id_arr)->orwhere('number','like','%'.$name.'%')->orWhere('name','like','%'.$name.'%')->orWhere('PartyA','like','%'.$name.'%');
         }
         $projects = $projectDb->orderBy('id','DESC')->paginate(10);
         foreach ($projects as $project){
             $project->unit = OutContract::where('project_id','=',$project->id)->pluck('unit')->toArray();
         }
-        return view('project.list',['projects'=>$projects,'search'=>$name]);
+        return view('project.list',['projects'=>$projects,'search'=>$search,'type'=>$type]);
     }
     public function createProject(Request $post)
     {
@@ -439,9 +453,18 @@ class ProjectController extends Controller
 
         $search = Input::get('search');
         $role = getRole('project_detail');
+//        $projectDB = DB::table('projects');
+        $type = Input::get('search-type');
         if ($role=='all'){
-            if ($search){
-                $project = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $project = Project::where('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $project = Project::where('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
             }else{
                 $project = Project::orderBy('id','DESC')->paginate(10);
             }
@@ -449,30 +472,55 @@ class ProjectController extends Controller
             $idArr = getRoleProject('project_detail');
 //            dd($idArr);
             $projectDB = Project::whereIn('id',$idArr);
-            if ($search){
-                $projectDB->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $projectDB->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                       $projectDB->where('name','like','%'.$search.'%');
+                        break;
+                }
             }
+//            if ($search){
+//                $projectDB->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+//            }
             $project = $projectDB->orderBy('id','DESC')->paginate(10);
 //            dd($project);
 
         }
-        return view('project.detail',['projects'=>$project,'search'=>$search]);
+        return view('project.detail',['projects'=>$project,'search'=>$search,'type'=>$type]);
     }
     public function listBudgetsPage()
     {
         $search = Input::get('search');
         $role = getRole('budget_list');
+        $type = Input::get('search-type');
         if ($role=='all'){
-            if ($search){
-                $projects = Project::where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $projects = Project::where('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $projects = Project::where('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
             }else{
                 $projects = Project::orderBy('id','DESC')->paginate(10);
             }
         }else{
             $idArr = getRoleProject('budget_list');
             $db = Project::whereIn('id',$idArr);
-            if ($search){
-                $db->where('name','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%');
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('name','like','%'.$search.'%');
+                        break;
+                }
             }
             $projects = $db->orderBy('id','DESC')->paginate(10);
         }
@@ -491,7 +539,7 @@ class ProjectController extends Controller
             }
         }
 
-        return view('budget.list',['projects'=>$projects,'search'=>$search]);
+        return view('budget.list',['projects'=>$projects,'search'=>$search,'type'=>$type]);
     }
     public function showBudgetPage()
     {
@@ -643,23 +691,36 @@ class ProjectController extends Controller
     {
         $role = getRole('check_list');
         $search = Input::get('search');
+        $type = Input::get('search-type');
         if ($role == 'all'){
-            if ($search){
-                $projects = Project::where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $projects = Project::where('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                    case 2:
+                        $projects = Project::where('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
+                        break;
+                }
             }else{
                 $projects = Project::orderBy('id','DESC')->paginate(10);
             }
         }else{
             $idArr = getRoleProject('check_list');
             $db = Project::whereIn('id',$idArr);
-            if ($search){
-                $db->where('number','like','%'.$search.'%')->orWhere('name','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
-            }else{
-                $db->orderBy('id','DESC')->paginate(10);
+            if ($type){
+                switch ($type){
+                    case 1:
+                        $db->where('number','like','%'.$search.'%');
+                        break;
+                    case 2:
+                        $db->where('name','like','%'.$search.'%');
+                        break;
+                }
             }
-            $projects = $db->paginate(10);
+            $projects = $db->orderBy('id','DESC')->paginate(10);
         }
-        return view('check.list',['projects'=>$projects,'search'=>$search]);
+        return view('check.list',['projects'=>$projects,'search'=>$search,'type'=>$type]);
     }
     public function checkDetailPage()
     {
@@ -1137,7 +1198,7 @@ class ProjectController extends Controller
         $role = getRole('buy_list');
         $db = Purchase::where('state','=',3);
         $search = Input::get('search');
-        $type = Input::get('seartch-type');
+        $type = Input::get('search-type');
         //dd($search);
         $finish = Input::get('finish');
         if ($finish){
@@ -1191,7 +1252,7 @@ class ProjectController extends Controller
                 $list->need = $need;
             }
         }
-        return view('buy.list',['lists'=>$lists,'search'=>$search]);
+        return view('buy.list',['lists'=>$lists,'search'=>$search,'type'=>$type,'finish'=>$finish]);
     }
     public function listProjectPurchasesPage()
     {
@@ -1280,7 +1341,7 @@ class ProjectController extends Controller
                 $list->count = $count;
             }
         }
-        return view('buy.pay_list',['lists'=>$lists,'search'=>$search]);
+        return view('buy.pay_list',['lists'=>$lists,'search'=>$search,'finish'=>$finish,'type'=>$type]);
     }
     public function addPurchaseCheque()
     {

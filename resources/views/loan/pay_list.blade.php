@@ -25,7 +25,7 @@
             <form  class="ui form flex-fluid">
                 <div class="ui left action right input fluid">
                     <div class="ui button white dropdown ">
-                        <input name="seartch-type" type="hidden">
+                        <input name="search-type" type="hidden">
                         <div class="text">请选中搜索内容</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
@@ -75,7 +75,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->appends(['search'=>$search])->links()}}
+        {{$lists->appends(['search'=>$search,'search-type'=>$type])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

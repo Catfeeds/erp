@@ -113,7 +113,7 @@
                 </tbody>
             </table>
         </div>
-        {{$lists->appends(['search'=>$search])->links()}}
+        {{$lists->appends(['search'=>$search,'search-type'=>$type,'finish'=>$finish])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

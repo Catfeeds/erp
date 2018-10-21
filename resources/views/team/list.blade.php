@@ -27,12 +27,12 @@
                     </div>
                     <div class="ui left action right input fluid flex-fluid">
                         <div class="ui button white dropdown ">
-                            <input name="seartch-type" type="hidden">
+                            <input name="search-type" type="hidden">
                             <div class="text">请选中搜索内容</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <div class="item" data-value="2">施工队名称</div>
-                                <div class="item" data-value="3">施工队经理</div>
+                                <div class="item" data-value="1">施工队名称</div>
+                                <div class="item" data-value="2">施工队经理</div>
                             </div>
                         </div>
                         <input name="name" type="text" placeholder="搜索内容" value="">
@@ -73,7 +73,7 @@
                 </tbody>
             </table>
         </div>
-        {{$teams->appends(['name'=>$name])->links()}}
+        {{$teams->appends(['name'=>$name,'search-type'=>$type])->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection

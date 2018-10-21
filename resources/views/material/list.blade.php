@@ -27,13 +27,13 @@
                     </div>
                     <div class="ui left action right input fluid flex-fluid">
                         <div class="ui button white dropdown ">
-                            <input name="seartch-type" type="hidden">
+                            <input name="search-type" type="hidden">
                             <div class="text">请选中搜索内容</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <div class="item" data-value="2">物料名称</div>
-                                <div class="item" data-value="3">品牌型号</div>
-                                <div class="item" data-value="4">生产厂家</div>
+                                <div class="item" data-value="1">物料名称</div>
+                                <div class="item" data-value="2">品牌型号</div>
+                                <div class="item" data-value="3">生产厂家</div>
                             </div>
                         </div>
                         <input name="value" type="text" placeholder="搜索内容" value="{{$name}}">
@@ -73,7 +73,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {{ $materials->appends(['value' => $name])->links() }}
+            {{ $materials->appends(['value' => $name,'search-type'=>$type])->links() }}
         </div>
 
     </div>

@@ -582,19 +582,26 @@ class PayController extends Controller
     public function listLoanPayPage()
     {
         $search = Input::get('search');
-        if ($search){
-            $lists = LoanPay::where('applier','like','%'.$search.'%')->orWhere('number','like','%'.$search.'%')->orderBy('id','DESC')->paginate(10);
-        }else{
-            $lists = LoanPay::orderBy('id','DESC')->paginate(10);
+        $type = Input::get('search-type');
+        $db = DB::table('loan_pays');
+        if ($type){
+            switch ($type) {
+                case 1:
+                    $db->where('number','like','%'.$search.'%');
+                    break;
+                case 2:
+                    $db->where('applier','like','%'.$search.'%');
+                    break;
+            }
         }
-
+        $lists = $db->orderBy('id','DESC')->paginate(10);
         foreach ($lists as $list){
             $idArr = LoanPayList::where('pay_id','=',$list->id)->pluck('loan_id')->toArray();
             $list->BXNumber = LoanSubmit::whereIn('id',$idArr)->pluck('number')->toArray();
             $list->BXNumber = implode(',',$list->BXNumber);
         }
 //        dd($lists);
-        return view('loan.pay_list',['lists'=>$lists,'search'=>$search]);
+        return view('loan.pay_list',['lists'=>$lists,'search'=>$search,'type'=>$type]);
     }
     public function loanSubmitSingle()
     {
