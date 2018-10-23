@@ -820,7 +820,7 @@ class PayController extends Controller
             $lists = $post->get('lists');
             $pictures = $post->get('pictures');
 //            $count = RequestPayment::whereDate('created_at', date('Y-m-d',time()))->count();
-//            $count = getRedisData('QK');
+            $count = getRedisData('QK');
 //            $count = 1;
             $payment = new RequestPayment();
             $payment->project_team = $projectTeam->id;
