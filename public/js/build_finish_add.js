@@ -75,6 +75,8 @@
             this.buildFinishAdd.team = item.id
             this.buildFinishAdd.build_name = item.name
             this.buildFinishAdd.build_manager = item.manager
+              this.buildFinishAdd.build_bank = item.bank
+              this.buildFinishAdd.build_account = item.account
           },
 
           //项目搜索
