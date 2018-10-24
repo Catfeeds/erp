@@ -80,6 +80,9 @@
             this.buildFinishAdd.team = item.id
             this.buildFinishAdd.build_name = item.name
             this.buildFinishAdd.build_manager = item.manager
+
+              this.buildFinishAdd.build_bank = item.bank
+              this.buildFinishAdd.build_account = item.account
           },
 
           //项目搜索
@@ -151,6 +154,51 @@
             this.buildFinishAdd.project_content = item.name
             this.buildFinishAdd.project_manager = item.pm
           },
+
+            //合同上传
+            uploadContract(e) {
+                const files = e.target.files
+                if (files.length < 1) {
+                    return
+                }
+                let fileArr = []
+                for (let file of files) {
+                    let formData = new FormData()
+                    formData.append('image', file)
+                    _http.UploadManager.createUpload(formData)
+                        .then(res => {
+                        if (res.data.code === '200') {
+                        const resData = res.data.data
+                        this.buildFinishAdd.pictures.push({
+                            id: resData.size,
+                            name: resData.name,
+                            url: resData.url
+                        })
+                        // this.buildFinishAdd.pictures.push(resData.url)
+                        this.$notify({
+                            title: '成功',
+                            message: `${resData.name} 上传成功`,
+                            type: 'success'
+                        })
+                    } else {
+                        this.$notify({
+                            title: '错误',
+                            message: res.data.msg,
+                            type: 'error'
+                        })
+                    }
+                })
+                .catch(err => {
+                        console.log(err)
+                    this.$notify({
+                        title: '错误',
+                        message: '服务器出错',
+                        type: 'error'
+                    })
+                })
+                }
+
+            },
 
           //提交
           submit() {
@@ -227,6 +275,9 @@
                     type: 'success'
                   })
                   $('.ui.dimmer').removeClass('active')
+                  setTimeout(() => {
+                      window.close();
+              }, 2000)
                 } else {
                   this.$notify({
                     title: '错误',
