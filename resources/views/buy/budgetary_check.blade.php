@@ -66,6 +66,7 @@
             <table class="ui celled center aligned table selectable unstackable">
                 <thead>
                 <tr>
+                    <th>序号</th>
                     <th>物料名称</th>
                     <th>性能及技术参数</th>
                     <th>品牌型号</th>
@@ -86,6 +87,7 @@
                 @foreach($purchase->lists as $list)
                     {{--{{dd($purchase->lists)}}--}}
                 <tr>
+                    <td>{{$list->idNumber}}</td>
                     <td>{{$list->material->name}}</td>
                     <td>{{$list->material->param}}</td>
                     <td>{{$list->material->model}}</td>

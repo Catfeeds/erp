@@ -889,8 +889,10 @@ class StockController extends Controller
         $lists = $purchase->lists()->get();
         $contracts = $purchase->contracts()->get();
         if (!empty($lists)){
-            foreach ($lists as $list){
-                $list->material = Material::find($list->material_id);
+            $count = count($lists);
+            for ($i=0;$i<$count;$i++){
+                $lists[$i]->material = Material::find($lists[$i]->material_id);
+                $lists[$i]->idNumber = $i+1;
             }
         }
 
