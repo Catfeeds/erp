@@ -152,14 +152,14 @@ class CostController extends Controller
     public function addPay(Request $post)
     {
         $id = $post->id?$post->id:0;
-        $count = 1;
-//        $count = getRedisData('FK');
+//        $count = 1;
+        $count = getRedisData('FK');
         if($id){
             $cost = Cost::find($id);
         }else{
             $cost = new Cost();
             $cost->number = 'FK'.date('Ymd',time()).sprintf("%03d", $count+1);
-//            setRedisData('FK',$count+1,getRedisTime());
+            setRedisData('FK',$count+1,getRedisTime());
         }
         if (empty($post->apply_price)){
             return response()->json([
