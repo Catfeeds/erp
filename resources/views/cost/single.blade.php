@@ -248,7 +248,7 @@
                     </button>
                 @else
                 @endif
-                @if($cost->state==2)
+                @if($cost->state>=2)
                     <a class="ui icon button primary" href="javascript:_helper.fullWindow('{{url('new/pay/pay')}}?id={{$cost->id}}')" style="margin:0 20px;">
                         <i class="icon yen"></i>
                         <span>付款</span>
