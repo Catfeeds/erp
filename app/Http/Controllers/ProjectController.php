@@ -585,41 +585,59 @@ class ProjectController extends Controller
         unset($data['project_id']);
         $budgets = $data;
 //        dd($budgets);
+
         if (!empty($budgets)){
-            foreach ($budgets as $item){
-                if ($item['type']==1){
-                    if (isset($item['material_id'])){
-                        $budget = new Budget();
-                        $budget->project_id = $project_id;
-                        $budget->material_id = $item['material_id'];
-                        $materail = Material::find($item['material_id']);
-                        $budget->name = $materail->name;
-                        $budget->param = $materail->param;
-                        $budget->model = $materail->model;
-                        $budget->factory = $materail->factory;
-                        $budget->unit = $materail->unit;
-                        $budget->price = $item['price'];
-                        $budget->number = $item['number'];
-                        $budget->cost = $item['price']*$item['number'];
-                        $budget->type = $item['type'];
-                        $budget->need_buy = $item['number'];
-                        $budget->save();
+            DB::beginTransaction();
+            try{
+                foreach ($budgets as $item){
+                    if ($item['type']==1){
+                        if (isset($item['material_id'])){
+                            $budget = new Budget();
+                            $budget->project_id = $project_id;
+                            $budget->material_id = $item['material_id'];
+                            $materail = Material::find($item['material_id']);
+                            $budget->name = $materail->name;
+                            $budget->param = $materail->param;
+                            $budget->model = $materail->model;
+                            $budget->factory = $materail->factory;
+                            $budget->unit = $materail->unit;
+                            $budget->price = $item['price'];
+                            $budget->number = $item['number'];
+                            $budget->cost = $item['price']*$item['number'];
+                            $budget->type = $item['type'];
+                            $budget->need_buy = $item['number'];
+                            $budget->save();
+                        }else{
+                            $materail = new Material();
+                            $materail->name = $item['name'];
+                            $materail->param = $item['param'];
+                            $materail->model = $item['model'];
+                            $materail->factory = $item['factory'];
+                            $materail->unit = $item['unit'];
+                            $materail->save();
+                            $budget = new Budget();
+                            $budget->project_id = $project_id;
+                            $budget->material_id = $materail->id;
+                            $budget->name = $materail->name;
+                            $budget->param = $materail->param;
+                            $budget->model = $materail->model;
+                            $budget->factory = $materail->factory;
+                            $budget->unit = $materail->unit;
+                            $budget->price = $item['price'];
+                            $budget->number = $item['number'];
+                            $budget->cost = $item['price']*$item['number'];
+                            $budget->type = $item['type'];
+                            $budget->need_buy = $item['number'];
+                            $budget->save();
+                        }
                     }else{
-                        $materail = new Material();
-                        $materail->name = $item['name'];
-                        $materail->param = $item['param'];
-                        $materail->model = $item['model'];
-                        $materail->factory = $item['factory'];
-                        $materail->unit = $item['unit'];
-                        $materail->save();
                         $budget = new Budget();
                         $budget->project_id = $project_id;
-                        $budget->material_id = $materail->id;
-                        $budget->name = $materail->name;
-                        $budget->param = $materail->param;
-                        $budget->model = $materail->model;
-                        $budget->factory = $materail->factory;
-                        $budget->unit = $materail->unit;
+                        $budget->name = $item['name']?$item['name']:'无';
+                        $budget->param = $item['param']?$item['param']:'无';
+                        $budget->model = $item['model']?$item['model']:'无';
+                        $budget->factory = $item['factory']?$item['factory']:'无';
+                        $budget->unit = $item['unit']?$item['unit']:'无';
                         $budget->price = $item['price'];
                         $budget->number = $item['number'];
                         $budget->cost = $item['price']*$item['number'];
@@ -627,28 +645,23 @@ class ProjectController extends Controller
                         $budget->need_buy = $item['number'];
                         $budget->save();
                     }
-                }else{
-                    $budget = new Budget();
-                    $budget->project_id = $project_id;
-                    $budget->name = $item['name']?$item['name']:'无';
-                    $budget->param = $item['param']?$item['param']:'无';
-                    $budget->model = $item['model']?$item['model']:'无';
-                    $budget->factory = $item['factory']?$item['factory']:'无';
-                    $budget->unit = $item['unit']?$item['unit']:'无';
-                    $budget->price = $item['price'];
-                    $budget->number = $item['number'];
-                    $budget->cost = $item['price']*$item['number'];
-                    $budget->type = $item['type'];
-                    $budget->need_buy = $item['number'];
-                    $budget->save();
-                }
 
+                }
+                DB::commit();
+                return response()->json([
+                    'code'=>'200',
+                    'msg'=>'SUCCESS'
+                ]);
+            }catch (\Exception $exception){
+                DB::rollback();
+                return response()->json([
+                    'code'=>'400',
+                    'msg'=>$exception->getMessage()
+                ]);
             }
+
         }
-        return response()->json([
-            'code'=>'200',
-            'msg'=>'SUCCESS'
-        ]);
+
     }
     public function delBudget($id)
     {
