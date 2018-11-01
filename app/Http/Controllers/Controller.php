@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function isEqual($num1,$num2)
+    {
+        $epsilon = 0.00001;
+        if (abs($num1-$num2) > $epsilon){
+            return false;
+        }
+        return true;
+    }
 }

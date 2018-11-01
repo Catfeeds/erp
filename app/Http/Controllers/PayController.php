@@ -453,7 +453,6 @@ class PayController extends Controller
                 $loan->lists()->delete();
             }else{
                 $loan = new LoanSubmit();
-//                $count = LoanSubmit::whereDate('created_at', date('Y-m-d',time()))->count();
                 $count = getRedisData('BX');
                 $loan->number = 'BX'.date('Ymd',time()).sprintf("%03d", $count+1);
                 setRedisData('BX',$count+1,getRedisTime());
@@ -463,11 +462,6 @@ class PayController extends Controller
             $loan->date = $post->get('date');
             $loan->price = $post->get('price');
             $loan->loan_user = $post->get('loan_user');
-//        $loanPrice = LoanList::where('borrower','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-//        $submitPrice = LoanPay::where('applier','=',$loan->loan_user)->sum('deduction');
-//        $price = LoanSubmit::where('loan_user','=',$loan->loan_user)->where('state','>=',3)->sum('price');
-//        $loan->loanBalance = $loanPrice-$submitPrice+$loan->price;
-//        $loan->submitBalance = $price;
             $swapPrice = 0;
             if ($loan->save()){
                 foreach ($lists as $item){
@@ -486,7 +480,7 @@ class PayController extends Controller
                     $list->save();
                 }
             }
-            if ($swapPrice!=$loan->price){
+            if (!$this->isEqual($swapPrice,$loan->price)){
                 throw new Exception('金额不等！');
             }
             DB::commit();
