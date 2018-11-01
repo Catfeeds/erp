@@ -198,7 +198,7 @@
             </tr>
             <tr>
                 <th>应收票余额</th>
-                <th colspan="8">{{number_format($cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
+                <th colspan="8">{{$cost->need_invoice==0?0:number_format($cost->apply_price-\App\Models\CostInvoice::where('cost_id','=',$cost->id)->sum('with_tax'),2)}}￥</th>
             </tr>
             </tfoot>
         </table>

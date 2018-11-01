@@ -31,21 +31,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($categories as $category)
+                @for($i=0;$i<count($categories);$i++)
                 <tr>
-                    <td>{{$category->id}}</td>
-                    <td>{{$category->title}}</td>
-                    @if(!empty($category->kinds))
-                    <td style="max-width:600px;">{{implode('/',$category->kinds)}}</td>
+                    <td>{{$i+1}}</td>
+                    <td>{{$categories[$i]->title}}</td>
+                    @if(!empty($categories[$i]->kinds))
+                    <td style="max-width:600px;">{{implode('/',$categories[$i]->kinds)}}</td>
                     @else
                         <td style="max-width:600px;"></td>
                     @endif
                     <td style="white-space:nowrap">
-                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('category/edit')}}?id={{$category->id}}')">录入事项</a>
-                        <button class="ui mini button negative dataPaymentDelete" data-id="{{$category->id}}">删除</button>
+                        <a class="ui mini button primary" href="javascript:_helper.fullWindow('{{url('category/edit')}}?id={{$categories[$i]->id}}')">录入事项</a>
+                        <button class="ui mini button negative dataPaymentDelete" data-id="{{$categories[$i]->id}}">删除</button>
                     </td>
                 </tr>
-                @endforeach
+                @endfor
 
                 </tbody>
             </table>

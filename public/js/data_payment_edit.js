@@ -58,6 +58,9 @@
                     message: '修改成功',
                     type: 'success'
                   })
+                  setTimeout(() => {
+                      window.close()
+              }, 300)
                 } else {
                   this.$notify({
                     title: '错误',

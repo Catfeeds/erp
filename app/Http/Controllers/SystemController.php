@@ -229,7 +229,7 @@ class SystemController extends Controller
         if ($name){
             $db->where('name','like','%'.$name.'%');
         }
-        $data = $db->where('state','=',1)->get();
+        $data = $db->where('state','=',1)->orderBy('id','DESC')->get();
         return response()->json([
             'code'=>'200',
             'msg'=>'SUCCESS',

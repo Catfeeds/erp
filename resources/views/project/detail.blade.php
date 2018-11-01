@@ -182,7 +182,7 @@
                     <td class="function-three">{{number_format($project->invoices()->sum('price'),2)}}</td>
                     <td class="function-three">{{number_format($project->collects()->where('type','=',2)->sum('price'),2)}}</td>
                     <td class="function-three">{{number_format($project->collects()->where('type','=',3)->sum('price'),2)}}</td>
-                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')-$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
+                    <td>{{number_format($project->stockRecords()->where('type','=',3)->sum('cost')+$project->requestPayments()->where('state','=',3)->sum('price')+$project->loanSubmits()->where('state','>=',3)->sum('price')+$project->payApplies()->sum('price')+$project->costs()->where('state','>=',2)->sum('apply_price')-$project->stockRecords()->where('type','=',2)->sum('cost'),2)}}</td>
                     <td class="function-four">{{number_format($project->stockRecords()->where('type','=',3)->sum('cost'),2)}}</td>
                     <td class="function-four">{{number_format($project->requestPayments()->where('state','=',3)->sum('price'),2)}}</td>
                     <td class="function-four">{{number_format($project->loanSubmits()->where('state','>=',3)->sum('price'),2)}}</td>
