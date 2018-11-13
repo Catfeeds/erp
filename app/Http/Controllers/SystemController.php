@@ -634,7 +634,7 @@ class SystemController extends Controller
     {
         $categories = Category::where('state','=',1)->paginate(10);
         for ($i=0;$i<count($categories);$i++){
-            $categories[$i]->kinds = $categories[$i]->kinds()->pluck('title')->toArray();
+            $categories[$i]->kinds = $categories[$i]->kinds()->where('state','=',1)->pluck('title')->toArray();
         }
         return view('data.payment_list',['categories'=>$categories]);
     }
