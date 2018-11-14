@@ -82,8 +82,8 @@
                     type: 'success'
                   })
                   setTimeout(() => {
-                      window.close();
-              }, 2000)
+                      window.close()
+              }, 300)
                 } else {
                   this.$notify({
                     title: '错误',

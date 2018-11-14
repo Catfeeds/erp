@@ -45,7 +45,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{$types->links()}}
     </div>
     <!-- /主体内容 === 不可复用 -->
 @endsection
