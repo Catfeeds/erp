@@ -105,7 +105,11 @@
         <h4 class="ui dividing header blue">请款添加</h4>
         <h4 class="ui header center aligned">请款清单</h4>
         <div class="flex-row flex-end">
-            <div class="ui mini button positive">Excel 导入</div>
+            <label for="contractUpload" class="ui mini positive icon button">
+                <i class="icon upload"></i>
+                <span>Excel 导入</span>
+                <input style="display:none;" type="file" id="contractUpload" @change="fileUpload($event)">
+            </label>
             <div class="ui mini button positive" @click="addItem('lists')">手工添加</div>
         </div>
         <h5 class="ui header right aligned">合计总额：￥@{{ sumAmount.toLocaleString('en-US') }} </h5>
