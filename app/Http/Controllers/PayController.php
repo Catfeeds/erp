@@ -841,6 +841,9 @@ class PayController extends Controller
                     if (isset($item['para'])){
                         $list->param = $item['para'];
                     }
+                    if (isset($item['param'])){
+                        $list->param = $item['param'];
+                    }
                     if (isset($item['remark'])){
                         $list->remark = $item['remark'];
                     }
@@ -849,6 +852,7 @@ class PayController extends Controller
                     $list->price = $item['price'];
                     $list->total = $item['price']*$item['number'];
                     $cost+=$list->total;
+                    $cost = round($cost,2);
                     $list->save();
                 }
 
