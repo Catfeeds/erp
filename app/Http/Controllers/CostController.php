@@ -109,7 +109,7 @@ class CostController extends Controller
                 'invoice_type'=>intval($cost->invoice_type),
                 'type'=>intval($cost->type),
                 'supplier_id'=>$cost->supplier_id,
-                'payee'=>$supplier->name,
+                'payee'=>empty($supplier)?'':$supplier->name,
                 'pay_type'=>intval($cost->pay_type),
                 'currentSupplier'=>$supplier,
                 'pictures'=>$pictures
