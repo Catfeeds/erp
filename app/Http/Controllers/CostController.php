@@ -111,7 +111,7 @@ class CostController extends Controller
                 'supplier_id'=>$cost->supplier_id,
                 'payee'=>empty($supplier)?'':$supplier->name,
                 'pay_type'=>intval($cost->pay_type),
-                'currentSupplier'=>$supplier,
+                'currentSupplier'=>empty($supplier)?'':$supplier,
                 'pictures'=>$pictures
             ];
 //            dd($data);
