@@ -117,7 +117,7 @@
                 <th colspan="7">{{number_format(\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</th>
             </tr>
             <tr>
-                <th>应收账款余额</th>
+                <th>应付账款余额</th>
                 <th colspan="7">{{number_format($cost->apply_price-\App\Models\CostPay::where('cost_id','=',$cost->id)->sum('cost'),2)}}￥</th>
             </tr>
             </tfoot>

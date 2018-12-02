@@ -140,7 +140,7 @@
                     <td>{{number_format($list->lists()->sum('cost')-$list->payments()->sum('pay_price'),2)}} </td>
                     <td>{{$list->content}}</td>
                     <td>{{number_format($list->invoices()->sum('with_tax'),2)}} </td>
-                    <td>{{number_format($list->lists()->sum('cost')-$list->invoices()->sum('with_tax'),2)}} </td>
+                    <td>{{$list->content=='无票'?0:number_format($list->lists()->sum('cost')-$list->invoices()->sum('with_tax'),2)}} </td>
                     <td>{{$list->lists()->sum('cost')-$list->payments()->sum('pay_price')==0?'已结清':'未结清'}}</td>
                 </tr>
                 @endforeach
