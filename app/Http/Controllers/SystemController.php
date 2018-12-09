@@ -114,27 +114,27 @@ class SystemController extends Controller
                 'return_msg'=>'非法文件名'
             ]);
         }
-        $allow =  [
-            'jpg',
-            'png',
-            'txt',
-            'bmp',
-            'gif',
-            'jpeg',
-            'pdf',
-            'mp4',
-            'doc',
-            'docx',
-            'xls',
-            'xlsx'
-
-    ];
-        if (!in_array(strtolower($name[1]),$allow)){
-            return response()->json([
-                'return_code'=>'FAIL',
-                'return_msg'=>'不支持的文件格式'
-            ]);
-        }
+//        $allow =  [
+//            'jpg',
+//            'png',
+//            'txt',
+//            'bmp',
+//            'gif',
+//            'jpeg',
+//            'pdf',
+//            'mp4',
+//            'doc',
+//            'docx',
+//            'xls',
+//            'xlsx'
+//
+//    ];
+//        if (!in_array(strtolower($name[1]),$allow)){
+//            return response()->json([
+//                'return_code'=>'FAIL',
+//                'return_msg'=>'不支持的文件格式'
+//            ]);
+//        }
 //        $md5 = md5_file($file);
         $name = $name[1];
         $name = date('Y-m-d His',time()).'.'.$name;

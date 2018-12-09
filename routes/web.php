@@ -177,11 +177,11 @@ Route::group(['middleware'=>'auth'],function (){
    //采购管理
     Route::get('purchases/list','ProjectController@listPurchasesPage');
     Route::get('del/purchase','PurchaseController@delPurchase');
-    Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage');
+    Route::get('project/purchases/list','ProjectController@listProjectPurchasesPage')->middleware('role:buy_project_list');
 //    Route::get('purchase/pay/list','ProjectController@listProjectPurchasesPage');
-    Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage');
+    Route::get('purchase/pay/list','ProjectController@listPurchasesPayPage')->middleware('role:buy_pay_list');
     Route::post('purchase/cheque','ProjectController@addPurchaseCheque');
-    Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage');
+    Route::get('purchase/charge/list','ProjectController@listPurchasesChargePage')->middleware('role:buy_invoice_list');
     Route::get('purchase/collect/list','ProjectController@purchaseCollectPage');
     Route::get('purchase/parity/list','ProjectController@purchaseParityPage')->middleware('role:buy_parity');
     Route::post('purchase/create','ProjectController@createPurchase');
@@ -216,25 +216,25 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('buy/edit/invoice','PurchaseController@editBuyInvoicePage');
     Route::post('buy/edit/invoice','PurchaseController@editBuyInvoice');
     //库存管理
-    Route::get('stock/list','StockController@listStockList');
-    Route::get('stock/buy/list','StockController@listBuyList');
-    Route::get('stock/return/list','StockController@listReturnList');
+    Route::get('stock/list','StockController@listStockList')->middleware('role:stock_list');
+    Route::get('stock/buy/list','StockController@listBuyList')->middleware('role:stock_buy_list');
+    Route::get('stock/return/list','StockController@listReturnList')->middleware('role:stock_return_list');
     Route::get('stock/get/list','StockController@listGetList');
-    Route::get('stock/out/list','StockController@listOutList');
-    Route::get('stock/add/buy','StockController@addBuyPage');
+    Route::get('stock/out/list','StockController@listOutList')->middleware('role:stock_out_list');
+    Route::get('stock/add/buy','StockController@addBuyPage')->middleware('role:stock_buy_edit');
     Route::post('stock/buy/add','StockController@addBuy');
-    Route::get('store/buy_check','StockController@buyCheckPage');
+    Route::get('store/buy_check','StockController@buyCheckPage')->middleware('role:stock_buy_edit');
     Route::get('stock/return/add','StockController@addReturnPage');
     Route::post('stock/return/add','StockController@addReturn');
     Route::get('stock/get/add','StockController@addGetPage');
     Route::post('stock/get/add','StockController@addGet');
     Route::get('stock/get/print','StockController@printGet');
     Route::get('stock/return/print','StockController@printReturn');
-    Route::get('stock/out/add','StockController@addOutPage');
+    Route::get('stock/out/add','StockController@addOutPage')->middleware('role:stock_out_edit');
     Route::post('stock/out/add','StockController@addOut');
     Route::get('stock/stock/out_add_add','StockController@addOutAddPage');
     Route::get('stock/purchase','StockController@getPurchaseData');
-    Route::get('stock/check','StockController@checkStock');
+    Route::get('stock/check','StockController@checkStock')->middleware('role:stock_record_list');
     Route::get('stock/out/single','StockController@singleOutPage');
     Route::get('stock/print/buy','StockController@printBuy');
 
@@ -248,7 +248,7 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('build/finish/list','BuildController@listFinishPage')->middleware('role:build_finish_list');
     Route::get('build/finish/create','BuildController@createFinishPage')->middleware('role:build_finish_edit');
     Route::get('build/pay/list','BuildController@listPayPage')->middleware('role:build_pay_list');
-    Route::get('build/get/list','BuildController@listGetPage');
+    Route::get('build/get/list','BuildController@listGetPage')->middleware('role:build_invoice_list');
     Route::get('build/finish/single','BuildController@finishSinglePage');
     Route::get('build/finish/print','BuildController@printBuildFinish');
     Route::get('build/pay/single','BuildController@paySinglePage');
